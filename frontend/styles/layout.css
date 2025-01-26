@@ -1,0 +1,126 @@
+/**
+ * Layout Styles
+ * ---------------------
+ * 包含以下布局样式：
+ * 
+ * 1. 仪表盘布局
+ *    - 容器样式
+ *    - 网格系统
+ * 
+ * 2. 分组布局
+ *    - 分组标题
+ *    - 分组内容
+ * 
+ * 3. 网站列表布局
+ *    - 网格布局
+ *    - 网站项目样式
+ *    - 图标和文本布局
+ * 
+ * 4. 固定定位元素
+ *    - 悬浮按钮位置
+ *    - 模态框遮罩
+ *    - 通知提示位置
+ */
+
+/* Dashboard Layout */
+#dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+  margin: 0 auto;
+  max-width: 1400px;
+}
+
+/* Group and Website Layout */
+.group {
+  margin-bottom: var(--spacing-xl);
+}
+
+.group h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--group-title-color, var(--text-primary));
+  margin-bottom: var(--spacing-md);
+  padding-bottom: var(--spacing-xs);
+  border-bottom: 2px solid var(--border-color);
+}
+
+.website-list {
+  display: grid;
+  gap: var(--spacing-lg);
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  margin-top: var(--spacing-md);
+}
+
+.website-item {
+  background: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md); /* 减小水平方向的内边距 */
+  transition: all var(--transition-normal);
+  cursor: pointer;
+  display: flex;
+  align-items: center;/* 垂直居中 */
+  gap: var(--spacing-md);/* 可以改变a和img的距离 */
+  box-shadow: var(--shadow-sm);
+  flex-direction: row;/* 修改这里的值让内部元素以列row 方式排列 */
+  align-content: space-around;/* 如果需要垂直方向上的分布 */
+  justify-content: center;/* 修改这里的值让内部元素居中 */
+  width: 180px; /* 设置一个固定的宽度 */
+  min-height: 65px; /* 设置一个最小高度 */
+}
+
+.website-item:hover {
+  border-color: var(--primary-color);
+  background: var(--surface-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.website-item img {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+}
+
+.website-item a {
+  color: var(--text-primary);
+  text-decoration: none;
+  font-size: 0.875rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Fixed Position Elements */
+.add-button-container {
+  position: fixed;
+  bottom: var(--spacing-xl);
+  right: var(--spacing-xl);
+  z-index: 10;
+  width: 48px;
+  height: 48px;
+  margin: 0;
+  padding: 0;
+}
+
+/* Modal Overlay */
+.modal::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  z-index: -1;
+}
+
+/* Notification Position */
+.notification {
+  position: fixed;
+  top: var(--spacing-lg);
+  right: var(--spacing-lg);
+  z-index: 1000;
+}

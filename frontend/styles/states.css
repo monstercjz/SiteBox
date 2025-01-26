@@ -1,0 +1,161 @@
+/**
+ * States & Animation Styles
+ * ---------------------
+ * 包含以下状态和动画样式：
+ * 
+ * 1. 加载状态
+ *    - 加载中效果
+ *    - 旋转动画
+ * 
+ * 2. 交互状态
+ *    - 按钮显示/隐藏
+ *    - 模态框开启/关闭
+ *    - 拖拽状态
+ * 
+ * 3. 搜索状态
+ *    - 搜索框展开
+ * 
+ * 4. 通知状态
+ *    - 信息提示
+ *    - 错误提示
+ *    - 成功提示
+ * 
+ * 5. 动画效果
+ *    - 滑入动画
+ *    - 焦点状态
+ */
+
+/* Loading State */
+.loading {
+  position: relative;
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.loading::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 30px;
+  height: 30px;
+  margin: -15px 0 0 -15px;
+  border: 3px solid var(--border-color);
+  border-top-color: var(--primary-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Button States */
+.add-buttons.show {
+  transform: scale(1) translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.add-buttons.show .icon-button {
+  transform: scale(1) translateY(0);
+  opacity: 1;
+}
+
+.add-buttons.show + .add-button-container #toggleAddButtons {
+  --rotation: 45deg;
+}
+
+/* Modal States */
+.modal.show-modal {
+  opacity: 1;
+}
+
+.modal.closing {
+  opacity: 0;
+}
+
+/* Drag and Drop States */
+.drag-over {
+  border: 2px dashed var(--primary-color) !important;
+  background: var(--surface-hover);
+  opacity: 0.8;
+  transform: scale(1.02);
+  transition: all var(--transition-normal);
+}
+
+/* Search Expanded State */
+.search-container.expanded .search-input {
+  width: 240px;
+  opacity: 1;
+  pointer-events: auto;
+  padding: 0 var(--spacing-xl) 0 var(--spacing-md);
+  margin-right: var(--spacing-sm);/* 让search-input展开状态的右边缘与search-icon的左边缘，稍微保留一点距离 */
+  box-shadow: var(--shadow-md);
+}
+
+.search-container.expanded .search-icon {
+  box-shadow: var(--shadow-md);
+}
+
+/* Notification States */
+.notification.info {
+  border-left: 4px solid var(--primary-color);
+}
+
+.notification.error {
+  border-left: 4px solid #dc2626;
+}
+
+.notification.success {
+  border-left: 4px solid #059669;
+}
+
+/* Animation Keyframes */
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Focus States */
+:focus {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+/* Theme transition states */
+body {
+    transition: background-color 0.3s ease,
+                color 0.3s ease;
+}
+
+/* 护眼主题切换状态 */
+#toggleEyeCare.active {
+    background: var(--primary-color);
+    color: var(--surface-color);
+}
+
+/* 添加主题切换时的渐变效果 */
+[data-theme] * {
+    transition: background-color 0.3s ease,
+                color 0.3s ease,
+                border-color 0.3s ease,
+                box-shadow 0.3s ease;
+}

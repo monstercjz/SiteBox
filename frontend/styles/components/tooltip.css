@@ -1,0 +1,42 @@
+/**
+ * Tooltip Component
+ * ---------------------
+ * 提示框相关样式，包含：
+ * 
+ * 1. General Tooltip
+ *    - 基础样式
+ *    - 定位和尺寸
+ * 
+ * 2. Website Tooltip
+ *    - 网站信息提示
+ *    - 布局结构
+ * 
+ * 3. Tooltip Content
+ *    - 文本样式
+ *    - 信息展示
+ */
+
+.tooltip, .website-tooltip {
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--radius-sm);
+    font-size: 0.875rem;
+    box-shadow: var(--shadow-lg);
+    color: var(--text-primary);
+    max-width: 300px;
+    word-wrap: break-word;
+}
+
+.tooltip-row {
+    display: flex;
+    gap: var(--spacing-sm);
+    align-items: center;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+}
+
+.tooltip-row strong {
+    color: var(--primary-color);
+    min-width: 60px;
+} 

@@ -1,0 +1,204 @@
+{
+  "groups": [
+    {
+      "id": "1fd77e26-625e-419e-9940-85b59a14fcea",
+      "name": "日常使用",
+      "order": 1,
+      "isCollapsible": false
+    },
+    {
+      "id": "8365b8e9-4e51-434b-a1dc-4632f424389b",
+      "name": "3",
+      "order": 2,
+      "isCollapsible": false
+    },
+    {
+      "id": "589756ee-86ee-4eb6-bab7-e51879422418",
+      "name": "收集",
+      "order": 3,
+      "isCollapsible": false
+    },
+    {
+      "id": "09e219d8-6108-42c9-b318-d3ef0b2a9782",
+      "name": "3",
+      "order": 4,
+      "isCollapsible": false
+    },
+    {
+      "id": "ed2439f3-6adb-4a94-a95d-1a62b3d9b762",
+      "name": "4",
+      "order": 5,
+      "isCollapsible": false
+    },
+    {
+      "id": "77e94784-731b-48d0-95d5-2be4ca7dd8da",
+      "name": "5",
+      "order": 6,
+      "isCollapsible": false
+    },
+    {
+      "id": "8f159501-e977-40f3-b59c-3b3a385f9e0f",
+      "name": "1",
+      "order": 7,
+      "isCollapsible": false
+    },
+    {
+      "id": "ef8e0d26-4236-4277-bb7b-4b0da30b7a25",
+      "name": "2",
+      "order": 8,
+      "isCollapsible": false
+    },
+    {
+      "id": "e12eb12e-1f8c-4ee4-88db-4b8dae08837c",
+      "name": "4",
+      "order": 9,
+      "isCollapsible": false
+    },
+    {
+      "id": "60e27e88-8f54-4186-8029-cca80f7b332b",
+      "name": "1",
+      "order": 10,
+      "isCollapsible": false
+    },
+    {
+      "id": "be7aed5f-2643-4d6c-a1f0-ebba9212d01a",
+      "name": "1",
+      "order": 11,
+      "isCollapsible": false
+    },
+    {
+      "id": "c01bb573-7195-4210-a669-10bdf51145c1",
+      "name": "1",
+      "order": 12,
+      "isCollapsible": false
+    },
+    {
+      "id": "37d8ee5a-0b3c-4050-9327-c8fd25c4f898",
+      "name": "1",
+      "order": 13,
+      "isCollapsible": false
+    },
+    {
+      "id": "5349f2ed-bc3d-4e46-9238-a294ec7968c4",
+      "name": "1",
+      "order": 14,
+      "isCollapsible": false
+    },
+    {
+      "id": "f8e2ac90-4105-435a-8f33-2c66821ad027",
+      "name": "1",
+      "order": 15,
+      "isCollapsible": false
+    },
+    {
+      "id": "67bd6825-db3a-4989-949c-93847a03979c",
+      "name": "1",
+      "order": 16,
+      "isCollapsible": false
+    },
+    {
+      "id": "5c2b6668-770b-43f6-b906-961047947d33",
+      "name": "1",
+      "order": 17,
+      "isCollapsible": false
+    },
+    {
+      "id": "b0bcc6bf-d8bd-4e24-970e-2585e81fbe64",
+      "name": "1",
+      "order": 18,
+      "isCollapsible": false
+    }
+  ],
+  "websites": [
+    {
+      "id": "ab5489f8-a6eb-4f97-b874-3da7addbb519",
+      "groupId": "1fd77e26-625e-419e-9940-85b59a14fcea",
+      "name": "知  乎",
+      "url": "http://zhihu.com",
+      "description": "1",
+      "faviconUrl": "/data/icons/zhihu.com.ico",
+      "lastAccessTime": "2025-01-24T20:05:38.414Z",
+      "order": 2,
+      "isAccessible": true
+    },
+    {
+      "id": "8ddcfb3b-df6f-41fb-b645-374be81a138f",
+      "groupId": "1fd77e26-625e-419e-9940-85b59a14fcea",
+      "name": "天龙八部",
+      "url": "http://tl.changyou.com",
+      "description": "1",
+      "faviconUrl": "/data/icons/tl.changyou.com.ico",
+      "lastAccessTime": "2025-01-24T12:13:34.758Z",
+      "order": 3,
+      "isAccessible": true
+    },
+    {
+      "id": "18cd9f5a-08d0-41f8-87af-0bc23c582c9a",
+      "groupId": "1fd77e26-625e-419e-9940-85b59a14fcea",
+      "name": "Google1",
+      "url": "http://google.com",
+      "description": "Google",
+      "faviconUrl": "/data/icons/google.com.ico",
+      "lastAccessTime": "2025-01-24T10:53:43.340Z",
+      "order": 5,
+      "isAccessible": true
+    },
+    {
+      "id": "3cf20c50-895c-429c-a3cd-b8499501a1a8",
+      "groupId": "1fd77e26-625e-419e-9940-85b59a14fcea",
+      "name": "github",
+      "url": "http://github.com/",
+      "description": "github",
+      "faviconUrl": "/data/icons/github.com.ico",
+      "lastAccessTime": "2025-01-22T17:46:05.811Z",
+      "order": 6,
+      "isAccessible": true
+    },
+    {
+      "id": "78d96e5a-11e2-49e6-8037-38316ce9017f",
+      "groupId": "1fd77e26-625e-419e-9940-85b59a14fcea",
+      "name": "百度",
+      "url": "http://baidu.com/1",
+      "description": "12",
+      "faviconUrl": "/data/icons/baidu.com.ico",
+      "lastAccessTime": "2025-01-23T01:44:35.383Z",
+      "order": 6,
+      "isAccessible": true
+    },
+    {
+      "id": "74d9717b-fabc-4612-9ba5-8e91458b07e9",
+      "groupId": "1fd77e26-625e-419e-9940-85b59a14fcea",
+      "name": "qq",
+      "url": "http://qq.com",
+      "description": "1",
+      "faviconUrl": "/data/icons/qq.com.ico",
+      "lastAccessTime": "2025-01-23T01:45:07.480Z",
+      "order": 6,
+      "isAccessible": true
+    },
+    {
+      "id": "ecfd671b-4fdc-4fe9-b791-e62ce7f0231a",
+      "groupId": "8365b8e9-4e51-434b-a1dc-4632f424389b",
+      "name": "baidu",
+      "url": "http://baidu.com/v3",
+      "description": "1",
+      "faviconUrl": "/data/icons/baidu.com.ico",
+      "lastAccessTime": "2025-01-24T21:08:42.984Z",
+      "order": 1,
+      "isAccessible": true
+    },
+    {
+      "id": "1eb7f74a-86be-4288-8bcd-e4d58032cc75",
+      "groupId": "1fd77e26-625e-419e-9940-85b59a14fcea",
+      "name": "1",
+      "url": "https://baidu.com/v11112",
+      "description": "2",
+      "faviconUrl": "/data/icons/baidu.com.ico",
+      "lastAccessTime": "2025-01-23T02:04:35.912Z",
+      "order": 7,
+      "isAccessible": true
+    }
+  ],
+  "nextGroupId": 63,
+  "nextWebsiteId": 7
+}

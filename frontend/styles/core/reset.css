@@ -1,0 +1,39 @@
+/**
+ * CSS Reset
+ * ---------------------
+ * 基础样式重置，包含：
+ * 
+ * 1. Box Model Reset
+ *    - 边距重置
+ *    - 盒模型设置
+ * 
+ * 2. HTML Elements
+ *    - 根元素设置
+ *    - 字体基础
+ * 
+ * 3. Body Styles
+ *    - 背景颜色
+ *    - 文本颜色
+ *    - 过渡效果
+ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    background-color: var(--surface-color);
+    color: var(--text-primary);
+    line-height: 1.5;
+    transition: background-color var(--transition-normal),
+                color var(--transition-normal);
+    padding: var(--spacing-lg);
+    min-height: 100vh;
+} 

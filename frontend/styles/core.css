@@ -1,0 +1,129 @@
+/**
+ * Core Styles
+ * ---------------------
+ * 包含以下核心功能：
+ * 
+ * 1. CSS变量定义
+ *    - 颜色系统
+ *    - 间距尺寸
+ *    - 圆角大小
+ *    - 过渡动画时间
+ * 
+ * 2. 主题变量
+ *    - 亮色主题（默认）
+ *    - 暗色主题
+ * 
+ * 3. 基础样式重置
+ *    - Box-sizing
+ *    - Margins
+ *    - Font sizes
+ * 
+ * 4. 基础排版
+ *    - 字体设置
+ *    - 行高
+ *    - 基础文字颜色
+ */
+
+/* CSS Variables */
+:root {
+  /* Color Palette */
+ /* Color System - Light Theme */
+ --primary-color: #4f46e5; /* 更优雅的靛蓝色 */
+ --primary-hover: #4338ca;
+ --surface-color: #ffffff;
+ --surface-hover: #f8fafc;
+ --border-color: #e2e8f0;
+ --text-primary: #1e293b;
+ --text-secondary: #64748b;
+ 
+ /* Shadow System */
+ --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.08);
+ --shadow-md: 0 4px 6px rgba(15, 23, 42, 0.08), 0 2px 4px rgba(15, 23, 42, 0.06);
+ --shadow-lg: 0 10px 15px rgba(15, 23, 42, 0.08), 0 4px 6px rgba(15, 23, 42, 0.06);
+  
+  /* Spacing */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  
+  /* Border radius */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-normal: 250ms ease;
+}
+
+/* Dark theme variables */
+[data-theme="dark"] {
+  --primary-color: #818cf8; /* 更柔和的亮紫色 */
+  --primary-hover: #6366f1;
+  --surface-color: #1e1e2e; /* 更温和的深色背景 */
+  --surface-hover: #27273a;
+  --border-color: #383850;
+  --text-primary: #e2e8f0;
+  --text-secondary: #94a3b8;
+  
+  /* Shadow System for Dark Theme */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.3), 0 2px 4px rgba(0, 0, 0, 0.2);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.3), 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Eye-care theme variables */
+[data-theme="eye-care"] {
+  /* 护眼主题的柔和色系 */
+  --primary-color: #5b8c5a;    /* 柔和的绿色 */
+  --primary-hover: #496b48;    /* 深绿色 */
+  --surface-color: #f0f5e9;    /* 淡青绿色背景 */
+  --surface-hover: #e6ede0;    /* 浅绿色悬浮背景 */
+  --background: #ecf3e6;       /* 柔和的浅绿背景 */
+  --text-primary: #2c3e2b;     /* 深绿色文字 */
+  --text-secondary: #5c705b;   /* 中灰绿色文字 */
+  --border-color: #c8d6c7;     /* 淡绿色边框 */
+  
+  /* 阴影效果调整为更柔和的绿色 */
+  --shadow-sm: 0 1px 2px rgba(91, 140, 90, 0.05);
+  --shadow-md: 0 4px 6px rgba(91, 140, 90, 0.05);
+  --shadow-lg: 0 10px 15px rgba(91, 140, 90, 0.05);
+  
+  /* 玻璃态效果调整 */
+  --glass-effect: rgba(240, 245, 233, 0.9);
+  --glass-border: 1px solid rgba(200, 214, 199, 0.2);
+  --glass-shadow: 0 8px 32px 0 rgba(91, 140, 90, 0.1);
+}
+
+/* Base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  background-color: var(--surface-color);
+  color: var(--text-primary);
+  line-height: 1.5;
+  transition: background-color var(--transition-normal),
+              color var(--transition-normal);
+  padding: var(--spacing-lg);
+  min-height: 100vh;
+}
+
+/* Typography */
+h1 {
+  font-size: 2rem;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: var(--spacing-xl);
+  letter-spacing: -0.025em;
+}

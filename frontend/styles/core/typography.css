@@ -1,0 +1,39 @@
+/**
+ * Typography Styles
+ * ---------------------
+ * 排版相关样式
+ */
+
+/* Headings */
+h1 {
+    font-size: 2rem;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+    letter-spacing: -0.025em;
+    color: var(--text-primary);
+}
+
+h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-lg);
+    color: var(--text-primary);
+}
+
+/* Text */
+p {
+    margin-bottom: var(--spacing-md);
+    color: var(--text-secondary);
+}
+
+/* Links */
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+a:hover {
+    color: var(--primary-hover);
+} 

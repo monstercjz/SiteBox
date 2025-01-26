@@ -1,0 +1,488 @@
+/**
+ * Component Styles
+ * ---------------------
+ * 包含以下组件样式：
+ * 
+ * 1. 搜索组件
+ *    - 搜索框
+ *    - 搜索图标
+ * 
+ * 2. 按钮组件
+ *    - 图标按钮
+ *    - 添加按钮组
+ *    - 添加切换按钮
+ * 
+ * 3. 模态框组件
+ *    - 模态框容器
+ *    - 模态框内容
+ *    - 模态框按钮
+ * 
+ * 4. 提示框组件
+ *    - 通用提示框
+ *    - 网站提示框
+ * 
+ * 5. 表单元素
+ *    - 输入框
+ *    - 文本域
+ *    - 下拉选择框
+ * 
+ * 6. 上下文菜单
+ *    - 菜单容器
+ *    - 菜单项
+ *    - 分隔线
+ */
+
+/* Search Container */
+.search-container {
+  position: fixed;
+  top: calc(var(--spacing-lg) + 48px);
+  right: max(var(--spacing-md), calc((100% - 1400px) / 2));
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  height: 40px;
+  transition: all var(--transition-normal);
+}
+
+/* Context Menu */
+#contextMenu {
+  background: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-xs) 0;
+  min-width: 160px;
+  box-shadow: var(--shadow-lg);
+}
+
+#contextMenu div {
+  padding: var(--spacing-sm) var(--spacing-md);
+  color: var(--text-primary);
+  cursor: pointer;
+  user-select: none;
+  transition: background-color var(--transition-fast);
+}
+
+#contextMenu div:hover {
+  background-color: var(--surface-hover);
+}
+
+/* Website context menu items */
+#contextMenu .delete-website-item {
+  color: #ef4444;
+}
+
+#contextMenu .delete-website-item:hover {
+  background-color: #fee2e2;
+}
+
+/* Group context menu items */
+#contextMenu .delete-group-item {
+  color: #ef4444;
+}
+
+#contextMenu .delete-group-item:hover {
+  background-color: #fee2e2;
+}
+
+/* Dark theme */
+[data-theme="dark"] #contextMenu .delete-website-item:hover,
+[data-theme="dark"] #contextMenu .delete-group-item:hover {
+  background-color: #451a1a;
+}
+
+.search-icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2;
+  background-color: var(--surface-color);
+  border-radius: var(--radius-lg);
+}
+
+.search-icon svg {
+  transition: all var(--transition-normal);
+}
+
+.search-icon:hover svg circle,
+.search-icon:hover svg line {
+  stroke: #ccc;
+}
+
+[data-theme="dark"] .search-icon svg circle,
+[data-theme="dark"] .search-icon svg line {
+  stroke: #333;
+}
+
+[data-theme="dark"] .search-icon:hover svg circle,
+[data-theme="dark"] .search-icon:hover svg line {
+  stroke: #555;
+}
+
+.search-input {
+  width: 0;
+  height: 40px;
+  padding: 0;
+  font-size: 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  background-color: var(--surface-color);
+  color: var(--text-primary);
+  transition: all var(--transition-normal);
+  position: absolute;
+  right: 40px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.search-input::placeholder {
+  color: var(--text-secondary);
+}
+
+/* Button Styles */
+.add-buttons {
+  position: fixed;
+  bottom: calc(var(--spacing-xl) + 64px);
+  right: var(--spacing-xl);
+  display: flex;
+  flex-direction: column-reverse;
+  gap: var(--spacing-md);
+  z-index: 10;
+  transform: scale(0.8) translateY(100px);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: bottom center;
+  will-change: transform, opacity;
+}
+
+.add-buttons.show {
+  transform: scale(1) translateY(0);
+  opacity: 1;
+  pointer-events: all;
+}
+
+.icon-button {
+  background: var(--surface-color);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-md);
+  position: relative;
+  overflow: hidden;
+}
+
+.icon-button svg {
+  transition: transform var(--transition-normal);
+  width: 24px;
+  height: 24px;
+  stroke-width: 2;
+}
+
+.icon-button:hover {
+  background: var(--surface-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.icon-button:hover svg {
+  transform: scale(1.1);
+  color: var(--primary-color);
+}
+
+.icon-button:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-md);
+}
+
+/* Toggle Add Button */
+#toggleAddButtons {
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 11;
+  transform: rotate(var(--rotation, 0deg));
+}
+
+#toggleAddButtons:hover {
+  background: var(--primary-hover);
+  transform: translateY(-2px) rotate(var(--rotation, 0deg));
+  box-shadow: var(--shadow-lg);
+}
+
+#toggleAddButtons:active {
+  transform: translateY(0) rotate(var(--rotation, 0deg));
+  box-shadow: var(--shadow-md);
+}
+
+/* Modal Styles */
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(to bottom right, 
+    var(--surface-color) 0%,
+    color-mix(in srgb, var(--surface-color) 98%, var(--primary-color)) 100%
+  );
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
+  width: 90%;
+  max-width: 500px;
+  box-shadow: var(--shadow-lg),
+              0 0 0 1px rgba(0, 0, 0, 0.05),
+              0 0 40px rgba(0, 0, 0, 0.1);
+  z-index: 1001;
+  opacity: 0;
+  transition: opacity var(--transition-normal),
+              transform var(--transition-normal);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Modal overlay */
+.modal::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  z-index: -1;
+}
+
+[data-theme="dark"] .modal {
+  background: linear-gradient(to bottom right, 
+    var(--surface-color) 0%,
+    color-mix(in srgb, var(--surface-color) 95%, var(--primary-color)) 100%
+  );
+  box-shadow: var(--shadow-lg),
+              0 0 0 1px rgba(255, 255, 255, 0.05),
+              0 0 40px rgba(0, 0, 0, 0.3);
+}
+
+.modal-content {
+  position: relative;
+}
+
+.modal-content h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-xl);
+  padding-right: var(--spacing-xl);
+}
+
+/* Close button */
+.close-modal-button {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 24px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.close-modal-button:hover {
+  background: var(--surface-hover);
+  color: var(--text-primary);
+}
+
+/* Form Elements */
+.modal input,
+.modal textarea,
+.modal select {
+  width: 100%;
+  padding: var(--spacing-md);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  background: var(--surface-color);
+  color: var(--text-primary);
+  font-size: 1rem;
+  margin-bottom: var(--spacing-lg);
+  transition: all var(--transition-fast);
+}
+
+.modal input:hover,
+.modal textarea:hover,
+.modal select:hover {
+  border-color: var(--text-secondary);
+}
+
+.modal input:focus,
+.modal textarea:focus,
+.modal select:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+.modal input::placeholder,
+.modal textarea::placeholder {
+  color: var(--text-secondary);
+}
+
+.modal select {
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right var(--spacing-sm) center;
+  background-size: 16px;
+  padding-right: var(--spacing-xl);
+}
+
+/* Modal Buttons */
+.modal-buttons-container {
+  display: flex;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-xl);
+  justify-content: flex-end;
+}
+
+.modal-buttons-container button {
+  padding: var(--spacing-sm) var(--spacing-xl);
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.save-modal-button {
+  background: var(--primary-color);
+  color: white;
+  border: none;
+}
+
+.save-modal-button:hover {
+  background: var(--primary-hover);
+  transform: translateY(-1px);
+}
+
+.cancel-modal-button {
+  background: transparent;
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+}
+
+.cancel-modal-button:hover {
+  background: var(--surface-hover);
+  transform: translateY(-1px);
+}
+
+/* Tooltip */
+.tooltip, .website-tooltip {
+  background: var(--surface-color);
+  border: 1px solid var(--border-color);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+  box-shadow: var(--shadow-lg);
+  color: var(--text-primary);
+  max-width: 300px;
+  word-wrap: break-word;
+}
+
+/* Theme Options */
+.theme-options {
+    position: absolute;
+    right: 100%;  /* 定位在按钮的左侧 */
+    top: 0;
+    display: flex;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-xs);
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    opacity: 0;
+    pointer-events: none;
+    transition: all var(--transition-normal);
+    margin-right: var(--spacing-sm);
+    height: 48px;  /* 与按钮高度一致 */
+    align-items: center;
+}
+
+/* Theme toggle container */
+.theme-toggle-container {
+    position: relative;  /* 为绝对定位的子元素提供参考 */
+}
+
+.theme-options.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.theme-option {
+    width: 40px;
+    height: 40px;
+    padding: var(--spacing-xs);
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    background: var(--surface-color);
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-sm);
+}
+
+.theme-option:hover {
+    background: var(--surface-hover);
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.theme-option[data-theme="light"] {
+    background: #ffffff;
+}
+
+.theme-option[data-theme="dark"] {
+    background: #1e1e2e;
+    color: #ffffff;
+}
+
+.theme-option[data-theme="eye-care"] {
+    background: #f0f5e9;
+    color: #5b8c5a;
+}

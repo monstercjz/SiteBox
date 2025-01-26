@@ -1,0 +1,73 @@
+/**
+ * Animation Styles
+ * ---------------------
+ * 动画相关样式，包含：
+ * 
+ * 1. Keyframe Animations
+ *    - 淡入淡出
+ *    - 滑动效果
+ *    - 旋转动画
+ *    - 缩放效果
+ * 
+ * 2. Animation Classes
+ *    - 可复用动画类
+ *    - 动画时长
+ * 
+ * 3. Transition Effects
+ *    - 平滑过渡
+ *    - 动画曲线
+ */
+
+/* Fade In */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Slide In */
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Spin */
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Scale Up */
+@keyframes scaleUp {
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Animation Classes */
+.fade-in {
+    animation: fadeIn var(--transition-normal);
+}
+
+.slide-in {
+    animation: slideIn var(--transition-normal);
+}
+
+.scale-up {
+    animation: scaleUp var(--transition-normal);
+} 

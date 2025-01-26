@@ -1,0 +1,76 @@
+/**
+ * Modal Component
+ * ---------------------
+ * 模态框相关样式，包含：
+ * 
+ * 1. Modal Container
+ *    - 定位和尺寸
+ *    - 背景效果
+ *    - 动画过渡
+ * 
+ * 2. Modal Content
+ *    - 内容布局
+ *    - 标题样式
+ * 
+ * 3. Modal Buttons
+ *    - 关闭按钮
+ *    - 操作按钮
+ * 
+ * 4. Modal Overlay
+ *    - 遮罩层效果
+ *    - 背景模糊
+ */
+
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(
+        to bottom right,
+        var(--surface-color) 0%,
+        color-mix(in srgb, var(--surface-color) 98%, var(--primary-color)) 100%
+    );
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-xl);
+    width: 90%;
+    max-width: 500px;
+    box-shadow: var(--shadow-lg),
+                0 0 0 1px rgba(0, 0, 0, 0.05),
+                0 0 40px rgba(0, 0, 0, 0.1);
+    z-index: 1001;
+    opacity: 0;
+    transition: opacity var(--transition-normal),
+                transform var(--transition-normal);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.modal-content {
+    position: relative;
+}
+
+.modal-content h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-xl);
+    padding-right: var(--spacing-xl);
+}
+
+.close-modal-button {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: none;
+    background: transparent;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+} 
