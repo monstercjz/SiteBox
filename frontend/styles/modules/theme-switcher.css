@@ -1,0 +1,67 @@
+/* Theme Switcher Options */
+.theme-switcher__options {
+    position: absolute;
+    right: 100%;  /* 定位在按钮的左侧 */
+    top: 0;
+    display: flex;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-xs);
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    opacity: 0;
+    pointer-events: none;
+    transition: all var(--transition-normal);
+    margin-right: var(--spacing-sm);
+    height: 48px;  /* 与按钮高度一致 */
+    align-items: center;
+}
+
+/* Theme switcher container */
+.theme-switcher {
+    position: relative;  /* 为绝对定位的子元素提供参考 */
+}
+
+.theme-switcher__options.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.theme-switcher__option {
+    width: 40px;
+    height: 40px;
+    padding: var(--spacing-xs);
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    background: var(--surface-color);
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-sm);
+}
+
+.theme-switcher__option:hover {
+    background: var(--surface-hover);
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.theme-switcher__option[data-theme="light"] {
+    background: #ffffff;
+}
+
+.theme-switcher__option[data-theme="dark"] {
+    background: #1e1e2e;
+    color: #ffffff;
+}
+
+.theme-switcher__option[data-theme="eye-care"] {
+    background: #f0f5e9;
+    color: #5b8c5a;
+}

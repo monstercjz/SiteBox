@@ -1,0 +1,45 @@
+/* Context Menu */
+#contextMenu {
+  background: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-xs) 0;
+  min-width: 160px;
+  box-shadow: var(--shadow-lg);
+}
+
+#contextMenu div {
+  padding: var(--spacing-sm) var(--spacing-md);
+  color: var(--text-primary);
+  cursor: pointer;
+  user-select: none;
+  transition: background-color var(--transition-fast);
+}
+
+#contextMenu div:hover {
+  background-color: var(--surface-hover);
+}
+
+/* Website context menu items */
+#contextMenu .delete-website-item {
+  color: #ef4444;
+}
+
+#contextMenu .delete-website-item:hover {
+  background-color: #fee2e2;
+}
+
+/* Group context menu items */
+#contextMenu .delete-group-item {
+  color: #ef4444;
+}
+
+#contextMenu .delete-group-item:hover {
+  background-color: #fee2e2;
+}
+
+/* Dark theme */
+[data-theme="dark"] #contextMenu .delete-website-item:hover,
+[data-theme="dark"] #contextMenu .delete-group-item:hover {
+  background-color: #451a1a;
+}

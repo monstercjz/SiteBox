@@ -1,0 +1,30 @@
+/* Base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  background-color: var(--surface-color);
+  color: var(--text-primary);
+  line-height: 1.5;
+  transition: background-color var(--transition-normal),
+              color var(--transition-normal);
+  padding: var(--spacing-lg);
+  min-height: 100vh;
+}
+
+/* Typography */
+h1 {
+  font-size: 2rem;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: var(--spacing-xl);
+  letter-spacing: -0.025em;
+}

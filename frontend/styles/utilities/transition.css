@@ -1,0 +1,2 @@
+/* 过渡效果 */
+.transition { transition: all var(--transition-normal); }

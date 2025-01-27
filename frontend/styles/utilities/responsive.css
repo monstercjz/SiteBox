@@ -1,0 +1,40 @@
+/* Responsive Design */
+@media (max-width: 768px) {
+  html {
+    font-size: 14px;
+  }
+
+  body {
+    padding: var(--spacing-md);
+  }
+
+  .action-buttons {
+    padding: 0 var(--spacing-md);
+  }
+
+  .website-list {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  }
+
+  .modal {
+    width: 95%;
+    padding: var(--spacing-lg);
+  }
+
+  .toggle-actions {
+    bottom: var(--spacing-lg);
+    right: var(--spacing-lg);
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .website-list {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  }
+}
+
+@media (min-width: 1025px) {
+  .website-list {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); /* 减小内部元素最小宽度为150px */
+  }
+}
