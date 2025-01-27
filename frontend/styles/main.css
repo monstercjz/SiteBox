@@ -48,9 +48,7 @@
 /* Import State styles */
 @import 'state/loading.css';
 @import 'state/button.css';
-@import 'state/modal.css';
 @import 'state/drag-over.css';
-@import 'state/search-form.css';
 @import 'state/notification.css';
 @import 'state/animations.css';
 @import 'state/focus.css';
