@@ -33,7 +33,7 @@
     padding: var(--spacing-md);
   }
 
-  .add-buttons {
+  .action-buttons {
     padding: 0 var(--spacing-md);
   }
 
@@ -46,7 +46,7 @@
     padding: var(--spacing-lg);
   }
 
-  .add-button-container {
+  .toggle-actions {
     bottom: var(--spacing-lg);
     right: var(--spacing-lg);
   }

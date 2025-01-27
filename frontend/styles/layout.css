@@ -93,7 +93,7 @@
 }
 
 /* Fixed Position Elements */
-.add-button-container {
+.toggle-actions {
   position: fixed;
   bottom: var(--spacing-xl);
   right: var(--spacing-xl);

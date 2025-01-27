@@ -16,7 +16,7 @@ function getCurrentTheme() {
 function setTheme(theme) {
     body.setAttribute('data-theme', theme);
     // 更新主题选项的激活状态
-    document.querySelectorAll('.theme-option').forEach(option => {
+    document.querySelectorAll('.theme-switcher__option').forEach(option => {
         option.classList.toggle('active', option.dataset.theme === theme);
     });
     try {
@@ -28,26 +28,26 @@ function setTheme(theme) {
 
 // 初始化主题切换功能
 export function initThemeToggle() {
-    const themeToggle = document.getElementById('themeToggle');
-    const themeOptions = document.querySelector('.theme-options');
+    const themeSwitcherToggle = document.getElementById('theme-switcher-toggle');
+    const themeSwitcherOptions = document.querySelector('.theme-switcher__options');
     
     // 切换主题选项的显示/隐藏
-    themeToggle.addEventListener('click', () => {
-        themeOptions.classList.toggle('show');
+    themeSwitcherToggle.addEventListener('click', () => {
+        themeSwitcherOptions.classList.toggle('show');
     });
     
     // 点击其他地方时隐藏主题选项
     document.addEventListener('click', (e) => {
-        if (!themeToggle.contains(e.target) && !themeOptions.contains(e.target)) {
-            themeOptions.classList.remove('show');
+        if (!themeSwitcherToggle.contains(e.target) && !themeSwitcherOptions.contains(e.target)) {
+            themeSwitcherOptions.classList.remove('show');
         }
     });
     
     // 为每个主题选项添加点击事件
-    document.querySelectorAll('.theme-option').forEach(option => {
+    document.querySelectorAll('.theme-switcher__option').forEach(option => {
         option.addEventListener('click', () => {
             setTheme(option.dataset.theme);
-            themeOptions.classList.remove('show');
+            themeSwitcherOptions.classList.remove('show');
         });
     });
     

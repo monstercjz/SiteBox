@@ -53,18 +53,18 @@
 }
 
 /* Button States */
-.add-buttons.show {
+.action-buttons.show {
   transform: scale(1) translateY(0);
   opacity: 1;
   pointer-events: auto;
 }
 
-.add-buttons.show .icon-button {
+.action-buttons.show .icon-button {
   transform: scale(1) translateY(0);
   opacity: 1;
 }
 
-.add-buttons.show + .add-button-container #toggleAddButtons {
+.action-buttons.show + .toggle-actions #actions-toggle-button {
   --rotation: 45deg;
 }
 
@@ -87,7 +87,7 @@
 }
 
 /* Search Expanded State */
-.search-container.expanded .search-input {
+.search-form.expanded .search-form__input {
   width: 240px;
   opacity: 1;
   pointer-events: auto;
@@ -96,7 +96,7 @@
   box-shadow: var(--shadow-md);
 }
 
-.search-container.expanded .search-icon {
+.search-form.expanded .search-form__icon {
   box-shadow: var(--shadow-md);
 }
 

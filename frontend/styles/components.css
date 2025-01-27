@@ -33,7 +33,7 @@
  */
 
 /* Search Container */
-.search-container {
+.search-form {
   position: fixed;
   top: calc(var(--spacing-lg) + 48px);
   right: max(var(--spacing-md), calc((100% - 1400px) / 2));
@@ -90,7 +90,7 @@
   background-color: #451a1a;
 }
 
-.search-icon {
+.search-form__icon {
   width: 40px;
   height: 40px;
   display: flex;
@@ -102,26 +102,26 @@
   border-radius: var(--radius-lg);
 }
 
-.search-icon svg {
+.search-form__icon svg {
   transition: all var(--transition-normal);
 }
 
-.search-icon:hover svg circle,
-.search-icon:hover svg line {
+.search-form__icon:hover svg circle,
+.search-form__icon:hover svg line {
   stroke: #ccc;
 }
 
-[data-theme="dark"] .search-icon svg circle,
-[data-theme="dark"] .search-icon svg line {
+[data-theme="dark"] .search-form__icon svg circle,
+[data-theme="dark"] .search-form__icon svg line {
   stroke: #333;
 }
 
-[data-theme="dark"] .search-icon:hover svg circle,
-[data-theme="dark"] .search-icon:hover svg line {
+[data-theme="dark"] .search-form__icon:hover svg circle,
+[data-theme="dark"] .search-form__icon:hover svg line {
   stroke: #555;
 }
 
-.search-input {
+.search-form__input {
   width: 0;
   height: 40px;
   padding: 0;
@@ -137,18 +137,18 @@
   pointer-events: none;
 }
 
-.search-input:focus {
+.search-form__input:focus {
   outline: none;
   border-color: var(--primary-color);
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
 
-.search-input::placeholder {
+.search-form__input::placeholder {
   color: var(--text-secondary);
 }
 
 /* Button Styles */
-.add-buttons {
+.action-buttons {
   position: fixed;
   bottom: calc(var(--spacing-xl) + 64px);
   right: var(--spacing-xl);
@@ -164,7 +164,7 @@
   will-change: transform, opacity;
 }
 
-.add-buttons.show {
+.action-buttons.show {
   transform: scale(1) translateY(0);
   opacity: 1;
   pointer-events: all;
@@ -211,7 +211,7 @@
 }
 
 /* Toggle Add Button */
-#toggleAddButtons {
+#actions-toggle-button {
   background: var(--primary-color);
   color: white;
   border: none;
@@ -229,13 +229,13 @@
   transform: rotate(var(--rotation, 0deg));
 }
 
-#toggleAddButtons:hover {
+#actions-toggle-button:hover {
   background: var(--primary-hover);
   transform: translateY(-2px) rotate(var(--rotation, 0deg));
   box-shadow: var(--shadow-lg);
 }
 
-#toggleAddButtons:active {
+#actions-toggle-button:active {
   transform: translateY(0) rotate(var(--rotation, 0deg));
   box-shadow: var(--shadow-md);
 }
@@ -419,8 +419,8 @@
   word-wrap: break-word;
 }
 
-/* Theme Options */
-.theme-options {
+/* Theme Switcher Options */
+.theme-switcher__options {
     position: absolute;
     right: 100%;  /* 定位在按钮的左侧 */
     top: 0;
@@ -439,17 +439,17 @@
     align-items: center;
 }
 
-/* Theme toggle container */
-.theme-toggle-container {
+/* Theme switcher container */
+.theme-switcher {
     position: relative;  /* 为绝对定位的子元素提供参考 */
 }
 
-.theme-options.show {
+.theme-switcher__options.show {
     opacity: 1;
     pointer-events: auto;
 }
 
-.theme-option {
+.theme-switcher__option {
     width: 40px;
     height: 40px;
     padding: var(--spacing-xs);
@@ -465,7 +465,7 @@
     box-shadow: var(--shadow-sm);
 }
 
-.theme-option:hover {
+.theme-switcher__option:hover {
     background: var(--surface-hover);
     border-color: var(--primary-color);
     color: var(--primary-color);
@@ -473,16 +473,16 @@
     box-shadow: var(--shadow-md);
 }
 
-.theme-option[data-theme="light"] {
+.theme-switcher__option[data-theme="light"] {
     background: #ffffff;
 }
 
-.theme-option[data-theme="dark"] {
+.theme-switcher__option[data-theme="dark"] {
     background: #1e1e2e;
     color: #ffffff;
 }
 
-.theme-option[data-theme="eye-care"] {
+.theme-switcher__option[data-theme="eye-care"] {
     background: #f0f5e9;
     color: #5b8c5a;
 }

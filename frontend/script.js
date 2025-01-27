@@ -23,23 +23,23 @@ document.addEventListener('DOMContentLoaded', async () => {
     // 获取仪表盘元素
     const dashboard = document.getElementById('dashboard');
     // 获取数据导入按钮元素
-    const importDataButton = document.getElementById('importData');
+    const importConfigButton = document.getElementById('import-config-button');
     // 获取数据导出按钮元素
-    const exportDataButton = document.getElementById('exportData');
+    const exportConfigButton = document.getElementById('export-config-button');
     // 获取导入网站按钮元素
-    const importWebsitesButton = document.getElementById('importWebsites');
+    const importWebsitesBatchButton = document.getElementById('import-websites-batch-button');
     // 获取切换添加按钮元素
-    const toggleAddButtons = document.getElementById('toggleAddButtons');
+    const actionsToggleButton = document.getElementById('actions-toggle-button');
     // 获取添加按钮容器元素
-    const addButtons = document.querySelector('.add-buttons');
+    const actionButtons = document.querySelector('.action-buttons');
 
     // 应用保存的主题和颜色偏好
     applySavedTheme();
     loadColorPreference();
 
     // 设置颜色切换按钮的初始状态
-    const toggleGroupColorsButton = document.getElementById('toggleGroupColors');
-    toggleGroupColorsButton.classList.toggle('active', loadColorPreference());
+    const groupColorToggleButton = document.getElementById('group-color-toggle');
+    groupColorToggleButton.classList.toggle('active', loadColorPreference());
 
     // 渲染仪表盘数据
     await renderDashboardWithData();
@@ -48,9 +48,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     const searchService = new SearchService();
 
     // 添加颜色切换按钮点击事件监听器
-    toggleGroupColorsButton.addEventListener('click', async () => {
+    groupColorToggleButton.addEventListener('click', async () => {
         const enabled = toggleRandomColors();
-        toggleGroupColorsButton.classList.toggle('active', enabled);
+        groupColorToggleButton.classList.toggle('active', enabled);
         await renderDashboardWithData(); // 重新渲染以应用新的颜色设置
     });
 
@@ -73,13 +73,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     // 添加数据导入按钮点击事件监听器
-    importDataButton.addEventListener('click', importData);
+    importConfigButton.addEventListener('click', importData);
 
     // 添加数据导出按钮点击事件监听器
-    exportDataButton.addEventListener('click', exportData);
+    exportConfigButton.addEventListener('click', exportData);
 
     // 添加导入网站按钮点击事件监听器
-    importWebsitesButton.addEventListener('click', () => {
+    importWebsitesBatchButton.addEventListener('click', () => {
         openImportWebsitesModal();
     });
 
@@ -96,16 +96,16 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.addEventListener('mouseout', hideTooltip);
 
     // 添加切换添加按钮点击事件监听器
-    toggleAddButtons.addEventListener('click', () => {
-        const buttons = addButtons.querySelectorAll('.icon-button');
-        if (addButtons.classList.contains('show')) {
-            addButtons.classList.remove('show');
+    actionsToggleButton.addEventListener('click', () => {
+        const buttons = actionButtons.querySelectorAll('.icon-button');
+        if (actionButtons.classList.contains('show')) {
+            actionButtons.classList.remove('show');
             // 关闭时反向设置延迟
             buttons.forEach((btn, index) => {
                 btn.style.transitionDelay = `${50 * (buttons.length - index - 1)}ms`;
             });
         } else {
-            addButtons.classList.add('show');
+            actionButtons.classList.add('show');
             // 添加按钮显示动画效果
             buttons.forEach((btn, index) => {
                 btn.style.transitionDelay = `${50 * index}ms`;
@@ -121,14 +121,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     // 添加添加分组按钮点击事件监听器
-    const showAddGroupButton = document.getElementById('showAddGroup');
-    showAddGroupButton.addEventListener('click', () => {
+    const addGroupButton = document.getElementById('add-group-button');
+    addGroupButton.addEventListener('click', () => {
         addGroup();
     });
 
     // 添加添加网站按钮点击事件监听器
-    const showAddWebsiteButton = document.getElementById('showAddWebsite');
-    showAddWebsiteButton.addEventListener('click', () => {
+    const addWebsiteButton = document.getElementById('add-website-button');
+    addWebsiteButton.addEventListener('click', () => {
         addWebsite();
     });
 

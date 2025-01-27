@@ -5,9 +5,9 @@
  */
 export class SearchService {
   constructor() {
-    this.searchContainer = document.querySelector('.search-container');
-    this.searchIcon = document.querySelector('.search-icon');
-    this.searchInput = document.querySelector('.search-input');
+    this.searchForm = document.querySelector('.search-form');
+    this.searchFormIcon = document.querySelector('.search-form__icon');
+    this.searchFormInput = document.querySelector('.search-form__input');
     this.hideTimeout = null;
     this.init();
   }
@@ -18,8 +18,8 @@ export class SearchService {
    */
   init() {
     // 点击图标展开/隐藏搜索框
-    this.searchIcon.addEventListener('click', () => {
-      if (this.searchContainer.classList.contains('expanded')) {
+    this.searchFormIcon.addEventListener('click', () => {
+      if (this.searchForm.classList.contains('expanded')) {
         this.toggleSearch(false);
       } else {
         this.toggleSearch(true);
@@ -27,25 +27,25 @@ export class SearchService {
     });
 
     // 输入时过滤网站并重置计时器
-    this.searchInput.addEventListener('input', (e) => {
+    this.searchFormInput.addEventListener('input', (e) => {
       const searchTerm = e.target.value.trim().toLowerCase();
       this.filterSites(searchTerm);
       this.resetInactivityTimer();
     });
 
     // 监听键盘事件以重置计时器
-    this.searchInput.addEventListener('keydown', () => {
+    this.searchFormInput.addEventListener('keydown', () => {
       this.resetInactivityTimer();
     });
 
     // 点击搜索框时重置计时器
-    this.searchInput.addEventListener('click', () => {
+    this.searchFormInput.addEventListener('click', () => {
       this.resetInactivityTimer();
     });
 
     // 鼠标进入搜索区域时重置计时器
-    this.searchContainer.addEventListener('mouseenter', () => {
-      if (this.searchContainer.classList.contains('expanded')) {
+    this.searchForm.addEventListener('mouseenter', () => {
+      if (this.searchForm.classList.contains('expanded')) {
         this.resetInactivityTimer();
       }
     });
@@ -56,9 +56,9 @@ export class SearchService {
    * @param {boolean} show - 是否显示搜索框
    */
   toggleSearch(show) {
-    this.searchContainer.classList.toggle('expanded', show);
+    this.searchForm.classList.toggle('expanded', show);
     if (show) {
-      this.searchInput.focus();
+      this.searchFormInput.focus();
     }
   }
 
