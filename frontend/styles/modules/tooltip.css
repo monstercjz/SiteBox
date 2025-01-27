@@ -1,12 +1,5 @@
-/* Tooltip */
-.tooltip, .website-tooltip {
-  background: var(--surface-color);
-  border: 1px solid var(--border-color);
-  padding: var(--spacing-sm) var(--spacing-md);
-  border-radius: var(--radius-sm);
-  font-size: 0.875rem;
-  box-shadow: var(--shadow-lg);
-  color: var(--text-primary);
-  max-width: 300px;
-  word-wrap: break-word;
-}
+/* Tooltip Styles - Main module - imports sub-modules */
+@import './tooltip/tooltip-base.css';
+/* @import './tooltip/tooltip-states.css'; // 如果需要状态样式 */
+/* @import './tooltip/tooltip-elements.css'; // 如果需要元素样式 */
+/* @import './tooltip/tooltip-theme.css'; */
