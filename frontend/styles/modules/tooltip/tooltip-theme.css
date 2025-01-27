@@ -1,0 +1,16 @@
+/* Tooltip Theme */
+/* Light theme */
+.theme-light .tooltip,
+.theme-light .website-tooltip {
+  background-color: var(--surface-color-light);
+  border-color: var(--border-color-light);
+  color: var(--text-primary-light);
+}
+
+/* Dark theme */
+.theme-dark .tooltip,
+.theme-dark .website-tooltip {
+  background-color: var(--surface-color-dark);
+  border-color: var(--border-color-dark);
+  color: var(--text-primary-dark);
+}

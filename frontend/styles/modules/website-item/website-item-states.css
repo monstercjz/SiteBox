@@ -1,0 +1,7 @@
+/* Website Item States Styles */
+.website-item:hover {
+  border-color: var(--primary-color);
+  background: var(--surface-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}

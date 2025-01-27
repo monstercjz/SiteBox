@@ -1,5 +1,5 @@
 /* Tooltip Styles - Main module - imports sub-modules */
 @import './tooltip/tooltip-base.css';
-/* @import './tooltip/tooltip-states.css'; // 如果需要状态样式 */
+@import './tooltip/tooltip-states.css'; /* 状态样式 */
 /* @import './tooltip/tooltip-elements.css'; // 如果需要元素样式 */
-/* @import './tooltip/tooltip-theme.css'; */
+@import './tooltip/tooltip-theme.css'; /* 主题样式 */

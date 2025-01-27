@@ -1,0 +1,7 @@
+/* Website List Layout */
+.website-list {
+  display: grid;
+  gap: var(--spacing-lg);
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  margin-top: var(--spacing-md);
+}

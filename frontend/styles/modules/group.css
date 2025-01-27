@@ -1,0 +1,5 @@
+/* Group Styles - Main module - imports sub-modules */
+@import './group/group-base.css';
+/* @import './group/group-states.css'; // 如果需要状态样式 */
+/* @import './group/group-elements.css'; // 如果需要元素样式 */
+/* @import './group/group-theme.css'; */

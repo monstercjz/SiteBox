@@ -30,8 +30,10 @@
 
 /* Import Layout styles */
 @import 'layout/dashboard.css';
-@import 'layout/group.css';
-@import 'layout/website-list.css';
+/* @import 'layout/group.css'; */ /* Moved to modules/group.css */
+@import './modules/group.css'; /* Import Group module */
+@import 'layout/website-list.css'; /* Import Website List layout module */
+@import './modules/website-item.css'; /* Import Website Item module */
 @import 'layout/toggle-actions.css';
 @import 'layout/modal-overlay.css';
 @import 'layout/notification.css';

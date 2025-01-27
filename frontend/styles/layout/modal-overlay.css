@@ -1,12 +1,5 @@
-/* Modal Overlay */
-.modal::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(4px);
-  z-index: -1;
-}
+/* Modal Overlay Layout - Main module - imports sub-modules */
+@import './modal-overlay/modal-overlay-base.css';
+/* @import './modal-overlay/modal-overlay-states.css'; // 如果需要状态样式 */
+/* @import './modal-overlay/modal-overlay-elements.css'; // 如果需要元素样式 */
+/* @import './modal-overlay/modal-overlay-theme.css'; */

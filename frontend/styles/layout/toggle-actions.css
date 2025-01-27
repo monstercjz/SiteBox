@@ -1,11 +1,5 @@
-/* Fixed Position Elements */
-.toggle-actions {
-  position: fixed;
-  bottom: var(--spacing-xl);
-  right: var(--spacing-xl);
-  z-index: 10;
-  width: 48px;
-  height: 48px;
-  margin: 0;
-  padding: 0;
-}
+/* Toggle Actions Layout - Main module - imports sub-modules */
+@import './toggle-actions/toggle-actions-base.css';
+/* @import './toggle-actions/toggle-actions-states.css'; // 如果需要状态样式 */
+/* @import './toggle-actions/toggle-actions-elements.css'; // 如果需要元素样式 */
+/* @import './toggle-actions/toggle-actions-theme.css'; */

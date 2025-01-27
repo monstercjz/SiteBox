@@ -1,7 +1,5 @@
-/* Notification Position */
-.notification {
-  position: fixed;
-  top: var(--spacing-lg);
-  right: var(--spacing-lg);
-  z-index: 1000;
-}
+/* Notification Layout - Main module - imports sub-modules */
+@import './notification/notification-base.css';
+/* @import './notification/notification-states.css'; // 如果需要状态样式 */
+/* @import './notification/notification-elements.css'; // 如果需要元素样式 */
+/* @import './notification/notification-theme.css'; */
