@@ -1,0 +1,4 @@
+/* Website Item Animations */
+.website-item {
+  transition: all var(--transition-normal);
+}

@@ -11,11 +11,9 @@ html {
 
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-  background-color: var(--surface-color);
-  color: var(--text-primary);
+  background-color: var(--background-color); /* 使用 CSS 变量 */
+  color: var(--text-color); /* 使用 CSS 变量 */
   line-height: 1.5;
-  transition: background-color var(--transition-normal),
-              color var(--transition-normal);
   padding: var(--spacing-lg);
   min-height: 100vh;
 }

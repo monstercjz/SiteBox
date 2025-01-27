@@ -25,15 +25,12 @@
  */
 
 /* Import Base styles */
-@import 'base/variables.css';
+@import 'theme/variables.css';
 @import 'base/typography.css';
 
 /* Import Layout styles */
 @import 'layout/dashboard.css';
-/* @import 'layout/group.css'; */ /* Moved to modules/group.css */
-@import './modules/group.css'; /* Import Group module */
 @import 'layout/website-list.css'; /* Import Website List layout module */
-@import './modules/website-item.css'; /* Import Website Item module */
 @import 'layout/toggle-actions.css';
 @import 'layout/modal-overlay.css';
 @import 'layout/notification.css';
@@ -41,6 +38,8 @@
 /* Import Component Modules */
 @import './modules/search-form.css';
 @import './modules/context-menu.css';
+@import './modules/group.css'; /* Import Group module */
+@import './modules/website-item.css'; /* Import Website Item module */
 @import './modules/icon-button.css';
 @import './modules/actions-toggle-button.css';
 @import './modules/modal.css';
@@ -52,8 +51,8 @@
 @import 'state/button.css';
 @import 'state/drag-over.css';
 @import 'state/notification.css';
-@import 'state/animations.css';
 @import 'state/focus.css';
+@import 'state/animations.css';
 @import 'state/theme-transition.css';
 
 /* Import Utility styles */

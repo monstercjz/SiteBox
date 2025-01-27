@@ -1,0 +1,11 @@
+/* Icon Button Theme */
+/*
+  This module is for defining the visual theme of the Icon Button component.
+  It should include CSS variables, color schemes, font stacks, and other theme-related styles.
+*/
+.icon-button {
+  background: var(--surface-color);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  box-shadow: var(--shadow-md);
+}

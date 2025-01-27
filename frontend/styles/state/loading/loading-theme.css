@@ -1,0 +1,10 @@
+/* Loading Theme */
+/* This module is for defining the visual theme of the Loading state.
+ * It should include CSS variables, color schemes, and other theme-related styles for the loading indicator.
+ */
+
+.loading::after {
+  border: 3px solid var(--border-color);
+  border-top-color: var(--primary-color);
+  border-radius: 50%;
+}

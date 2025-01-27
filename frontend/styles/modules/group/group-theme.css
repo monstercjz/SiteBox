@@ -1,1 +1,9 @@
 /* Group Theme */
+.group h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--group-title-color, var(--text-primary));
+  /*border-bottom-color: var(--border-color);  仅添加颜色部分 */
+  border-bottom: 2px solid var(--border-color);
+  
+}

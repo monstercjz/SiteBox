@@ -1,7 +1,7 @@
-/* Dashboard Layout - Main module - imports sub-modules */
+/* Dashboard Styles - Main module - imports sub-modules */
 @import './dashboard/dashboard-base.css';
-/* @import './dashboard/dashboard-header.css'; // 如果需要头部样式 */
-/* @import './dashboard/dashboard-sidebar.css'; // 如果需要侧边栏样式 */
-/* @import './dashboard/dashboard-content.css'; // 如果需要内容区域样式 */
-/* @import './dashboard/dashboard-footer.css'; // 如果需要页脚样式 */
-/* @import './dashboard/dashboard-responsive.css'; // 如果需要响应式样式 */
+@import './dashboard/dashboard-header.css'; /* 如果需要头部样式 */
+@import './dashboard/dashboard-sidebar.css'; /* 如果需要侧边栏样式 */
+@import './dashboard/dashboard-content.css'; /* 如果需要内容区域样式 */
+@import './dashboard/dashboard-footer.css'; /* 如果需要页脚样式 */
+@import './dashboard/dashboard-responsive.css'; /* 如果需要响应式样式 */

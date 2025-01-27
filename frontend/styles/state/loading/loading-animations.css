@@ -1,0 +1,10 @@
+/* Loading Animations */
+/* This module is for defining animations for the Loading state.
+ * It should include keyframes and animation-related styles for the loading indicator.
+ */
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

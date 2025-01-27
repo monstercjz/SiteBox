@@ -2,6 +2,8 @@
 :root {
   /* Color Palette */
  /* Color System - Light Theme */
+  --background-color: var(--surface-color); /* Background color */
+  --text-color: var(--text-primary); /* Text color */
   --primary-color: #4f46e5; /* 更优雅的靛蓝色 */
   --primary-hover: #4338ca;
   --surface-color: #ffffff;
@@ -34,6 +36,8 @@
 
 /* Dark theme variables */
 [data-theme="dark"] {
+  --background-color: var(--surface-color); /* Background color */
+  --text-color: var(--text-primary); /* Text color */
   --primary-color: #818cf8; /* 更柔和的亮紫色 */
   --primary-hover: #6366f1;
   --surface-color: #1e1e2e; /* 更温和的深色背景 */
@@ -51,6 +55,8 @@
 /* Eye-care theme variables */
 [data-theme="eye-care"] {
   /* 护眼主题的柔和色系 */
+  --background-color: var(--surface-color); /* Background color */
+  --text-color: var(--text-primary); /* Text color */
   --primary-color: #5b8c5a;    /* 柔和的绿色 */
   --primary-hover: #496b48;    /* 深绿色 */
   --surface-color: #f0f5e9;    /* 淡青绿色背景 */

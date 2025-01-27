@@ -1,0 +1,5 @@
+/* Modal Animations */
+.modal {
+  transition: opacity var(--transition-normal),
+              transform var(--transition-normal);
+}

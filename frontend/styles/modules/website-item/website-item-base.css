@@ -1,15 +1,15 @@
 /* Website Item Base Styles */
 .website-item {
-  background: var(--surface-color);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
   padding: var(--spacing-md); /* 减小水平方向的内边距 */
-  transition: all var(--transition-normal);
   cursor: pointer;
   display: flex;
   align-items: center;/* 垂直居中 */
   gap: var(--spacing-md);/* 可以改变a和img的距离 */
-  box-shadow: var(--shadow-sm);
+  flex-direction: row;/* 修改这里的值让内部元素以列row 方式排列 */
+  align-content: space-around;/* 如果需要垂直方向上的分布 */
+  justify-content: center;/* 修改这里的值让内部元素居中 */
+  width: 180px; /* 设置一个固定的宽度 */
+  min-height: 65px; /* 设置一个最小高度 */
   flex-direction: row;/* 修改这里的值让内部元素以列row 方式排列 */
   align-content: space-around;/* 如果需要垂直方向上的分布 */
   justify-content: center;/* 修改这里的值让内部元素居中 */
