@@ -1,0 +1,10 @@
+/* Search Form Theme */
+[data-theme="dark"] .search-form__icon svg circle,
+[data-theme="dark"] .search-form__icon svg line {
+  stroke: #333;
+}
+
+[data-theme="dark"] .search-form__icon:hover svg circle,
+[data-theme="dark"] .search-form__icon:hover svg line {
+  stroke: #555;
+}

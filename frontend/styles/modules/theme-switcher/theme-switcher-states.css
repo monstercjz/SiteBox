@@ -1,0 +1,5 @@
+/* Theme Switcher States */
+.theme-switcher__options.show {
+    opacity: 1;
+    pointer-events: auto;
+}

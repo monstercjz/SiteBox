@@ -1,0 +1,8 @@
+/* Context Menu Item Styles */
+#contextMenu div {
+  padding: var(--spacing-sm) var(--spacing-md);
+  color: var(--text-primary);
+  cursor: pointer;
+  user-select: none;
+  transition: background-color var(--transition-fast);
+}

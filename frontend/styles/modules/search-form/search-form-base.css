@@ -1,0 +1,11 @@
+/* Search Container */
+.search-form {
+  position: fixed;
+  top: calc(var(--spacing-lg) + 48px);
+  right: max(var(--spacing-md), calc((100% - 1400px) / 2));
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  height: 40px;
+  transition: all var(--transition-normal);
+}

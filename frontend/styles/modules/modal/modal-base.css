@@ -1,0 +1,41 @@
+/* Modal Styles */
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(to bottom right, 
+    var(--surface-color) 0%,
+    color-mix(in srgb, var(--surface-color) 98%, var(--primary-color)) 100%
+  );
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
+  width: 90%;
+  max-width: 500px;
+  box-shadow: var(--shadow-lg),
+              0 0 0 1px rgba(0, 0, 0, 0.05),
+              0 0 40px rgba(0, 0, 0, 0.1);
+  z-index: 1001;
+  opacity: 0;
+  transition: opacity var(--transition-normal),
+              transform var(--transition-normal);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Modal overlay */
+.modal::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  z-index: -1;
+}
+
+.modal-content {
+  position: relative;
+}

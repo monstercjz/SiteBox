@@ -1,0 +1,7 @@
+/* Icon Button Element Styles */
+.icon-button svg {
+  transition: transform var(--transition-normal);
+  width: 24px;
+  height: 24px;
+  stroke-width: 2;
+}

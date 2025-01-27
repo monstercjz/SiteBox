@@ -1,0 +1,16 @@
+/* Icon Button State Styles */
+.icon-button:hover {
+  background: var(--surface-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.icon-button:hover svg {
+  transform: scale(1.1);
+  color: var(--primary-color);
+}
+
+.icon-button:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-md);
+}

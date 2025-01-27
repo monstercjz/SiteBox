@@ -1,0 +1,24 @@
+/* Theme Switcher Options */
+.theme-switcher__options {
+    position: absolute;
+    right: 100%;  /* 定位在按钮的左侧 */
+    top: 0;
+    display: flex;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-xs);
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    opacity: 0;
+    pointer-events: none;
+    transition: all var(--transition-normal);
+    margin-right: var(--spacing-sm);
+    height: 48px;  /* 与按钮高度一致 */
+    align-items: center;
+}
+
+/* Theme switcher container */
+.theme-switcher {
+    position: relative;  /* 为绝对定位的子元素提供参考 */
+}

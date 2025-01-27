@@ -37,13 +37,13 @@
 @import 'layout/notification.css';
 
 /* Import Component Modules */
-@import 'modules/search-form.css';
-@import 'modules/context-menu.css';
-@import 'modules/icon-button.css';
-@import 'modules/actions-toggle-button.css';
-@import 'modules/modal.css';
-@import 'modules/tooltip.css';
-@import 'modules/theme-switcher.css';
+@import './modules/search-form.css';
+@import './modules/context-menu.css';
+@import './modules/icon-button.css';
+@import './modules/actions-toggle-button.css';
+@import './modules/modal.css';
+@import './modules/tooltip.css';
+@import './modules/theme-switcher.css';
 
 /* Import State styles */
 @import 'state/loading.css';

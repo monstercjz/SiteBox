@@ -1,0 +1,17 @@
+/* Context Menu Specific Item Styles */
+#contextMenu .delete-website-item {
+  color: #ef4444;
+}
+
+#contextMenu .delete-website-item:hover {
+  background-color: #fee2e2;
+}
+
+/* Group context menu items */
+#contextMenu .delete-group-item {
+  color: #ef4444;
+}
+
+#contextMenu .delete-group-item:hover {
+  background-color: #fee2e2;
+}
