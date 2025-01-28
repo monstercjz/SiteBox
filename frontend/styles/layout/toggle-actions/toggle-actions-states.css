@@ -1,9 +1,5 @@
-/* Toggle Actions States Styles */
+/* Toggle Actions States Styles - 切换操作状态样式 */
 /*
-  This module is for defining states styles for the Toggle Actions component.
-  It should include styles for different states like active, hover, focus etc.
+  定义切换操作 (toggle-actions) 组件在不同状态下的样式，
+  例如 show 状态 (显示时) 的样式。目前暂无状态样式。
 */
-
-.action-buttons.show + .toggle-actions #actions-toggle-button {
-  --rotation: 45deg;
-}

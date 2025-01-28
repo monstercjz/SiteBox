@@ -1,5 +1,6 @@
-/* Notification States */
-/* This module is for defining the different states of the Notification component, 
- * such as hover, active, focus, disabled, etc. 
- * It should include styles that change based on user interaction or component state.
+/* Notification States Styles - 通知组件状态样式 */
+/* 
+  定义通知 (notification) 组件在不同状态下的样式。 
+  该模块用于设置通知组件在不同状态下的视觉反馈，
+  例如 info, error, success 等不同类型的通知样式。
  */

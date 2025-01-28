@@ -1,10 +1,5 @@
-/* Loading Animations */
-/* This module is for defining animations for the Loading state.
- * It should include keyframes and animation-related styles for the loading indicator.
- */
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
+/* Loading Animations Styles - 加载动画样式 */
+/*
+  定义全局加载 (loading) 状态的动画效果。
+  例如 loading 状态指示器的旋转动画等。
+*/

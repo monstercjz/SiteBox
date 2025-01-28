@@ -1,26 +1,28 @@
-/* Toggle Actions Layout Base Styles */
-/*  Base layout styles for the action buttons */
+/* Toggle Actions Layout Base Styles - 切换操作布局基础样式 */
+/*  Base layout styles for the action buttons - 操作按钮组的基础布局样式 */
 .action-buttons {
-  position: fixed;
-  bottom: calc(var(--spacing-xl) + 64px);
-  right: var(--spacing-xl);
-  display: flex;
-  flex-direction: column-reverse;
-  gap: var(--spacing-md);
-  z-index: 10;
-  transform: scale(0.8) translateY(100px);
-  opacity: 0;
-  pointer-events: none;
-  transform-origin: bottom center;
+  position: fixed; /* 使用 fixed 定位，使其脱离文档流 */
+  bottom: calc(var(--spacing-xl) + 64px); /* 距离底部一定距离，考虑 actions-toggle-button 高度 */
+  right: var(--spacing-xl); /* 距离右侧一定距离，使用 xl 尺寸 CSS 变量 */
+  display: flex; /* 使用 flex 布局 */
+  flex-direction: column-reverse; /* 垂直反向排列，按钮从下往上排列 */
+  gap: var(--spacing-md); /* 设置按钮之间的间距 */
+  z-index: 10; /* 设置 z-index，确保在其他元素之上 */
+  transform: scale(0.8) translateY(100px); /* 初始状态缩小和向下位移，用于动画效果 */
+  opacity: 0; /* 初始状态透明度为 0，隐藏 */
+  pointer-events: none; /* 初始状态禁止 pointer 事件 */
+  transform-origin: bottom center; /* 设置 transform-origin，缩放和位移基点为底部中心 */
 }
 
+/* Action Buttons Show State - 操作按钮组显示状态 */
 .action-buttons.show {
-  transform: scale(1) translateY(0);
-  opacity: 1;
-  pointer-events: all;
+  transform: scale(1) translateY(0); /* 显示状态取消缩放和位移 */
+  opacity: 1; /* 显示状态透明度为 1，显示 */
+  pointer-events: all; /* 显示状态允许 pointer 事件 */
 }
 
+/* Action Buttons Icon Button Show State - 操作按钮组图标按钮显示状态 */
 .action-buttons.show .icon-button {
-  transform: scale(1) translateY(0);
-  opacity: 1;
+  transform: scale(1) translateY(0); /* 显示状态取消缩放和位移 */
+  opacity: 1; /* 显示状态透明度为 1，显示 */
 }

@@ -1,4 +1,6 @@
-/* Dashboard Content Styles */
-/* This module is for defining the styles of the dashboard content area.
- * It should include layout, structural, and visual styles specific to the content area.
- */
+/* Dashboard Content Styles - 仪表盘内容区域样式 */
+/*
+  定义仪表盘 (dashboard) 组件内容区域的样式。
+  该模块用于设置仪表盘主要内容区域的布局、结构和视觉样式，
+  例如内边距、背景色等，用于组织和展示网站列表和分组。
+*/

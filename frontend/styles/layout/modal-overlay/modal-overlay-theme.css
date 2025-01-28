@@ -1,5 +1,10 @@
-/* Modal Overlay Theme */
+/* Modal Overlay Theme Styles - 模态框遮罩层主题样式 */
+/*
+  定义模态框遮罩层 (modal-overlay) 组件的视觉主题样式。
+  主要设置遮罩层的背景色和 backdrop-filter，使用 CSS 变量进行主题化配置。
+*/
+/* Modal Overlay - 模态框遮罩层 */
 .modal::before {
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.5); /* 设置背景色为半透明黑色 */
+  backdrop-filter: blur(4px); /* 添加背景模糊效果 */
 }

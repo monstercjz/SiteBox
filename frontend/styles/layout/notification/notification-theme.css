@@ -1,5 +1,6 @@
-/* Notification Theme */
+/* Notification Theme Styles - 通知组件主题样式 */
 /* 
-  This module is for defining the visual theme of the Notification component in layout. 
-  It should include CSS variables, color schemes, font stacks, and other theme-related styles.
+  定义通知 (notification) 组件的视觉主题样式。 
+  该模块用于设置通知组件的背景色、文字颜色、边框颜色等主题相关的样式，
+  使用 CSS 变量进行主题化配置，以便切换不同主题风格。
 */

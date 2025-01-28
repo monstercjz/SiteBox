@@ -1,4 +1,6 @@
-/* Website List Theme */
-/* This module is for defining the visual theme of the Website List layout module.
- * It should include CSS variables, color schemes, font stacks, and other theme-related styles.
- */
+/* Website List Theme Styles - 网站列表主题样式 */
+/* 
+  定义网站列表 (website-list) 组件的视觉主题样式。 
+  该模块用于设置网站列表容器的主题相关样式，
+  例如背景色、文字颜色、边框颜色、阴影等，使用 CSS 变量进行主题化配置。
+*/

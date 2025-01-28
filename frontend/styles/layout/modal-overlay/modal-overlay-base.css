@@ -1,10 +1,15 @@
-/* Modal Overlay */
+/* Modal Overlay Base Styles - 模态框遮罩层基础样式 */
+/*
+  定义模态框遮罩层 (modal-overlay) 组件的基础布局和结构样式。
+  主要设置遮罩层的定位和 z-index，不包含主题、颜色或状态相关的样式。
+*/
+/* Modal Overlay - 模态框遮罩层 */
 .modal::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: -1;
+  content: ''; /* 伪元素内容为空 */
+  position: fixed; /* 使用 fixed 定位，使其覆盖整个视口 */
+  top: 0; /* 顶部对齐 */
+  left: 0; /* 左侧对齐 */
+  right: 0; /* 右侧对齐 */
+  bottom: 0; /* 底部对齐 */
+  z-index: -1; /* 设置 z-index 为 -1，使其位于模态框下方 */
 }

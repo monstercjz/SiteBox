@@ -1,11 +1,16 @@
-/* Toggle Actions Layout */
+/* Toggle Actions Base Layout Styles - 切换操作基础布局样式 */
+/*
+  定义切换操作 (toggle-actions) 组件的基础布局和结构样式。
+  主要设置切换操作容器的定位、尺寸和 z-index，不包含主题、颜色或状态相关的样式。
+*/
+/* Toggle Actions Container - 切换操作容器 */
 .toggle-actions {
-  position: fixed;
-  bottom: var(--spacing-xl);
-  right: var(--spacing-xl);
-  z-index: 10;
-  width: 48px;
-  height: 48px;
-  margin: 0;
-  padding: 0;
+  position: fixed; /* 使用 fixed 定位，使其脱离文档流 */
+  bottom: var(--spacing-xl); /* 距离底部一定距离，使用 xl 尺寸 CSS 变量 */
+  right: var(--spacing-xl); /* 距离右侧一定距离，使用 xl 尺寸 CSS 变量 */
+  z-index: 10; /* 设置 z-index，确保在其他元素之上 */
+  width: 48px; /* 设置宽度 */
+  height: 48px; /* 设置高度 */
+  margin: 0; /* 移除外边距 */
+  padding: 0; /* 移除内边距 */
 }

@@ -1,7 +1,12 @@
-/* Notification Position */
+/* Notification Base Layout Styles - 通知组件基础布局样式 */
+/*
+  定义通知 (notification) 组件的基础布局和结构样式。
+  主要设置通知容器的定位和 z-index，不包含主题、颜色或状态相关的样式。
+*/
+/* Notification Container - 通知容器 */
 .notification {
-  position: fixed;
-  top: var(--spacing-lg);
-  right: var(--spacing-lg);
-  z-index: 1000;
+  position: fixed; /* 使用 fixed 定位，使其脱离文档流 */
+  top: var(--spacing-lg); /* 距离顶部一定距离，使用 spacing-lg CSS 变量 */
+  right: var(--spacing-lg); /* 距离右侧一定距离，使用 spacing-lg CSS 变量 */
+  z-index: 1000; /* 设置 z-index，确保在其他元素之上 */
 }
