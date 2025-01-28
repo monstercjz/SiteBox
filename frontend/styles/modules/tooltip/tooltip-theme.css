@@ -14,3 +14,11 @@
   border-color: var(--border-color-dark);
   color: var(--text-primary-dark);
 }
+
+.tooltip, .website-tooltip {
+  background: var(--surface-color);
+  border: 1px solid var(--border-color);
+  font-size: 0.875rem;
+  box-shadow: var(--shadow-lg);
+  color: var(--text-primary);
+}

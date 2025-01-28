@@ -1,4 +1,5 @@
-/* Tooltip Animations */
-/* This module is for defining animations and transitions for the Tooltip component.
- * It should include keyframes, transitions, and animation-related styles.
- */
+/* TODO */
+
+.tooltip, .website-tooltip {
+  transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+}

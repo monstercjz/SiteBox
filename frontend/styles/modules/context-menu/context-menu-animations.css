@@ -2,3 +2,7 @@
 /* This module is for defining animations and transitions for the Context Menu component.
  * It should include keyframes, transitions, and animation-related styles.
  */
+
+#contextMenu div {
+  transition: background-color var(--transition-fast);
+}

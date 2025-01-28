@@ -1,7 +1,7 @@
 /* Icon Button Styles - Main module - imports sub-modules */
 @import './icon-button/icon-button-base.css';
-@import './icon-button/icon-button-states.css';
-@import './icon-button/icon-button-elements.css';
-@import './icon-button/icon-button-layout.css';
 @import './icon-button/icon-button-theme.css';
+@import './icon-button/icon-button-variants.css';
+@import './icon-button/icon-button-states.css';
 @import './icon-button/icon-button-animations.css';
+@import './icon-button/icon-button-responsive.css';

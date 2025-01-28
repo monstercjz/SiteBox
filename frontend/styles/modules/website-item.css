@@ -1,6 +1,7 @@
 /* Website Item Styles - Main module - imports sub-modules */
 @import './website-item/website-item-base.css';
-@import './website-item/website-item-states.css';
-@import './website-item/website-item-elements.css';
 @import './website-item/website-item-theme.css';
+@import './website-item/website-item-variants.css';
+@import './website-item/website-item-states.css';
 @import './website-item/website-item-animations.css';
+@import './website-item/website-item-responsive.css';

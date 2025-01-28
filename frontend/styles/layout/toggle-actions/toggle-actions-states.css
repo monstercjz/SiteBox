@@ -1,0 +1,9 @@
+/* Toggle Actions States Styles */
+/*
+  This module is for defining states styles for the Toggle Actions component.
+  It should include styles for different states like active, hover, focus etc.
+*/
+
+.action-buttons.show + .toggle-actions #actions-toggle-button {
+  --rotation: 45deg;
+}

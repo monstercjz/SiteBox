@@ -1,8 +1,0 @@
-/* Modal Header Styles */
-.modal-content h2 {
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: var(--text-primary);
-  margin-bottom: var(--spacing-xl);
-  padding-right: var(--spacing-xl);
-}

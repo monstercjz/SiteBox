@@ -1,8 +1,0 @@
-/* Modal States */
-.modal.show-modal {
-  opacity: 1;
-}
-
-.modal.closing {
-  opacity: 0;
-}

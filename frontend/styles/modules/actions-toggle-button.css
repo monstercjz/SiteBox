@@ -1,4 +1,7 @@
 /* Actions Toggle Button Styles - Main module - imports sub-modules */
 @import './actions-toggle-button/actions-toggle-button-base.css';
-@import './actions-toggle-button/actions-toggle-button-states.css';
 @import './actions-toggle-button/actions-toggle-button-theme.css';
+@import './actions-toggle-button/actions-toggle-button-variants.css';
+@import './actions-toggle-button/actions-toggle-button-states.css';
+@import './actions-toggle-button/actions-toggle-button-animations.css';
+@import './actions-toggle-button/actions-toggle-button-responsive.css';

@@ -16,3 +16,17 @@
   width: 180px; /* 设置一个固定的宽度 */
   min-height: 65px; /* 设置一个最小高度 */
 }
+
+.website-item img {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+}
+
+.website-item a {
+  text-decoration: none;
+  font-size: 0.875rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

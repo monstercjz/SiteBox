@@ -8,3 +8,13 @@
 [data-theme="dark"] .search-form__icon:hover svg line {
   stroke: #555;
 }
+
+.search-form__icon {
+  background-color: var(--surface-color);
+}
+
+.search-form__input {
+  background-color: var(--surface-color);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}

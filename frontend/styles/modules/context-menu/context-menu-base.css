@@ -3,3 +3,9 @@
   padding: var(--spacing-xs) 0;
   min-width: 160px;
 }
+
+#contextMenu div {
+  padding: var(--spacing-sm) var(--spacing-md);
+  cursor: pointer;
+  user-select: none;
+}

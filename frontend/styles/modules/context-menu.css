@@ -1,7 +1,7 @@
 /* Context Menu Styles - Main module - imports sub-modules */
 @import './context-menu/context-menu-base.css';
-@import './context-menu/context-menu-item.css';
-@import './context-menu/context-menu-item-states.css';
-@import './context-menu/context-menu-item-specific.css';
 @import './context-menu/context-menu-theme.css';
+@import './context-menu/context-menu-variants.css';
+@import './context-menu/context-menu-states.css';
 @import './context-menu/context-menu-animations.css';
+@import './context-menu/context-menu-responsive.css';

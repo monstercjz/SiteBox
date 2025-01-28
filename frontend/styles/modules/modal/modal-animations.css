@@ -3,3 +3,13 @@
   transition: opacity var(--transition-normal),
               transform var(--transition-normal);
 }
+
+.close-modal-button {
+  transition: all var(--transition-fast);
+}
+
+.modal input,
+.modal textarea,
+.modal select {
+  transition: all var(--transition-fast);
+}

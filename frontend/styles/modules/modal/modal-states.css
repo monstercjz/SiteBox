@@ -1,0 +1,39 @@
+/* TODO */
+
+.save-modal-button:hover {
+  background: var(--primary-hover);
+  transform: translateY(-1px);
+}
+
+.cancel-modal-button:hover {
+  background: var(--surface-hover);
+  transform: translateY(-1px);
+}
+
+.close-modal-button:hover {
+  background: var(--surface-hover);
+  color: var(--text-primary);
+}
+
+.modal input:hover,
+.modal textarea:hover,
+.modal select:hover {
+  border-color: var(--text-secondary);
+}
+
+.modal input:focus,
+.modal textarea:focus,
+.modal select:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+/* Modal States */
+.modal.show-modal {
+  opacity: 1;
+}
+
+.modal.closing {
+  opacity: 0;
+}

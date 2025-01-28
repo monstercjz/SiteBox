@@ -1,4 +1,9 @@
-/* Search Form Animations */
-/* This module is for defining animations and transitions for the Search Form component.
- * It should include keyframes, transitions, and animation-related styles.
- */
+/* TODO */
+
+.search-form__icon svg {
+  transition: all var(--transition-normal);
+}
+
+.search-form__input {
+  transition: all var(--transition-normal);
+}

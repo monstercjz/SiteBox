@@ -4,6 +4,7 @@
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-lg);
+  color: var(--text-primary);
 }
 
 [data-theme="dark"] #contextMenu .delete-website-item:hover,

@@ -1,9 +1,7 @@
 /* Modal Styles - Main module - imports sub-modules */
 @import './modal/modal-base.css';
 @import './modal/modal-theme.css';
-@import './modal/modal-header.css';
-@import './modal/modal-close-button.css';
-@import './modal/modal-form.css';
-@import './modal/modal-buttons.css';
-@import './modal/modal-state.css';
+@import './modal/modal-variants.css';
+@import './modal/modal-states.css';
 @import './modal/modal-animations.css';
+@import './modal/modal-responsive.css';
