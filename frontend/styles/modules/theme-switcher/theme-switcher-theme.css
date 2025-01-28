@@ -33,3 +33,7 @@
   color: var(--text-primary); /* 设置文字颜色为 primary text color CSS 变量 */
   border: 1px solid var(--border-color); /* 设置边框 */
 }
+
+.theme-switcher__option {
+  box-shadow: var(--shadow-sm); /* 设置阴影效果 */
+}

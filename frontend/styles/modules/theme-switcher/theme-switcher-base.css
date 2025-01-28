@@ -34,6 +34,6 @@
   display: flex; /* 使用 flex 布局 */
   align-items: center; /* 垂直居中 */
   justify-content: center; /* 水平居中 */
-  box-shadow: var(--shadow-sm); /* 设置阴影效果 */
+  /* box-shadow: var(--shadow-sm); 设置阴影效果 */
   transition: all var(--transition-fast); /* 添加过渡效果 */
 }
