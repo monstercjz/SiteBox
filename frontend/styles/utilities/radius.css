@@ -1,4 +1,11 @@
-/* 圆角工具类 */
-.radius-sm { border-radius: var(--radius-sm); }
-.radius-md { border-radius: var(--radius-md); }
-.radius-lg { border-radius: var(--radius-lg); }
+/* Radius Utilities Styles - 圆角工具类样式 */
+/*
+  定义全局圆角 (radius) 工具类样式，方便快速设置元素圆角大小。
+  包括 sm, md, lg 等不同尺寸的圆角工具类，使用 CSS 变量进行主题化配置。
+*/
+/* Radius Small - 小圆角 */
+.radius-sm { border-radius: var(--radius-sm); } /* 设置 border-radius: var(--radius-sm); 使用 sm 尺寸圆角 CSS 变量 */
+/* Radius Medium - 中圆角 */
+.radius-md { border-radius: var(--radius-md); } /* 设置 border-radius: var(--radius-md); 使用 md 尺寸圆角 CSS 变量 */
+/* Radius Large - 大圆角 */
+.radius-lg { border-radius: var(--radius-lg); } /* 设置 border-radius: var(--radius-lg); 使用 lg 尺寸圆角 CSS 变量 */

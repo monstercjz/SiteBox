@@ -1,21 +1,27 @@
-/* Accessibility */
+/* Accessibility Utilities Styles - 无障碍工具类样式 */
+/*
+  定义全局无障碍 (accessibility) 工具类样式，
+  例如 prefers-reduced-motion, sr-only 等工具类，增强网站的可访问性。
+*/
+/* prefers-reduced-motion - 减少动画效果 */
 @media (prefers-reduced-motion: reduce) {
   * {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important; /* 禁用动画，设置动画时长为极短时间 */
+    animation-iteration-count: 1 !important; /* 禁用动画迭代 */
+    transition-duration: 0.01ms !important; /* 禁用过渡效果，设置过渡时长为极短时间 */
+    scroll-behavior: auto !important; /* 禁用平滑滚动 */
   }
 }
 
+/* sr-only - 屏幕阅读器专用类 */
 .sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border-width: 0;
+  position: absolute; /* 使用 absolute 定位，使其脱离文档流 */
+  width: 1px; /* 设置宽度为 1px */
+  height: 1px; /* 设置高度为 1px */
+  padding: 0; /* 移除内边距 */
+  margin: -1px; /* 设置负外边距，使其在视觉上隐藏 */
+  overflow: hidden; /* 隐藏溢出内容 */
+  clip: rect(0, 0, 0, 0); /* 使用 clip 裁剪，进一步隐藏内容 */
+  white-space: nowrap; /* 禁止文本换行 */
+  border-width: 0; /* 移除边框 */
 }

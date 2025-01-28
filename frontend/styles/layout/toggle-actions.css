@@ -1,8 +1,13 @@
-/* Toggle Actions Layout - Main module - imports sub-modules */
-@import './toggle-actions/toggle-actions-base.css';
-/* @import './toggle-actions/toggle-actions-states.css'; // 如果需要状态样式 */
+/* Toggle Actions Layout - Main module - 切换操作布局样式 - 主模块 - 引入子模块 */
+/*
+  切换操作 (toggle-actions) 组件的布局样式主模块，负责引入 toggle-actions 目录下各个子模块的样式文件。
+  通过 @import 引入 base, theme, layout-base, animations, states 等子模块，
+  实现切换操作组件的模块化样式管理。
+*/
+@import './toggle-actions/toggle-actions-base.css'; /* 引入切换操作基础布局模块 */
+@import './toggle-actions/toggle-actions-theme.css'; /* 引入切换操作主题样式模块 */
+@import './toggle-actions/toggle-actions-layout-base.css'; /* 引入切换操作布局基础模块 */
+@import './toggle-actions/toggle-actions-animations.css'; /* 引入切换操作动画样式模块 */
+@import './toggle-actions/toggle-actions-states.css'; /* 引入切换操作状态样式模块 */
 /* @import './toggle-actions/toggle-actions-elements.css'; // 如果需要元素样式 */
-@import './toggle-actions/toggle-actions-theme.css';
-@import './toggle-actions/toggle-actions-layout-base.css';
-@import './toggle-actions/toggle-actions-animations.css';
-@import './toggle-actions/toggle-actions-states.css';
+/* @import './toggle-actions/toggle-actions-states.css'; // 如果需要状态样式 */

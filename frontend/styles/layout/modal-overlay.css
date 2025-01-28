@@ -1,5 +1,9 @@
-/* Modal Overlay Layout - Main module - imports sub-modules */
-@import './modal-overlay/modal-overlay-base.css';
+/* Modal Overlay Layout - Main module - 模态框遮罩层布局样式 - 主模块 - 引入子模块 */
+/*
+  模态框遮罩层 (modal-overlay) 组件的布局样式主模块，负责引入 modal-overlay 目录下各个子模块的样式文件。
+  通过 @import 引入 base, theme 等子模块，实现模态框遮罩层组件的模块化样式管理。
+*/
+@import './modal-overlay/modal-overlay-base.css'; /* 引入模态框遮罩层基础布局模块 */
 /* @import './modal-overlay/modal-overlay-states.css'; // 如果需要状态样式 */
 /* @import './modal-overlay/modal-overlay-elements.css'; // 如果需要元素样式 */
-@import './modal-overlay/modal-overlay-theme.css';
+@import './modal-overlay/modal-overlay-theme.css'; /* 引入模态框遮罩层主题样式模块 */

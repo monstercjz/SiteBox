@@ -1,5 +1,9 @@
-/* Website List Layout - Main module - imports sub-modules */
-@import './website-list/website-list-base.css';
+/* Website List Layout - Main module - 网站列表布局样式 - 主模块 - 引入子模块 */
+/*
+  网站列表 (website-list) 组件的布局样式主模块，负责引入 website-list 目录下各个子模块的样式文件。
+  通过 @import 引入 base, theme 等子模块，实现网站列表组件的模块化样式管理。
+*/
+@import './website-list/website-list-base.css'; /* 引入网站列表基础布局模块 */
 /* @import './website-list/website-states.css'; // 如果需要状态样式 */
 /* @import './website-list/website-elements.css'; // 如果需要元素样式 */
-@import './website-list/website-list-theme.css';
+@import './website-list/website-list-theme.css'; /* 引入网站列表主题样式模块 */

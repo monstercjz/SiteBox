@@ -1,8 +1,13 @@
-/* Drag and Drop States */
+/* Drag and Drop States Styles - 拖拽状态样式 */
+/*
+  定义拖拽 (drag-over) 状态下的样式，用于视觉反馈，
+  例如拖拽元素经过可放置区域时的样式变化。
+*/
+/* Drag Over 状态 - 拖拽经过状态 */
 .drag-over {
-  border: 2px dashed var(--primary-color);
-  background: var(--surface-hover);
-  opacity: 0.8;
-  transform: scale(1.02);
-  transition: all var(--transition-normal);
+  border: 2px dashed var(--primary-color); /* 虚线边框，颜色为 primary color CSS 变量 */
+  background: var(--surface-hover); /* 背景色为 surface hover color CSS 变量 */
+  opacity: 0.8; /* 透明度 0.8 */
+  transform: scale(1.02); /* 放大 1.02 倍 */
+  transition: all var(--transition-normal); /* 添加过渡效果 */
 }

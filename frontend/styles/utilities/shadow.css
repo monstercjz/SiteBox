@@ -1,5 +1,11 @@
-/* Utility Classes */
-/* 阴影工具类 */
-.shadow-sm { box-shadow: var(--shadow-sm); }
-.shadow-md { box-shadow: var(--shadow-md); }
-.shadow-lg { box-shadow: var(--shadow-lg); }
+/* Shadow Utilities Styles - 阴影工具类样式 */
+/*
+  定义全局阴影 (shadow) 工具类样式，方便快速设置元素阴影效果。
+  包括 sm, md, lg 等不同尺寸的阴影工具类，使用 CSS 变量进行主题化配置。
+*/
+/* Shadow Small - 小阴影 */
+.shadow-sm { box-shadow: var(--shadow-sm); } /* 设置 box-shadow: var(--shadow-sm); 使用 sm 尺寸阴影 CSS 变量 */
+/* Shadow Medium - 中阴影 */
+.shadow-md { box-shadow: var(--shadow-md); } /* 设置 box-shadow: var(--shadow-md); 使用 md 尺寸阴影 CSS 变量 */
+/* Shadow Large - 大阴影 */
+.shadow-lg { box-shadow: var(--shadow-lg); } /* 设置 box-shadow: var(--shadow-lg); 使用 lg 尺寸阴影 CSS 变量 */

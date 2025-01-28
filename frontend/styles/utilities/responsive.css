@@ -1,40 +1,47 @@
-/* Responsive Design */
+/* Responsive Utilities Styles - 响应式工具类样式 */
+/*
+  定义全局响应式 (responsive) 工具类样式，用于适配不同屏幕尺寸。
+  包括针对小屏幕、中等屏幕、大屏幕的媒体查询，以及在不同屏幕尺寸下调整的全局样式和组件样式。
+*/
+/* Small screens - 小屏幕 (最大宽度 768px) 媒体查询 */
 @media (max-width: 768px) {
   html {
-    font-size: 14px;
+    font-size: 14px; /* 小屏幕下设置根元素字体大小为 14px */
   }
 
   body {
-    padding: var(--spacing-md);
+    padding: var(--spacing-md); /* 小屏幕下减小 body 内边距 */
   }
 
   .action-buttons {
-    padding: 0 var(--spacing-md);
+    padding: 0 var(--spacing-md); /* 小屏幕下调整 action-buttons 水平内边距 */
   }
 
   .website-list {
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); /* 小屏幕下 website-list 调整为更小的网格列 */
   }
 
   .modal {
-    width: 95%;
-    padding: var(--spacing-lg);
+    width: 95%; /* 小屏幕下 modal 宽度调整为 95% 视口宽度 */
+    padding: var(--spacing-lg); /* 小屏幕下减小 modal 内边距 */
   }
 
   .toggle-actions {
-    bottom: var(--spacing-lg);
-    right: var(--spacing-lg);
+    bottom: var(--spacing-lg); /* 小屏幕下调整 toggle-actions 底部外边距 */
+    right: var(--spacing-lg); /* 小屏幕下调整 toggle-actions 右侧外边距 */
   }
 }
 
+/* Medium screens - 中等屏幕 (最小宽度 769px, 最大宽度 1024px) 媒体查询 */
 @media (min-width: 769px) and (max-width: 1024px) {
   .website-list {
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); /* 中等屏幕下 website-list 调整为中等网格列 */
   }
 }
 
+/* Large screens - 大屏幕 (最小宽度 1025px) 媒体查询 */
 @media (min-width: 1025px) {
   .website-list {
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); /* 减小内部元素最小宽度为150px */
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); /* 大屏幕下 website-list 调整为更小的网格列 (与小屏幕相同) */
   }
 }

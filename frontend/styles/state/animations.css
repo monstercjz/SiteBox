@@ -1,17 +1,23 @@
-/* Animation Keyframes */
+/* State Animations Styles - 状态动画样式 */
+/*
+  定义全局状态动画 (animations) 样式，例如 slideIn, spin 等关键帧动画。
+  用于组件在不同状态切换时应用的动画效果。
+*/
+/* Slide In Animation - 滑入动画 */
 @keyframes slideIn {
   from {
-    transform: translateX(100%);
-    opacity: 0;
+    transform: translateX(100%); /* 初始位置在右侧 100% 宽度 */
+    opacity: 0; /* 初始状态透明度为 0 */
   }
   to {
-    transform: translateX(0);
-    opacity: 1;
+    transform: translateX(0); /* 最终位置在水平 0 位置 */
+    opacity: 1; /* 最终状态透明度为 1 */
   }
 }
 
+/* Spin Animation - 旋转动画 */
 @keyframes spin {
   to {
-    transform: rotate(360deg);
+    transform: rotate(360deg); /* 最终状态旋转 360 度，实现旋转动画 */
   }
 }

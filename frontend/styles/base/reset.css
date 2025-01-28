@@ -1,1 +1,47 @@
-/* TODO */
+/* Reset CSS - 基础样式重置 */
+/*
+  应用全局 CSS Reset 样式，Normalize 浏览器默认样式，
+  统一不同浏览器下的元素渲染，保持样式一致性。
+*/
+
+/* 清除所有元素的内外边距和边框 */
+*, *::before, *::after {
+  box-sizing: border-box; /* 统一 box-sizing 模式为 border-box */
+  margin: 0; /* 清除外边距 */
+  padding: 0; /* 清除内边距 */
+}
+
+/* 设置 body 基础样式 */
+body {
+  min-height: 100vh; /* 最小高度为 100vh，覆盖整个视口 */
+  text-rendering: optimizeSpeed; /* 优化渲染速度 */
+  line-height: 1.5; /* 设置默认行高 */
+}
+
+/* 针对图片和视频等嵌入元素 */
+img, picture, svg, video {
+  display: block; /* 设置为 block 元素，移除默认 inline 行为 */
+  max-width: 100%; /* 最大宽度 100% ，防止超出父元素 */
+}
+
+/* 移除 a 标签默认文字装饰 */
+a {
+  text-decoration: none; /* 移除下划线 */
+}
+
+/* 继承字体设置 */
+input, button, textarea, select {
+  font: inherit; /* 继承父元素字体设置 */
+}
+
+/* 优化滚动行为 */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important; /* 禁用动画 */
+    animation-iteration-count: 1 !important; /* 禁用动画迭代 */
+    transition-duration: 0.01ms !important; /* 禁用过渡效果 */
+    scroll-behavior: auto !important; /* 禁用平滑滚动 */
+  }
+}

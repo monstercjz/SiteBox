@@ -1,19 +1,24 @@
-/* Theme transition states */
+/* Theme Transition States Styles - 主题过渡状态样式 */
+/*
+  定义主题切换时的过渡效果，平滑主题切换过程。
+  包括 body 背景色和文字颜色、主题切换按钮等元素的过渡效果。
+*/
+/* Body Theme Transition - Body 主题过渡 */
 body {
-    transition: background-color 0.3s ease,
-                color 0.3s ease;
+  transition: background-color 0.3s ease, /* 背景色过渡效果 */
+              color 0.3s ease; /* 文字颜色过渡效果 */
 }
 
-/* 护眼主题切换状态 */
+/* Eye-care theme toggle button active state - 护眼主题切换按钮激活状态 */
 #toggleEyeCare.active {
-    background: var(--primary-color);
-    color: var(--surface-color);
+  background: var(--primary-color); /* 激活状态背景色为 primary color CSS 变量 */
+  color: var(--surface-color); /* 激活状态文字颜色为 surface color CSS 变量 */
 }
 
-/* 添加主题切换时的渐变效果 */
+/* Theme Transition for all elements with data-theme attribute -  为带有 data-theme 属性的所有元素添加主题过渡效果 */
 [data-theme] * {
-    transition: background-color 0.3s ease,
-                color 0.3s ease,
-                border-color 0.3s ease,
-                box-shadow 0.3s ease;
+  transition: background-color 0.3s ease, /* 背景色过渡效果 */
+              color 0.3s ease, /* 文字颜色过渡效果 */
+              border-color 0.3s ease, /* 边框颜色过渡效果 */
+              box-shadow 0.3s ease; /* 阴影过渡效果 */
 }

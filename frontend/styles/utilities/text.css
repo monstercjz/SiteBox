@@ -1,6 +1,11 @@
-/* 文本处理 */
+/* Text Utilities Styles - 文本处理工具类样式 */
+/*
+  定义全局文本处理工具类样式，方便快速设置文本相关样式。
+  包括 text-ellipsis 等常用的文本处理工具类。
+*/
+/* Text Ellipsis - 文本省略 */
 .text-ellipsis {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  overflow: hidden; /* 隐藏溢出内容 */
+  text-overflow: ellipsis; /* 使用省略号 (...) 表示溢出文本 */
+  white-space: nowrap; /* 禁止文本换行 */
 }
