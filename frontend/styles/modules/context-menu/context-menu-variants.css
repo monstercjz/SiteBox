@@ -1,17 +1,25 @@
-/* Context Menu Specific Item Styles */
+/* Context Menu Variants Styles - 右键菜单变体样式 */
+/*
+  定义右键菜单 (context-menu) 组件的变体样式和功能扩展。
+  例如不同类型的菜单项样式，用于区分不同操作。
+*/
+/* 删除网站条目菜单项样式 */
 #contextMenu .delete-website-item {
-  color: #ef4444;
+  color: #ef4444; /* 设置删除网站条目菜单项文字颜色为红色 */
 }
 
+/* 删除网站条目菜单项 hover 状态样式 */
 #contextMenu .delete-website-item:hover {
-  background-color: #fee2e2;
+  background-color: #fee2e2; /* 设置删除网站条目菜单项 hover 背景色为浅红色 */
 }
 
+/* 删除分组菜单项样式 */
 /* Group context menu items */
 #contextMenu .delete-group-item {
-  color: #ef4444;
+  color: #ef4444; /* 设置删除分组菜单项文字颜色为红色 */
 }
 
+/* 删除分组菜单项 hover 状态样式 */
 #contextMenu .delete-group-item:hover {
-  background-color: #fee2e2;
+  background-color: #fee2e2; /* 设置删除分组菜单项 hover 背景色为浅红色 */
 }

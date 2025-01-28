@@ -1,11 +1,11 @@
-/* Actions Toggle Button Theme */
+/* Actions Toggle Button Theme Styles - 切换按钮主题样式 */
 /*
-  This module is for defining the visual theme of the Actions Toggle Button component.
-  It should include CSS variables, color schemes, font stacks, and other theme-related styles.
+  定义切换按钮 (actions-toggle-button) 组件的视觉主题样式。
+  包括背景色、文字颜色、边框、阴影等，使用 CSS 变量进行主题化配置。
 */
 #actions-toggle-button {
-  background: var(--primary-color);
-  color: white;
-  border: none;
-  box-shadow: var(--shadow-lg);
+  background: var(--primary-color); /* 设置背景色为 primary color CSS 变量 */
+  color: white; /* 设置文字颜色为白色 */
+  border: none; /* 移除边框 */
+  box-shadow: var(--shadow-lg); /* 设置阴影效果，使用 shadow-lg CSS 变量 */
 }

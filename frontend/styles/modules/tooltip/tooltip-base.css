@@ -1,7 +1,12 @@
-/* Tooltip */
+/* Tooltip Base Styles - 工具提示基础样式 */
+/*
+  定义工具提示 (tooltip) 组件的基础布局和结构样式。
+  包括 tooltip 容器的基础 padding、border-radius、max-width 等，不包含主题、颜色或状态相关的样式。
+*/
+/* Tooltip 容器 */
 .tooltip, .website-tooltip {
-  padding: var(--spacing-sm) var(--spacing-md);
-  border-radius: var(--radius-sm);
-  max-width: 300px;
-  word-wrap: break-word;
+  padding: var(--spacing-sm) var(--spacing-md); /* 设置内边距 */
+  border-radius: var(--radius-sm); /* 设置圆角 */
+  max-width: 300px; /* 设置最大宽度 */
+  word-wrap: break-word; /* 允许单词断行 */
 }

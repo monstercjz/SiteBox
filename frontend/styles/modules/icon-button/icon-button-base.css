@@ -1,19 +1,26 @@
-/* Icon Button Base Styles */
+/* Icon Button Base Styles - 图标按钮基础样式 */
+/*
+  定义图标按钮 (icon-button) 组件的基础布局和结构样式。
+  包括尺寸、display 属性、图标 SVG 的基本样式等，不包含主题、颜色或状态相关的样式。
+*/
+
+/* 图标按钮容器 */
 .icon-button {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  cursor: pointer;
-  transition: all var(--transition-normal);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  overflow: hidden;
+  width: 48px; /* 设置宽度 */
+  height: 48px; /* 设置高度 */
+  border-radius: 50%; /* 设置圆形边框 */
+  cursor: pointer; /* 设置鼠标指针为 pointer */
+  transition: all var(--transition-normal); /* 添加过渡效果 */
+  display: inline-flex; /* 使用 inline-flex 布局，使其可以水平排列 */
+  align-items: center; /* 垂直居中 */
+  justify-content: center; /* 水平居中 */
+  position: relative; /* 设置定位为 relative */
+  overflow: hidden; /* 隐藏溢出内容 */
 }
 
+/* 图标按钮 SVG 图标 */
 .icon-button svg {
-  width: 24px;
-  height: 24px;
-  stroke-width: 2;
+  width: 24px; /* 设置 SVG 图标宽度 */
+  height: 24px; /* 设置 SVG 图标高度 */
+  stroke-width: 2; /* 设置 SVG 描边宽度 */
 }

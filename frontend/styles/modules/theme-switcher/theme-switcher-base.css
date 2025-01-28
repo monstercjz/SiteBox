@@ -1,33 +1,39 @@
-/* Theme Switcher Options */
+/* Theme Switcher Base Styles - 主题切换器基础样式 */
+/*
+  定义主题切换器 (theme-switcher) 组件的基础布局和结构样式。
+  包括选项容器、选项按钮的基础样式，不包含主题、颜色或状态相关的样式。
+*/
+/* 主题切换器选项容器 */
 .theme-switcher__options {
-    position: absolute;
-    right: 100%;  /* 定位在按钮的左侧 */
-    top: 0;
-    display: flex;
-    gap: var(--spacing-xs);
-    padding: var(--spacing-xs);
-    opacity: 0;
-    pointer-events: none;
-    transition: all var(--transition-normal);
-    margin-right: var(--spacing-sm);
-    height: 48px;  /* 与按钮高度一致 */
-    align-items: center;
+  position: absolute; /* 使用 absolute 定位，使其脱离文档流 */
+  right: 100%;  /* 定位在按钮的左侧 */
+  top: 0; /* 顶部对齐 */
+  display: flex; /* 使用 flex 布局 */
+  gap: var(--spacing-xs); /* 设置选项之间的间距 */
+  padding: var(--spacing-xs); /* 设置内边距 */
+  opacity: 0; /* 初始状态透明度为 0 */
+  pointer-events: none; /* 初始状态禁止 pointer 事件 */
+  transition: all var(--transition-normal); /* 添加过渡效果 */
+  margin-right: var(--spacing-sm); /* 设置右外边距 */
+  height: 48px;  /* 与按钮高度一致 */
+  align-items: center; /* 垂直居中 */
 }
 
-/* Theme switcher container */
+/* Theme switcher container - 主题切换器容器 */
 .theme-switcher {
-    position: relative;  /* 为绝对定位的子元素提供参考 */
+  position: relative;  /* 为绝对定位的子元素提供参考 */
 }
 
+/* Theme switcher option - 主题切换器选项按钮 */
 .theme-switcher__option {
-    width: 40px;
-    height: 40px;
-    padding: var(--spacing-xs);
-    border-radius: 50%;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: var(--shadow-sm);
-    transition: all var(--transition-fast);
+  width: 40px; /* 设置宽度 */
+  height: 40px; /* 设置高度 */
+  padding: var(--spacing-xs); /* 设置内边距 */
+  border-radius: 50%; /* 设置圆形边框 */
+  cursor: pointer; /* 设置鼠标指针为 pointer */
+  display: flex; /* 使用 flex 布局 */
+  align-items: center; /* 垂直居中 */
+  justify-content: center; /* 水平居中 */
+  box-shadow: var(--shadow-sm); /* 设置阴影效果 */
+  transition: all var(--transition-fast); /* 添加过渡效果 */
 }

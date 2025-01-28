@@ -1,24 +1,29 @@
-/* Tooltip Theme */
-/* Light theme */
+/* Tooltip Theme Styles - 工具提示主题样式 */
+/* 
+  定义工具提示 (tooltip) 组件的视觉主题样式。 
+  It should include CSS variables, color schemes, font stacks, and other theme-related styles.
+*/
+/* Light theme - 亮色主题 */
 .theme-light .tooltip,
 .theme-light .website-tooltip {
-  background-color: var(--surface-color-light);
-  border-color: var(--border-color-light);
-  color: var(--text-primary-light);
+  background-color: var(--surface-color-light); /* 亮色主题背景色 */
+  border-color: var(--border-color-light); /* 亮色主题边框颜色 */
+  color: var(--text-primary-light); /* 亮色主题文字颜色 */
 }
 
-/* Dark theme */
+/* Dark theme - 深色主题 */
 .theme-dark .tooltip,
 .theme-dark .website-tooltip {
-  background-color: var(--surface-color-dark);
-  border-color: var(--border-color-dark);
-  color: var(--text-primary-dark);
+  background-color: var(--surface-color-dark); /* 深色主题背景色 */
+  border-color: var(--border-color-dark); /* 深色主题边框颜色 */
+  color: var(--text-primary-dark); /* 深色主题文字颜色 */
 }
 
+/* Tooltip 容器 - 工具提示容器 */
 .tooltip, .website-tooltip {
-  background: var(--surface-color);
-  border: 1px solid var(--border-color);
-  font-size: 0.875rem;
-  box-shadow: var(--shadow-lg);
-  color: var(--text-primary);
+  background: var(--surface-color); /* 设置背景色为 surface color CSS 变量 */
+  border: 1px solid var(--border-color); /* 设置边框 */
+  font-size: 0.875rem; /* 设置字体大小 */
+  box-shadow: var(--shadow-lg); /* 设置阴影效果，使用 shadow-lg CSS 变量 */
+  color: var(--text-primary); /* 设置文字颜色为 primary text color CSS 变量 */
 }

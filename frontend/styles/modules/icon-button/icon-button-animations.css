@@ -1,8 +1,5 @@
-/* Icon Button Animations */
-/* This module is for defining animations and transitions for the Icon Button component.
- * It should include keyframes, transitions, and animation-related styles.
- */
-
-.icon-button svg {
-  transition: transform var(--transition-normal);
-}
+/* Icon Button Animations Styles - 图标按钮动画样式 */
+/*
+  定义图标按钮 (icon-button) 组件的动画和过渡效果。
+  例如 hover, active 等状态切换时的动画效果，目前暂无动画样式。
+*/

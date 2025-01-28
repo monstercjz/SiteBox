@@ -1,39 +1,48 @@
-/* TODO */
-
+/* Modal States Styles - 模态框状态样式 */
+/*
+  定义模态框 (modal) 组件在不同状态下的样式，
+  例如 hover, active, focus, show-modal, closing 等交互和状态样式。
+*/
+/* 保存按钮 Hover 状态 */
 .save-modal-button:hover {
-  background: var(--primary-hover);
-  transform: translateY(-1px);
+  background: var(--primary-hover); /* Hover 状态背景色 */
+  transform: translateY(-1px); /* Hover 状态向上位移 */
 }
 
+/* 取消按钮 Hover 状态 */
 .cancel-modal-button:hover {
-  background: var(--surface-hover);
-  transform: translateY(-1px);
+  background: var(--surface-hover); /* Hover 状态背景色 */
+  transform: translateY(-1px); /* Hover 状态向上位移 */
 }
 
+/* 关闭按钮 Hover 状态 */
 .close-modal-button:hover {
-  background: var(--surface-hover);
-  color: var(--text-primary);
+  background: var(--surface-hover); /* Hover 状态背景色 */
+  color: var(--text-primary); /* Hover 状态文字颜色 */
 }
 
+/* 表单元素 Hover 状态 */
 .modal input:hover,
 .modal textarea:hover,
 .modal select:hover {
-  border-color: var(--text-secondary);
+  border-color: var(--text-secondary); /* Hover 状态边框颜色 */
 }
 
+/* 表单元素 Focus 状态 */
 .modal input:focus,
 .modal textarea:focus,
 .modal select:focus {
-  outline: none;
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+  outline: none; /* 移除默认 outline */
+  border-color: var(--primary-color); /* Focus 状态边框颜色 */
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1); /* Focus 状态阴影 */
 }
 
-/* Modal States */
+/* 显示 Modal 状态 */
 .modal.show-modal {
-  opacity: 1;
+  opacity: 1; /* 显示状态透明度为 1 */
 }
 
+/* 关闭 Modal 状态 */
 .modal.closing {
-  opacity: 0;
+  opacity: 0; /* 关闭状态透明度为 0 */
 }

@@ -1,31 +1,35 @@
-/* Theme Switcher Theme */
+/* Theme Switcher Theme Styles - 主题切换器主题样式 */
 /* 
   This module is for defining the visual theme of the Theme Switcher component. 
   It should include CSS variables, color schemes, font stacks, and other theme-related styles.
 */
-
+/* Theme Switcher Options Container - 主题切换器选项容器 */
 .theme-switcher__options {
-    background: var(--surface-color);
-    border: 1px solid var(--border-color);
-    box-shadow: var(--shadow-md);
+  background: var(--surface-color); /* 设置背景色为 surface color CSS 变量 */
+  border: 1px solid var(--border-color); /* 设置边框 */
+  box-shadow: var(--shadow-md); /* 设置阴影效果，使用 shadow-md CSS 变量 */
 }
 
+/* Light theme option - 亮色主题选项 */
 .theme-switcher__option[data-theme="light"] {
-    background: #ffffff;
+  background: #ffffff; /* 亮色主题选项背景色为白色 */
 }
 
+/* Dark theme option - 深色主题选项 */
 .theme-switcher__option[data-theme="dark"] {
-    background: #1e1e2e;
-    color: #ffffff;
+  background: #1e1e2e; /* 深色主题选项背景色为深灰色 */
+  color: #ffffff; /* 深色主题选项文字颜色为白色 */
 }
 
+/* Eye-care theme option - 护眼主题选项 */
 .theme-switcher__option[data-theme="eye-care"] {
-    background: #f0f5e9;
-    color: #5b8c5a;
+  background: #f0f5e9; /* 护眼主题选项背景色为浅绿色 */
+  color: #5b8c5a; /* 护眼主题选项文字颜色为深绿色 */
 }
 
+/* Theme switcher option - 主题切换器选项按钮 */
 .theme-switcher__option {
-    background: var(--surface-color);
-    color: var(--text-primary);
-    border: 1px solid var(--border-color);
+  background: var(--surface-color); /* 设置背景色为 surface color CSS 变量 */
+  color: var(--text-primary); /* 设置文字颜色为 primary text color CSS 变量 */
+  border: 1px solid var(--border-color); /* 设置边框 */
 }
