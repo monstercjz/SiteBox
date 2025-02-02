@@ -47,7 +47,7 @@ const Joi = require('joi');
 const { getGroupById } = require('./groupService');
 const logger = require('../utils/logger');
 
-const { WEBSITE_DATA_FILE_PATH } = require('../config/constants');
+const { WEBSITE_DATA_FILE_PATH, PORT, backendUrl } = require('../config/constants');
 const { fetchFavicon , deleteFaviconFile } = require('../utils/faviconUtils');
 
 /**
@@ -188,8 +188,19 @@ async function updateWebsite(websiteId, websiteData) {
   try {
     const data = await fileHandler.readData(WEBSITE_DATA_FILE_PATH);
     //由于更新网站的时候put进来的websitedata里是没有faviconurl这个值的，所以肯定是undefined，就导致更新的时候其实会强制执行调用更新
+    //如果websiteData.faviconurl为空，则根据websiteId来获取对应的faviconUrl，如果websitedata.url的hostname包含在faviconUrl里，那么就不用更新，否则就更新
     console.log('传进来的ico', websiteData.faviconUrl);
-    const updatedFaviconUrl = await generateFaviconUrl(websiteData.url, websiteData.faviconUrl);
+    let updatedFaviconUrl = websiteData.faviconUrl; // 默认不更新，使用传入的 faviconUrl
+    if (!websiteData.faviconUrl) { // 如果 websiteData.faviconUrl 为空，才进行判断是否需要更新
+      const existingWebsiteData = await _findWebsiteById(websiteId);
+      const currentHostname = new URL(websiteData.url).hostname;
+      const existingFaviconUrl = existingWebsiteData.faviconUrl;
+      if (!existingFaviconUrl || !existingFaviconUrl.includes(currentHostname)) { //  existingFaviconUrl 不包含 currentHostname，需要更新 faviconUrl
+        updatedFaviconUrl = await generateFaviconUrl(websiteData.url, websiteData.faviconUrl);
+      } else {
+        updatedFaviconUrl = existingFaviconUrl; // existingFaviconUrl 包含 currentHostname，不更新，沿用旧的 faviconUrl
+      }
+    }
     console.log('更新后ico', updatedFaviconUrl);
     const updatedWebsites = _updateWebsiteData(websiteId, websiteData, data.websites || [], updatedFaviconUrl);
     data.websites = updatedWebsites;
@@ -229,7 +240,7 @@ const deleteWebsite = async (websiteId) => {
   if (deletedWebsite) {
     logger.info(`删除网站: ${deletedWebsite.name} (ID: ${websiteId})`);
     _maintainHostnameIndex('delete', deletedWebsite); // Maintain hostname index
-    
+
     await _deleteFaviconIfNoOtherWebsiteWithHostname(deletedWebsite, data.websites || []);
 
     return { message: 'Website deleted successfully' };
@@ -571,18 +582,18 @@ const batchImportWebsites = async (websites, groupId) => {
   try {
     // 创建备份
     await syncService.backupData();
-    
+
     // 读取现有数据
     const data = await fileHandler.readData(WEBSITE_DATA_FILE_PATH);
-    
+
     // 初始化数据对象如果不存在
     if (!data.websites) data.websites = [];
     if (!data.groups) data.groups = [];
-    
+
     // 获取组内现有网站数量
     const websitesInGroup = data.websites.filter(w => w.groupId === groupId);
     const baseOrder = websitesInGroup.length;
-    
+
     // 创建新的网站对象
     const newWebsites = websites.map((website, index) => ({
       id: uuidv4(),
@@ -595,13 +606,13 @@ const batchImportWebsites = async (websites, groupId) => {
       order: baseOrder + index + 1,
       isAccessible: true
     }));
-    
+
     // 添加新网站
     data.websites.push(...newWebsites);
-    
+
     // 保存更新后的数据
     await fileHandler.writeData(WEBSITE_DATA_FILE_PATH, data);
-    
+
     return {
       success: true,
       count: newWebsites.length

@@ -25,8 +25,21 @@ const syncBookmarks = async (req, res) => {
     apiResponse.error(res, error.message);
   }
 };
+/**
+ * @description 接收并保存浏览器插件发送的URL
+ */
+const saveWebsiteUrl = async (req, res) => {
+  try {
+    const { url, title, description, groupId } = req.body; // 从请求体中获取 url, title, description, groupId
+    await pluginService.saveWebsiteUrl(url, title, description, groupId); // 传递 title, description, groupId
+    apiResponse.success(res, { message: 'URL saved successfully' });
+  } catch (error) {
+    apiResponse.error(res, error.message);
+  }
+};
 
 module.exports = {
   getExtensionData,
   syncBookmarks,
+  saveWebsiteUrl,
 };

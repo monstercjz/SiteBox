@@ -14,4 +14,9 @@ router.get('/extension/data', pluginController.getExtensionData);
  */
 router.post('/extension/sync', pluginController.syncBookmarks);
 
+/**
+ * @route POST /extension/url
+ * @description 接收并保存浏览器插件发送的URL
+ */
+router.post('/extension/url', pluginController.saveWebsiteUrl);
 module.exports = router;

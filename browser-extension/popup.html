@@ -1,31 +1,61 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Personal Dashboard</title>
-    <style>
-        body {
-            font-family: sans-serif;
-            width: 300px;
-            padding: 10px;
-        }
-        ul {
-            list-style: none;
-            padding: 0;
-        }
-        li {
-            margin-bottom: 5px;
-        }
-        a {
-            text-decoration: none;
-            color: #333;
-        }
-    </style>
+  <title>Website Saver Extension</title>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      width: 300px;
+      padding: 10px;
+    }
+    button {
+      display: block; /* 将按钮设置为块级元素 */
+      margin: 0 auto; /* 水平居中 */
+      padding: 10px 15px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    .form-group {
+      margin-bottom: 10px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    input[type="text"],
+    textarea,
+    select {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+  </style>
 </head>
 <body>
-    <h1>Quick Links</h1>
-    <ul id="links">
-        <!-- Links will be rendered here -->
-    </ul>
-    <script src="popup.js"></script>
+  <h1>Website Saver</h1>
+  <div class="form-group">
+    <label for="url">当前页面(URL):</label>
+    <input type="text" id="url" readonly>
+  </div>
+  <div class="form-group">
+    <label for="title">当前页面(Title):</label>
+    <input type="text" id="title">
+  </div>
+  <div class="form-group">
+    <label for="description">页面描述(Description):</label>
+    <textarea id="description"></textarea>
+  </div>
+  <div class="form-group">
+    <label for="group">请选择分组(Group):</label>
+    <select id="group">
+      <option value="">-- Select Group --</option>
+    </select>
+  </div>
+   <p id="success-message" style="color: green; display: none;">网站保存成功!</p>
+  <button id="saveBtn">保存网址(Save Website)</button>
+  <script src="popup.js"></script>
 </body>
-</html> 
+</html>

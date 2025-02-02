@@ -1,7 +1,7 @@
 const fs = require('fs').promises;
 const path = require('path');
 const axios = require('axios');
-
+const { PORT, backendUrl } = require('../config/constants');
 const faviconCache = {};
 
 async function fetchFavicon(websiteUrl) {
@@ -18,7 +18,7 @@ async function fetchFavicon(websiteUrl) {
     await fs.access(iconPath);
     faviconCache[domain] = `/data/icons/${iconFileName}`;
     console.log(`当前的`, faviconCache[domain]);
-    return `/data/icons/${iconFileName}`;
+    return `${backendUrl}:${PORT}/data/icons/${iconFileName}`;
   } catch (error) {
     // 如果不存在，则进行网络请求
     console.log(`网络获取`);
@@ -30,7 +30,7 @@ async function fetchFavicon(websiteUrl) {
         const iconBuffer = Buffer.from(response.data, 'binary');
         await fs.writeFile(iconPath, iconBuffer);
         faviconCache[domain] = `/data/icons/${iconFileName}`;
-        return `/data/icons/${iconFileName}`;
+        return `${backendUrl}:${PORT}/data/icons/${iconFileName}`;
       }
     } catch (error) {
       console.error(`Failed to fetch favicon for ${websiteUrl}:`, error.message);
@@ -38,7 +38,7 @@ async function fetchFavicon(websiteUrl) {
   }
 
   //return null;
-  return `/data/icons/Docker.png.ico`
+  return `${backendUrl}:${PORT}/data/icons/Docker.png.ico`
 }
 
 

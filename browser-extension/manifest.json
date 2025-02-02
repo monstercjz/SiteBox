@@ -1,20 +1,25 @@
 {
   "manifest_version": 3,
-  "name": "Personal Dashboard Extension",
+  "name": "Website Saver Extension",
   "version": "1.0",
-  "description": "Quick access to your personal dashboard links.",
-  "permissions": [
-    "storage"
-  ],
+  "description": "A browser extension to save website URLs with titles, descriptions, and groups to backend API",
   "action": {
-    "default_popup": "popup.html",
-    "default_icon": {
-      "16": "icon16.png",
-      "48": "icon48.png",
-      "128": "icon128.png"
-    }
+    "default_popup": "popup.html"
   },
   "background": {
     "service_worker": "background.js"
+  },
+  "permissions": [
+    "activeTab"
+  ],
+  "host_permissions": [
+    "http://localhost:3000/*"
+  ],
+  "icons": {
+    "16": "icon16.png",
+    "32": "icon32.png",
+    "180": "icon180.png",
+    "192": "icon192.png",
+    "512": "icon512.png"
   }
-} 
+}
