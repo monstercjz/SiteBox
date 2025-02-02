@@ -4,15 +4,20 @@
   包括背景色、边框颜色、阴影、文字颜色等，使用 CSS 变量进行主题化配置。
 */
 #contextMenu {
-  background: var(--surface-color); /* 设置背景色为 surface color CSS 变量 */
-  border: 1px solid var(--border-color); /* 设置边框 */
   border-radius: var(--radius-md); /* 设置圆角 */
+  background: var(--color-surface); /* 设置背景色为 surface color CSS 变量 */
+  border: 1px solid var(--color-border); /* 设置边框 */
   box-shadow: var(--shadow-lg); /* 设置阴影效果，使用 shadow-lg CSS 变量 */
   color: var(--text-primary); /* 设置文字颜色为 primary text color CSS 变量 */
 }
 
 /* 深色主题下的删除菜单项 hover 样式 */
-[data-theme="dark"] #contextMenu .delete-website-item:hover,
-[data-theme="dark"] #contextMenu .delete-group-item:hover {
-  background-color: #451a1a; /* 深色主题下删除菜单项 hover 背景色 */
+[data-theme="dark"] #contextMenu div.delete-website-item:hover,
+[data-theme="dark"] #contextMenu div.delete-group-item:hover {
+  background-color: var(--color-delete-hover); /* 深色主题下删除菜单项 hover 背景色 */
+}
+
+/* 右键菜单项 */
+#contextMenu div {
+  color: var(--text-primary);
 }

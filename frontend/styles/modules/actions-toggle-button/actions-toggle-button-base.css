@@ -6,21 +6,12 @@
 
 /* 切换按钮容器 */
 #actions-toggle-button {
+  position: relative; /* 设置定位为 relative */
+  display: flex; /* 使用 flex 布局 */
+  align-items: center; /* 垂直居中 */
+  justify-content: center; /* 水平居中 */
   width: 48px; /* 设置宽度 */
   height: 48px; /* 设置高度 */
   border-radius: 50%; /* 设置圆形边框 */
-  cursor: pointer; /* 设置鼠标指针为 pointer */
-  transition: all var(--transition-normal); /* 添加过渡效果 */
-  display: flex; /* 使用 flex 布局 */
-  align-items: center; /* 垂直居中 */
-  justify-content: center; /* 水平居中 */
-  position: relative; /* 设置定位为 relative */
   z-index: 11; /* 设置 z-index */
-  transform: rotate(var(--rotation, 0deg)); /* 旋转角度，默认为 0 度 */
-  display: flex; /* 使用 flex 布局 */
-  align-items: center; /* 垂直居中 */
-  justify-content: center; /* 水平居中 */
-  position: relative; /* 设置定位为 relative */
-  z-index: 11; /* 设置 z-index */
-  transform: rotate(var(--rotation, 0deg)); /* 旋转角度，默认为 0 度 */
 }

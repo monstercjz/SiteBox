@@ -1,0 +1,15 @@
+/* Light theme variables - 亮色主题变量 */
+@layer theme-variables {
+  :root {
+    /* Color System - Light Theme - 颜色系统 - 亮色主题 */
+    --color-background-base: var(--color-surface); /* Background color - 基础背景色，默认使用 surface color */
+    --color-text-base: var(--color-text-primary); /* Text color - 基础文字颜色，默认使用 primary text color */
+    --color-primary: hsl(242, 69%, 59%); /* Primary color - 主题色，靛蓝色 (HSL) */
+    --color-primary-hover: hsl(242, 58%, 53%); /* Primary color Hover - 主题色 Hover 状态 (HSL) */
+    --color-surface: hsl(0, 0%, 100%); /* Surface color - 表面颜色，白色 (HSL) */
+    --color-surface-hover: hsl(240, 60%, 98%); /* Surface color Hover - 表面颜色 Hover 状态 (HSL) */
+    --color-border: hsl(220, 31%, 90%); /* Border color - 边框颜色 (HSL) */
+    --color-text-primary: hsl(225, 33%, 18%); /* Primary text color - 主要文字颜色，深灰色 (HSL) */
+    --color-text-secondary: hsl(220, 17%, 47%); /* Secondary text color - 次要文字颜色，浅灰色 (HSL) */
+  }
+}

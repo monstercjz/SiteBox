@@ -7,3 +7,10 @@
 .tooltip, .website-tooltip {
   transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out; /* 透明度和可见性过渡效果 */
 }
+.fade-in {
+  opacity: 1;
+}
+
+.fade-out {
+  opacity: 0;
+}

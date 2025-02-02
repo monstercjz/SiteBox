@@ -9,14 +9,11 @@
   right: 100%;  /* 定位在按钮的左侧 */
   top: 0; /* 顶部对齐 */
   display: flex; /* 使用 flex 布局 */
+  align-items: center; /* 垂直居中 */
+  height: 48px;  /* 与按钮高度一致 */
   gap: var(--spacing-xs); /* 设置选项之间的间距 */
   padding: var(--spacing-xs); /* 设置内边距 */
-  opacity: 0; /* 初始状态透明度为 0 */
-  pointer-events: none; /* 初始状态禁止 pointer 事件 */
-  transition: all var(--transition-normal); /* 添加过渡效果 */
   margin-right: var(--spacing-sm); /* 设置右外边距 */
-  height: 48px;  /* 与按钮高度一致 */
-  align-items: center; /* 垂直居中 */
 }
 
 /* Theme switcher container - 主题切换器容器 */
@@ -26,14 +23,12 @@
 
 /* Theme switcher option - 主题切换器选项按钮 */
 .theme-switcher__option {
+  display: flex; /* 使用 flex 布局 */
+  align-items: center; /* 垂直居中 */
+  justify-content: center; /* 水平居中 */
   width: 40px; /* 设置宽度 */
   height: 40px; /* 设置高度 */
   padding: var(--spacing-xs); /* 设置内边距 */
   border-radius: 50%; /* 设置圆形边框 */
-  cursor: pointer; /* 设置鼠标指针为 pointer */
-  display: flex; /* 使用 flex 布局 */
-  align-items: center; /* 垂直居中 */
-  justify-content: center; /* 水平居中 */
   /* box-shadow: var(--shadow-sm); 设置阴影效果 */
-  transition: all var(--transition-fast); /* 添加过渡效果 */
 }

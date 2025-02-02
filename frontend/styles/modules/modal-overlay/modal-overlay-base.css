@@ -5,11 +5,11 @@
 */
 /* Modal Overlay - 模态框遮罩层 */
 .modal::before {
-  content: ''; /* 伪元素内容为空 */
   position: fixed; /* 使用 fixed 定位，使其覆盖整个视口 */
   top: 0; /* 顶部对齐 */
   left: 0; /* 左侧对齐 */
   right: 0; /* 右侧对齐 */
   bottom: 0; /* 底部对齐 */
+  content: ''; /* 伪元素内容为空 */
   z-index: -1; /* 设置 z-index 为 -1，使其位于模态框下方 */
 }

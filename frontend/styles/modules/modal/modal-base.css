@@ -1,6 +1,7 @@
 /* Modal Styles - 模态框基础样式 */
 /*
   定义模态框 (modal) 组件的基础布局和结构样式。
+   依赖：base/variables.css, theme/light.css
   包括模态框容器、内容区域、按钮容器、关闭按钮、表单元素等的基础样式，不包含主题、颜色或状态相关的样式。
 */
 
@@ -9,35 +10,35 @@
   position: fixed; /* 使用 fixed 定位，使其脱离文档流 */
   top: 50%; /* 垂直居中 */
   left: 50%; /* 水平居中 */
-  transform: translate(-50%, -50%); /* 使用 transform 进一步精确居中 */
   padding: var(--spacing-xl); /* 设置内边距 */
   width: 90%; /* 设置宽度为 90% 视口宽度 */
   max-width: 500px; /* 设置最大宽度 */
+  transform: translate(-50%, -50%); /* 使用 transform 进一步精确居中 */
   z-index: 1001; /* 设置 z-index，确保在其他元素之上 */
-  opacity: 0; /* 初始状态透明度为 0 */
 }
 
 /* 模态框内容区域 */
 .modal-content {
+  width: 100%; /* 确保内容区域宽度撑满 */
   position: relative; /* 设置定位为 relative，方便内部元素定位 */
+  display: flex; /* 使用 flexbox 布局 */
+  flex-direction: column; /* 垂直方向排列 */
 }
 
 /* 模态框按钮容器 */
 .modal-buttons-container {
   display: flex; /* 使用 flex 布局 */
+  justify-content: flex-end; /* 水平方向靠右对齐 */
   gap: var(--spacing-md); /* 设置按钮之间的间距 */
   margin-top: var(--spacing-xl); /* 设置上外边距 */
-  justify-content: flex-end; /* 水平方向靠右对齐 */
 }
 
 /* 模态框按钮通用样式 */
 .modal-buttons-container button {
   padding: var(--spacing-sm) var(--spacing-xl); /* 设置按钮内边距 */
   border-radius: var(--radius-md); /* 设置按钮圆角 */
-  font-size: 0.875rem; /* 设置字体大小 */
-  font-weight: 500; /* 设置字体粗细 */
-  cursor: pointer; /* 设置鼠标指针为 pointer */
-  transition: all var(--transition-fast); /* 添加过渡效果 */
+  font-size: var(--font-size-sm); /* 设置字体大小 */
+  font-weight: var(--font-weight-medium); /* 设置字体粗细 */
 }
 
 /* 模态框关闭按钮 */
@@ -45,39 +46,37 @@
   position: absolute; /* 使用 absolute 定位，相对于 .modal-content 定位 */
   right: 0; /* 靠右对齐 */
   top: 0; /* 靠顶部对齐 */
-  width: 32px; /* 设置宽度 */
-  height: 32px; /* 设置高度 */
   display: flex; /* 使用 flex 布局 */
   align-items: center; /* 垂直居中 */
   justify-content: center; /* 水平居中 */
+  width: var(--modal-close-button-size); /* 设置宽度 */
+  height: var(--modal-close-button-size); /* 设置高度 */
   border-radius: 50%; /* 设置圆形边框 */
-  border: none; /* 移除边框 */
   background: transparent; /* 设置背景色为透明 */
-  cursor: pointer; /* 设置鼠标指针为 pointer */
+  border: none; /* 移除边框 */
 }
 
 /* 模态框表单元素通用样式 */
 .modal input,
 .modal textarea,
 .modal select {
-  width: 100%; /* 设置宽度为 100% 父容器宽度 */
+  flex-grow: 1; /* 撑满剩余空间，可以让长度一致 */
   padding: var(--spacing-md); /* 设置内边距 */
-  border: 1px solid var(--border-color); /* 设置边框 */
-  border-radius: var(--radius-md); /* 设置圆角 */
+  padding-right: var(--spacing-xl); /* 增加右侧内边距，留出箭头空间 */
   margin-bottom: var(--spacing-lg); /* 设置下外边距 */
-  transition: all var(--transition-fast); /* 添加过渡效果 */
+  border-radius: var(--radius-md); /* 设置圆角 */
+  border: 1px solid var(--color-border); /* 设置边框 */
   appearance: none; /* 移除默认 appearance 样式 */
   background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e"); /* 下拉箭头 SVG */
   background-repeat: no-repeat; /* 禁止背景图片重复 */
   background-position: right var(--spacing-sm) center; /* 设置背景图片位置 */
   background-size: 16px; /* 设置背景图片大小 */
-  padding-right: var(--spacing-xl); /* 增加右侧内边距，留出箭头空间 */
 }
 
 /* 模态框标题 */
 .modal-content h2 {
-  font-size: 1.5rem; /* 设置字体大小 */
-  font-weight: 600; /* 设置字体粗细 */
   margin-bottom: var(--spacing-xl); /* 设置下外边距 */
   padding-right: var(--spacing-xl); /* 设置右内边距 */
+  font-size: var(--font-size-xl); /* 设置字体大小 */
+  font-weight: var(--font-weight-semibold); /* 设置字体粗细 */
 }

@@ -5,7 +5,7 @@
 */
 /* Default Focus Style - 默认 Focus 样式 */
 :focus {
-  outline: 2px solid var(--primary-color); /* 设置 outline 样式，颜色为 primary color CSS 变量 */
+  outline: 2px solid var(--color-primary); /* 设置 outline 样式，颜色为 primary color CSS 变量 */
   outline-offset: 2px; /* 设置 outline-offset，使 outline 与元素之间留有间隙 */
 }
 
@@ -16,6 +16,6 @@
 
 /* Focus-visible 状态下的 Focus 样式 -  focus-visible 状态下，显示 outline 样式，增强键盘可访问性 */
 :focus-visible {
-  outline: 2px solid var(--primary-color); /* 设置 outline 样式，颜色为 primary color CSS 变量 */
+  outline: 2px solid var(--color-primary); /* 设置 outline 样式，颜色为 primary color CSS 变量 */
   outline-offset: 2px; /* 设置 outline-offset */
 }

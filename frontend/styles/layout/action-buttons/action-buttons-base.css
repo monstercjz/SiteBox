@@ -1,0 +1,16 @@
+/* Toggle Actions Layout Base Styles - 切换操作布局基础样式 */
+/*  Base layout styles for the action buttons - 操作按钮组的基础布局样式 */
+.action-buttons {
+    position: fixed; /* 使用 fixed 定位，使其脱离文档流 */
+    bottom: calc(var(--spacing-xl) + 64px); /* 距离底部一定距离，考虑 actions-toggle-button 高度 */
+    right: var(--spacing-xl); /* 距离右侧一定距离，使用 xl 尺寸 CSS 变量 */
+    display: flex; /* 使用 flex 布局 */
+    flex-direction: column-reverse; /* 垂直反向排列，按钮从下往上排列 */
+    gap: var(--spacing-md); /* 设置按钮之间的间距 */
+    z-index: 10; /* 设置 z-index，确保在其他元素之上 */
+    pointer-events: none; /* 初始状态禁止 pointer 事件 */
+  }
+/* Action Buttons Show State - 操作按钮组显示状态 */
+.action-buttons.show {
+  pointer-events: all; /* 显示状态允许 pointer 事件 */
+}

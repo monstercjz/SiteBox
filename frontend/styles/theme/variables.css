@@ -1,82 +1,56 @@
-/* CSS Variables - CSS 变量定义 */
-/*
-  定义 CSS 变量，用于整个项目的主题化配置。
-  包括颜色调色板、阴影系统、间距系统、圆角系统、过渡效果系统等。
-*/
-:root {
-  /* Color Palette - 颜色调色板 */
- /* Color System - Light Theme - 颜色系统 - 亮色主题 */
-  --background-color: var(--surface-color); /* Background color - 背景色，默认使用 surface color */
-  --text-color: var(--text-primary); /* Text color - 文字颜色，默认使用 primary text color */
-  --primary-color: #4f46e5; /* Primary color - 主题色，靛蓝色 */
-  --primary-hover: #4338ca; /* Primary color Hover - 主题色 Hover 状态 */
-  --surface-color: #ffffff; /* Surface color - 表面颜色，白色 */
-  --surface-hover: #f8fafc; /* Surface color Hover - 表面颜色 Hover 状态 */
-  --border-color: #e2e8f0; /* Border color - 边框颜色 */
-  --text-primary: #1e293b; /* Primary text color - 主要文字颜色，深灰色 */
-  --text-secondary: #64748b; /* Secondary text color - 次要文字颜色，浅灰色 */
-  
-  /* Shadow System - 阴影系统 */
-  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.08); /* Small shadow - 小阴影 */
-  --shadow-md: 0 4px 6px rgba(15, 23, 42, 0.08), 0 2px 4px rgba(15, 23, 42, 0.06); /* Medium shadow - 中阴影 */
-  --shadow-lg: 0 10px 15px rgba(15, 23, 42, 0.08), 0 4px 6px rgba(15, 23, 42, 0.06); /* Large shadow - 大阴影 */
-  
-  /* Spacing System - 间距系统 */
-  --spacing-xs: 0.25rem; /* Extra small spacing - 极小间距 */
-  --spacing-sm: 0.5rem; /* Small spacing - 小间距 */
-  --spacing-md: 1rem; /* Medium spacing - 中间距 */
-  --spacing-lg: 1.5rem; /* Large spacing - 大间距 */
-  --spacing-xl: 2rem; /* Extra large spacing - 极大间距 */
-  
-  /* Border radius System - 圆角系统 */
-  --radius-sm: 0.25rem; /* Small radius - 小圆角 */
-  --radius-md: 0.5rem; /* Medium radius - 中圆角 */
-  --radius-lg: 0.75rem; /* Large radius - 大圆角 */
-  
-  /* Transitions System - 过渡效果系统 */
-  --transition-fast: 150ms ease; /* Fast transition - 快速过渡效果 */
-  --transition-normal: 250ms ease; /* Normal transition - 通用过渡效果 */
+@import "./light.css";
+@import "./dark.css";
+@import "./eye-care.css";
+@layer theme-variables;
+
+@layer theme-variables {
+  /* CSS Variables - CSS 变量定义 */
+  /*
+    定义 CSS 变量，用于整个项目的基础主题化配置。
+    包括字体排版系统、阴影系统、间距系统、圆角系统、过渡效果系统、组件尺寸系统等。
+    颜色系统变量将在各个主题文件中定义。
+  */
+  :root {
+    /* Typography System - 字体排版系统 */
+    --font-size-responsive: 14px;   /* Responsive font size for small screens - 小屏幕响应式字体大小 */
+    --font-size-sm: 0.875rem;      /* Small font size - 较小字体大小 */
+    --font-size-base: 1rem;         /* Base font size - 基础字体大小 */
+    --font-size-lg: 1.25rem;       /* Large font size - 较大字体大小 */
+    --font-size-xl: 1.5rem;       /* Extra large font size - 较大字体大小 */
+    --font-size-h1: 2rem;         /* H1 heading font size - H1 标题字体大小 */
+    --font-weight-normal: 400;     /* Normal font weight - 正常字体粗细 */
+    --font-weight-medium: 500;     /* Medium font weight - 中等字体粗细 */
+    --font-weight-semibold: 600;   /* Semibold font weight - 较粗字体粗细 */
+    --font-weight-bold: 700;       /* Bold font weight - 粗体 */
+
+    /* Shadow System - 阴影系统 (Light Theme) */
+    --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.08); /* Small shadow - 小阴影 */
+    --shadow-md: 0 4px 6px rgba(15, 23, 42, 0.08), 0 2px 4px rgba(15, 23, 42, 0.06); /* Medium shadow - 中阴影 */
+    --shadow-lg: 0 10px 15px rgba(15, 23, 42, 0.08), 0 4px 6px rgba(15, 23, 42, 0.06); /* Large shadow - 大阴影 */
+
+    /* Spacing System - 间距系统 */
+    --spacing-xs: 0.25rem; /* Extra small spacing - 极小间距 */
+    --spacing-sm: 0.5rem; /* Small spacing - 小间距 */
+    --spacing-md: 1rem; /* Medium spacing - 中间距 */
+    --spacing-lg: 1.5rem; /* Large spacing - 大间距 */
+    --spacing-xl: 2rem; /* Extra large spacing - 极大间距 */
+
+    /* Border radius System - 圆角系统 */
+    --radius-sm: 0.25rem; /* Small radius - 小圆角 */
+    --radius-md: 0.5rem; /* Medium radius - 中圆角 */
+    --radius-lg: 0.75rem; /* Large radius - 大圆角 */
+
+    /* Transitions System - 过渡效果系统 */
+    --transition-fast: 150ms ease; /* Fast transition - 快速过渡效果 */
+    --transition-normal: 250ms ease; /* Normal transition - 通用过渡效果 */
+    --rotation: 0deg;                /* Rotation angle - 旋转角度 */
+
+    /* Component Sizes System - 组件尺寸系统 */
+    --icon-button-size: 48px; /* Icon button size - 图标按钮尺寸 */
+    --modal-close-button-size: 32px; /* Modal close button size - 模态框关闭按钮尺寸 */
+    --color-delete-hover: #451a1a; /* Delete item hover color - 删除菜单项悬停颜色 */
+    --item-width: 160px;           /* Website item width - 网站项宽度 */
+    
+  }
 }
 
-/* Dark theme variables - 深色主题变量 */
-[data-theme="dark"] {
-  --background-color: var(--surface-color); /* Background color - 背景色，默认使用 surface color */
-  --text-color: var(--text-primary); /* Text color - 文字颜色，默认使用 primary text color */
-  --primary-color: #818cf8; /* Primary color - 主题色，柔和的亮紫色 */
-  --primary-hover: #6366f1; /* Primary color Hover - 主题色 Hover 状态 */
-  --surface-color: #1e1e2e; /* Surface color - 表面颜色，温和的深色背景 */
-  --surface-hover: #27273a; /* Surface color Hover - 表面颜色 Hover 状态 */
-  --border-color: #383850; /* Border color - 边框颜色 */
-  --text-primary: #e2e8f0; /* Primary text color - 主要文字颜色，浅灰色 */
-  --text-secondary: #94a3b8; /* Secondary text color - 次要文字颜色，灰色 */
-  
-  /* Shadow System for Dark Theme - 深色主题阴影系统 */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3); /* Small shadow - 小阴影 */
-  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.3), 0 2px 4px rgba(0, 0, 0, 0.2); /* Medium shadow - 中阴影 */
-  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.3), 0 4px 6px rgba(0, 0, 0, 0.2); /* Large shadow - 大阴影 */
-}
-
-/* Eye-care theme variables - 护眼主题变量 */
-[data-theme="eye-care"] {
-  /* 护眼主题的柔和色系 */
-  --background-color: var(--surface-color); /* Background color - 背景色，默认使用 surface color */
-  --text-color: var(--text-primary); /* Text color - 文字颜色，默认使用 primary text color */
-  --primary-color: #5b8c5a;    /* Primary color - 主题色，柔和的绿色 */
-  --primary-hover: #496b48;    /* Primary color Hover - 主题色 Hover 状态，深绿色 */
-  --surface-color: #f0f5e9;    /* Surface color - 表面颜色，淡青绿色背景 */
-  --surface-hover: #e6ede0;    /* Surface color Hover - 表面颜色 Hover 状态，浅绿色悬浮背景 */
-  --background: #ecf3e6;       /* Background - 背景色，柔和的浅绿背景 */
-  --text-primary: #2c3e2b;     /* Primary text color - 主要文字颜色，深绿色文字 */
-  --text-secondary: #5c705b;   /* Secondary text color - 次要文字颜色，中灰绿色文字 */
-  --border-color: #c8d6c7;     /* Border color - 边框颜色，淡绿色边框 */
-  
-  /* 阴影效果调整为更柔和的绿色 */
-  --shadow-sm: 0 1px 2px rgba(91, 140, 90, 0.05); /* Small shadow - 小阴影 */
-  --shadow-md: 0 4px 6px rgba(91, 140, 90, 0.05); /* Medium shadow - 中阴影 */
-  --shadow-lg: 0 10px 15px rgba(91, 140, 90, 0.05); /* Large shadow - 大阴影 */
-  
-  /* 玻璃态效果调整 - Glass Effect System */
-  --glass-effect: rgba(240, 245, 233, 0.9); /* Glass effect background color - 玻璃态背景色 */
-  --glass-border: 1px solid rgba(200, 214, 199, 0.2); /* Glass effect border color - 玻璃态边框颜色 */
-  --glass-shadow: 0 8px 32px 0 rgba(91, 140, 90, 0.1); /* Glass effect shadow - 玻璃态阴影 */
-}

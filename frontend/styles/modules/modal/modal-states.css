@@ -1,8 +1,19 @@
 /* Modal States Styles - 模态框状态样式 */
 /*
   定义模态框 (modal) 组件在不同状态下的样式，
+   依赖：state/variables.css, theme/light.css
   例如 hover, active, focus, show-modal, closing 等交互和状态样式。
 */
+/* 模态框按钮通用样式 */
+.modal-buttons-container button {
+  cursor: pointer; /* 设置鼠标指针为 pointer */
+}
+
+/* 关闭按钮 */
+.close-modal-button {
+  cursor: pointer; /* 设置鼠标指针为 pointer */
+}
+
 /* 保存按钮 Hover 状态 */
 .save-modal-button:hover {
   background: var(--primary-hover); /* Hover 状态背景色 */
@@ -33,7 +44,7 @@
 .modal textarea:focus,
 .modal select:focus {
   outline: none; /* 移除默认 outline */
-  border-color: var(--primary-color); /* Focus 状态边框颜色 */
+  border-color: var(--color-primary); /* Focus 状态边框颜色 */
   box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1); /* Focus 状态阴影 */
 }
 

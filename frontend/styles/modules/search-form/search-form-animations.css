@@ -1,5 +1,10 @@
 /* Search Form Animations Styles - 搜索框动画样式 */
 /*
   定义搜索框 (search-form) 组件的动画和过渡效果。
-  例如搜索框展开/收起时的动画效果，目前暂无动画样式。
+  例如搜索框展开/收起时的动画效果。
 */
+
+/* 搜索框容器 */
+.search-form {
+  transition: all var(--transition-normal); /* 添加过渡效果 */
+}

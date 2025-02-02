@@ -8,9 +8,9 @@
   position: fixed; /* 使用 fixed 定位，使其脱离文档流 */
   bottom: var(--spacing-xl); /* 距离底部一定距离，使用 xl 尺寸 CSS 变量 */
   right: var(--spacing-xl); /* 距离右侧一定距离，使用 xl 尺寸 CSS 变量 */
-  z-index: 10; /* 设置 z-index，确保在其他元素之上 */
   width: 48px; /* 设置宽度 */
   height: 48px; /* 设置高度 */
   margin: 0; /* 移除外边距 */
   padding: 0; /* 移除内边距 */
+  z-index: 10; /* 设置 z-index，确保在其他元素之上 */
 }

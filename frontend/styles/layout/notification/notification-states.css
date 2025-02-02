@@ -1,6 +1,19 @@
 /* Notification States Styles - 通知组件状态样式 */
-/* 
-  定义通知 (notification) 组件在不同状态下的样式。 
-  该模块用于设置通知组件在不同状态下的视觉反馈，
+/*
+  定义通知 (notification) 组件在不同状态下的样式，
   例如 info, error, success 等不同类型的通知样式。
- */
+*/
+/* Info Notification State - 信息通知状态 */
+.notification.info {
+  border-left: 4px solid var(--notification-border-color-info); /* 信息通知左侧边框颜色，使用 CSS 变量 */
+}
+
+/* Error Notification State - 错误通知状态 */
+.notification.error {
+  border-left: 4px solid var(--notification-border-color-error); /* 错误通知左侧边框颜色，使用 CSS 变量 */
+}
+
+/* Success Notification State - 成功通知状态 */
+.notification.success {
+  border-left: 4px solid var(--notification-border-color-success); /* 成功通知左侧边框颜色，使用 CSS 变量 */
+}

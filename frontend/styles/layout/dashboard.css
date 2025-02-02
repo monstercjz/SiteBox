@@ -5,8 +5,3 @@
   实现仪表盘组件的模块化样式管理。
 */
 @import './dashboard/dashboard-base.css'; /* 引入仪表盘基础布局模块 */
-@import './dashboard/dashboard-header.css'; /* 引入仪表盘头部样式模块 (如果需要头部样式) */
-@import './dashboard/dashboard-sidebar.css'; /* 引入仪表盘侧边栏样式模块 (如果需要侧边栏样式) */
-@import './dashboard/dashboard-content.css'; /* 引入仪表盘内容区域样式模块 (如果需要内容区域样式) */
-@import './dashboard/dashboard-footer.css'; /* 引入仪表盘页脚样式模块 (如果需要页脚样式) */
-@import './dashboard/dashboard-responsive.css'; /* 引入仪表盘响应式样式模块 (如果需要响应式样式) */

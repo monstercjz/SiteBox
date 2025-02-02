@@ -1,5 +1,15 @@
 /* Theme Switcher Animations Styles - 主题切换器动画样式 */
 /*
   定义主题切换器 (theme-switcher) 组件的动画和过渡效果。
-  例如选项列表显示/隐藏时的动画效果，目前暂无动画样式。
+  例如选项列表显示/隐藏时的动画效果。
 */
+
+/* 主题切换器选项容器过渡效果 */
+.theme-switcher__options {
+  transition: all var(--transition-normal); /* 添加通用过渡效果 */
+}
+
+/* 主题切换器选项按钮过渡效果 */
+.theme-switcher__option {
+  transition: all var(--transition-fast); /* 添加通用过渡效果 */
+}

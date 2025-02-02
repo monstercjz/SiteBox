@@ -17,12 +17,12 @@
 
 /* 搜索框图标主题 */
 .search-form__icon {
-  background-color: var(--surface-color); /* 设置背景色为 surface color CSS 变量 */
+  background-color: var(--color-surface); /* 设置背景色为 surface color CSS 变量 */
 }
 
 /* 搜索框输入框主题 */
 .search-form__input {
-  background-color: var(--surface-color); /* 设置背景色为 surface color CSS 变量 */
-  color: var(--text-primary); /* 设置文字颜色为 primary text color CSS 变量 */
-  border-color: var(--border-color); /* 设置边框颜色为 border color CSS 变量 */
+  background-color: var(--color-surface); /* 设置背景色为 surface color CSS 变量 */
+  color: var(--color-text-primary); /* 设置文字颜色为 primary text color CSS 变量 */
+  border-color: var(--color-border); /* 设置边框颜色为 border color CSS 变量 */
 }

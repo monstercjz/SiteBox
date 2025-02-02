@@ -1,5 +1,9 @@
 /* Actions Toggle Button Animations Styles - 切换按钮动画样式 */
 /*
   定义切换按钮 (actions-toggle-button) 组件的动画和过渡效果。
-  例如点击、hover 等状态切换时的动画效果，目前暂无动画样式。
+  例如点击、hover 等状态切换时的动画效果。
 */
+
+#actions-toggle-button {
+  transition: all var(--transition-normal); /* 添加过渡效果 */
+}

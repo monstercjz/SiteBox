@@ -9,9 +9,7 @@
 }
 
 /* 删除网站条目菜单项 hover 状态样式 */
-#contextMenu .delete-website-item:hover {
-  background-color: #fee2e2; /* 设置删除网站条目菜单项 hover 背景色为浅红色 */
-}
+
 
 /* 删除分组菜单项样式 */
 /* Group context menu items */
@@ -20,6 +18,8 @@
 }
 
 /* 删除分组菜单项 hover 状态样式 */
-#contextMenu .delete-group-item:hover {
-  background-color: #fee2e2; /* 设置删除分组菜单项 hover 背景色为浅红色 */
+
+/* 菜单项 hover 状态通用样式 */
+#contextMenu div:hover {
+  background-color: var(--surface-hover);
 }

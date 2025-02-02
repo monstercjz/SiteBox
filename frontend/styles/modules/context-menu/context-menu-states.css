@@ -1,5 +1,20 @@
 /* Context Menu States Styles - 右键菜单状态样式 */
 /*
   定义右键菜单 (context-menu) 组件在不同状态下的样式，
-  例如 hover, active 等交互状态。目前暂无状态样式。
+  例如 hover, active 等交互状态。
 */
+
+/* 右键菜单项 */
+#contextMenu div {
+  cursor: pointer; /* 设置鼠标指针为 pointer */
+}
+
+/* 删除网站条目菜单项 hover 状态样式 */
+#contextMenu .delete-website-item:hover {
+  background-color: #fee2e2; /* 设置删除网站条目菜单项 hover 背景色为浅红色 */
+}
+
+/* 删除分组菜单项 hover 状态样式 */
+#contextMenu .delete-group-item:hover {
+  background-color: #fee2e2; /* 设置删除分组菜单项 hover 背景色为浅红色 */
+}

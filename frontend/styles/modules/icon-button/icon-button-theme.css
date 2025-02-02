@@ -1,11 +1,12 @@
 /* Icon Button Theme Styles - 图标按钮主题样式 */
 /*
   定义图标按钮 (icon-button) 组件的视觉主题样式。
+   依赖：theme/variables.css, theme/light.css
   包括背景色、边框颜色、文字颜色、阴影等，使用 CSS 变量进行主题化配置。
 */
 .icon-button {
-  background: var(--surface-color); /* 设置背景色为 surface color CSS 变量 */
-  border: 1px solid var(--border-color); /* 设置边框 */
-  color: var(--text-primary); /* 设置文字颜色为 primary text color CSS 变量 */
+  background: var(--color-surface); /* 设置背景色为 surface color CSS 变量 */
+  border: 1px solid var(--color-border); /* 设置边框 */
+  color: var(--color-text-primary); /* 设置文字颜色为 primary text color CSS 变量 */
   box-shadow: var(--shadow-md); /* 设置阴影效果，使用 shadow-md CSS 变量 */
 }

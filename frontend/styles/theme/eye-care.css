@@ -1,0 +1,26 @@
+/* Eye-care theme variables - 护眼主题变量 */
+@layer theme-variables {
+  [data-theme="eye-care"] {
+    /* 护眼主题的柔和色系 */
+    --color-background-base: var(--color-surface); /* Background color - 基础背景色，默认使用 surface color */
+    --color-text-base: var(--color-text-primary); /* Text color - 基础文字颜色，默认使用 primary text color */
+    --color-primary: hsl(117, 43%, 45%);  /* Primary color - 主题色，柔和的绿色 (HSL) */
+    --color-primary-hover: hsl(115, 34%, 35%);  /* Primary color Hover - 主题色 Hover 状态，深绿色 (HSL) */
+    --color-surface: hsl(80, 30%, 94%);  /* Surface color - 表面颜色，淡青绿色背景 (HSL) */
+    --color-surface-hover: hsl(80, 25%, 92%);  /* Surface color Hover - 表面颜色 Hover 状态，浅绿色悬浮背景 (HSL) */
+    --color-background: hsl(84, 47%, 93%);      /* Background - 背景色，柔和的浅绿背景 (HSL) */
+    --color-text-primary: hsl(120, 30%, 20%);   /* Primary text color - 主要文字颜色，深绿色文字 (HSL) */
+    --color-text-secondary: hsl(120, 15%, 40%); /* Secondary text color - 次要文字颜色，中灰绿色文字 (HSL) */
+    --color-border: hsl(120, 20%, 80%);     /* Border color - 边框颜色，淡绿色边框 (HSL) */
+
+    /* 阴影效果调整为更柔和的绿色 */
+    --shadow-sm: 0 1px 2px rgba(91, 140, 90, 0.05); /* Small shadow - 小阴影 */
+    --shadow-md: 0 4px 6px rgba(91, 140, 90, 0.05); /* Medium shadow - 中阴影 */
+    --shadow-lg: 0 10px 15px rgba(91, 140, 90, 0.05); /* Large shadow - 大阴影 */
+
+    /* 玻璃态效果调整 - Glass Effect System */
+    --glass-effect: rgba(240, 245, 233, 0.9); /* Glass effect background color - 玻璃态背景色 */
+    --glass-border: 1px solid rgba(200, 214, 199, 0.2); /* Glass effect border color - 玻璃态边框颜色 */
+    --glass-shadow: 0 8px 32px 0 rgba(91, 140, 90, 0.1); /* Glass effect shadow - 玻璃态阴影 */
+  }
+}
