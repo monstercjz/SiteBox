@@ -201,17 +201,6 @@
       "isAccessible": true
     },
     {
-      "id": "732bcf2d-c00a-4f5b-8836-dca0773e09bb",
-      "groupId": "09e219d8-6108-42c9-b318-d3ef0b2a9782",
-      "name": "taobao",
-      "url": "https://taobao.com",
-      "description": "1",
-      "faviconUrl": "http://localhost:3000/data/icons/taobao.com.ico",
-      "lastAccessTime": "2025-02-02T16:27:30.701Z",
-      "order": 2,
-      "isAccessible": true
-    },
-    {
       "id": "27f6962a-382e-4032-b806-35bb61dc5617",
       "groupId": "589756ee-86ee-4eb6-bab7-e51879422418",
       "name": "taobao",

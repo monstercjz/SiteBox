@@ -1,9 +1,48 @@
 version: "3.9"
+
+networks:
+  app-network:
+    driver: bridge
+
 services:
-  backend:
+  frontend-nginx:
+    container_name: frontend-web-server
     build:
-      context: .
-      dockerfile: ./backend/Dockerfile
+      context: ./frontend # Explicitly set build context to ./frontend
+      dockerfile: Dockerfile # Dockerfile path is relative to the context (./frontend)
+    ports:
+      - "80:80"
+    depends_on:
+      - backend-nginx
+    networks:
+      - app-network
+    restart: always
+    volumes:
+      - ./frontend:/usr/share/nginx/html:ro
+
+  backend-nginx:
+    container_name: backend-nginx-server
+    build:
+      context: . # Explicitly set build context to project root (.)
+      dockerfile: ./backend-nginx/Dockerfile
+    ports:
+      - "3001:3001"
+    depends_on:
+      - backend-app
+    networks:
+      - app-network
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "nginx -t"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  backend-app:
+    container_name: backend-app-server
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
     ports:
       - "3000:3000"
     volumes:
@@ -11,3 +50,11 @@ services:
     environment:
       PORT: 3000
       BACKEND_URL: http://localhost
+    networks:
+      - app-network
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "node server.js --check"]
+      interval: 10s
+      timeout: 5s
+      retries: 3

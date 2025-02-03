@@ -7,33 +7,33 @@ const path = require('path');
 app.use(express.json());
 app.use(cors());
 // 配置静态文件服务
-app.use('/data/icons', express.static(path.join(__dirname, 'data', 'icons')));
+app.use('/api/data/icons', express.static(path.join(__dirname, 'data', 'icons')));
 // Routes
 const groupRoutes = require('./routes/groupRoutes');
-app.use('/groups', groupRoutes);
+app.use('/api/groups', groupRoutes);
 
 const websiteRoutes = require('./routes/websiteRoutes');
-app.use('/websites', websiteRoutes);
+app.use('/api/websites', websiteRoutes);
 
 const searchRoutes = require('./routes/searchRoutes');
-app.use('/search', searchRoutes);
+app.use('/api/search', searchRoutes);
 
 const syncRoutes = require('./routes/syncRoutes');
-app.use('/sync', syncRoutes);
+app.use('/api/sync', syncRoutes);
 
 const userRoutes = require('./routes/userRoutes');
-app.use('/user', userRoutes);
+app.use('/api/user', userRoutes);
 
 const analyticsRoutes = require('./routes/analyticsRoutes');
-app.use('/analytics', analyticsRoutes);
+app.use('/api/analytics', analyticsRoutes);
 
 const pluginRoutes = require('./routes/pluginRoutes');
-app.use('/plugin', pluginRoutes);
+app.use('/api/plugin', pluginRoutes);
 
 const miscRoutes = require('./routes/miscRoutes');
-app.use('/misc', miscRoutes);
+app.use('/api/misc', miscRoutes);
 
-app.get('/', (req, res) => {
+app.get('/api/', (req, res) => {
   res.send('Backend service is running');
 });
 

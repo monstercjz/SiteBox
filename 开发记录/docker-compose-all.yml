@@ -1,0 +1,26 @@
+version: "3.9"
+# 三层架构模式
+services:
+  frontend-nginx:
+    build: ./frontend
+    ports:
+      - "80:80" # 宿主机 80 端口映射到前端 Nginx 容器 80 端口
+    depends_on:
+      - backend-nginx # 依赖后端 Nginx 服务
+
+  backend-nginx:
+    build: ./backend-nginx
+    ports:
+      - "3001:3001" # 宿主机 3001 端口 (可选，如果需要直接访问后端 Nginx)
+    depends_on:
+      - backend-app # 依赖后端 Node.js 应用服务
+
+  backend-app:
+    build: ./backend
+    ports:
+      - "3000:3000" # 宿主机 3000 端口 (可选，如果需要直接访问后端应用)
+    volumes:
+      - ./backend/data:/app/backend/data
+    environment:
+      PORT: 3000
+      BACKEND_URL: http://localhost
