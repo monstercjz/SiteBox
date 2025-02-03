@@ -88,7 +88,7 @@ function renderDashboard({ websites, groups }) {
             websiteItem.innerHTML = `
                 
                 
-                ${website.faviconUrl ? `<img src="${website.faviconUrl}" title="${website.name}" style="margin-right: 3px;">` : ''}
+                ${website.faviconUrl ? `<img src="${website.faviconUrl.startsWith('http') ? website.faviconUrl : backendUrl + website.faviconUrl}" title="${website.name}" style="margin-right: 3px;">` : ''}
                 <a href="${website.url}" target="_blank">${website.name}</a>
                 <span style="display:none;">${website.faviconUrl}</span>
             `;

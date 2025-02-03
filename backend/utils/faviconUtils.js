@@ -19,7 +19,7 @@ async function fetchFavicon(websiteUrl) {
     faviconCache[domain] = `/data/icons/${iconFileName}`;
     console.log(`当前的`, faviconCache[domain]);
     //return `${backendUrl}:${PORT}/data/icons/${iconFileName}`;
-    return `/api/data/icons/${iconFileName}`;
+    return `/data/icons/${iconFileName}`;
   } catch (error) {
     // 如果不存在，则进行网络请求
     console.log(`网络获取`);
@@ -32,7 +32,7 @@ async function fetchFavicon(websiteUrl) {
         await fs.writeFile(iconPath, iconBuffer);
         faviconCache[domain] = `/data/icons/${iconFileName}`;
         //return `${backendUrl}:${PORT}/data/icons/${iconFileName}`;
-        return `/api/data/icons/${iconFileName}`;
+        return `/data/icons/${iconFileName}`;
       }
     } catch (error) {
       console.error(`Failed to fetch favicon for ${websiteUrl}:`, error.message);
@@ -40,7 +40,7 @@ async function fetchFavicon(websiteUrl) {
   }
 
   //return null;
-  return `/api/data/icons/Docker.png.ico`
+  return `/data/icons/Docker.png.ico`
 }
 
 
