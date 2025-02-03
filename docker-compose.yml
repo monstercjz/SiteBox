@@ -1,0 +1,13 @@
+version: "3.9"
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: ./backend/Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./backend/data:/app/backend/data
+    environment:
+      PORT: 3000
+      BACKEND_URL: http://localhost

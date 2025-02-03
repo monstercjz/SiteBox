@@ -3,8 +3,8 @@
 
 const GROUP_DATA_FILE_PATH = `${__dirname}/../data/sites-data.json`;
 
-const PORT = 3000;
-const backendUrl = 'http://localhost';
+const PORT = process.env.PORT || 3000;
+const backendUrl = process.env.BACKEND_URL || 'http://localhost';
 const WEBSITE_DATA_FILE_PATH = `${__dirname}/../data/sites-data.json`;
 const HISTORY_DATA_FILE_PATH = `${__dirname}/../data/sites-history.json`;
 const ICONS_DIR = `${__dirname}/../data/icons`;
