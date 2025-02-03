@@ -13,63 +13,27 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // 获取全部分组并填充下拉框
-  fetch('http://localhost:3000/groups') // 后端 API 地址，修改为 /groups
-    .then(response => response.json())
-    .then(data => {
-      if (data.data) {
-        data.data.forEach(group => {
-          const option = document.createElement('option');
-          option.value = group.id;
-          option.textContent = group.name;
-          groupSelect.appendChild(option);
-        });
-      }
-    })
-    .catch(error => {
-      console.error('Error fetching groups:', error);
-    });
-
-  saveBtn.addEventListener('click', () => {
-    const url = urlInput.value;
-    const title = titleInput.value;
-    const description = descriptionInput.value;
-    const groupId = groupSelect.value;
-
-    // 判断是否选择了分组
-    if (!groupId) {
-      // 检查默认分组是否存在，如果不存在则创建
-      fetch('http://localhost:3000/groups/default') // 检查默认分组的 API 地址，修改为 /groups/default
-        .then(response => {
-          if (!response.ok) {
-            // 默认分组不存在，创建默认分组
-            return fetch('http://localhost:3000/groups', { // 创建分组的 API 地址，修改为 /groups
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({ name: 'Default Group',isCollapsible: false }) // 默认分组名称
-            })
-            .then(response => response.json())
-            .then(data => {
-              // 创建默认分组成功后，将网站数据保存到默认分组
-              return saveWebsiteData(url, title, description, data.data.id);
-            });
-          } else {
-            return response.json().then(data => {
-              // 默认分组已存在，将网站数据保存到默认分组
-              return saveWebsiteData(url, title, description, data.group.id);
-            });
-          }
-        });
-    } else {
-      // 已选择分组，直接保存网站数据
-      saveWebsiteData(url, title, description, groupId);
-    }
-  });
+  function fetchGroups(apiAddress) { // 接受 apiAddress 参数
+    fetch(`${apiAddress}/api/groups`) // 使用 apiAddress
+      .then(response => response.json())
+      .then(data => {
+        if (data.data) {
+          data.data.forEach(group => {
+            const option = document.createElement('option');
+            option.value = group.id;
+            option.textContent = group.name;
+            groupSelect.appendChild(option);
+          });
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching groups:', error);
+      });
+  }
 
   // 保存网站数据到后端 API
-  function saveWebsiteData(url, title, description, groupId) {
-    fetch('http://localhost:3000/plugin/extension/url', {
+  function saveWebsiteData(url, title, description, groupId, apiAddress) { // 接受 apiAddress 参数
+    fetch(`${apiAddress}/api/plugin/extension/url`, { // 使用 apiAddress
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -102,4 +66,52 @@ document.addEventListener('DOMContentLoaded', () => {
       console.error('发送失败，请检查控制台错误日志');
     });
   }
+
+  // 初始化加载分组列表
+  chrome.storage.local.get(['apiAddress'], function(result) {
+    const apiAddress = result.apiAddress || 'http://192.168.31.242:3001'; // 默认 API 地址
+    fetchGroups(apiAddress); // 加载分组列表
+  });
+
+
+  saveBtn.addEventListener('click', () => {
+    const url = urlInput.value;
+    const title = titleInput.value;
+    const description = descriptionInput.value;
+    const groupId = groupSelect.value;
+    chrome.storage.local.get(['apiAddress'], function(result) { // 获取本地存储的 API 地址
+      const apiAddress = result.apiAddress || 'http://192.168.31.242:3001'; // 默认 API 地址
+
+      // 判断是否选择了分组
+      if (!groupId) {
+        // 检查默认分组是否存在，如果不存在则创建
+        fetch(`${apiAddress}/api/groups/default`) // 检查默认分组的 API 地址
+          .then(response => {
+            if (!response.ok) {
+              // 默认分组不存在，创建默认分组
+              return fetch(`${apiAddress}/api/groups`, { // 创建分组的 API 地址
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ name: 'Default Group',isCollapsible: false }) // 默认分组名称
+              })
+              .then(response => response.json())
+              .then(data => {
+                // 创建默认分组成功后，将网站数据保存到默认分组
+                return saveWebsiteData(url, title, description, data.data.id, apiAddress); // 传递 apiAddress
+              });
+            } else {
+              return response.json().then(data => {
+                // 默认分组已存在，将网站数据保存到默认分组
+                return saveWebsiteData(url, title, description, data.group.id, apiAddress); // 传递 apiAddress
+              });
+            }
+          });
+      } else {
+        // 已选择分组，直接保存网站数据
+        saveWebsiteData(url, title, description, groupId, apiAddress); // 传递 apiAddress
+      }
+    });
+  });
 });
