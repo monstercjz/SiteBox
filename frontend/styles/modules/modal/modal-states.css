@@ -16,19 +16,19 @@
 
 /* 保存按钮 Hover 状态 */
 .save-modal-button:hover {
-  background: var(--primary-hover); /* Hover 状态背景色 */
+  background: var(--color-primary-hover); /* Hover 状态背景色 */
   transform: translateY(-1px); /* Hover 状态向上位移 */
 }
 
 /* 取消按钮 Hover 状态 */
 .cancel-modal-button:hover {
-  background: var(--surface-hover); /* Hover 状态背景色 */
+  background: var(--color-surface-hover); /* Hover 状态背景色 */
   transform: translateY(-1px); /* Hover 状态向上位移 */
 }
 
 /* 关闭按钮 Hover 状态 */
 .close-modal-button:hover {
-  background: var(--surface-hover); /* Hover 状态背景色 */
+  background: var(--color-surface-hover); /* Hover 状态背景色 */
   color: var(--text-primary); /* Hover 状态文字颜色 */
 }
 

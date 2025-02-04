@@ -11,7 +11,7 @@
 
 /* Hover 状态 */
 .icon-button:hover {
-  background: var(--surface-hover); /* Hover 状态背景色 */
+  background: var(---color-surface-hover); /* Hover 状态背景色 */
   box-shadow: var(--shadow-lg); /* Hover 状态阴影 */
   transform: translateY(-2px); /* Hover 状态向上位移 */
 }
