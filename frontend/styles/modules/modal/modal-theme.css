@@ -14,7 +14,6 @@
   box-shadow: var(--shadow-lg), /* 设置阴影效果，使用 shadow-lg CSS 变量 */
               0 0 0 1px rgba(0, 0, 0, 0.05),
               0 0 40px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(8px); /* 添加背景模糊效果 */
   border: 1px solid rgba(255, 255, 255, 0.1); /* 设置边框 */
 }
 

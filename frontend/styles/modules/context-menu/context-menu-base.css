@@ -13,5 +13,5 @@
 /* 右键菜单项 */
 #contextMenu div {
   padding: var(--spacing-sm) var(--spacing-md); /* 设置菜单项内边距 */
-  user-select: none; /* 禁止用户选择文本 */
+  
 }

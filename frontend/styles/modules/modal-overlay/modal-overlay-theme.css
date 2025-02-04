@@ -9,8 +9,3 @@
   --modal-overlay-background-color: rgba(0, 0, 0, 0.5); /* 半透明黑色 */
 }
 
-/* Modal Overlay - 模态框遮罩层 */
-.modal::before {
-  background: var(--modal-overlay-background-color); /* 使用 CSS 变量设置背景色 */
-  backdrop-filter: blur(4px); /* 添加背景模糊效果 */
-}

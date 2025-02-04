@@ -20,6 +20,7 @@ function validateAndCompleteUrl(url) {
 }
 
 let currentTooltip = null; // 当前显示的 tooltip 元素
+let tooltipTimeout = null; // tooltip 消失定时器
 
 /**
  * @function showTooltip
@@ -32,6 +33,7 @@ function showTooltip(e) {
         if (!currentTooltip) {
             // 如果 currentTooltip 不存在，则创建 tooltip 元素
             currentTooltip = document.createElement('div');
+            currentTooltip.style.position = 'absolute'; // 设置 position: absolute;
             currentTooltip.id = 'tooltip'; // 设置 tooltip ID
             document.body.appendChild(currentTooltip); // 将 tooltip 添加到 body 中
         }
@@ -39,8 +41,15 @@ function showTooltip(e) {
         currentTooltip.textContent = tooltipText; // 设置 tooltip 文本内容
         currentTooltip.style.display = 'block'; // 显示 tooltip
         const rect = target.getBoundingClientRect(); // 获取目标元素 Rect
-        currentTooltip.style.left = `${rect.left + window.scrollX-5}px`; // 设置 tooltip left 偏移量
-        currentTooltip.style.top = `${rect.top + window.scrollY+5 }px`; // 设置 tooltip top 偏移量
+                currentTooltip.style.left = `${rect.left - currentTooltip.offsetWidth - 10}px`; //  按钮左侧，留出间距
+                currentTooltip.style.top = `${rect.top + rect.height / 2 - 15}px`; // 与按钮垂直中心对齐，并向上偏移
+
+        // 清除之前的定时器，防止重复触发
+        clearTimeout(tooltipTimeout);
+        // 设置 5 秒后自动隐藏 tooltip
+        tooltipTimeout = setTimeout(() => {
+            hideTooltip(e); // 调用 hideTooltip 函数隐藏 tooltip
+        }, 5000); // 5 秒后自动隐藏 tooltip
     }
 }
 
@@ -74,14 +83,14 @@ function escapeHtml(unsafe) {
         .replace(/'/g, "&#039;")
       : '';
   }
-  
+
 /**
  * @function generateTooltipContent
  * @description 生成 tooltip 内容 HTML 字符串
  * @param {Website} website 网站数据对象
  * @returns {string} tooltip 内容 HTML 字符串
  */
-function generateTooltipContent(website) { 
+function generateTooltipContent(website) {
     if (!website || !website.lastAccessTime) {
       return '<div class="tooltip-content error">数据无效</div>'; // 数据无效时显示错误提示
     }

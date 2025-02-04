@@ -134,4 +134,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // 初始化主题切换功能
     initThemeToggle();
+    // 添加切换添加按钮鼠标悬停事件监听器
+    actionsToggleButton.addEventListener('mouseover', showTooltip);
+    // 获取 action-buttons 下的所有 icon-button 元素
+    const actionIconButtons = actionButtons.querySelectorAll('.icon-button');
+
+    // 为每个 action button 添加鼠标悬停事件监听器
+    actionIconButtons.forEach(button => {
+        button.addEventListener('mouseover', showTooltip);
+    });
 });
