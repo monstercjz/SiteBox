@@ -1,0 +1,17 @@
+@layer theme-variables {
+  body[data-theme='dark'] {
+    --primary-color: #9333ea;
+    --primary-hover: #a855f7;
+    --secondary-color: #7c3aed;
+    --background: #1e1b4b;
+    --surface: #2e2a5b;
+    --text-primary: #f5f3ff;
+    --text-secondary: #e0e7ff;
+    --border-color: #4c4a6e;
+    --shadow: 0 1px 3px rgba(147, 51, 234, 0.2);
+    --glass-effect: rgba(46, 42, 91, 0.9);
+    --glass-border: 1px solid rgba(46, 42, 91, 0.2);
+    --glass-shadow: 0 8px 32px 0 rgba(147, 51, 234, 0.15);
+    --glass-blur: blur(12px);
+  }
+}

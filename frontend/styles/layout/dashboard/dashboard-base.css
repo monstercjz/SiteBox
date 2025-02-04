@@ -11,3 +11,24 @@
   margin: 0 auto; /* 水平居中 */
   gap: var(--spacing-xl); /* 设置子元素间距为 xl 尺寸 CSS 变量 */
 }
+[data-layout="alternative"] #dashboard {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(280px, 1fr));
+  gap: 2rem;
+  max-width: 1350px;
+  margin: 0 auto;
+  padding: 2rem;
+  position: relative;
+}
+
+@media (max-width: 1200px) {
+  [data-layout="alternative"] #dashboard {
+      grid-template-columns: repeat(2, minmax(280px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  [data-layout="alternative"] #dashboard {
+      grid-template-columns: 1fr;
+  }
+}

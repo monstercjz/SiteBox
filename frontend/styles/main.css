@@ -47,6 +47,7 @@
 @import './modules/modal.css';
 @import './modules/tooltip.css';
 @import './modules/theme-switcher.css';
+@import './modules/layout-switcher.css';
 
 /* Import State styles - 引入状态模块样式 */
 @import 'state/loading.css';
@@ -66,3 +67,4 @@
 @import 'utilities/size.css';
 @import 'utilities/position.css';
 @import 'utilities/z-index.css';
+@import 'utilities/alternative.css';

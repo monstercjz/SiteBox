@@ -1,0 +1,28 @@
+@layer theme-variables {
+  :root {
+    --primary-color: #7c3aed;
+    --primary-hover: #6d28d9;
+    --secondary-color: #9333ea;
+    --background: #f5f3ff;
+    --surface: #ffffff;
+    --text-primary: #1e1b4b;
+    --text-secondary: #4c4a6e;
+    --border-color: #e0e7ff;
+    --shadow: 0 1px 3px rgba(99, 102, 241, 0.1);
+    --radius: 16px;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --gradient: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+
+    /* New theme variables */
+    --accent-color: #f59e0b;
+    --success-color: #10b981;
+    --error-color: #ef4444;
+    --info-color: #3b82f6;
+    --warning-color: #f59e0b;
+    --overlay-color: rgba(0, 0, 0, 0.5);
+    --glass-effect: rgba(255, 255, 255, 0.9);
+    --glass-border: 1px solid rgba(255, 255, 255, 0.2);
+    --glass-shadow: 0 8px 32px 0 rgba(99, 102, 241, 0.15);
+    --glass-blur: blur(12px);
+  }
+}

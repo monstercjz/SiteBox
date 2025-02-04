@@ -5,6 +5,7 @@ import { showNotification, renderDashboardWithData } from './modules/dashboardDa
 import { SearchService } from './modules/searchService.js';
 import { fetchAndRenderGroupSelect, renderGroupSelect } from './modules/groupSelectDataService.js';
 import { applySavedTheme, initThemeToggle } from './modules/themeService.js';
+import { applySavedLayout, initLayoutToggle } from './modules/layoutService.js'; // 导入 layoutService
 import { loadColorPreference, toggleRandomColors } from './modules/colorThemeService.js';
 import { addGroup, deleteGroup, editGroup } from './modules/groupInteractionService.js';
 import { addWebsite, deleteWebsite, getWebsiteInfo, handleWebsiteHover, openImportWebsitesModal ,handleWebsiteClick } from './modules/websiteInteractionService.js';
@@ -35,6 +36,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // 应用保存的主题和颜色偏好
     applySavedTheme();
+    applySavedLayout(); // 应用保存的布局
     loadColorPreference();
 
     // 设置颜色切换按钮的初始状态
@@ -134,6 +136,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // 初始化主题切换功能
     initThemeToggle();
+    // 初始化布局切换功能 (目前为空)
+    initLayoutToggle(); // 初始化布局切换功能
     // 添加切换添加按钮鼠标悬停事件监听器
     actionsToggleButton.addEventListener('mouseover', showTooltip);
     // 获取 action-buttons 下的所有 icon-button 元素
