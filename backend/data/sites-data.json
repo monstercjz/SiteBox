@@ -21,17 +21,6 @@
   ],
   "websites": [
     {
-      "id": "ab5489f8-a6eb-4f97-b874-3da7addbb519",
-      "groupId": "1fd77e26-625e-419e-9940-85b59a14fcea",
-      "name": "知  乎",
-      "url": "http://zhihu.com/",
-      "description": "1",
-      "faviconUrl": "http://localhost:3000/data/icons/zhihu.com.ico",
-      "lastAccessTime": "2025-01-24T20:05:38.414Z",
-      "order": 2,
-      "isAccessible": true
-    },
-    {
       "id": "8ddcfb3b-df6f-41fb-b645-374be81a138f",
       "groupId": "1fd77e26-625e-419e-9940-85b59a14fcea",
       "name": "taobao",
@@ -45,10 +34,10 @@
     {
       "id": "18cd9f5a-08d0-41f8-87af-0bc23c582c9a",
       "groupId": "1fd77e26-625e-419e-9940-85b59a14fcea",
-      "name": "Google1",
+      "name": "Google",
       "url": "http://google.com/",
       "description": "Google",
-      "faviconUrl": "http://localhost:3000/data/icons/google.com.ico",
+      "faviconUrl": "/data/icons/google.com.ico",
       "lastAccessTime": "2025-01-24T10:53:43.340Z",
       "order": 5,
       "isAccessible": true
@@ -59,7 +48,7 @@
       "name": "github",
       "url": "http://github.com",
       "description": "github",
-      "faviconUrl": "http://localhost:3000/data/icons/github.com.ico",
+      "faviconUrl": "/data/icons/github.com.ico",
       "lastAccessTime": "2025-01-22T17:46:05.811Z",
       "order": 6,
       "isAccessible": true
