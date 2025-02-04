@@ -6,7 +6,7 @@
 
 /* 设置 html 根元素字体大小 */
 html {
-  font-size: 16px; /* 默认字体大小 16px */
+  font-size: var(--font-size-base); /* 默认字体大小 16px */
 }
 
 /* 设置 body 基础字体和颜色 */

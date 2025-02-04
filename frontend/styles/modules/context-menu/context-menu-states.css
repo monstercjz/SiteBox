@@ -8,7 +8,10 @@
 #contextMenu div {
   cursor: pointer; /* 设置鼠标指针为 pointer */
 }
-
+/* Context Menu Item State Styles */
+#contextMenu div:hover {
+  background-color: var(--color-surface-hover);
+}
 /* 删除网站条目菜单项 hover 状态样式 */
 #contextMenu .delete-website-item:hover {
   background-color: #fee2e2; /* 设置删除网站条目菜单项 hover 背景色为浅红色 */
@@ -17,4 +20,9 @@
 /* 删除分组菜单项 hover 状态样式 */
 #contextMenu .delete-group-item:hover {
   background-color: #fee2e2; /* 设置删除分组菜单项 hover 背景色为浅红色 */
+}
+/* 深色主题下的删除菜单项 hover 样式 */
+[data-theme="dark"] #contextMenu div.delete-website-item:hover,
+[data-theme="dark"] #contextMenu div.delete-group-item:hover {
+  background-color: var(--color-delete-hover); /* 深色主题下删除菜单项 hover 背景色 */
 }

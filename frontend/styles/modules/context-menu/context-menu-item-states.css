@@ -1,4 +1,0 @@
-/* Context Menu Item State Styles */
-#contextMenu div:hover {
-  background-color: var(--color-surface-hover);
-}
