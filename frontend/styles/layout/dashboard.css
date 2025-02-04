@@ -5,3 +5,4 @@
   实现仪表盘组件的模块化样式管理。
 */
 @import './dashboard/dashboard-base.css'; /* 引入仪表盘基础布局模块 */
+@import './dashboard/dashboard-base-responsive.css'; /* 引入仪表盘基础布局模块 */

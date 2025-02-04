@@ -45,6 +45,76 @@
     --transition-normal: 250ms ease; /* Normal transition - 通用过渡效果 */
     --rotation: 0deg;                /* Rotation angle - 旋转角度 */
 
+
+    /* Border Width System - 边框宽度系统 */
+
+    /* Animation System - 动画系统 */
+    --animation-duration-fast: 0.2s;
+    --animation-duration-normal: 0.3s;
+    --animation-duration-slow: 0.4s;
+    --animation-duration-ripple: 0.6s;
+    --animation-duration-glow: 1.5s;
+
+    /* Animation Transform System - 动画变换系统 */
+    --transform-scale-sm: 0.95;
+    --transform-scale-normal: 1;
+    --transform-scale-md: 1.02;
+    --transform-scale-lg: 1.03;
+    --transform-scale-xl: 1.05;
+    --transform-scale-2xl: 1.08;
+    --transform-scale-hover: 1.1;
+    --transform-translateY-xs: -10px;
+    --transform-translateY-sm: -8px;
+    --transform-translateY-md: -6px;
+    --transform-translateY-lg: -4px;
+    --transform-translateY-xl: -2px;
+    --transform-translateY-2xl: 0;
+    --transform-translateY-3xl: 8px;
+    --transform-translateY-4xl: 10px;
+    --transform-translateY-modal-in-from: 20px;
+    
+    --animation-duration-rotate: 6s;
+    
+    --border-width: 1px;
+
+    /* Custom Shadows - 自定义阴影 */
+    --shadow-group-hover: 0 12px 24px rgba(0, 0, 0, 0.15);
+    --shadow-website-item-hover: 0 16px 32px rgba(99, 102, 241, 0.2);
+    --shadow-card-hover-start: 0 4px 8px rgba(0, 0, 0, 0.1);
+    --shadow-card-hover-mid: 0 20px 40px rgba(99, 102, 241, 0.25);
+    --shadow-website-item-active: 0 8px 24px rgba(0, 0, 0, 0.2);
+    --shadow-modal-content: 0 12px 32px rgba(0, 0, 0, 0.2);
+    --shadow-add-button: 0 4px 12px rgba(124, 58, 237, 0.3);
+    --shadow-add-button-hover: 0 6px 16px rgba(124, 58, 237, 0.4);
+    --shadow-context-menu: 0 8px 32px rgba(99, 102, 241, 0.2);
+    --shadow-input-focus: 0 0 0 3px rgba(124, 58, 237, 0.1);
+    --shadow-search-input: 0 4px 16px rgba(0, 0, 0, 0.1);
+    --shadow-system-status-hover: 0 12px 24px rgba(0, 0, 0, 0.2);
+    --shadow-search-input-focus: 0 0 0 2px rgba(76, 175, 80, 0.2);
+    --shadow-modal-button-active: 0 2px 6px rgba(124, 58, 237, 0.2);
+
+    /* Size System - 尺寸系统 */
+    --size-xs: 4px;
+    --size-sm: 8px;
+    --size-md: 10px;
+    --size-lg: 12px;
+    --size-xl: 16px;
+    --size-2xl: 20px;
+    --size-3xl: 24px;
+    --size-icon: 24px; /* Icon size - 图标尺寸 */
+    --size-button-sm: 48px; /* Small button size - 小按钮尺寸 */
+    --size-button-md: 48px; /* Medium button size - 中按钮尺寸 */
+    --size-modal-width: 500px; /* Modal width - 模态框宽度 */
+    --size-context-menu-width: 180px; /* Context menu width - 上下文菜单宽度 */
+    --size-website-tooltip-width: 240px; /* Website tooltip width - 网站工具提示宽度 */
+    --size-search-container-width-collapsed: 40px; /* Search container width (collapsed) - 搜索容器宽度 (折叠) */
+    --size-search-container-width-expanded: 300px; /* Search container width (expanded) - 搜索容器宽度 (展开) */
+    --size-search-input-width: 256px; /* Search input width - 搜索输入框宽度 */
+    --size-website-item-min-height: 60px; /* Website item min height - 网站项最小高度 */
+    --size-breakpoint-sm: 480px; /* Small breakpoint - 小屏幕断点 */
+    --size-breakpoint-md: 768px; /* Medium breakpoint - 中屏幕断点 */
+    --size-breakpoint-lg: 1200px; /* Large breakpoint - 大屏幕断点 */
+    
     /* Component Sizes System - 组件尺寸系统 */
     --icon-button-size: 48px; /* Icon button size - 图标按钮尺寸 */
     --modal-close-button-size: 32px; /* Modal close button size - 模态框关闭按钮尺寸 */

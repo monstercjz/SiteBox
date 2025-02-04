@@ -10,7 +10,4 @@
     z-index: 10; /* 设置 z-index，确保在其他元素之上 */
     pointer-events: none; /* 初始状态禁止 pointer 事件 */
   }
-/* Action Buttons Show State - 操作按钮组显示状态 */
-.action-buttons.show {
-  pointer-events: all; /* 显示状态允许 pointer 事件 */
-}
+

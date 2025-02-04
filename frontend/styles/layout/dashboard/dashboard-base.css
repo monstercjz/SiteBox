@@ -20,15 +20,3 @@
   padding: 2rem;
   position: relative;
 }
-
-@media (max-width: 1200px) {
-  [data-layout="alternative"] #dashboard {
-      grid-template-columns: repeat(2, minmax(280px, 1fr));
-  }
-}
-
-@media (max-width: 768px) {
-  [data-layout="alternative"] #dashboard {
-      grid-template-columns: 1fr;
-  }
-}

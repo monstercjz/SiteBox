@@ -26,3 +26,19 @@ h1 {
   margin-bottom: var(--spacing-xl); /* 设置下外边距 */
   letter-spacing: -0.025em; /* 设置letter-spacing 调整字间距 */
 }
+/* Alternative Layout - 备选布局*/
+[data-layout="alternative"] body {
+  font-family: 'Inter', system-ui, sans-serif;
+  margin: 0;
+  padding: 20px;
+  background-color: var(--color-background-base);
+  color: var(--color-text-primary);
+  line-height: 1.5;
+}
+
+[data-layout="alternative"] h1 {
+  text-align: center;
+  margin: 2rem 0;
+  color: var(--color-text-primary);
+  font-weight: 600;
+}
