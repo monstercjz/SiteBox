@@ -7,3 +7,10 @@
 #actions-toggle-button {
   transition: all var(--transition-normal); /* 添加过渡效果 */
 }
+[data-layout="alternative"] .toggle-actions button {
+  transition: var(--transition);
+
+}
+[data-layout="alternative"] .toggle-actions button svg {
+  transition: transform 0.2s ease;
+}

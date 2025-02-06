@@ -4,3 +4,33 @@
    依赖：state/variables.css
   例如 hover, active 等交互状态。目前暂无状态样式。
 */
+[data-layout="alternative"] .group::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--border-radius-sm);
+  background: var(--gradient);
+  opacity: 0;
+  transition: var(--transition);
+}
+
+[data-layout="alternative"] .group:hover {
+  transform: translateY(-6px) scale(1.03);
+  box-shadow: 0 var(--shadow-blur-md) var(--shadow-blur-lg) rgba(0, 0, 0, 0.15);
+  animation: groupHover 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  backdrop-filter: blur(12px);
+}
+
+
+[data-layout="alternative"] .group:hover::before {
+  opacity: 1;
+  width: 100%;
+  height: var(--border-width-md);
+  background: linear-gradient(
+      90deg,
+      var(--color-primary) 0%,
+      var(--color-secondary) 100%
+  );
+}

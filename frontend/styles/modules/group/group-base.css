@@ -15,3 +15,18 @@
   margin-bottom: var(--spacing-md); /* 设置下外边距 */
   padding-bottom: var(--spacing-xs); /* 设置下内边距 */
 }
+[data-layout="alternative"] .group {
+  padding: var(--spacing-group);
+  position: relative;
+  overflow: hidden;
+  margin: var(--spacing-xs);
+  /* will-change: transform, opacity; */
+  /* text-rendering: optimizeLegibility; */
+}
+[data-layout="alternative"] .group h2 {
+  margin: 0 0 1rem 0;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

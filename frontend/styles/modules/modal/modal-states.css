@@ -29,7 +29,7 @@
 /* 关闭按钮 Hover 状态 */
 .close-modal-button:hover {
   background: var(--color-surface-hover); /* Hover 状态背景色 */
-  color: var(--text-primary); /* Hover 状态文字颜色 */
+  color: var(--color-text-primary); /* Hover 状态文字颜色 */
 }
 
 /* 表单元素 Hover 状态 */

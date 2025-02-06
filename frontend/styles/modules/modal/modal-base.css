@@ -25,6 +25,28 @@
   flex-direction: column; /* 垂直方向排列 */
 }
 
+/* 模态框表单元素通用样式 */
+.modal input,
+.modal textarea,
+.modal select {
+  flex-grow: 1; /* 撑满剩余空间，可以让长度一致 */
+  padding: var(--spacing-md); /* 设置内边距 */
+  padding-right: var(--spacing-xl); /* 增加右侧内边距，留出箭头空间 */
+  margin-bottom: var(--spacing-lg); /* 设置下外边距 */
+  appearance: none; /* 移除默认 appearance 样式 */
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e"); /* 下拉箭头 SVG */
+  background-repeat: no-repeat; /* 禁止背景图片重复 */
+  background-position: right var(--spacing-sm) center; /* 设置背景图片位置 */
+  background-size: 16px; /* 设置背景图片大小 */
+}
+
+/* 模态框标题 */
+.modal-content h2 {
+  margin-bottom: var(--spacing-xl); /* 设置下外边距 */
+  padding-right: var(--spacing-xl); /* 设置右内边距 */
+  font-size: var(--font-size-xl); /* 设置字体大小 */
+  font-weight: var(--font-weight-semibold); /* 设置字体粗细 */
+}
 /* 模态框按钮容器 */
 .modal-buttons-container {
   display: flex; /* 使用 flex 布局 */
@@ -54,29 +76,4 @@
   border-radius: 50%; /* 设置圆形边框 */
   background: transparent; /* 设置背景色为透明 */
   border: none; /* 移除边框 */
-}
-
-/* 模态框表单元素通用样式 */
-.modal input,
-.modal textarea,
-.modal select {
-  flex-grow: 1; /* 撑满剩余空间，可以让长度一致 */
-  padding: var(--spacing-md); /* 设置内边距 */
-  padding-right: var(--spacing-xl); /* 增加右侧内边距，留出箭头空间 */
-  margin-bottom: var(--spacing-lg); /* 设置下外边距 */
-  border-radius: var(--radius-md); /* 设置圆角 */
-  border: 1px solid var(--color-border); /* 设置边框 */
-  appearance: none; /* 移除默认 appearance 样式 */
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e"); /* 下拉箭头 SVG */
-  background-repeat: no-repeat; /* 禁止背景图片重复 */
-  background-position: right var(--spacing-sm) center; /* 设置背景图片位置 */
-  background-size: 16px; /* 设置背景图片大小 */
-}
-
-/* 模态框标题 */
-.modal-content h2 {
-  margin-bottom: var(--spacing-xl); /* 设置下外边距 */
-  padding-right: var(--spacing-xl); /* 设置右内边距 */
-  font-size: var(--font-size-xl); /* 设置字体大小 */
-  font-weight: var(--font-weight-semibold); /* 设置字体粗细 */
 }

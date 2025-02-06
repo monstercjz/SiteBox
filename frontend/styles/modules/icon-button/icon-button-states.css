@@ -27,3 +27,6 @@
   box-shadow: var(--shadow-md); /* Active 状态阴影 */
   transform: translateY(0); /* Active 状态取消位移 */
 }
+[data-layout="alternative"] .icon-button:hover svg {
+  transform: rotate(90deg);
+}

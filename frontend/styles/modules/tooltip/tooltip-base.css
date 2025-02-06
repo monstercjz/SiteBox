@@ -4,9 +4,53 @@
   包括 tooltip 容器的基础 padding、border-radius、max-width 等，不包含主题、颜色或状态相关的样式。
 */
 /* Tooltip 容器 */
-.tooltip, .website-tooltip {
-  padding: var(--spacing-sm) var(--spacing-md); /* 设置内边距 */
-  border-radius: var(--radius-sm); /* 设置圆角 */
-  max-width: 300px; /* 设置最大宽度 */
+/* .tooltip, .website-tooltip {
+  padding: var(--spacing-sm) var(--spacing-md); 
+  border-radius: var(--radius-sm); 
+  max-width: 300px; 
+  
+} */
+#tooltip {
+  color: var(--color-text-primary);
+  padding: var(--spacing-sm) var(--spacing-md);
+  position: absolute;
+  z-index: 1000;
+  white-space: nowrap;
+}
+
+/* Website tooltip styles */
+.website-tooltip {
+  padding: var(--spacing-md);
+  border-radius: var(--radius);
+  backdrop-filter: var(--glass-blur);
   word-wrap: break-word; /* 允许单词断行 */
+  z-index: 1000;
+  min-width: var(--size-website-tooltip-width);
+  opacity: 0;
+}
+.fade-in {
+  opacity: 1;
+}
+
+.fade-out {
+  opacity: 0;
+}
+
+.tooltip-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.tooltip-row {
+  display: flex;
+  gap: var(--spacing-sm);
+  align-items: center;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-primary);
+}
+
+.tooltip-row strong {
+  color: var(--color-primary);
+  min-width: var(--size-website-item-min-height);
 }

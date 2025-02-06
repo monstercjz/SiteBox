@@ -15,3 +15,17 @@
   border-radius: 50%; /* 设置圆形边框 */
   z-index: 11; /* 设置 z-index */
 }
+
+[data-layout="alternative"] .toggle-actions button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--size-button-md);
+  height: var(--size-button-md);
+  border-radius: 50%;
+  padding: var(--spacing-sm);
+  cursor: pointer;
+  overflow: hidden;
+}
+

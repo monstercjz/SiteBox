@@ -27,7 +27,7 @@
             writingsuggestions="off">
     </div>
     <div class="action-buttons">
-        <button id="add-group-button" class="icon-button" aria-label="添加分组" data-tooltip="添加分组">
+        <button id="add-group-button" type="button" class="icon-button" aria-label="添加分组" data-tooltip="添加分组">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
@@ -35,7 +35,7 @@
                 <line x1="9" y1="14" x2="15" y2="14" />
             </svg>
         </button>
-        <button id="add-website-button" class="icon-button" aria-label="添加网站" data-tooltip="添加网站">
+        <button id="add-website-button" type="button" class="icon-button" aria-label="添加网站" data-tooltip="添加网站">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path
@@ -44,7 +44,7 @@
         </button>
         <div class="theme-switcher">
             <div class="theme-switcher__options">
-                <button class="theme-switcher__option" data-theme="light" aria-label="亮色主题" data-tooltip="亮色主题">
+                <button class="theme-switcher__option" type="button" data-theme="light" aria-label="亮色主题" data-tooltip="亮色主题">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="12" cy="12" r="4" />
@@ -58,13 +58,13 @@
                         <path d="m19.07 4.93-1.41 1.41" />
                     </svg>
                 </button>
-                <button class="theme-switcher__option" data-theme="dark" aria-label="暗色主题" data-tooltip="暗色主题">
+                <button class="theme-switcher__option" type="button" data-theme="dark" aria-label="暗色主题" data-tooltip="暗色主题">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M12 3a6.364 6.364 0 0 0 9 9 9 9 0 1 1-9-9Z" />
                     </svg>
                 </button>
-                <button class="theme-switcher__option" data-theme="eye-care" aria-label="护眼主题" data-tooltip="护眼主题">
+                <button class="theme-switcher__option" type="button" data-theme="eye-care" aria-label="护眼主题" data-tooltip="护眼主题">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
@@ -74,7 +74,7 @@
                     </svg>
                 </button>
             </div>
-            <button id="theme-switcher-toggle" class="icon-button" aria-label="切换主题" data-tooltip="切换主题">
+            <button id="theme-switcher-toggle" type="button" class="icon-button" aria-label="切换主题" data-tooltip="切换主题">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="12" cy="12" r="5" />
@@ -85,13 +85,13 @@
         </div>
         <div class="layout-switcher">
             <div class="layout-switcher__options">
-                <button class="layout-switcher__option" data-layout="default" aria-label="默认布局" data-tooltip="默认布局">
+                <button type="button" class="layout-switcher__option" type="button" data-layout="default" aria-label="默认布局" data-tooltip="默认布局">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <rect x="3" y="3" width="18" height="18" />
                     </svg>
                 </button>
-                <button class="layout-switcher__option" data-layout="alternative" aria-label="多列布局" data-tooltip="多列布局">
+                <button type="button" class="layout-switcher__option" type="button" data-layout="alternative" aria-label="多列布局" data-tooltip="多列布局">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <rect x="3" y="3" width="7" height="7" />
@@ -101,7 +101,7 @@
                     </svg>
                 </button>
             </div>
-            <button id="layout-switcher-toggle" class="icon-button" aria-label="切换布局" data-tooltip="切换布局">
+            <button id="layout-switcher-toggle" type="button" class="icon-button" aria-label="切换布局" data-tooltip="切换布局">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <rect x="3" y="3" width="7" height="7" />
@@ -111,7 +111,7 @@
                 </svg>
             </button>
         </div>
-        <button id="group-color-toggle" class="icon-button" aria-label="标题随机颜色" data-tooltip="标题随机颜色">
+        <button id="group-color-toggle" type="button" class="icon-button" aria-label="标题随机颜色" data-tooltip="标题随机颜色">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="12" cy="12" r="10" />
@@ -122,21 +122,21 @@
                 <line x1="22" y1="12" x2="20" y2="12" />
             </svg>
         </button>
-        <button id="import-config-button" class="icon-button" aria-label="导入数据" data-tooltip="导入配置">
+        <button id="import-config-button" type="button" class="icon-button" aria-label="导入数据" data-tooltip="导入配置">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M12 19V5M5 12l7-7 7 7" />
                 <path d="M2 21h20v-2H2z" />
             </svg>
         </button>
-        <button id="export-config-button" class="icon-button" aria-label="导出数据" data-tooltip="导出配置">
+        <button id="export-config-button" type="button" class="icon-button" aria-label="导出数据" data-tooltip="导出配置">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M12 5v14M5 12l7 7 7-7" />
                 <path d="M2 3h20v2H2z" />
             </svg>
         </button>
-        <button id="import-websites-batch-button" class="icon-button" aria-label="粘贴导入网站" data-tooltip="批量添加">
+        <button id="import-websites-batch-button" type="button" class="icon-button" aria-label="粘贴导入网站" data-tooltip="批量添加">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M16 17l5-5-5-5M21 12H9" />

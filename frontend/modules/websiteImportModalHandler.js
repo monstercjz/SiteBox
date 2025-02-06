@@ -45,7 +45,7 @@ export class WebsiteImportModalHandler {
       <div class="modal-content">
         <span class="close close-modal-button" aria-label="关闭导入网站模态框">&times;</span>
         <h2>导入网站</h2>
-        <textarea placeholder="请粘贴网站列表，格式为 网站名+网站地址+描述，一行一个" style="width: 96%; height: 200px;"></textarea>
+        <textarea placeholder="请粘贴网站列表，格式为 网站名+网站地址+描述，一行一个" style="width: 90%; height: 200px;"></textarea>
         <select id="importWebsitesGroupSelect" style="margin-top: 10px;">
           <option value="">选择分组</option>
         </select>

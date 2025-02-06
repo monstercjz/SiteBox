@@ -1,8 +1,3 @@
-@import "./light.css";
-@import "./dark.css";
-@import "./eye-care.css";
-@layer theme-variables;
-
 @layer theme-variables {
   /* CSS Variables - CSS 变量定义 */
   /*
@@ -29,8 +24,18 @@
     --shadow-lg: 0 10px 15px rgba(15, 23, 42, 0.08), 0 4px 6px rgba(15, 23, 42, 0.06); /* Large shadow - 大阴影 */
 
     /* Spacing System - 间距系统 */
+    --spacing-xnano: 0.2rem;     /* Extra nano spacing - 极微小间距 */
+    --spacing-xnano: 0.2rem;     /* Extra nano spacing - 极微小间距 */
     --spacing-xs: 0.25rem; /* Extra small spacing - 极小间距 */
+    --spacing-nano: 0.1rem;      /* Nano spacing - 极微间距 */
+    --spacing-mmd: 0.75rem;    /* Medium medium spacing - 中中等间距 */
+    --spacing-mmd: 0.75rem;    /* Medium medium spacing - 中中等间距 */
     --spacing-sm: 0.5rem; /* Small spacing - 小间距 */
+    --spacing-xxl: 6rem;      /* Extra extra large spacing - 极极大间距 */
+    --spacing-xxl: 6rem;      /* Extra extra large spacing - 极极大间距 */
+    --border-radius-lg: 24px;    /* Large border radius - 大圆角 */
+    --border-radius-lg: 24px;    /* Large border radius - 大圆角 */
+    --spacing-xxl: 6rem;      /* Extra extra large spacing - 极极大间距 */
     --spacing-md: 1rem; /* Medium spacing - 中间距 */
     --spacing-lg: 1.5rem; /* Large spacing - 大间距 */
     --spacing-xl: 2rem; /* Extra large spacing - 极大间距 */
@@ -39,6 +44,8 @@
     --radius-sm: 0.25rem; /* Small radius - 小圆角 */
     --radius-md: 0.5rem; /* Medium radius - 中圆角 */
     --radius-lg: 0.75rem; /* Large radius - 大圆角 */
+    --border-radius-sm: var(--radius-sm); /* Small border radius - 小圆角，与 radius-sm 保持一致 */
+
 
     /* Transitions System - 过渡效果系统 */
     --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -46,6 +53,9 @@
     --transition-normal: 250ms ease; /* Normal transition - 通用过渡效果 */
     --rotation: 0deg;                /* Rotation angle - 旋转角度 */
     --gradient: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+  
+    --animation-duration-ripple-button: 1.5s;
+    --animation-duration-ripple-button: 1.5s;
 
     /* Border Width System - 边框宽度系统 */
 
@@ -54,6 +64,8 @@
     --animation-duration-normal: 0.3s;
     --animation-duration-slow: 0.4s;
     --animation-duration-ripple: 0.6s;
+    --transform-translateY-hover-sm: -4px; /* Small hover translate Y - 小尺寸悬停Y轴位移 */
+    --transform-translateY-hover-sm: -4px; /* Small hover translate Y - 小尺寸悬停Y轴位移 */
     --animation-duration-glow: 1.5s;
 
     /* Animation Transform System - 动画变换系统 */
@@ -73,11 +85,27 @@
     --transform-translateY-3xl: 8px;
     --transform-translateY-4xl: 10px;
     --transform-translateY-modal-in-from: 20px;
-    
-    --animation-duration-rotate: 6s;
-    
-    --border-width: 1px;
 
+    --animation-duration-rotate: 6s;
+
+    --border-width: 1px;
+    --border-width-md: 6px;         /* Medium border width - 中等边框宽度 */
+    --border-width-xs: 2px;         /* Extra small border width - 极小边框宽度 */
+
+    /* Custom Spacing - 自定义间距 */
+    --spacing-xxs: 0.375rem;       /* Extra extra small spacing - 极极小间距 */
+
+    /* Custom Width - 自定义宽度 */
+    --max-width-modal: 500px;       /* Maximum width for modal - 模态框最大宽度 */
+    --max-width-search-bar: 600px;  /* Maximum width for search bar - 搜索栏最大宽度 */
+    --min-width-system-status-item: 200px; /* Minimum width for system status item - 系统状态项最小宽度 */
+
+    /* Custom Font Size - 自定义字体大小 */
+    --font-size-h2: 2.5rem;         /* H2 heading font size - H2 标题字体大小 */
+    --font-size-xs: 0.9rem;         /* Extra small font size - 极小字体大小 */
+
+    --size-icon-lg: 30px;      /* Large icon size - 大图标尺寸 */
+    --size-icon-lg: 30px;      /* Large icon size - 大图标尺寸 */
     /* Custom Shadows - 自定义阴影 */
     --shadow-group-hover: 0 12px 24px rgba(0, 0, 0, 0.15);
     --shadow-website-item-hover: 0 16px 32px rgba(99, 102, 241, 0.2);
@@ -115,13 +143,28 @@
     --size-breakpoint-sm: 480px; /* Small breakpoint - 小屏幕断点 */
     --size-breakpoint-md: 768px; /* Medium breakpoint - 中屏幕断点 */
     --size-breakpoint-lg: 1200px; /* Large breakpoint - 大屏幕断点 */
-    
+
     /* Component Sizes System - 组件尺寸系统 */
     --icon-button-size: 48px; /* Icon button size - 图标按钮尺寸 */
     --modal-close-button-size: 32px; /* Modal close button size - 模态框关闭按钮尺寸 */
     --color-delete-hover: #451a1a; /* Delete item hover color - 删除菜单项悬停颜色 */
     --item-width: 160px;           /* Website item width - 网站项宽度 */
-    
+
+    /* 未定义的变量 - Undefined Variables */
+    --max-dashboard-width: 1280px;      /* Dashboard 最大宽度 */
+    --spacing-group: var(--spacing-lg); /* Group padding */
+    --shadow-blur-md: 12px;             /* Medium shadow blur */
+    --shadow-blur-lg: 24px;             /* Large shadow blur */
+    --border-radius-sm: 4px;           /* Small border radius */
+    --border-width-md: 4px;            /* Medium border width */
+    --color-primary-hover: #6366f1;     /* Primary color hover state */
+    --shadow-website-item-hover: 0 16px 32px rgba(99, 102, 241, 0.2); /* Website item hover shadow */
+    --shadow-website-item-active: 0 8px 24px rgba(0, 0, 0, 0.2);    /* Active website item shadow */
+    --shadow-modal-button-active: 0 2px 6px rgba(124, 58, 237, 0.2); /* Active modal button shadow */
+    --border-radius-lg: 16px;          /* Large border radius */
+    --shadow-search-input: 0 4px 16px rgba(0, 0, 0, 0.1);         /* Search input shadow */
+    --shadow-system-status-hover: 0 12px 24px rgba(0, 0, 0, 0.2);  /* System status hover shadow */
+    --transform-translateY-hover-sm: -4px; /* Small hover translate Y */
+
   }
 }
-

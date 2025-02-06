@@ -3,24 +3,9 @@
   定义工具提示 (tooltip) 组件的视觉主题样式。 
   It should include CSS variables, color schemes, font stacks, and other theme-related styles.
 */
-/* Light theme - 亮色主题 */
-.theme-light .tooltip,
-.theme-light .website-tooltip {
-  background-color: var(--color-surface); /* 亮色主题背景色 */
-  border-color: var(--color-border); /* 亮色主题边框颜色 */
-  color: var(--color-text-primary); /* 亮色主题文字颜色 */
-}
-
-/* Dark theme - 深色主题 */
-.theme-dark .tooltip,
-.theme-dark .website-tooltip {
-  background-color: var(--color-surface); /* 深色主题背景色 */
-  border-color: var(--color-border); /* 深色主题边框颜色 */
-  color: var(--color-text-primary); /* 深色主题文字颜色 */
-}
 
 /* Tooltip 容器 - 工具提示容器 */
-.tooltip, .website-tooltip {
+.website-tooltip {
   background: var(--color-surface); /* 设置背景色为 surface color CSS 变量 */
   border: 1px solid var(--color-border); /* 设置边框 */
   font-size: var(--font-size-sm); /* 设置字体大小 */

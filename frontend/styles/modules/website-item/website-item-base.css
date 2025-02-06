@@ -25,3 +25,27 @@
   white-space: nowrap;
   overflow: hidden;
 }
+[data-layout="alternative"] .website-item {   
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-xxs); 
+  padding: var(--spacing-sm); 
+  margin: var(--spacing-xs);  
+  position: relative;
+  overflow: hidden;
+  min-height: 60px;
+  min-width: 60px;
+  width: auto;
+  height: auto;
+  backdrop-filter: none;
+  cursor: pointer;
+}
+[data-layout="alternative"] .website-item a {
+  text-decoration: none;  
+  font-weight: 500;
+  position: relative;
+  display: inline-block;
+  padding-bottom: var(--border-width-xs);
+}

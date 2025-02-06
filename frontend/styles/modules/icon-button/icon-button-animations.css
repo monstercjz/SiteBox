@@ -9,3 +9,10 @@
 .icon-button {
   transition: all var(--transition-normal); /* 添加过渡效果 */
 }
+[data-layout="alternative"] .icon-button {
+  transition: var(--transition); 
+  animation: float 3s ease-in-out infinite;
+}
+[data-layout="alternative"] .action-buttons button svg {
+  transition: transform 0.2s ease;
+}

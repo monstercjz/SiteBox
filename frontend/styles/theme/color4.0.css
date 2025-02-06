@@ -1,0 +1,188 @@
+/* ========================
+   基础主题 (默认)
+   ======================== */
+   :root {
+    /* 使用原有v3.0变量 */
+  }
+  
+  /* ========================
+     明亮主题 1 - 清新蓝
+     ======================== */
+  .theme-light-1 {
+    /* 核心品牌色 */
+    --color-brand-primary-base: #2A7C9D;    /* 更明亮的蓝色 */
+    --color-brand-primary-hover: #3A9EBD;
+    --color-brand-primary-active: #1D5C7A;
+  
+    /* 辅助色 */
+    --color-functional-secondary-base: #6DB3A6;  /* 柔和的青绿色 */
+    --color-functional-secondary-hover: #8FCEC5;
+    --color-functional-secondary-active: #4D8A7F;
+  
+    /* 中性色 */
+    --color-neutral-background: #F0F4F8;    /* 浅蓝灰背景 */
+    --color-neutral-divider: #D0DDE5;       /* 更柔和的边框 */
+    --color-neutral-text-primary: #1A2D3A;  /* 深蓝灰文字 */
+  }
+  
+  /* ========================
+     明亮主题 2 - 活力橙
+     ======================== */
+  .theme-light-2 {
+    --color-brand-primary-base: #FF6B35;    /* 橙色主色 */
+    --color-brand-primary-hover: #FF8C5A;
+    --color-brand-primary-active: #D14917;
+  
+    --color-functional-secondary-base: #4ECDC4;  /* 蓝绿色辅助 */
+    --color-functional-secondary-hover: #70E8E0;
+    --color-functional-secondary-active: #2BA89F;
+  
+    --color-neutral-background: #FFF5F0;    /* 浅橙调背景 */
+    --color-neutral-divider: #FFD4C2; 
+    --color-neutral-text-primary: #3E1E0F;
+  }
+  
+  /* ========================
+     暗色主题 1 - 深邃夜空
+     ======================== */
+  .theme-dark-1 {
+    --color-brand-primary-base: #3A7CA5;    /* 浅蓝色 */
+    --color-brand-primary-hover: #4D9EC7;
+    --color-brand-primary-active: #2A5C82;
+  
+    --color-functional-secondary-base: #5DA399;  /* 保持原青绿色 */
+  
+    /* 中性色反转 */
+    --color-neutral-background: #1A1F24;    /* 深灰背景 */
+    --color-neutral-divider: #2D363D; 
+    --color-neutral-text-primary: #E0E6EB;  /* 浅灰文字 */
+    --color-neutral-text-secondary: #8C9BA5;
+    --background-card: #242D33;             /* 深色卡片 */
+    --text-inverse: #1A1F24;                /* 深色背景上的文字 */
+  }
+  
+  /* ========================
+     暗色主题 2 - 科技紫黑
+     ======================== */
+  .theme-dark-2 {
+    --color-brand-primary-base: #7C4DFF;    /* 紫色主色 */
+    --color-brand-primary-hover: #9370FF;
+    --color-brand-primary-active: #5C2AD8;
+  
+    --color-functional-secondary-base: #00BCD4;  /* 亮青色辅助 */
+  
+    --color-neutral-background: #121212;    /* 纯黑背景 */
+    --color-neutral-divider: #2A2A2A;
+    --color-neutral-text-primary: #E0E0E0;
+    --background-card: #1E1E1E;
+    --text-inverse: #121212;
+  }
+  
+  /* ========================
+     护眼主题 - 森林绿
+     ======================== */
+  .theme-eye-care {
+    --color-brand-primary-base: #4CAF50;    /* 绿色主色 */
+    --color-brand-primary-hover: #66BB6A;
+    --color-brand-primary-active: #388E3C;
+  
+    --color-functional-secondary-base: #81C784;  /* 浅绿色辅助 */
+  
+    /* 中性色调整 */
+    --color-neutral-background: #E8F5E9;    /* 浅绿背景 */
+    --color-neutral-divider: #C8E6C9;
+    --color-neutral-text-primary: #1B5E20;  /* 深绿文字 */
+    --background-card: #FFFFFF;
+  }
+  
+  /* ========================
+     紫色主题 - 幻影紫
+     ======================== */
+  .theme-purple {
+    --color-brand-primary-base: #9C27B0;    /* 紫色主色 */
+    --color-brand-primary-hover: #BA68C8;
+    --color-brand-primary-active: #6A1B9A;
+  
+    --color-functional-secondary-base: #CE93D8;  /* 浅紫色辅助 */
+  
+    /* 中性色适配 */
+    --color-neutral-background: #F3E5F5;    /* 浅紫背景 */
+    --color-neutral-divider: #E1BEE7;
+    --color-neutral-text-primary: #4A148C;  /* 深紫文字 */
+    --background-card: #FFFFFF;
+  }
+  /* ========================
+   基础阴影变量
+   ======================== */
+:root {
+  --shadow-color-base: 0deg 0% 0%;         /* 默认阴影色调 */
+  --shadow-intensity: 0.12;                /* 基础透明度 */
+
+  /* 标准阴影层级 */
+  --shadow-sm: 
+    0 1px 2px hsl(var(--shadow-color-base) / calc(var(--shadow-intensity) * 0.8)),
+    0 0.5px 1px hsl(var(--shadow-color-base) / calc(var(--shadow-intensity) * 0.4));
+  
+  --shadow-md: 
+    0 4px 6px hsl(var(--shadow-color-base) / calc(var(--shadow-intensity) * 1.2)),
+    0 2px 4px hsl(var(--shadow-color-base) / calc(var(--shadow-intensity) * 0.6));
+  
+  --shadow-lg: 
+    0 10px 15px hsl(var(--shadow-color-base) / calc(var(--shadow-intensity) * 1.5)),
+    0 6px 8px hsl(var(--shadow-color-base) / calc(var(--shadow-intensity) * 0.8));
+}
+
+/* ========================
+   主题阴影定制
+   ======================== */
+
+/* 明亮主题1 - 清新蓝 */
+.theme-light-1 {
+  --shadow-color-base: 208deg 25% 40%;     /* 基于主色的冷色调阴影 */
+  --shadow-intensity: 0.08;                /* 低强度柔和阴影 */
+}
+
+/* 明亮主题2 - 活力橙 */
+.theme-light-2 {
+  --shadow-color-base: 18deg 80% 40%;      /* 橙色主色衍生阴影 */
+  --shadow-intensity: 0.1;
+  --shadow-md: 
+    0 4px 8px hsl(18deg 80% 40% / 0.15),   /* 强化活力感 */
+    0 2px 4px hsl(18deg 60% 30% / 0.1);
+}
+
+/* 暗色主题1 - 深邃夜空 */
+.theme-dark-1 {
+  --shadow-color-base: 210deg 15% 18%;     /* 深蓝灰阴影 */
+  --shadow-intensity: 0.2;                 /* 高强度阴影 */
+  --shadow-sm: 
+    0 2px 4px hsl(210deg 15% 18% / 0.3),   /* 增加弥散效果 */
+    0 1px 2px hsl(210deg 15% 18% / 0.15);
+}
+
+/* 暗色主题2 - 科技紫黑 */
+.theme-dark-2 {
+  --shadow-color-base: 262deg 100% 70%;    /* 紫色光效阴影 */
+  --shadow-intensity: 0.25;
+  --shadow-lg: 
+    0 12px 25px hsl(262deg 100% 70% / 0.3), /* 霓虹光效 */
+    0 8px 12px hsl(262deg 100% 70% / 0.2);
+}
+
+/* 护眼主题 - 森林绿 */
+.theme-eye-care {
+  --shadow-color-base: 120deg 30% 35%;     /* 自然绿阴影 */
+  --shadow-intensity: 0.06;                /* 极弱阴影避免视觉压力 */
+  --shadow-md: 
+    0 4px 6px hsl(120deg 30% 35% / 0.08),
+    0 2px 4px hsl(120deg 30% 35% / 0.04);
+}
+
+/* 紫色主题 - 幻影紫 */
+.theme-purple {
+  --shadow-color-base: 291deg 65% 50%;     /* 主色同系阴影 */
+  --shadow-intensity: 0.1;
+  --shadow-sm: 
+    0 2px 4px hsl(291deg 65% 50% / 0.15),  /* 柔光效果 */
+    0 1px 2px hsl(291deg 65% 50% / 0.1);
+}

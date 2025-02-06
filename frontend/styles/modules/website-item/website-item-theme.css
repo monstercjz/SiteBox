@@ -11,5 +11,16 @@
 }
 
 .website-item a {
-  color: var(--text-primary);
+  color: var(--color-text-primary);
+}
+[data-layout="alternative"] .website-item {
+  background: var(--glass-effect);
+  border: var(--glass-border);
+  border-radius: var(--radius);
+  box-shadow: var(--glass-shadow);
+}
+[data-layout="alternative"] .website-item a {
+
+  color: var(--color-text-primary);
+
 }

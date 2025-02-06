@@ -23,3 +23,24 @@
   height: 24px; /* 设置 SVG 图标高度 */
   stroke-width: 2; /* 设置 SVG 描边宽度 */
 }
+
+[data-layout="alternative"] .icon-button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--size-button-md);
+  height: var(--size-button-md);
+  border-radius: 50%;
+  overflow: hidden;
+  border: none;
+  padding: var(--spacing-xnano);
+  cursor: pointer;
+}
+
+[data-layout="alternative"] .icon-button:hover svg {
+  width: var(--size-icon-lg);
+  height: var(--size-icon-lg);
+}
+
+

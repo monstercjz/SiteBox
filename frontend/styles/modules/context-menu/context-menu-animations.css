@@ -8,3 +8,10 @@
 #contextMenu div {
   transition: background-color var(--transition-fast);
 }
+[data-layout="alternative"] #contextMenu {
+  transform-origin: top left;
+  animation: fadeIn var(--animation-duration-fast) ease-out;
+}
+[data-layout="alternative"] #contextMenu div {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}

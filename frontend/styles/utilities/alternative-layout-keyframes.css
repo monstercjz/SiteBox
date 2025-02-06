@@ -1,0 +1,141 @@
+@keyframes fadeInGroup {
+    from {
+        opacity: 0;
+        transform: scale(0.98) translateY(10px);
+        filter: blur(4px);
+        backdrop-filter: blur(8px);
+    }
+    50% {
+        transform: scale(1.02) translateY(-5px);
+        filter: blur(2px);
+        backdrop-filter: blur(4px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+        filter: blur(0);
+        backdrop-filter: blur(0);
+    }
+}
+
+@keyframes groupHover {
+    0% {
+        transform: translateY(0) scale(1);
+        backdrop-filter: blur(10px);
+    }
+    50% {
+        transform: translateY(-8px) scale(1.05);
+        backdrop-filter: blur(16px);
+    }
+    100% {
+        transform: translateY(-6px) scale(1.03);
+        backdrop-filter: blur(12px);
+    }
+}
+
+@keyframes cardHover {
+    0% {
+        transform: translateY(0) scale(1);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    50% {
+        transform: translateY(-10px) scale(1.08);
+        box-shadow: 0 20px 40px rgba(99, 102, 241, 0.25);
+    }
+    100% {
+        transform: translateY(-8px) scale(1.05);
+        box-shadow: 0 16px 32px rgba(99, 102, 241, 0.2);
+    }
+}
+
+@keyframes glow {
+    from {
+        box-shadow: 0 0 4px var(--primary-color),
+                    0 0 8px var(--secondary-color);
+    }
+    to {
+        box-shadow: 0 0 8px var(--primary-color),
+                    0 0 16px var(--secondary-color);
+    }
+}
+
+@keyframes fadeInItem {
+    from {
+        opacity: 0;
+        transform: scale(0.95) translateY(8px);
+    }
+    50% {
+        transform: scale(1.02) translateY(-3px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+@keyframes itemHover {
+    0% {
+        transform: translateY(0) scale(1);
+    }
+    50% {
+        transform: translateY(-6px) scale(1.05);
+    }
+    100% {
+        transform: translateY(-4px) scale(1.03);
+    }
+}
+
+@keyframes modalIn {
+    from {
+        transform: translateY(20px) scale(0.95);
+        opacity: 0;
+        filter: blur(4px);
+        backdrop-filter: blur(16px);
+    }
+    50% {
+        transform: translateY(-10px) scale(1.02);
+        filter: blur(2px);
+        backdrop-filter: blur(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        opacity: 1;
+        filter: blur(0);
+        backdrop-filter: blur(12px);
+    }
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes ripple {
+    to {
+        width: 200%;
+        height: 200%;
+        opacity: 0;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes float {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0); }
+}

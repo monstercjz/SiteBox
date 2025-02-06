@@ -7,6 +7,18 @@
 .icon-button {
   background: var(--color-surface); /* 设置背景色为 surface color CSS 变量 */
   border: 1px solid var(--color-border); /* 设置边框 */
-  color: var(--color-text-primary); /* 设置文字颜色为 primary text color CSS 变量 */
+  color: var(
+    --color-text-primary
+  ); /* 设置文字颜色为 primary text color CSS 变量 */
   box-shadow: var(--shadow-md); /* 设置阴影效果，使用 shadow-md CSS 变量 */
+}
+[data-layout="alternative"] .icon-button {
+  background: var(--color-primary);
+  color: white;
+  box-shadow: var(--shadow-add-button);
+  background: radial-gradient(
+    circle at center,
+    var(--color-primary) 0%,
+    var(--color-secondary) 100%
+  );
 }

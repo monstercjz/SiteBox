@@ -4,16 +4,26 @@
   例如 info, error, success 等不同类型的通知样式。
 */
 /* Info Notification State - 信息通知状态 */
-.notification.info {
-  border-left: 4px solid var(--notification-border-color-info); /* 信息通知左侧边框颜色，使用 CSS 变量 */
+
+.notification.success {
+  background: var(--success-color);
+  color: white;
+  border-left: 4px solid var(--notification-border-color-success); /* 成功通知左侧边框颜色，使用 CSS 变量 */
 }
 
-/* Error Notification State - 错误通知状态 */
 .notification.error {
+  background: var(--error-color);
+  color: white;
   border-left: 4px solid var(--notification-border-color-error); /* 错误通知左侧边框颜色，使用 CSS 变量 */
 }
 
-/* Success Notification State - 成功通知状态 */
-.notification.success {
-  border-left: 4px solid var(--notification-border-color-success); /* 成功通知左侧边框颜色，使用 CSS 变量 */
+.notification.info {
+  background: var(--info-color);
+  color: white;
+  border-left: 4px solid var(--notification-border-color-info); /* 信息通知左侧边框颜色，使用 CSS 变量 */
+}
+
+.notification.warning {
+  background: var(--warning-color);
+  color: white;
 }

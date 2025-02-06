@@ -11,3 +11,11 @@
   gap: var(--spacing-lg); /* 设置网格项之间的间距 */
   margin-top: var(--spacing-md); /* 设置上外边距 */
 }
+[data-layout="alternative"] .website-list {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(10px, 1fr));
+  padding: var(--spacing-nano);
+  gap: var(--spacing-md);  
+  /* width: 100%; */
+  box-sizing: border-box;
+}

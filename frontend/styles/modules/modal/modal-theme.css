@@ -28,6 +28,26 @@
               0 0 40px rgba(0, 0, 0, 0.3);
 }
 
+/* 模态框表单元素主题 */
+.modal input,
+.modal textarea,
+.modal select {
+  background: var(--color-surface); /* 设置背景色为 surface color CSS 变量 */
+  color: var(--color-text-primary); /* 设置文字颜色为 primary text color CSS 变量 */
+  border-radius: var(--radius-md); /* 设置圆角 */
+  border: 1px solid var(--color-border); /* 设置边框 */
+}
+
+/* 模态框表单元素 placeholder 文本颜色 */
+.modal input::placeholder,
+.modal textarea::placeholder {
+  color: var(--color-text-secondary); /* 设置 placeholder 文本颜色为 secondary text color CSS 变量 */
+}
+
+/* 模态框标题主题 */
+.modal-content h2 {
+  color: var(--color-text-primary); /* 设置文字颜色为 primary text color CSS 变量 */
+}
 /* 保存按钮主题 */
 .save-modal-button {
   background: var(--color-primary); /* 设置背景色为 primary color CSS 变量 */
@@ -45,23 +65,4 @@
 /* 关闭按钮主题 */
 .close-modal-button {
   color: var(--color-text-secondary); /* 设置文字颜色为 secondary text color CSS 变量 */
-}
-
-/* 模态框表单元素主题 */
-.modal input,
-.modal textarea,
-.modal select {
-  background: var(--color-surface); /* 设置背景色为 surface color CSS 变量 */
-  color: var(--color-text-primary); /* 设置文字颜色为 primary text color CSS 变量 */
-}
-
-/* 模态框表单元素 placeholder 文本颜色 */
-.modal input::placeholder,
-.modal textarea::placeholder {
-  color: var(--color-text-secondary); /* 设置 placeholder 文本颜色为 secondary text color CSS 变量 */
-}
-
-/* 模态框标题主题 */
-.modal-content h2 {
-  color: var(--color-text-primary); /* 设置文字颜色为 primary text color CSS 变量 */
 }

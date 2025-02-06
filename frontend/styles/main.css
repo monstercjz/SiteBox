@@ -57,7 +57,7 @@
 @import 'state/theme-transition.css';
 
 /* Import Utility styles - 引入工具类模块样式 */
-@import 'utilities/responsive.css';
+/* @import 'utilities/responsive.css'; */
 @import 'utilities/accessibility.css';
 @import 'utilities/shadow.css';
 @import 'utilities/radius.css';
@@ -67,4 +67,7 @@
 @import 'utilities/size.css';
 @import 'utilities/position.css';
 @import 'utilities/z-index.css';
-@import 'utilities/alternative.css';
+@import './variables.css';
+@import 'utilities/alternative-layout-keyframes.css';
+@import './theme/default-theme-colors.css';
+@import './theme/dark-theme-colors.css';

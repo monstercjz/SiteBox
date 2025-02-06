@@ -1,0 +1,125 @@
+/* ===================================
+   SiteBox 企业级颜色系统 (v3.0)
+   =================================== */
+
+   :root {
+    /* 核心品牌色系（状态驱动命名） */
+    --color-brand-primary-base: #2A5C82;    /* 主品牌基准色 */
+    --color-brand-primary-hover: #3A7CA5;   /* 悬停状态 */
+    --color-brand-primary-active: #1D415C;  /* 激活/按压状态 */
+  
+    /* 辅助色系（功能导向命名） */
+    --color-functional-secondary-base: #5DA399;  /* 辅助主色 */
+    --color-functional-secondary-hover: #7FBFB5; /* 悬停亮色 */
+    --color-functional-secondary-active: #3B7870;/* 激活暗色 */
+  
+    /* 功能色系（语义直译） */
+    --color-status-success: #28A745;    /* 成功状态 */
+    --color-status-warning: #FFC107;    /* 警告状态 */
+    --color-status-error: #DC3545;      /* 错误状态 */
+    --color-interaction-accent: #FF7F50;/* 强调交互色 */
+  
+    /* 中性色系（用途命名） */
+    --color-neutral-background: #F8F9FA;    /* 页面背景 */
+    --color-neutral-divider: #E9ECEF;       /* 分割线/边框 */
+    --color-neutral-border-disabled: #DEE2E6; /* 禁用状态边框 */
+    --color-neutral-text-primary: #212529;  /* 主文本 */
+    --color-neutral-text-secondary: #495057;/* 次级文本 */
+  
+    /* 语义化变量（保持原有映射关系） */
+    /* 文本系统 */
+    --text-primary: var(--color-neutral-text-primary);
+    --text-secondary: var(--color-neutral-text-secondary);
+    --text-disabled: var(--color-neutral-border-disabled);
+    --text-inverse: #FFFFFF;
+  
+    /* 背景系统 */
+    --background-body: var(--color-neutral-background);
+    --background-card: #FFFFFF;
+    --background-header: var(--color-brand-primary-base);
+    --background-subheader: var(--color-functional-secondary-base);
+    
+    /* 交互系统 */
+    --action-primary: var(--color-brand-primary-base);
+    --action-primary-hover: var(--color-brand-primary-hover);
+    --action-primary-active: var(--color-brand-primary-active);
+    --action-secondary: var(--color-functional-secondary-base);
+    
+    /* 状态系统 */
+    --status-success: var(--color-status-success);
+    --status-warning: var(--color-status-warning);
+    --status-error: var(--color-status-error);
+    --status-accent: var(--color-interaction-accent);
+    
+    /* 特殊元素 */
+    --url-identifier: #1E88E5;       /* 网址标识 */
+    --timestamp-label: #95A5A6;      /* 时间戳文本 */
+  }
+
+  /* ===================================
+   SiteBox 精细间距与尺寸系统
+   =================================== */
+
+:root {
+    /*========== 基准单位 ==========*/
+    --base-unit: 4px;     /* 基准单位缩小至 4px */
+    --font-base: 16px;    /* 基准字体大小不变 */
+  
+  
+    /*========== 间距系统 ==========*/
+    /* 内边距 (Padding) */
+    --spacing-inset-xxs: var(--base-unit);        /* 4px - 超小元素内边距 */
+    --spacing-inset-xs: calc(var(--base-unit) * 2);   /* 8px - 标签/小按钮 */
+    --spacing-inset-sm: calc(var(--base-unit) * 3);   /* 12px - 卡片内边距 */
+    --spacing-inset-md: calc(var(--base-unit) * 4);   /* 16px - 模块容器 */
+    --spacing-inset-lg: calc(var(--base-unit) * 6);   /* 24px - 大容器 */
+  
+    /* 外边距 (Margin) */
+    --spacing-stack-xxs: var(--base-unit);        /* 4px - 紧凑垂直间距 */
+    --spacing-stack-xs: calc(var(--base-unit) * 2);   /* 8px - 行间距 */
+    --spacing-stack-sm: calc(var(--base-unit) * 3);   /* 12px - 段落间距 */
+    --spacing-stack-md: calc(var(--base-unit) * 4);   /* 16px - 模块间距 */
+    --spacing-stack-lg: calc(var(--base-unit) * 6);   /* 24px - 大区块间距 */
+  
+    /* 行内间距 (Inline) */
+    --spacing-inline-xxs: calc(var(--base-unit) * 0.5);  /* 2px - 图标间 */
+    --spacing-inline-xs: var(--base-unit);               /* 4px - 标签内 */
+    --spacing-inline-sm: calc(var(--base-unit) * 1.5);   /* 6px - 按钮内 */
+    --spacing-inline-md: calc(var(--base-unit) * 2);     /* 8px - 导航项 */
+  
+  
+    /*========== 尺寸系统 ==========*/
+    /* 容器尺寸 */
+    --size-container-max: 1280px;       /* 页面最大宽度 */
+    --size-sidebar-width: 240px;        /* 侧边栏 */
+    --size-modal-sm: 400px;             /* 小弹窗宽度 */
+    --size-modal-md: 600px;             /* 标准弹窗 */
+    
+    /* 组件高度 */
+    --size-component-xxs: calc(var(--base-unit) * 6);    /* 24px - 小图标按钮 */
+    --size-component-xs: calc(var(--base-unit) * 8);     /* 32px - 输入框/小按钮 */
+    --size-component-sm: calc(var(--base-unit) * 10);    /* 40px - 标准按钮 */
+    --size-component-md: calc(var(--base-unit) * 12);    /* 48px - 大按钮 */
+    
+    /* 圆角 */
+    --radius-xxs: calc(var(--base-unit) * 0.5);  /* 2px - 输入框 */
+    --radius-xs: var(--base-unit);               /* 4px - 标签 */
+    --radius-sm: calc(var(--base-unit) * 2);     /* 8px - 卡片 */
+    --radius-md: calc(var(--base-unit) * 4);     /* 16px - 弹窗 */
+    --radius-lg: calc(var(--base-unit) * 6);     /* 24px - 圆形元素 */
+  
+  
+    /*========== 字体系统 ==========*/
+    /* 字体大小（基于 4px 倍数微调） */
+    --font-size-xs: calc(var(--font-base) * 0.75);   /* 12px - 辅助文本 */
+    --font-size-sm: calc(var(--font-base) * 0.875);  /* 14px - 小正文 */
+    --font-size-body: var(--font-base);              /* 16px - 标准正文 */
+    --font-size-heading-xs: calc(var(--font-base) * 1.25);  /* 20px - 小标题 */
+    --font-size-heading-sm: calc(var(--font-base) * 1.5);   /* 24px - 子标题 */
+    --font-size-heading-md: calc(var(--font-base) * 2);     /* 32px - 主标题 */
+    
+    /* 行高 */
+    --line-height-compact: 1.3;      /* 紧凑（表格/标签） */
+    --line-height-normal: 1.5;       /* 正文（默认） */
+    --line-height-relaxed: 1.8;      /* 长文本（文章/说明） */
+  }

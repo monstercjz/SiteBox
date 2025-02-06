@@ -6,17 +6,51 @@
 
 /* 右键菜单容器 */
 #contextMenu {
-  padding: var(--spacing-xs) 0; /* 设置垂直方向内边距 */
-  min-width: 160px; /* 设置最小宽度 */
+  padding: var(--spacing-xs) 0;
+  /* 设置垂直方向内边距 */
+  min-width: 160px;
+  /* 设置最小宽度 */
 }
 
 /* 右键菜单项 */
 #contextMenu div {
-  padding: var(--spacing-sm) var(--spacing-md);/* 设置菜单项内边距 */
-  color: var(--text-primary);
+  padding: var(--spacing-sm) var(--spacing-md);
+  /* 设置菜单项内边距 */
   cursor: pointer;
   user-select: none;
-  transition: background-color var(--transition-fast);
-  
-  
+}
+
+/* 删除网站条目菜单项样式 */
+#contextMenu .delete-website-item {
+  color: #ef4444; /* 设置删除网站条目菜单项文字颜色为红色 */
+}
+
+/* 删除分组菜单项样式 */
+/* Group context menu items */
+#contextMenu .delete-group-item {
+  color: #ef4444; /* 设置删除分组菜单项文字颜色为红色 */
+}
+
+[data-layout="alternative"] #contextMenu {
+  position: fixed;
+  z-index: 9999;
+  min-width: var(--size-context-menu-width);
+  overflow: hidden;
+  display: block !important;
+}
+[data-layout="alternative"] #contextMenu div {
+  padding: var(--spacing-mmd) var(--spacing-md);
+  cursor: pointer;
+  font-size: var(--font-size-xs);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+  overflow: hidden;
+}
+[data-layout="alternative"] #contextMenu .delete-website-item {
+  color: #ef4444; /* 设置删除网站条目菜单项文字颜色为红色 */
+}
+[data-layout="alternative"] #contextMenu .delete-group-item {
+  color: #ef4444; /* 设置删除分组菜单项文字颜色为红色 */
 }

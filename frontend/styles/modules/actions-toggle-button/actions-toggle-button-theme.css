@@ -9,3 +9,10 @@
   border: none; /* 移除边框 */
   box-shadow: var(--shadow-lg); /* 设置阴影效果，使用 shadow-lg CSS 变量 */
 }
+[data-layout="alternative"] .toggle-actions button {
+  background: var(--color-primary);
+  color: white;
+  border: none;
+  box-shadow: var(--shadow-add-button);
+  background: radial-gradient(circle at center, var(--color-primary) 0%, var(--color-secondary) 100%);
+}

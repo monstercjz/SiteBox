@@ -1,0 +1,32 @@
+:root {
+    /* 品牌色系 */
+    --color-brand-primary: #2A5C82;        /* 主品牌色 */
+    --color-brand-primary-light: #3A7CA5;  /* 悬停/轻量化 */
+    --color-brand-primary-dark: #1D415C;   /* 激活/强调 */
+  
+    /* 辅助功能色 */
+    --color-functional-secondary: #5DA399; /* 次级操作/分类标题 */
+    --color-functional-accent: #FF7F50;    /* 强调/符号色 */
+  
+    /* 中性色系 */
+    --color-neutral-background: #F8F9FA;   /* 页面背景 */
+    --color-neutral-card: #FFFFFF;         /* 卡片背景 */
+    --color-neutral-divider: #E9ECEF;      /* 分割线 */
+    --color-neutral-border: #ADB5BD;       /* 输入框边框 */
+    --color-neutral-text-primary: #212529; /* 主文本 */
+    --color-neutral-text-secondary: #6C757D; /* 次级文本 */
+    --color-neutral-text-tertiary: #95A5A6;  /* 弱化文本（新增） */
+    --color-neutral-text-inverse: #FFFFFF;   /* 反色文本（新增） */
+  
+    /* 状态色系 */
+    --color-status-success: #28A745;       /* 成功 */
+    --color-status-warning: #FFC107;       /* 警告 */
+    --color-status-error: #DC3545;         /* 错误 */
+    --color-status-disabled: #CED4DA;      /* 禁用 */
+  
+    /* 特殊场景色 */
+    --color-special-url: #1E88E5;          /* 网址链接 */
+    --color-special-timestamp: #95A5A6;    /* 时间戳 */
+    --color-special-warning-bg: #FFF3CD;   /* 警告背景（新增） */
+    --color-special-error-bg: #F8D7DA;     /* 错误背景（新增） */
+  }
