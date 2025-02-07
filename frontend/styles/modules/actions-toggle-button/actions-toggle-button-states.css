@@ -10,7 +10,7 @@
 
 /* Hover 状态 */
 #actions-toggle-button:hover {
-  background: var(--color-primary-hover); /* Hover 状态背景色 */
+  background: var(--action-primary-hover); /* Hover 状态背景色 */
   box-shadow: var(--shadow-lg); /* Hover 状态阴影 */
   transform: translateY(-2px) rotate(45deg); /* Hover 状态位移和旋转45度，显示为“x” */
 }
@@ -37,7 +37,7 @@
   width: 0;
   height: 0;
   background: rgba(255, 255, 255, 0.3);
-  border-radius: 50%;
+  border-radius: var(--radius-xl);
   transform: translate(-50%, -50%);
   animation: ripple var(--animation-duration-ripple) ease-out;
 }

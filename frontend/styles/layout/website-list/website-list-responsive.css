@@ -14,8 +14,8 @@
 /* Extra small devices - 超小屏幕 (小于 576px) */
 @media (max-width: 575.98px) {
   .website-list {
-    grid-template-columns: repeat(auto-fill, minmax(var(--item-width), 1fr));
-    gap: var(--spacing-sm);
+    grid-template-columns: repeat(auto-fill, minmax(var(--size-website-item-min-width), 1fr));
+    gap: var(--spacing-inline-xs);
   }
   [data-layout="alternative"] .website-list {
     grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
@@ -25,8 +25,8 @@
 /* Small devices - 小屏幕 (576px 及以上) */
 @media (min-width: 576px) {
   .website-list {
-    grid-template-columns: repeat(auto-fill, minmax(var(--item-width), 1fr));
-    gap: var(--spacing-md);
+    grid-template-columns: repeat(auto-fill, minmax(var(--size-website-item-min-width), 1fr));
+    gap: var(--spacing-inline-md);
   }
   [data-layout="alternative"] .website-list {
     grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
@@ -36,7 +36,7 @@
 /* Medium devices - 中等屏幕 (768px 及以上) */
 @media (min-width: 768px) {
   .website-list {
-    grid-template-columns: repeat(auto-fill, minmax(var(--item-width), 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(var(--size-website-item-min-width), 1fr));
   }
   [data-layout="alternative"] .website-list {
     grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
@@ -46,8 +46,8 @@
 /* Large devices - 大屏幕 (992px 及以上) */
 @media (min-width: 992px) {
   .website-list {
-    grid-template-columns: repeat(auto-fill, minmax(var(--item-width), 1fr));
-    gap: var(--spacing-lg);
+    grid-template-columns: repeat(auto-fill, minmax(var(--size-website-item-min-width), 1fr));
+    gap: var(--spacing-inline-lg);
   }
   [data-layout="alternative"] .website-list {
     grid-template-columns: repeat(auto-fill, minmax(65px, 1fr));
@@ -57,7 +57,7 @@
 /* Extra large devices - 超大屏幕 (1200px 及以上) */
 @media (min-width: 1200px) {
   .website-list {
-    grid-template-columns: repeat(auto-fill, minmax(var(--item-width), 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(var(--size-website-item-min-width), 1fr));
   }
   [data-layout="alternative"] .website-list {
     grid-template-columns: repeat(auto-fill, minmax(65px, 1fr));
@@ -67,8 +67,8 @@
 /* XX-Large devices - 超超大屏幕 (1400px 及以上) */
 @media (min-width: 1400px) {
   .website-list {
-    grid-template-columns: repeat(auto-fill, minmax(var(--item-width), 1fr));
-    max-width: 1800px;
+    grid-template-columns: repeat(auto-fill, minmax(var(--size-website-item-min-width), 1fr));
+    max-width: var(--size-websitelist-max-width);
     margin: 0 auto;
   }
   [data-layout="alternative"] .website-list {
@@ -88,6 +88,6 @@
   }
 
   .website-list {
-    gap: var(--spacing-md);
+    gap: var(--spacing-inline-md);
   }
 }

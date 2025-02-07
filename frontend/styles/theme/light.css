@@ -1,9 +1,11 @@
-/* Light theme variables - 亮色主题变量 */
+/* === Light theme variables - 亮色主题变量 === */
+/* 作用：定义亮色主题下通用的颜色变量，用于亮色模式的整体风格设置。 */
+/* 依赖： theme/variables.css (基础变量) */
 @layer theme-variables {
   :root {
     /* Color System - Light Theme - 颜色系统 - 亮色主题 */
-    --color-background-base: var(--color-surface); /* Background color - 基础背景色，默认使用 surface color */
-    --color-text-base: var(--color-text-primary); /* Text color - 基础文字颜色，默认使用 primary text color */
+    --color-background-base: var(--color-surface); /* Background color - 基础背景色，默认使用 surface color，白色 */
+    --color-text-base: var(--color-text-primary); /* Text color - 基础文字颜色，默认使用 primary text color，深灰色 */
     --color-primary: hsl(242, 69%, 59%); /* Primary color - 主题色，靛蓝色 (HSL) */
     --color-primary-hover: hsl(242, 58%, 53%); /* Primary color Hover - 主题色 Hover 状态 (HSL) */
     --color-surface: hsl(0, 0%, 100%); /* Surface color - 表面颜色，白色 (HSL) */

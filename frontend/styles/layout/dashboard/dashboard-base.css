@@ -7,16 +7,16 @@
 #dashboard {
   display: flex; /* 使用 flex 布局 */
   flex-direction: column; /* 垂直方向布局 */
-  max-width: 1350px; /* 设置最大宽度 */
+  max-width: var(--size-dashboard-max-width); /* 设置最大宽度 */
   margin: 0 auto; /* 水平居中 */
-  gap: var(--spacing-xl); /* 设置子元素间距为 xl 尺寸 CSS 变量 */
+  gap: var(--spacing-inline-xl); /* 设置子元素间距为 xl 尺寸 CSS 变量 */
 }
 [data-layout="alternative"] #dashboard {
   display: grid;
   /* grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); */
-  gap: var(--spacing-xl);
-  max-width: 1350px;
+  gap: var(--spacing-inline-xl);
+  max-width: var(--size-dashboard-max-width);
   margin: 0 auto;
-  padding: var(--spacing-xl);
+  padding: var(--spacing-inset-xl);
   position: relative;
 }

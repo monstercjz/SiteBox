@@ -11,9 +11,9 @@
   display: flex; /* 使用 flex 布局 */
   align-items: center; /* 垂直居中 */
   height: 48px;  /* 与按钮高度一致 */
-  gap: var(--spacing-xs); /* 设置选项之间的间距 */
-  padding: var(--spacing-xs); /* 设置内边距 */
-  margin-right: var(--spacing-sm); /* 设置右外边距 */
+  gap: var(--spacing-inline-xxs); /* 设置选项之间的间距 */
+  padding: var(--spacing-inset-xxs); /* 设置内边距 */
+  margin-right: var(--spacing-stack-xs); /* 设置右外边距 */
 }
 
 /* Layout switcher container - 布局切换器容器 */
@@ -28,7 +28,7 @@
   justify-content: center; /* 水平居中 */
   width: 40px; /* 设置宽度 */
   height: 40px; /* 设置高度 */
-  padding: var(--spacing-xs); /* 设置内边距 */
-  border-radius: 50%; /* 设置圆形边框 */
+  padding: var(--spacing-inset-xxs); /* 设置内边距 */
+  border-radius: var(--radius-xl);/* 设置圆形边框 */
   /* box-shadow: var(--shadow-sm); 设置阴影效果 */
 }

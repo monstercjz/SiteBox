@@ -1,3 +1,6 @@
+/* === Modal Overlay Layout Styles - 模态框遮罩层布局样式 === */
+/* 作用：组织和导入模态框遮罩层布局相关的子模块样式。 */
+/* 依赖： modal-overlay 子模块 */
 /* Modal Overlay Layout - Main module - 模态框遮罩层布局样式 - 主模块 - 引入子模块 */
 /*
   模态框遮罩层 (modal-overlay) 组件的布局样式主模块，负责引入 modal-overlay 目录下各个子模块的样式文件。

@@ -6,7 +6,7 @@
 
 /* 右键菜单容器 */
 #contextMenu {
-  padding: var(--spacing-xs) 0;
+  padding: var(--spacing-inset-xxs) 0;
   /* 设置垂直方向内边距 */
   min-width: 160px;
   /* 设置最小宽度 */
@@ -14,10 +14,11 @@
 
 /* 右键菜单项 */
 #contextMenu div {
-  padding: var(--spacing-sm) var(--spacing-md);
+  padding: var(--spacing-inset-xs) var(--spacing-inset-md);
   /* 设置菜单项内边距 */
   cursor: pointer;
   user-select: none;
+  font-size: var(--font-size-sm);
 }
 
 /* 删除网站条目菜单项样式 */
@@ -34,14 +35,14 @@
 [data-layout="alternative"] #contextMenu {
   position: fixed;
   z-index: 9999;
-  min-width: var(--size-context-menu-width);
+  min-width: var(--size-contextmenu-min-width);
   overflow: hidden;
   display: block !important;
 }
 [data-layout="alternative"] #contextMenu div {
-  padding: var(--spacing-mmd) var(--spacing-md);
+  padding: var(--spacing-inset-sm) var(--spacing-inset-md);
   cursor: pointer;
-  font-size: var(--font-size-xs);
+  font-size: var(--font-size-sm);
   display: flex;
   align-items: center;
   gap: 0.5rem;

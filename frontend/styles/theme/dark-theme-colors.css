@@ -1,20 +1,23 @@
+/* === Dark Theme Colors - 深色主题颜色 === */
+/* 作用：定义深色主题下的颜色变量，用于深色模式。 */
+/* 依赖： theme/variables.css (基础变量) */
 [data-theme="dark"] {
-    --color-primary: #9333ea;
-    --color-primary-hover: #a855f7;
-    --color-secondary: #7c3aed;
+    --color-primary: #9333ea; /* Primary color - 主题色 */
+    --color-primary-hover: #a855f7; /* Primary color hover state - 主题色悬停状态 */
+    --color-secondary: #7c3aed; /* Secondary color - 次要颜色 */
     --color-background-base: #2e2a5b; /* Background color - 基础背景色，深紫色 */
     --color-text-base: var(--color-text-primary); /* Text color - 基础文字颜色，默认使用 primary text color */
-    --color-surface: #2e2a5b;
+    --color-surface: #2e2a5b; /* Surface color - 表面颜色 */
     --color-surface-hover: hsl(240, 17%, 21%); /* Surface color Hover - 表面颜色 Hover 状态 (HSL) */
-    --color-border: #4c4a6e;
-    --color-text-primary: #f5f3ff;
-    --color-text-secondary: #e0e7ff;
-    --shadow-sm: 0 1px 3px rgba(147, 51, 234, 0.2);
-    --glass-effect: rgba(46, 42, 91, 0.9);
-    --glass-border: 1px solid rgba(46, 42, 91, 0.2);
-    --glass-shadow: 0 8px 32px 0 rgba(147, 51, 234, 0.15);
-    --glass-blur: blur(12px);
-    --color-delete-hover: hsl(9, 58%, 30%); /* Delete item hover color for dark theme - 深色主题删除菜单项悬停颜色 */
-    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.3), 0 2px 4px rgba(0, 0, 0, 0.2); /* Medium shadow - 中阴影 */
-    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.3), 0 4px 6px rgba(0, 0, 0, 0.2); /* Large shadow - 大阴影 */
+    --color-border: #4c4a6e; /* Border color - 边框颜色 */
+    --color-text-primary: #f5f3ff; /* Primary text color - 主要文本颜色，浅色 */
+    --color-text-secondary: #e0e7ff; /* Secondary text color - 次要文本颜色，更浅色 */
+    --shadow-sm: 0 1px 3px rgba(147, 51, 234, 0.2); /* Small shadow - 小阴影，紫色阴影 */
+    --glass-effect: rgba(46, 42, 91, 0.9); /* Glass effect color - 玻璃效果颜色，深紫色 */
+    --color-glass-border: 1px solid rgba(46, 42, 91, 0.2); /* Glass border color - 玻璃边框颜色，深紫色 */
+    --color-glass-shadow: 0 8px 32px 0 rgba(147, 51, 234, 0.15); /* Glass shadow color - 玻璃阴影颜色，紫色阴影 */
+    --glass-blur: blur(12px); /* Glass blur - 玻璃模糊效果 */
+    --color-delete-hover: hsl(9, 58%, 30%); /* Delete item hover color for dark theme - 深色主题删除菜单项悬停颜色，使用 HSL 调整 */
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.3), 0 2px 4px rgba(0, 0, 0, 0.2); /* Medium shadow - 中阴影，通用阴影 */
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.3), 0 4px 6px rgba(0, 0, 0, 0.2); /* Large shadow - 大阴影，通用阴影 */
 }

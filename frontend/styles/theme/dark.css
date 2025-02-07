@@ -1,8 +1,10 @@
-/* Dark theme variables - 深色主题变量 */
+/* === Dark Theme Variables - 深色主题变量 === */
+/* 作用：定义深色主题下通用的颜色变量，用于深色模式的整体风格设置。 */
+/* 依赖： theme/variables.css (基础变量) */
 @layer theme-variables {
   [data-theme="dark"] {
-    --color-background-base: var(--color-surface); /* Background color - 基础背景色，默认使用 surface color */
-    --color-text-base: var(--color-text-primary); /* Text color - 基础文字颜色，默认使用 primary text color */
+    --color-background-base: var(--color-surface); /* Background color - 基础背景色，默认使用 surface color，深色背景 */
+    --color-text-base: var(--color-text-primary); /* Text color - 基础文字颜色，默认使用 primary text color，浅色文字 */
     --color-primary: hsl(249, 85%, 73%); /* Primary color - 主题色，柔和的亮紫色 (HSL) */
     --color-primary-hover: hsl(244, 87%, 67%); /* Primary color Hover - 主题色 Hover 状态 (HSL) */
     --color-surface: hsl(240, 14%, 16%); /* Surface color - 表面颜色，温和的深色背景 (HSL) */
@@ -12,9 +14,9 @@
     --color-text-secondary: hsl(220, 13%, 70%); /* Secondary text color - 次要文字颜色，灰色 (HSL) */
 
     /* Shadow System for Dark Theme - 深色主题阴影系统 */
-    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3); /* Small shadow - 小阴影 */
-    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.3), 0 2px 4px rgba(0, 0, 0, 0.2); /* Medium shadow - 中阴影 */
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3); /* Small shadow - 小阴影，深色主题下阴影更明显 */
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.3), 0 2px 4px rgba(0, 0, 0, 0.2); /* Medium shadow - 中阴影，深色主题下阴影更明显 */
     --color-delete-hover: hsl(9, 58%, 30%); /* Delete item hover color for dark theme - 深色主题删除菜单项悬停颜色 */
-    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.3), 0 4px 6px rgba(0, 0, 0, 0.2); /* Large shadow - 大阴影 */
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.3), 0 4px 6px rgba(0, 0, 0, 0.2); /* Large shadow - 大阴影，深色主题下阴影更明显 */
   }
 }

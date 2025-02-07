@@ -1,11 +1,14 @@
+/* === Z-index Utilities Styles - 层级控制工具类样式 === */
+/* 作用：定义全局 z-index 层级控制工具类样式，方便快速设置元素层叠顺序。 */
+/* 依赖：无 */
 /* Z-index Utilities Styles - 层级控制工具类样式 */
 /*
   定义全局 z-index 层级控制工具类样式，方便快速设置元素 z-index 属性。
   包括 z-10, z-20, z-max 等常用的 z-index 工具类。
 */
-/* Z-index 10 - 层级 10 */
-.z-10 { z-index: 10; } /* 设置 z-index: 10; 层级值为 10 */
-/* Z-index 20 - 层级 20 */
-.z-20 { z-index: 20; } /* 设置 z-index: 20; 层级值为 20 */
-/* Z-index Max - 最大层级 */
-.z-max { z-index: 9999; } /* 设置 z-index: 9999; 层级值为最大值 9999 */
+/* Z-index 10 - 层级 10，用于一般元素的层级 */
+.z-10 { z-index: 10; } /* 设置 z-index: 10; 层级值为 10，中等层级 */
+/* Z-index 20 - 层级 20，用于置于较上层的元素 */
+.z-20 { z-index: 20; } /* 设置 z-index: 20; 层级值为 20，较高层级 */
+/* Z-index Max - 最大层级，用于模态框等需要置于最顶层的元素 */
+.z-max { z-index: 9999; } /* 设置 z-index: 9999; 层级值为最大值 9999，最高层级，通常用于 modal, tooltip 等 */

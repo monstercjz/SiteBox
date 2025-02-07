@@ -10,9 +10,9 @@
   display: flex; /* 使用 flex 布局 */
   align-items: center; /* 垂直居中 */
   justify-content: center; /* 水平居中 */
-  width: 48px; /* 设置宽度 */
-  height: 48px; /* 设置高度 */
-  border-radius: 50%; /* 设置圆形边框 */
+  width: var(--size-button-md); /* 设置宽度 */
+  height: var(--size-button-md); /* 设置高度 */
+  border-radius: var(--radius-circle); /* 设置圆形边框 */
   z-index: 11; /* 设置 z-index */
 }
 
@@ -23,8 +23,8 @@
   justify-content: center;
   width: var(--size-button-md);
   height: var(--size-button-md);
-  border-radius: 50%;
-  padding: var(--spacing-sm);
+  border-radius: var(--radius-circle);
+  padding: var(--spacing-inset-xs);
   cursor: pointer;
   overflow: hidden;
 }

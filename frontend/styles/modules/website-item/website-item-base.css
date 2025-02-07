@@ -5,10 +5,10 @@
   flex-direction: row;/* 修改这里的值让内部元素以列row 方式排列 */
   align-content: space-around;/* 如果需要垂直方向上的分布 */
   justify-content: center;/* 修改这里的值让内部元素居中 */
-  /*padding: var(--spacing-md); /* 减小水平方向的内边距 */
-  padding-right: var(--spacing-md);
-  gap: var(--spacing-md);/* 可以改变a和img的距离 */
-  width: var(--item-width); /* 使用 CSS 变量设置 item 宽度 */
+  /*padding: var(--spacing-inset-md); /* 减小水平方向的内边距 */
+  padding-right: var(--spacing-inset-md);
+  gap: var(--spacing-inline-md);/* 可以改变a和img的距离 */
+  width: var(--size-website-item-min-width); /* 使用 CSS 变量设置 item 宽度 */
   min-height: 65px; /* 设置一个最小高度 */
 }
 
@@ -30,9 +30,9 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: var(--spacing-xxs); 
-  padding: var(--spacing-sm); 
-  margin: var(--spacing-xs);  
+  gap: var(--spacing-inline-xxs); 
+  padding: var(--spacing-inset-xs); 
+  margin: var(--spacing-stack-xxs);  
   position: relative;
   overflow: hidden;
   min-height: 60px;
@@ -44,8 +44,8 @@
 }
 [data-layout="alternative"] .website-item a {
   text-decoration: none;  
-  font-weight: 500;
+  font-weight: var(--font-weight-medium);
   position: relative;
   display: inline-block;
-  padding-bottom: var(--border-width-xs);
+  padding-bottom: var(--spacing-inset-xs);/* 待调整 */
 }

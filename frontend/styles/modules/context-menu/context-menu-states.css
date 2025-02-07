@@ -10,7 +10,7 @@
 }
 /* Context Menu Item State Styles */
 #contextMenu div:hover {
-  background-color: var(--color-surface-hover);
+  background-color: var(--background-card-hover);
 }
 /* 删除网站条目菜单项 hover 状态样式 */
 #contextMenu .delete-website-item:hover {
@@ -64,12 +64,12 @@
   height: 100%;
   background: linear-gradient(90deg, rgba(124,58,237,0.1) 0%, rgba(147,51,234,0.1) 100%);
   transform: translateX(-100%);
-  transition: transform var(--animation-duration-normal) ease;
+  transition: transform var(--animation-duration-medium) ease;
   z-index: -1;
 }
 
 [data-layout="alternative"] #contextMenu div:hover {
-  color: var(--color-primary);
+  color: var(--action-primary);
 }
 
 [data-layout="alternative"] #contextMenu div:hover::before {

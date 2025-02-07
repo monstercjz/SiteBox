@@ -3,55 +3,65 @@
    =================================== */
 
    :root {
-    /* 核心品牌色系 */
+    /* === Core Brand Colors - 核心品牌色系 === */
+    /* 作用：定义品牌核心色，用于品牌主色调的统一。 */
+    /* 依赖：无 */
     --color-primary-500: #2A5C82;    /* 主品牌色 */
     --color-primary-400: #3A7CA5;    /* 悬停状态 */
     --color-primary-600: #1D415C;    /* 激活状态 */
   
-    /* 辅助色系 */
+    /* === Auxiliary Color System - 辅助色系 === */
+    /* 作用：定义辅助颜色，用于丰富视觉层次和突出重点。 */
+    /* 依赖：无 */
     --color-secondary-500: #5DA399;  /* 辅助主色 */
     --color-secondary-400: #7FBFB5;
     --color-secondary-600: #3B7870;
   
-    /* 功能色系 */
+    /* === Functional Color System - 功能色系 === */
+    /* 作用：定义功能性颜色，用于表达状态和操作反馈。 */
+    /* 依赖：无 */
     --color-accent-500: #FF7F50;     /* 强调色 */
     --color-success-500: #28A745;    /* 成功状态 */
     --color-warning-500: #FFC107;    /* 警告状态 */
     --color-error-500: #DC3545;      /* 错误状态 */
   
-    /* 中性色系 */
+    /* === Neutral Color System - 中性色系 === */
+    /* 作用：定义中性颜色，用于构建页面的基础框架和文本层次。 */
+    /* 依赖：无 */
     --color-neutral-100: #F8F9FA;    /* 页面背景 */
     --color-neutral-200: #E9ECEF;    /* 分割线/边框 */
     --color-neutral-300: #DEE2E6;    /* 禁用状态边框 */
     --color-neutral-700: #495057;    /* 次级文本 */
     --color-neutral-900: #212529;    /* 主文本 */
   
-    /* 语义化变量 (基于核心色系映射) */
-    /* 文本系统 */
+    /* === Semantic Variables (Mapped from Core Color System) - 语义化变量 (基于核心色系映射) === */
+    /* 作用：定义语义化的颜色变量，方便在不同组件和模块中统一调用。 */
+    /* 依赖：核心色系 */
+    /* Text System - 文本系统 */
     --text-primary: var(--color-neutral-900);
     --text-secondary: var(--color-neutral-700);
     --text-disabled: var(--color-neutral-300);
     --text-inverse: #FFFFFF;
   
-    /* 背景系统 */
+    /* Background System - 背景系统 */
     --background-body: var(--color-neutral-100);
     --background-card: #FFFFFF;
     --background-header: var(--color-primary-500);
     --background-subheader: var(--color-secondary-500);
     
-    /* 交互系统 */
+    /* Interaction System - 交互系统 */
     --action-primary: var(--color-primary-500);
     --action-primary-hover: var(--color-primary-400);
     --action-primary-active: var(--color-primary-600);
     --action-secondary: var(--color-secondary-500);
     
-    /* 状态系统 */
+    /* Status System - 状态系统 */
     --status-success: var(--color-success-500);
     --status-warning: var(--color-warning-500);
     --status-error: var(--color-error-500);
     --status-accent: var(--color-accent-500);
     
-    /* 特殊元素 */
+    /* Special Elements - 特殊元素 */
     --url-identifier: #1E88E5;       /* 网址标识 */
     --timestamp-label: #95A5A6;      /* 时间戳文本 */
   }

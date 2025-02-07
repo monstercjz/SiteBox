@@ -1,10 +1,7 @@
 @layer theme-variables {
-  /* CSS Variables - CSS 变量定义 */
-  /*
-    定义 CSS 变量，用于整个项目的基础主题化配置。
-    包括字体排版系统、阴影系统、间距系统、圆角系统、过渡效果系统、组件尺寸系统等。
-    颜色系统变量将在各个主题文件中定义。
-  */
+  /* === CSS Variables - CSS 变量 === */
+  /* 作用：定义 CSS 变量，用于整个项目的基础主题化配置。 */
+  /* 依赖：无 */
   :root {
     /* Typography System - 字体排版系统 */
     --font-size-responsive: 14px;   /* Responsive font size for small screens - 小屏幕响应式字体大小 */
@@ -52,7 +49,7 @@
     --transition-fast: 150ms ease; /* Fast transition - 快速过渡效果 */
     --transition-normal: 250ms ease; /* Normal transition - 通用过渡效果 */
     --rotation: 0deg;                /* Rotation angle - 旋转角度 */
-    --gradient: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+    --gradient: linear-gradient(135deg, var(--action-primary) 0%, var(--action-secondary) 100%);
   
     --animation-duration-ripple-button: 1.5s;
     --animation-duration-ripple-button: 1.5s;
@@ -153,11 +150,10 @@
     /* 未定义的变量 - Undefined Variables */
     --max-dashboard-width: 1280px;      /* Dashboard 最大宽度 */
     --spacing-group: var(--spacing-lg); /* Group padding */
-    --shadow-blur-md: 12px;             /* Medium shadow blur */
-    --shadow-blur-lg: 24px;             /* Large shadow blur */
+
     --border-radius-sm: 4px;           /* Small border radius */
     --border-width-md: 4px;            /* Medium border width */
-    --color-primary-hover: #6366f1;     /* Primary color hover state */
+    --action-primary-hover: #6366f1;     /* Primary color hover state */
     --shadow-website-item-hover: 0 16px 32px rgba(99, 102, 241, 0.2); /* Website item hover shadow */
     --shadow-website-item-active: 0 8px 24px rgba(0, 0, 0, 0.2);    /* Active website item shadow */
     --shadow-modal-button-active: 0 2px 6px rgba(124, 58, 237, 0.2); /* Active modal button shadow */

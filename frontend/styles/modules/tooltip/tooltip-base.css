@@ -5,14 +5,14 @@
 */
 /* Tooltip 容器 */
 /* .tooltip, .website-tooltip {
-  padding: var(--spacing-sm) var(--spacing-md); 
+  padding: var(--spacing-inset-xs) var(--spacing-inset-md); 
   border-radius: var(--radius-sm); 
   max-width: 300px; 
   
 } */
 #tooltip {
-  color: var(--color-text-primary);
-  padding: var(--spacing-sm) var(--spacing-md);
+  color: var(--text-primary);
+  padding: var(--spacing-inset-xs) var(--spacing-inset-md);
   position: absolute;
   z-index: 1000;
   white-space: nowrap;
@@ -20,12 +20,12 @@
 
 /* Website tooltip styles */
 .website-tooltip {
-  padding: var(--spacing-md);
-  border-radius: var(--radius);
+  padding: var(--spacing-inset-md);
+  border-radius: var(--radius-sm);
   backdrop-filter: var(--glass-blur);
   word-wrap: break-word; /* 允许单词断行 */
   z-index: 1000;
-  min-width: var(--size-website-tooltip-width);
+  min-width: var(--size-websitetooltip-min-width);
   opacity: 0;
 }
 .fade-in {
@@ -39,18 +39,18 @@
 .tooltip-content {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-sm);
+  gap: var(--spacing-inline-xs);
 }
 
 .tooltip-row {
   display: flex;
-  gap: var(--spacing-sm);
+  gap: var(--spacing-inline-xs);
   align-items: center;
   font-size: var(--font-size-xs);
-  color: var(--color-text-primary);
+  color: var(--text-primary);
 }
 
 .tooltip-row strong {
-  color: var(--color-primary);
-  min-width: var(--size-website-item-min-height);
+  color: var(--action-primary);
+  /* min-width: var(--size-website-item-min-height); */
 }

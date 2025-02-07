@@ -1,3 +1,6 @@
+/* === Text Utilities Styles - 文本处理工具类样式 === */
+/* 作用：定义全局文本处理工具类样式，方便快速设置文本相关样式，如省略、换行等。 */
+/* 依赖：无 */
 /* Text Utilities Styles - 文本处理工具类样式 */
 /*
   定义全局文本处理工具类样式，方便快速设置文本相关样式。
@@ -5,7 +8,7 @@
 */
 /* Text Ellipsis - 文本省略 */
 .text-ellipsis {
-  overflow: hidden; /* 隐藏溢出内容 */
-  text-overflow: ellipsis; /* 使用省略号 (...) 表示溢出文本 */
-  white-space: nowrap; /* 禁止文本换行 */
+  overflow: hidden; /* 隐藏溢出容器的内容 */
+  text-overflow: ellipsis; /* 使用省略号 (...) 表示被修剪的文本 */
+  white-space: nowrap; /* 禁止文本换行，单行显示 */
 }

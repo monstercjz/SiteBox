@@ -5,8 +5,8 @@
 */
 /* Layout Switcher Options Container - 布局切换器选项容器 */
 .layout-switcher__options {
-  background: var(--color-surface); /* 设置背景色为 surface color CSS 变量 */
-  /*border: 1px solid var(--color-border);  设置边框 */
+  background: var(--background-card); /* 设置背景色为 surface color CSS 变量 */
+  /*border: 1px solid var(--border-normal);  设置边框 */
   /*box-shadow: var(--shadow-md);  设置阴影效果，使用 shadow-md CSS 变量 */
 }
 
@@ -22,9 +22,9 @@
 
 /* Layout switcher option - 布局切换器选项按钮 */
 .layout-switcher__option {
-  background: var(--color-surface); /* 设置背景色为 surface color CSS 变量 */
-  color: var(--color-text-primary); /* 设置文字颜色为 primary text color CSS 变量 */
-  border: 1px solid var(--color-border); /* 设置边框 */
+  background: var(--background-card); /* 设置背景色为 surface color CSS 变量 */
+  color: var(--text-primary); /* 设置文字颜色为 primary text color CSS 变量 */
+  border: 1px solid var(--border-normal); /* 设置边框 */
 }
 
 .layout-switcher__option {

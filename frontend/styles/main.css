@@ -1,32 +1,37 @@
+/* === Main Stylesheet Comments === */
+/* 作用：主样式表，用于导入和组织所有模块的CSS */
+/* 依赖：基础模块、布局模块、组件模块、状态模块、工具类模块 */
+
 /**
  * Main Stylesheet - 主样式表
  * ---------------------
  * CSS模块入口文件，按照以下顺序导入各个模块：
  * CSS module entry file, imports sub-modules in the following order:
- * 
+ *
  * 1. Base - 基础模块
  *    - CSS变量 (CSS Variables)
  *    - 基础样式 (Base Styles)
- * 
+ *
  * 2. Layout - 布局模块
  *    - 布局结构 (Layout Structure)
  *    - 定位规则 (Positioning Rules)
- * 
+ *
  * 3. Modules - 组件模块
  *    - UI组件样式 (UI Component Styles)
  *    - 按钮、模态框、工具提示等 (Buttons, Modals, Tooltips, etc.)
- * 
+ *
  * 4. States - 状态模块
  *    - 状态样式 (State Styles)
  *    - 动画效果 (Animations)
- * 
+ *
  * 5. Utilities - 工具类模块
  *    - 工具类 (Utility Classes)
  *    - 响应式设计 (Responsive Design)
  */
 
 /* Import Base styles - 引入基础模块样式 */
-@import 'theme/variables.css';
+/* @import 'theme/variables.css'; */
+
 @import 'base/typography.css';
 
 /* Import Layout styles - 引入布局模块样式 */
@@ -67,7 +72,9 @@
 @import 'utilities/size.css';
 @import 'utilities/position.css';
 @import 'utilities/z-index.css';
-@import './variables.css';
+/* @import './variables.css'; */
 @import 'utilities/alternative-layout-keyframes.css';
-@import './theme/default-theme-colors.css';
-@import './theme/dark-theme-colors.css';
+/* @import './theme/default-theme-colors.css';
+@import './theme/dark-theme-colors.css'; */
+@import './theme/light-theme-colors.css';
+@import 'theme/dis.css';

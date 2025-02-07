@@ -1,3 +1,6 @@
+/* === Notification Layout Styles - 通知布局样式 === */
+/* 作用：组织和导入通知布局相关的子模块样式。 */
+/* 依赖： notification 子模块 */
 /* Notification Layout - Main module - 通知布局样式 - 主模块 - 引入子模块 */
 /*
   通知 (notification) 组件的布局样式主模块，负责引入 notification 目录下各个子模块的样式文件。

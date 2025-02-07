@@ -11,9 +11,9 @@
   display: inline-flex; /* 使用 inline-flex 布局，使其可以水平排列 */
   align-items: center; /* 垂直居中 */
   justify-content: center; /* 水平居中 */
-  width: var(--icon-button-size); /* 设置宽度 */
-  height: var(--icon-button-size); /* 设置高度 */
-  border-radius: 50%; /* 设置圆形边框 */
+  width: var(--size-button-md); /* 设置宽度 */
+  height: var(--size-button-md); /* 设置高度 */
+  border-radius: var(--radius-circle); /* 设置圆形边框 */
   overflow: hidden; /* 隐藏溢出内容 */
 }
 
@@ -31,10 +31,10 @@
   justify-content: center;
   width: var(--size-button-md);
   height: var(--size-button-md);
-  border-radius: 50%;
+  border-radius: var(--radius-circle);
   overflow: hidden;
   border: none;
-  padding: var(--spacing-xnano);
+  padding: var(--spacing-inset-xxs);
   cursor: pointer;
 }
 

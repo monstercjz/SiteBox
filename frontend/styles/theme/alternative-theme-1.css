@@ -1,28 +1,31 @@
 @layer theme-variables {
+  /* === Alternative Theme 1 Variables - 备选主题 1 变量 === */
+  /* 作用：定义备选主题 1 的颜色变量，用于主题切换。 */
+  /* 依赖： theme/variables.css (基础变量) */
   :root {
-    --color-primary: #7c3aed;
-    --color-primary-hover: #6d28d9;
-    --color-secondary: #9333ea;
-    --color-background-base: #f5f3ff;
-    --color-surface: #ffffff;
-    --color-text-primary: #1e1b4b;
-    --color-text-secondary: #4c4a6e;
-    --color-border: #e0e7ff;
-    --shadow-md: 0 1px 3px rgba(99, 102, 241, 0.1);
-    --radius-md: 16px;
-    --transition-normal: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    --color-gradient-primary: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+    --color-primary: #7c3aed; /* Primary color - 主题色 */
+    --color-primary-hover: #6d28d9; /* Primary color hover state - 主题色悬停状态 */
+    --color-secondary: #9333ea; /* Secondary color - 次要颜色 */
+    --color-background-base: #f5f3ff; /* Base background color - 基础背景色 */
+    --color-surface: #ffffff; /* Surface color - 表面颜色，用于卡片、Modal 等 */
+    --color-text-primary: #1e1b4b; /* Primary text color - 主要文本颜色 */
+    --color-text-secondary: #4c4a6e; /* Secondary text color - 次要文本颜色 */
+    --color-border: #e0e7ff; /* Border color - 边框颜色 */
+    --shadow-md: 0 1px 3px rgba(99, 102, 241, 0.1); /* Medium shadow - 中等阴影 */
+    --radius-md: 16px; /* Medium radius - 中等圆角 */
+    --transition-normal: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* Normal transition - 通用过渡效果 */
+    --color-gradient-primary: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%); /* Primary gradient color - 主题渐变色 */
 
-    /* New theme variables */
-    --color-accent: #f59e0b;
-    --color-success: #10b981;
-    --color-error: #ef4444;
-    --color-info: #3b82f6;
-    --color-warning: #f59e0b;
-    --color-overlay: rgba(0, 0, 0, 0.5);
-    --color-glass-effect: rgba(255, 255, 255, 0.9);
-    --color-glass-border: 1px solid rgba(255, 255, 255, 0.2);
-    --color-glass-shadow: 0 8px 32px 0 rgba(99, 102, 241, 0.15);
-    --glass-blur: blur(12px);
+    /* New theme variables - 新主题变量 */
+    --color-accent: #f59e0b; /* Accent color - 强调色 */
+    --color-success: #10b981; /* Success color - 成功色 */
+    --color-error: #ef4444; /* Error color - 错误色 */
+    --color-info: #3b82f6; /* Info color - 信息色 */
+    --color-warning: #f59e0b; /* Warning color - 警告色 */
+    --color-overlay: rgba(0, 0, 0, 0.5); /* Overlay color - 遮罩层颜色 */
+    --color-glass-effect: rgba(255, 255, 255, 0.9); /* Glass effect color - 玻璃效果颜色 */
+    --color-glass-border: 1px solid rgba(255, 255, 255, 0.2); /* Glass border color - 玻璃边框颜色 */
+    --color-glass-shadow: 0 8px 32px 0 rgba(99, 102, 241, 0.15); /* Glass shadow color - 玻璃阴影颜色 */
+    --glass-blur: blur(12px); /* Glass blur - 玻璃模糊效果 */
   }
 }

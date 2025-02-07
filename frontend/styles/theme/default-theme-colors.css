@@ -1,26 +1,29 @@
 :root {
-    --color-background-base: #f5f3ff;
-    --color-surface: #ffffff;
-    --color-text-primary: #1e1b4b;
-    --color-text-secondary: #4c4a6e;
-    --color-primary: #7c3aed;
-    --color-primary-hover: #6d28d9;
-    --color-secondary: #9333ea;
-    --color-border: #e0e7ff;
+    /* === Default Theme Colors - 默认主题颜色 === */
+    /* 作用：定义默认主题下的颜色变量，作为默认主题风格。 */
+    /* 依赖： theme/variables.css (基础变量) */
+    --color-background-base: #f5f3ff; /* Background color - 基础背景色，浅紫色 */
+    --color-surface: #ffffff; /* Surface color - 表面颜色，白色 */
+    --color-text-primary: #1e1b4b; /* Primary text color - 主要文本颜色，深紫色 */
+    --color-text-secondary: #4c4a6e; /* Secondary text color - 次要文本颜色，中紫色 */
+    --color-primary: #7c3aed; /* Primary color - 主题色，亮紫色 */
+    --color-primary-hover: #6d28d9; /* Primary color Hover - 主题色悬停状态，深紫色 */
+    --color-secondary: #9333ea; /* Secondary color - 次要颜色，紫色 */
+    --color-border: #e0e7ff; /* Border color - 边框颜色，浅紫色 */
 
-    --accent-color: #f59e0b;
-    --success-color: #10b981;
-    --error-color: #ef4444;
-    --info-color: #3b82f6;
-    --warning-color: #f59e0b;
+    --accent-color: #f59e0b; /* Accent color - 强调色，橙色 */
+    --success-color: #10b981; /* Success color - 成功色，绿色 */
+    --error-color: #ef4444; /* Error color - 错误色，红色 */
+    --info-color: #3b82f6; /* Info color - 信息色，蓝色 */
+    --warning-color: #f59e0b; /* Warning color - 警告色，橙色 */
 
-    --overlay-color: rgba(0, 0, 0, 0.5);
-    --shadow-sm: 0 1px 3px rgba(99, 102, 241, 0.1);
-    --radius: 16px;
-    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    --gradient: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
-    --glass-effect: rgba(255, 255, 255, 0.9);
-    --glass-border: 1px solid rgba(255, 255, 255, 0.2);
-    --glass-shadow: 0 8px 32px 0 rgba(99, 102, 241, 0.15);
-    --glass-blur: blur(12px);
+    --overlay-color: rgba(0, 0, 0, 0.5); /* Overlay color - 遮罩层颜色，半透明黑色 */
+    --shadow-sm: 0 1px 3px rgba(99, 102, 241, 0.1); /* Small shadow - 小阴影，紫色阴影 */
+    --radius: 16px; /* Radius - 圆角，16px */
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* Transition - 过渡效果 */
+    --gradient: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%); /* Gradient - 渐变色 */
+    --glass-effect: rgba(255, 255, 255, 0.9); /* Glass effect color - 玻璃效果颜色，白色 */
+    --glass-border: 1px solid rgba(255, 255, 255, 0.2); /* Glass border color - 玻璃边框颜色，白色 */
+    --glass-shadow: 0 8px 32px 0 rgba(99, 102, 241, 0.15); /* Glass shadow color - 玻璃阴影颜色，紫色阴影 */
+    --glass-blur: blur(12px); /* Glass blur - 玻璃模糊效果 */
 }

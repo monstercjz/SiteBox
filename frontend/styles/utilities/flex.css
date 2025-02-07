@@ -1,15 +1,18 @@
+/* === Flex Utilities Styles - Flex 布局工具类样式 === */
+/* 作用：定义全局 Flex 布局工具类样式，方便快速使用 Flexbox 布局。 */
+/* 依赖： theme/variables.css (间距变量) */
 /* Flex Utilities Styles - Flex 布局工具类样式 */
 /*
   定义全局 Flex 布局工具类样式，方便快速使用 Flexbox 布局。
   包括 flex 容器、align-items、justify-content、gap 等常用 Flexbox 属性的工具类。
 */
 /* Flex Container - Flex 容器 */
-.flex { display: flex; } /* 设置 display: flex; 启用 Flexbox 布局 */
+.flex { display: flex; } /* 设置 display: flex; 启用 Flexbox 布局，将元素设置为 flex 容器 */
 /* Align Items Center - 垂直居中 */
-.items-center { align-items: center; } /* 设置 align-items: center; 垂直居中 flex 元素 */
+.items-center { align-items: center; } /* 设置 align-items: center; 垂直居中 flex 容器内的元素 */
 /* Justify Content Space Between - 水平两端对齐 */
-.justify-between { justify-content: space-between; } /* 设置 justify-content: space-between; 水平两端对齐 flex 元素 */
+.justify-between { justify-content: space-between; } /* 设置 justify-content: space-between; 水平方向上两端对齐 flex 元素，中间元素平均分布 */
 /* Gap Small - 小间距 */
-.gap-sm { gap: var(--spacing-sm); } /* 设置 gap: var(--spacing-sm); 使用 sm 尺寸间距 CSS 变量 */
+.gap-sm { gap: var(--spacing-inline-xs); } /* 设置 gap: var(--spacing-inline-xs); 使用 CSS 变量 --spacing-inset-xs 定义 flex 元素之间的间距，小尺寸间距 */
 /* Gap Medium - 中间距 */
-.gap-md { gap: var(--spacing-md); } /* 设置 gap: var(--spacing-md); 使用 md 尺寸间距 CSS 变量 */
+.gap-md { gap: var(--spacing-inline-md); } /* 设置 gap: var(--spacing-inline-md); 使用 CSS 变量 --spacing-inset-md 定义 flex 元素之间的间距，中等尺寸间距 */

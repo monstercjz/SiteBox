@@ -7,7 +7,7 @@
 
 :root {
   /* Notification border colors - 通知边框颜色 */
-  --notification-border-color-info: var(--color-primary); /* 信息通知边框颜色 */
+  --notification-border-color-info: var(--action-primary); /* 信息通知边框颜色 */
   --notification-border-color-error: #dc2626; /* 错误通知边框颜色 */
   --notification-border-color-success: #059669; /* 成功通知边框颜色 */
 }

@@ -130,7 +130,7 @@ function setRandomGroupColors() {
   const groupTitles = document.querySelectorAll('.group h2');
   groupTitles.forEach(title => {
     const color = colors[Math.floor(Math.random() * colors.length)];
-    title.style.setProperty('--group-title-color', color);
+    title.style.setProperty('--group-title-random-color', color);
   });
 }
 
@@ -141,7 +141,7 @@ function setRandomGroupColors() {
 function resetGroupColors() {
   const groupTitles = document.querySelectorAll('.group h2');
   groupTitles.forEach(title => {
-    title.style.removeProperty('--group-title-color');
+    title.style.removeProperty('--group-title-random-color');
   });
 }
 

@@ -6,24 +6,24 @@
 /* Info Notification State - 信息通知状态 */
 
 .notification.success {
-  background: var(--success-color);
+  background: var(--status-success);
   color: white;
   border-left: 4px solid var(--notification-border-color-success); /* 成功通知左侧边框颜色，使用 CSS 变量 */
 }
 
 .notification.error {
-  background: var(--error-color);
+  background: var(--status-error);
   color: white;
   border-left: 4px solid var(--notification-border-color-error); /* 错误通知左侧边框颜色，使用 CSS 变量 */
 }
 
 .notification.info {
-  background: var(--info-color);
+  background: var(--status-info);
   color: white;
   border-left: 4px solid var(--notification-border-color-info); /* 信息通知左侧边框颜色，使用 CSS 变量 */
 }
 
 .notification.warning {
-  background: var(--warning-color);
+  background: var(--status-warning);
   color: white;
 }

@@ -1,3 +1,6 @@
+/* === Loading Theme Styles - 加载主题样式 === */
+/* 作用：定义全局加载 (loading) 状态的主题样式，例如 loading 指示器的颜色、大小等主题相关样式。 */
+/* 依赖： theme/variables.css (颜色变量) */
 /* Loading Theme Styles - 加载主题样式 */
 /*
   定义全局加载 (loading) 状态的主题样式。

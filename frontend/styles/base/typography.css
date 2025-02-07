@@ -1,44 +1,42 @@
-/* Base Typography Styles - 基础排版样式 */
-/*
-  定义项目的基础排版样式，包括字体、字号、行高等。
-  用于设置全局的 typography 风格，例如字体栈、body 样式、标题样式等。
-*/
+/* === Base Typography Styles - 基础排版样式 === */
+/* 作用：定义项目的基础排版样式，包括字体、字号、行高等。 */
+/* 依赖：theme/variables.css (字体大小、颜色变量) */
 
 /* 设置 html 根元素字体大小 */
 html {
-  font-size: var(--font-size-base); /* 默认字体大小 16px */
+  font-size: var(--base-font-size); /* 设置默认字体大小，使用 CSS 变量 --base-font-size 16px */
 }
 
 /* 设置 body 基础字体和颜色 */
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif; /* 设置字体栈 */
-  background-color: var(--color-background-base); /* 设置背景色，使用 CSS 变量 */
-  color: var(--color-text-base); /* 设置文字颜色，使用 CSS 变量 */
-  padding: var(--spacing-lg); /* 设置内边距 */
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif; /* 设置全局字体栈，提供跨平台字体选择 */
+  background-color: var(--background-body); /* 设置背景色，使用 CSS 变量 --background-body */
+  color: var(--text-primary); /* 设置文字颜色，使用 CSS 变量 --text-primary */
+  padding: var(--spacing-inset-lg); /* 设置 body 内边距，使用 CSS 变量 --spacing-inset-lg */
 }
 
 /* Typography - 标题排版样式 */
 /* Main heading - 主要标题 */
 h1 {
-  font-size: 2rem; /* 设置字体大小 */
-  font-weight: 600; /* 设置字体粗细 */
-  text-align: center; /* 居中对齐 */
-  margin-bottom: var(--spacing-xl); /* 设置下外边距 */
-  letter-spacing: -0.025em; /* 设置letter-spacing 调整字间距 */
+  font-size: var(--font-size-heading-md); /* 设置 H1 标题字体大小为 2rem */
+  font-weight: var(--font-weight-semibold); /* 设置 H1 标题字体粗细为 600 (Semi-bold) */
+  text-align: center; /* 设置 H1 标题文本居中对齐 */
+  margin-bottom: var(--spacing-stack-xl); /* 设置 H1 标题下外边距，使用 CSS 变量 --spacing-stack-xl */
+  letter-spacing: -0.025em; /* 设置 letter-spacing 调整字间距，使标题更紧凑 */
 }
-/* Alternative Layout - 备选布局*/
+/* Alternative Layout - 备选布局 */
 [data-layout="alternative"] body {
-  font-family: 'Inter', system-ui, sans-serif;
-  margin: 0;
-  padding: 20px;
-  background-color: var(--color-background-base);
-  color: var(--color-text-primary);
-  line-height: 1.5;
+  font-family: 'Inter', system-ui, sans-serif; /* 备选布局下的字体栈 */
+  margin: 0; /* 清除备选布局 body 的外边距 */
+  padding: 20px; /* 设置备选布局 body 的内边距为 20px */
+  background-color: var(--background-body); /* 备选布局背景色，使用 CSS 变量 --background-body */
+  color: var(--text-primary); /* 备选布局文字颜色，使用 CSS 变量 --text-primary */
+  line-height: 1.5; /* 备选布局行高 */
 }
 
 [data-layout="alternative"] h1 {
-  text-align: center;
-  margin: 2rem 0;
-  color: var(--color-text-primary);
-  font-weight: 600;
+  text-align: center; /* 备选布局 H1 标题文本居中对齐 */
+  margin: 2rem 0; /* 备选布局 H1 标题上下外边距 */
+  color: var(--text-primary); /* 备选布局 H1 标题颜色，使用 CSS 变量 --text-primary */
+  font-weight: var(--font-weight-semibold); /* 备选布局 H1 标题字体粗细 */
 }

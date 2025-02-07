@@ -1,3 +1,6 @@
+/* === Toggle Actions Layout Styles - 切换操作布局样式 === */
+/* 作用：组织和导入切换操作布局相关的子模块样式。 */
+/* 依赖： toggle-actions 子模块 */
 /* Toggle Actions Layout - Main module - 切换操作布局样式 - 主模块 - 引入子模块 */
 /*
   切换操作 (toggle-actions) 组件的布局样式主模块，负责引入 toggle-actions 目录下各个子模块的样式文件。

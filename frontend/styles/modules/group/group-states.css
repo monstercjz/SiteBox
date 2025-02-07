@@ -5,12 +5,13 @@
   例如 hover, active 等交互状态。目前暂无状态样式。
 */
 [data-layout="alternative"] .group::before {
+  /* 此before导致右键分组无效，待调整 */
   content: '';
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  height: var(--border-radius-sm);
+  height: var(--border-width-xs);/* 待调整 */
   background: var(--gradient);
   opacity: 0;
   transition: var(--transition);
@@ -27,10 +28,10 @@
 [data-layout="alternative"] .group:hover::before {
   opacity: 1;
   width: 100%;
-  height: var(--border-width-md);
+  height: var(--border-width-xs);/* 待调整 */
   background: linear-gradient(
       90deg,
-      var(--color-primary) 0%,
-      var(--color-secondary) 100%
+      var(--action-primary) 0%,
+      var(--action-secondary) 100%
   );
 }

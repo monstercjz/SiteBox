@@ -1,3 +1,6 @@
+/* === Theme Switcher Styles - 主题切换器样式 === */
+/* 作用：组织和导入主题切换器相关的子模块样式。 */
+/* 依赖： theme-switcher 子模块 */
 /* Theme Switcher Styles - Main module - imports sub-modules */
 @import './theme-switcher/theme-switcher-base.css';
 @import './theme-switcher/theme-switcher-theme.css';

@@ -6,10 +6,10 @@
 */
 /* 模态框容器 */
 .modal {
-  border-radius: var(--radius-lg); /* 设置圆角，使用 radius-lg CSS 变量 */
+  border-radius: var(--radius-md); /* 设置圆角，使用 radius-lg CSS 变量 */
   background: linear-gradient(to bottom right, /* 设置背景渐变 */
-    var(--color-surface) 0%, /* 起始颜色为 surface color CSS 变量 */
-    color-mix(in srgb, var(--color-surface) 98%, var(--color-primary)) 100% /* 混合 surface color 和 primary color */
+    var(--background-card) 0%, /* 起始颜色为 surface color CSS 变量 */
+    color-mix(in srgb, var(--background-card) 98%, var(--action-primary)) 100% /* 混合 surface color 和 primary color */
   );
   box-shadow: var(--shadow-lg), /* 设置阴影效果，使用 shadow-lg CSS 变量 */
               0 0 0 1px rgba(0, 0, 0, 0.05),
@@ -20,8 +20,8 @@
 /* 深色主题下的模态框容器 */
 [data-theme="dark"] .modal {
   background: linear-gradient(to bottom right, /* 深色主题下设置背景渐变 */
-    var(--color-surface) 0%, /* 起始颜色为 surface color CSS 变量 */
-    color-mix(in srgb, var(--color-surface) 95%, var(--color-primary)) 100% /* 混合 surface color 和 primary color */
+    var(--background-card) 0%, /* 起始颜色为 surface color CSS 变量 */
+    color-mix(in srgb, var(--background-card) 95%, var(--action-primary)) 100% /* 混合 surface color 和 primary color */
   );
   box-shadow: var(--shadow-lg), /* 深色主题下设置阴影效果，使用 shadow-lg CSS 变量 */
               0 0 0 1px rgba(255, 255, 255, 0.05),
@@ -32,25 +32,25 @@
 .modal input,
 .modal textarea,
 .modal select {
-  background: var(--color-surface); /* 设置背景色为 surface color CSS 变量 */
-  color: var(--color-text-primary); /* 设置文字颜色为 primary text color CSS 变量 */
-  border-radius: var(--radius-md); /* 设置圆角 */
-  border: 1px solid var(--color-border); /* 设置边框 */
+  background: var(--background-card); /* 设置背景色为 surface color CSS 变量 */
+  color: var(--text-primary); /* 设置文字颜色为 primary text color CSS 变量 */
+  border-radius: var(--radius-sm); /* 设置圆角 */
+  border: 1px solid var(--border-normal); /* 设置边框 */
 }
 
 /* 模态框表单元素 placeholder 文本颜色 */
 .modal input::placeholder,
 .modal textarea::placeholder {
-  color: var(--color-text-secondary); /* 设置 placeholder 文本颜色为 secondary text color CSS 变量 */
+  color: var(--text-secondary); /* 设置 placeholder 文本颜色为 secondary text color CSS 变量 */
 }
 
 /* 模态框标题主题 */
 .modal-content h2 {
-  color: var(--color-text-primary); /* 设置文字颜色为 primary text color CSS 变量 */
+  color: var(--text-primary); /* 设置文字颜色为 primary text color CSS 变量 */
 }
 /* 保存按钮主题 */
 .save-modal-button {
-  background: var(--color-primary); /* 设置背景色为 primary color CSS 变量 */
+  background: var(--action-primary); /* 设置背景色为 primary color CSS 变量 */
   color: white; /* 设置文字颜色为白色 */
   border: none; /* 移除边框 */
 }
@@ -58,11 +58,11 @@
 /* 取消按钮主题 */
 .cancel-modal-button {
   background: transparent; /* 设置背景色为透明 */
-  color: var(--color-text-primary); /* 设置文字颜色为 primary text color CSS 变量 */
-  border: 1px solid var(--color-border); /* 设置边框 */
+  color: var(--text-primary); /* 设置文字颜色为 primary text color CSS 变量 */
+  border: 1px solid var(--border-normal); /* 设置边框 */
 }
 
 /* 关闭按钮主题 */
 .close-modal-button {
-  color: var(--color-text-secondary); /* 设置文字颜色为 secondary text color CSS 变量 */
+  color: var(--text-secondary); /* 设置文字颜色为 secondary text color CSS 变量 */
 }

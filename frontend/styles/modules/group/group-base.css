@@ -7,24 +7,24 @@
 
 /* 分组容器 */
 .group {
-  margin-bottom: var(--spacing-xl); /* 设置下外边距 */
+  margin-bottom: var(--spacing-stack-xl); /* 设置下外边距 */
 }
 
 /* 分组标题 */
 .group h2 {
-  margin-bottom: var(--spacing-md); /* 设置下外边距 */
-  padding-bottom: var(--spacing-xs); /* 设置下内边距 */
+  margin-bottom: var(--spacing-stack-md); /* 设置下外边距 */
+  padding-bottom: var(--spacing-stack-xxs); /* 设置下内边距 */
 }
 [data-layout="alternative"] .group {
-  padding: var(--spacing-group);
+  padding: var(--spacing-inset-md);
   position: relative;
   overflow: hidden;
-  margin: var(--spacing-xs);
+  margin: var(--spacing-stack-xxs);
   /* will-change: transform, opacity; */
   /* text-rendering: optimizeLegibility; */
 }
 [data-layout="alternative"] .group h2 {
-  margin: 0 0 1rem 0;
+  margin: 0 0 var(--spacing-stack-md) 0;
 
   display: flex;
   justify-content: space-between;

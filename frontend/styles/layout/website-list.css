@@ -1,3 +1,6 @@
+/* === Website List Layout Styles - 网站列表布局样式 === */
+/* 作用：组织和导入网站列表布局相关的子模块样式。 */
+/* 依赖： website-list 子模块 */
 /* Website List Layout - Main module - 网站列表布局样式 - 主模块 - 引入子模块 */
 /*
   网站列表 (website-list) 组件的布局样式主模块，负责引入 website-list 目录下各个子模块的样式文件。

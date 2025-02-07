@@ -1,7 +1,10 @@
+/* === Transition Utilities Styles - 过渡效果工具类样式 === */
+/* 作用：定义全局过渡效果 (transition) 工具类样式，方便快速为元素添加过渡效果。 */
+/* 依赖： theme/variables.css (过渡效果变量) */
 /* Transition Utilities Styles - 过渡效果工具类样式 */
 /*
   定义全局过渡效果 (transition) 工具类样式，方便快速为元素添加过渡效果。
   包括 transition 工具类，使用 CSS 变量进行过渡时长和 easing 函数配置。
 */
 /* Transition Normal - 通用过渡效果 */
-.transition { transition: all var(--transition-normal); } /* 设置 transition: all var(--transition-normal); 应用通用过渡效果，时长和 easing 函数使用 CSS 变量 */
+.transition { transition: all var(--transition-normal); } /* 设置 transition: all var(--transition-normal); 应用通用过渡效果，all 属性，时长和 easing 函数从 CSS 变量 --transition-normal 获取 */

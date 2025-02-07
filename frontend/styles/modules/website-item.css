@@ -1,3 +1,6 @@
+/* === Website Item Styles - 网站条目样式 === */
+/* 作用：组织和导入网站条目相关的子模块样式。 */
+/* 依赖： website-item 子模块 */
 /* Website Item Styles - Main module - imports sub-modules */
 @import './website-item/website-item-base.css';
 @import './website-item/website-item-theme.css';
