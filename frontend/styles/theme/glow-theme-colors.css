@@ -4,7 +4,7 @@
 /* ========================
    流光溢彩主题 - 炫彩霓虹
    ======================== */
-:root {
+[data-theme='glow'] {
     /* === Core Brand Colors (State-driven Naming) - 核心品牌色系（状态驱动命名） === */
     /* 品牌色 */
     --color-brand-primary-base: #8A2BE2;     /* 霓虹紫-主品牌基准色 */

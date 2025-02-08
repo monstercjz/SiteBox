@@ -147,4 +147,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     actionIconButtons.forEach(button => {
         button.addEventListener('mouseover', showTooltip);
     });
+    // const themeswitcheroptionButtons = actionButtons.querySelectorAll('.theme-switcher__option');
+        
+    //     themeswitcheroptionButtons.forEach(button => {
+    //         button.addEventListener('mouseover', showTooltip);
+    //     });
 });

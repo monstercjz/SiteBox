@@ -4,7 +4,7 @@
 /* ========================
    羊皮卷主题 - 古典护眼
    ======================== */
-:root {
+[data-theme='eye-parchment']  {
     /* === Core Brand Colors (State-driven Naming) - 核心品牌色系（状态驱动命名） === */
     /* 品牌色 */
     --color-brand-primary-base: #D2B48C;     /* 羊皮纸色-主品牌基准色 */

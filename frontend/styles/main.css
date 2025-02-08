@@ -33,6 +33,16 @@
 /* @import 'theme/variables.css'; */
 
 @import 'base/typography.css';
+@import './theme/variables.css';
+@import './theme/eye-parchment-theme-colors.css';
+@import './theme/orange-theme-colors.css';
+@import './theme/light-theme-colors.css';
+@import './theme/dark-theme-colors.css';
+@import './theme/eye-green-theme-colors.css';
+@import './theme/flat-theme-colors.css';
+@import './theme/glow-theme-colors.css';
+@import './theme/light-purple-theme-colors.css';
+
 
 /* Import Layout styles - 引入布局模块样式 */
 @import 'layout/dashboard.css';
@@ -61,18 +71,9 @@
 @import 'utilities/size.css';
 @import 'utilities/position.css';
 @import 'utilities/z-index.css';
-/* @import './variables.css'; */
 @import 'utilities/alternative-layout-keyframes.css';
-/* @import './theme/default-theme-colors.css'; */
-/* @import './theme/orange-theme-colors.css'; */
-@import './theme/light-theme-colors.css';
-/* @import './theme/dark-theme-colors.css'; */
-/* @import './theme/eye-theme-colors.css'; */
-/* @import './theme/flat-theme-colors.css'; */
-/* @import './theme/glow-theme-colors.css'; */
-@import 'theme/variables.css';
-/* @import 'theme/light-purple-theme-colors.css'; */
-/* @import './style.css'; */
+/* @import './variables.css'; */
+
 
 /* Import Component Modules - 引入组件模块样式 */
 @import './modules/search-form.css';

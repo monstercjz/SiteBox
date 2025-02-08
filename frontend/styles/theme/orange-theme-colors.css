@@ -4,7 +4,7 @@
 /* ========================
    橙色主题 - 活力温暖
    ======================== */
-:root {
+[data-theme='orange'] {
     /* === Core Brand Colors (State-driven Naming) - 核心品牌色系（状态驱动命名） === */
     /* 品牌色 */
     --color-brand-primary-base: #F97316;     /* 橙色-主品牌基准色 */
