@@ -15,6 +15,7 @@
 
 /* Layout Switcher Options Show State - 布局切换器选项显示状态 */
 .layout-switcher__options.show {
+  background-color: var(--background-body);
   opacity: 1; /* 显示状态透明度为 1 */
   pointer-events: auto; /* 显示状态允许 pointer 事件 */
 }

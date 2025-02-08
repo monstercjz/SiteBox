@@ -17,7 +17,7 @@
 
 /* 搜索框图标主题 */
 .search-form__icon {
-  background-color: var(--background-card); /* 设置背景色为 surface color CSS 变量 */
+  background-color: var(--background-body); /* 设置背景色为 surface color CSS 变量 */
 }
 
 /* 搜索框输入框主题 */

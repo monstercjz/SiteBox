@@ -110,8 +110,8 @@
     --shadow-card-hover-mid: 0 20px 40px rgba(99, 102, 241, 0.25);
     --shadow-website-item-active: 0 8px 24px rgba(0, 0, 0, 0.2);
     --shadow-modal-content: 0 12px 32px rgba(0, 0, 0, 0.2);
-    --shadow-add-button: 0 4px 12px rgba(124, 58, 237, 0.3);
-    --shadow-add-button-hover: 0 6px 16px rgba(124, 58, 237, 0.4);
+    --shadow-button: 0 4px 12px rgba(124, 58, 237, 0.3);
+    --shadow-button-hover: 0 6px 16px rgba(124, 58, 237, 0.4);
     --shadow-context-menu: 0 8px 32px rgba(99, 102, 241, 0.2);
     --shadow-input-focus: 0 0 0 3px rgba(124, 58, 237, 0.1);
     --shadow-search-input: 0 4px 16px rgba(0, 0, 0, 0.1);

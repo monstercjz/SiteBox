@@ -22,7 +22,7 @@
 }
 [data-layout="alternative"] .toggle-actions button:hover {
   transform: scale(var(--transform-scale-hover));
-  box-shadow: var(--shadow-add-button-hover);
+  box-shadow: var(--shadow-button-hover);
 }
 
 [data-layout="alternative"] .toggle-actions button:hover svg {

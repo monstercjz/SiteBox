@@ -15,6 +15,7 @@
 
 /* Theme Switcher Options Show State - 主题切换器选项显示状态 */
 .theme-switcher__options.show {
+  background-color: var(--background-body);
   opacity: 1; /* 显示状态透明度为 1 */
   pointer-events: auto; /* 显示状态允许 pointer 事件 */
 }

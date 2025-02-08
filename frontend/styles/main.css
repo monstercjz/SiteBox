@@ -74,7 +74,12 @@
 @import 'utilities/z-index.css';
 /* @import './variables.css'; */
 @import 'utilities/alternative-layout-keyframes.css';
-/* @import './theme/default-theme-colors.css';
-@import './theme/dark-theme-colors.css'; */
-@import './theme/light-theme-colors.css';
+/* @import './theme/default-theme-colors.css'; */
+@import './theme/parchment-theme-colors.css';
+/* @import './theme/light-theme-colors.css'; */
+/* @import './theme/dark-theme-colors.css'; */
+/* @import './theme/eye-theme-colors.css'; */
+/* @import './theme/flat-theme-colors.css'; */
+/* @import './theme/glow-theme-colors.css'; */
 @import 'theme/dis.css';
+/* @import 'theme/light-purple-theme-colors.css'; */

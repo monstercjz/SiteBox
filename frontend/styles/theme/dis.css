@@ -131,6 +131,9 @@
   --animation-duration-ripple: 0.6s;/* 波浪动画 */
   --animation-duration-rotate: 6s; /* 旋转动画 */
 
+  --transform-scale-hover: 1.1;
+  --shadow-blur-md: 12px;             /* Medium shadow blur */
+  --shadow-blur-lg: 24px;             /* Large shadow blur */
 
   /*========== 响应式控制 ==========*/
   /* === Responsive Control - 响应式控制 === */

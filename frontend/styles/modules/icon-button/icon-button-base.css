@@ -5,26 +5,9 @@
   包括尺寸、display 属性、图标 SVG 的基本样式等，不包含主题、颜色或状态相关的样式。
 */
 
-/* 图标按钮容器 */
+
+
 .icon-button {
-  position: relative; /* 设置定位为 relative */
-  display: inline-flex; /* 使用 inline-flex 布局，使其可以水平排列 */
-  align-items: center; /* 垂直居中 */
-  justify-content: center; /* 水平居中 */
-  width: var(--size-button-md); /* 设置宽度 */
-  height: var(--size-button-md); /* 设置高度 */
-  border-radius: var(--radius-circle); /* 设置圆形边框 */
-  overflow: hidden; /* 隐藏溢出内容 */
-}
-
-/* 图标按钮 SVG 图标 */
-.icon-button svg {
-  width: 24px; /* 设置 SVG 图标宽度 */
-  height: 24px; /* 设置 SVG 图标高度 */
-  stroke-width: 2; /* 设置 SVG 描边宽度 */
-}
-
-[data-layout="alternative"] .icon-button {
   position: relative;
   display: flex;
   align-items: center;
@@ -38,7 +21,7 @@
   cursor: pointer;
 }
 
-[data-layout="alternative"] .icon-button:hover svg {
+.icon-button:hover svg {
   width: var(--size-icon-lg);
   height: var(--size-icon-lg);
 }

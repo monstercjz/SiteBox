@@ -13,6 +13,6 @@
   background: var(--action-primary);
   color: white;
   border: none;
-  box-shadow: var(--shadow-add-button);
+  box-shadow: var(--shadow-button);
   background: radial-gradient(circle at center, var(--action-primary) 0%, var(--action-secondary) 100%);
 }
