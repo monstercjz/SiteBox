@@ -3,13 +3,8 @@
   定义切换按钮 (actions-toggle-button) 组件的视觉主题样式。
   包括背景色、文字颜色、边框、阴影等，使用 CSS 变量进行主题化配置。
 */
+
 #actions-toggle-button {
-  background: var(--action-primary); /* 设置背景色为 primary color CSS 变量 */
-  color: white; /* 设置文字颜色为白色 */
-  border: none; /* 移除边框 */
-  box-shadow: var(--shadow-lg); /* 设置阴影效果，使用 shadow-lg CSS 变量 */
-}
-[data-layout="alternative"] .toggle-actions button {
   background: var(--action-primary);
   color: white;
   border: none;

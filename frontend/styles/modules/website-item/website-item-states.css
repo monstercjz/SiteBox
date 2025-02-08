@@ -4,14 +4,13 @@
 }
 
 .website-item:hover {
-  /* background: var(--background-card-hover);
-  border-color: var(--action-primary); */
+  
   box-shadow: var(--shadow-md);
   transform: translateY(-2px);
 }
 [data-layout="default"] .website-item:hover {
-  background: var(--background-card-hover);
-  border-color: var(--action-primary);
+  /* background: var(--background-surface-hover); */
+  border-color: var(--action-primary-hover);
 }
 [data-layout="alternative"] .website-item::before {
   content: '';

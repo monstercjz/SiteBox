@@ -1,127 +1,152 @@
-@import "./light.css";
+/* ===================================
+   SiteBox 混合单位尺寸系统 (v3.1)
+   =================================== */
+/* @import "./light.css";
 @import "./dark.css";
-@import "./eye-care.css";
-@layer theme-variables;
+@import "./eye-care.css"; */
 
-@layer theme-variables {
-  /* CSS Variables - CSS 变量定义 */
-  /*
-    定义 CSS 变量，用于整个项目的基础主题化配置。
-    包括字体排版系统、阴影系统、间距系统、圆角系统、过渡效果系统、组件尺寸系统等。
-    颜色系统变量将在各个主题文件中定义。
-  */
-  :root {
-    /* Typography System - 字体排版系统 */
-    --font-size-responsive: 14px;   /* Responsive font size for small screens - 小屏幕响应式字体大小 */
-    --font-size-sm: 0.875rem;      /* Small font size - 较小字体大小 */
-    --font-size-base: 1rem;         /* Base font size - 基础字体大小 */
-    --font-size-lg: 1.25rem;       /* Large font size - 较大字体大小 */
-    --font-size-xl: 1.5rem;       /* Extra large font size - 较大字体大小 */
-    --font-size-h1: 2rem;         /* H1 heading font size - H1 标题字体大小 */
-    --font-weight-normal: 400;     /* Normal font weight - 正常字体粗细 */
-    --font-weight-medium: 500;     /* Medium font weight - 中等字体粗细 */
-    --font-weight-semibold: 600;   /* Semibold font weight - 较粗字体粗细 */
-    --font-weight-bold: 700;       /* Bold font weight - 粗体 */
+:root {
+  /*========== 基准定义 ==========*/
+  /* === Base Definitions - 基准定义 === */
+  /* 作用：定义基准单位和字体大小，用于尺寸和排版系统的计算。 */
+  /* 依赖：无 */
+  --base-unit-px: 4px; /* 基础像素单位 (用于精确控制) */
+  --base-font-size: 16px; /* 根字体大小 (1rem = 16px) */
 
-    /* Shadow System - 阴影系统 (Light Theme) */
-    --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.08); /* Small shadow - 小阴影 */
-    --shadow-md: 0 4px 6px rgba(15, 23, 42, 0.08), 0 2px 4px rgba(15, 23, 42, 0.06); /* Medium shadow - 中阴影 */
-    --shadow-lg: 0 10px 15px rgba(15, 23, 42, 0.08), 0 4px 6px rgba(15, 23, 42, 0.06); /* Large shadow - 大阴影 */
+  /*========== 间距系统 ==========*/
+  /* === Spacing System - 间距系统 === */
+  /* 作用：定义页面元素间距，包括内边距、外边距和行内间距，采用混合单位策略。 */
+  /* 依赖：基准单位 */
+  /* 内边距 (混合单位) */
+  --spacing-inset-xxs: 0.25rem; /* 4px - 超小元素内边距 */
+  --spacing-inset-xs: 0.5rem; /* 8px - 标签/小按钮 */
+  --spacing-inset-sm: 0.75rem; /* 12px - 卡片内边距 */
+  --spacing-inset-md: 1rem; /* 16px - 模块容器 */
+  --spacing-inset-lg: 1.5rem; /* 24px - 大容器 */
+  --spacing-inset-xl: 2rem; /* 32px - 极大间距 */
 
-    /* Spacing System - 间距系统 */
-    --spacing-xs: 0.25rem; /* Extra small spacing - 极小间距 */
-    --spacing-sm: 0.5rem; /* Small spacing - 小间距 */
-    --spacing-md: 1rem; /* Medium spacing - 中间距 */
-    --spacing-lg: 1.5rem; /* Large spacing - 大间距 */
-    --spacing-xl: 2rem; /* Extra large spacing - 极大间距 */
+  /* 外边距 (rem单位) */
+  --spacing-stack-xxs: 0.25rem; /* 4px */
+  --spacing-stack-xs: 0.5rem; /* 8px */
+  --spacing-stack-sm: 0.75rem; /* 12px */
+  --spacing-stack-md: 1rem; /* 16px */
+  --spacing-stack-lg: 1.5rem; /* 24px */
+  --spacing-stack-xl: 2rem; /* 32px - 极大间距 */
 
-    /* Border radius System - 圆角系统 */
-    --radius-sm: 0.25rem; /* Small radius - 小圆角 */
-    --radius-md: 0.5rem; /* Medium radius - 中圆角 */
-    --radius-lg: 0.75rem; /* Large radius - 大圆角 */
+  /* 行内间距 (px单位保持精确) */
+  --spacing-inline-xxxs: 2px; /* 超密级间距 */
+  --spacing-inline-xxs: 4px; /* 图标与文字 */
+  --spacing-inline-xs: 8px; /* 按钮内部 */
+  --spacing-inline-sm: 12px; /* 导航项间距 */
+  --spacing-inline-md: 16px; /* 导航项间距 */
+  --spacing-inline-lg: 24px; /* 导航项间距 */
+  --spacing-inline-xl: 32px; /* 导航项间距 */
 
-    /* Transitions System - 过渡效果系统 */
-    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-fast: 150ms ease; /* Fast transition - 快速过渡效果 */
-    --transition-normal: 250ms ease; /* Normal transition - 通用过渡效果 */
-    --rotation: 0deg;                /* Rotation angle - 旋转角度 */
-    --gradient: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+  /*========== 尺寸系统 ==========*/
+  /* === Size System - 尺寸系统 === */
+  /* 作用：定义容器和组件尺寸，采用 rem 和 px 混合单位，兼顾灵活性和精确性。 */
+  /* 依赖：基准单位，基准字体大小 */
+  /* 容器尺寸 (rem + px混合) */
+  --size-dashboard-max-width: 80rem; /* 1280px */
+  --size-websitelist-max-width: 80rem; /* 1280px */
+  --size-contextmenu-min-width: 12rem; /* Context menu width - 上下文菜单宽度 */
+  --size-websitetooltip-min-width: 15rem; /* Website tooltip width - 网站工具提示宽度 */
+  --size-search-input-width: 16rem; /* Search input width - 搜索输入框宽度 */
+  --size-modal-width-sm: 25rem; /* 400px */
+  --size-modal-width-md: 31.25rem; /* 500px */
+  --size-modal-width-lg: 37.5rem; /* 600px */
 
-    /* Border Width System - 边框宽度系统 */
+  /* 组件高度 (rem单位) */
+  --size-component-xxs: 1.5rem; /* 24px */
+  --size-component-xs: 2rem; /* 32px */
+  --size-component-sm: 2.5rem; /* 40px */
+  --size-component-md: 3rem; /* 48px */
+  --size-icon-md: 1.5rem; /* 16px */
+  --size-icon-lg: 2rem; /* 24px */
+  --size-button-sm: 2.5rem; /* 32px */
+  --size-button-md: 3rem; /* 48px */
+  --size-website-item-min-width: 10rem; /* Website item min height - 网站项最小高度 */
+  --size-website-item-min-height: 3.75rem; /* Website item min height - 网站项最小高度 */
 
-    /* Animation System - 动画系统 */
-    --animation-duration-fast: 0.2s;
-    --animation-duration-normal: 0.3s;
-    --animation-duration-slow: 0.4s;
-    --animation-duration-ripple: 0.6s;
-    --animation-duration-glow: 1.5s;
+  /* 圆角 (px单位保证精确) */
+  --radius-xxs: 2px; /* 输入框 */
+  --radius-xs: 4px; /* 标签 */
+  --radius-sm: 8px; /* 卡片 */
+  --radius-md: 12px; /* 弹窗 */
+  --radius-lg: 16px; /* 弹窗 */
+  --radius-xl: 24px; /* 圆形元素 */
+  --radius-circle: 50%; /* 圆形元素 */
 
-    /* Animation Transform System - 动画变换系统 */
-    --transform-scale-sm: 0.95;
-    --transform-scale-normal: 1;
-    --transform-scale-md: 1.02;
-    --transform-scale-lg: 1.03;
-    --transform-scale-xl: 1.05;
-    --transform-scale-2xl: 1.08;
-    --transform-scale-hover: 1.1;
-    --transform-translateY-xs: -10px;
-    --transform-translateY-sm: -8px;
-    --transform-translateY-md: -6px;
-    --transform-translateY-lg: -4px;
-    --transform-translateY-xl: -2px;
-    --transform-translateY-2xl: 0;
-    --transform-translateY-3xl: 8px;
-    --transform-translateY-4xl: 10px;
-    --transform-translateY-modal-in-from: 20px;
-    
-    --animation-duration-rotate: 6s;
-    
-    --border-width: 1px;
+    /*========== 线条粗细 ==========*/
+  /* === Border Width - 线条粗细 === */
+  /* 作用：定义不同的线条粗细，用于边框的设置。 */
+  /* 依赖：无 */
+  --border-width-xxs: 1px; /* 最细 */
+  --border-width-xs: 2px; /* 较细 */
+  --border-width-sm: 3px; /* 较轻 */
+  --border-width-md: 4px; /* 标准 */
+  --border-width-lg: 5px; /* 较粗 */
+  --border-width-xl: 6px; /* 最粗 */
 
-    /* Custom Shadows - 自定义阴影 */
-    --shadow-group-hover: 0 12px 24px rgba(0, 0, 0, 0.15);
-    --shadow-website-item-hover: 0 16px 32px rgba(99, 102, 241, 0.2);
-    --shadow-card-hover-start: 0 4px 8px rgba(0, 0, 0, 0.1);
-    --shadow-card-hover-mid: 0 20px 40px rgba(99, 102, 241, 0.25);
-    --shadow-website-item-active: 0 8px 24px rgba(0, 0, 0, 0.2);
-    --shadow-modal-content: 0 12px 32px rgba(0, 0, 0, 0.2);
-    --shadow-add-button: 0 4px 12px rgba(124, 58, 237, 0.3);
-    --shadow-add-button-hover: 0 6px 16px rgba(124, 58, 237, 0.4);
-    --shadow-context-menu: 0 8px 32px rgba(99, 102, 241, 0.2);
-    --shadow-input-focus: 0 0 0 3px rgba(124, 58, 237, 0.1);
-    --shadow-search-input: 0 4px 16px rgba(0, 0, 0, 0.1);
-    --shadow-system-status-hover: 0 12px 24px rgba(0, 0, 0, 0.2);
-    --shadow-search-input-focus: 0 0 0 2px rgba(76, 175, 80, 0.2);
-    --shadow-modal-button-active: 0 2px 6px rgba(124, 58, 237, 0.2);
 
-    /* Size System - 尺寸系统 */
-    --size-xs: 4px;
-    --size-sm: 8px;
-    --size-md: 10px;
-    --size-lg: 12px;
-    --size-xl: 16px;
-    --size-2xl: 20px;
-    --size-3xl: 24px;
-    --size-icon: 24px; /* Icon size - 图标尺寸 */
-    --size-button-sm: 48px; /* Small button size - 小按钮尺寸 */
-    --size-button-md: 48px; /* Medium button size - 中按钮尺寸 */
-    --size-modal-width: 500px; /* Modal width - 模态框宽度 */
-    --size-context-menu-width: 180px; /* Context menu width - 上下文菜单宽度 */
-    --size-website-tooltip-width: 240px; /* Website tooltip width - 网站工具提示宽度 */
-    --size-search-container-width-collapsed: 40px; /* Search container width (collapsed) - 搜索容器宽度 (折叠) */
-    --size-search-container-width-expanded: 300px; /* Search container width (expanded) - 搜索容器宽度 (展开) */
-    --size-search-input-width: 256px; /* Search input width - 搜索输入框宽度 */
-    --size-website-item-min-height: 60px; /* Website item min height - 网站项最小高度 */
-    --size-breakpoint-sm: 480px; /* Small breakpoint - 小屏幕断点 */
-    --size-breakpoint-md: 768px; /* Medium breakpoint - 中屏幕断点 */
-    --size-breakpoint-lg: 1200px; /* Large breakpoint - 大屏幕断点 */
-    
-    /* Component Sizes System - 组件尺寸系统 */
-    --icon-button-size: 48px; /* Icon button size - 图标按钮尺寸 */
-    --modal-close-button-size: 32px; /* Modal close button size - 模态框关闭按钮尺寸 */
-    --color-delete-hover: #451a1a; /* Delete item hover color - 删除菜单项悬停颜色 */
-    --item-width: 160px;           /* Website item width - 网站项宽度 */
-    
+  /*========== 字体系统 ==========*/
+  /* === Font System - 字体系统 === */
+  /* 作用：定义字体大小和行高，基于 rem 单位和无单位值，灵活适应不同屏幕。 */
+  /* 依赖：基准字体大小 */
+  /* 字体大小 (rem单位) */
+  --font-size-xs: 0.75rem; /* 12px */
+  --font-size-sm: 0.875rem; /* 14px */
+  --font-size-body: 1rem; /* 16px */
+  --font-size-heading-xs: 1.25rem; /* 20px */
+  --font-size-heading-sm: 1.5rem; /* 24px */
+  --font-size-heading-md: 2rem; /* 32px */
+
+  /*========== 字体粗细 ==========*/
+  /* === Font Weight - 字体粗细 === */
+  /* 作用：定义不同的字体粗细，用于文本的强调和区分。 */
+  /* 依赖：无 */
+  --font-weight-thin: 100; /* 最细 */
+  --font-weight-extra-light: 200; /* 较细 */
+  --font-weight-light: 300; /* 较轻 */
+  --font-weight-normal: 400; /* 标准 */
+  --font-weight-medium: 500; /* 中等 */
+  --font-weight-semibold: 600; /* 较粗 */
+  --font-weight-bold: 700; /* 粗 */
+  --font-weight-extra-bold: 800; /* 较粗 */
+  --font-weight-black: 900; /* 最粗 */
+
+  /* 行高 (无单位值) */
+  --line-height-compact: 1.3; /* 精确控制布局 */
+  --line-height-normal: 1.5; /* 默认阅读体验 */
+  --line-height-relaxed: 1.8; /* 长文本舒适阅读 */
+
+  /*========== 动画时间 ==========*/
+  /* === Animation Duration - 动画时间 === */
+  /* 作用：定义动画的时间长度，用于一致的动画效果。 */
+  /* 依赖：无 */
+  --animation-duration-quick: 0.1s; /* 快速动画 */
+  --animation-duration-short: 0.2s; /* 短动画 */
+  --animation-duration-medium: 0.3s; /* 中等动画 */
+  --animation-duration-long: 0.5s; /* 长动画 */
+  --animation-duration-extra-long: 1s; /* 非常长动画 */
+  --animation-duration-ripple: 0.6s;/* 波浪动画 */
+  --animation-duration-rotate: 6s; /* 旋转动画 */
+
+  --transform-scale-hover: 1.1;
+  --shadow-blur-md: 12px;             /* Medium shadow blur */
+  --shadow-blur-lg: 24px;             /* Large shadow blur */
+
+  /*========== 响应式控制 ==========*/
+  /* === Responsive Control - 响应式控制 === */
+  /* 作用：定义响应式断点和字体大小调整，适配不同屏幕尺寸。 */
+  /* 依赖：基准字体大小 */
+  @media (max-width: 768px) {
+    --base-font-size: 14px; /* 移动端基准字体 */
+    --size-component-xs: 1.714rem; /* 14px * 1.714 ≈ 24px */
+    --spacing-stack-xs: 0.357rem; /* 14px * 0.357 ≈ 5px */
+  }
+
+  @media (min-width: 1600px) {
+    --base-font-size: 16px; /* 大屏幕放大字体 */
   }
 }
-

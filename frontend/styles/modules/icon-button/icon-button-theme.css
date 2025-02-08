@@ -6,8 +6,8 @@
 */
 
 .icon-button {
-  background: var(--action-primary); /* 设置背景色为 surface color CSS 变量 */
-  color: white;
+  /*background: var(--action-primary);  设置背景色为 surface color CSS 变量 */
+  /* color: white; */
   box-shadow: var(--shadow-button);
   /* background: radial-gradient(
     circle at center,

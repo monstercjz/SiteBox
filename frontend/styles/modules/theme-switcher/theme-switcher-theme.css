@@ -29,7 +29,7 @@
 
 /* Theme switcher option - 主题切换器选项按钮 */
 .theme-switcher__option {
-  background: var(--background-card); /* 设置背景色为 surface color CSS 变量 */
+  background: var(--background-surface); /* 设置背景色为 surface color CSS 变量 */
   color: var(--text-primary); /* 设置文字颜色为 primary text color CSS 变量 */
   border: 1px solid var(--border-normal); /* 设置边框 */
 }

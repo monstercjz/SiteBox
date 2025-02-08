@@ -5,24 +5,15 @@
 */
 
 /* 切换按钮容器 */
-#actions-toggle-button {
-  position: relative; /* 设置定位为 relative */
-  display: flex; /* 使用 flex 布局 */
-  align-items: center; /* 垂直居中 */
-  justify-content: center; /* 水平居中 */
-  width: var(--size-button-md); /* 设置宽度 */
-  height: var(--size-button-md); /* 设置高度 */
-  border-radius: var(--radius-circle); /* 设置圆形边框 */
-  z-index: 11; /* 设置 z-index */
-}
 
-[data-layout="alternative"] .toggle-actions button {
+
+#actions-toggle-button {
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: var(--size-button-md);
-  height: var(--size-button-md);
+  width: var(--size-button-sm);
+  height: var(--size-button-sm);
   border-radius: var(--radius-circle);
   padding: var(--spacing-inset-xs);
   cursor: pointer;

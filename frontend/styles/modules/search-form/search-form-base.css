@@ -8,7 +8,7 @@
 .search-form {
   position: fixed; /* 使用 fixed 定位，使其脱离文档流 */
   top: calc(var(--spacing-inset-lg) + 48px); /* 距离顶部一定距离，考虑 header 高度 */
-  right: max(var(--spacing-inset-md), calc((100% - 1400px) / 2)); /* 靠右对齐，并根据屏幕宽度调整右边距 */
+  right: max(var(--spacing-inset-md), calc((100% - var(--size-dashboard-max-width)) / 2)); /* 靠右对齐，并根据屏幕宽度调整右边距 */
   display: flex; /* 使用 flex 布局 */
   align-items: center; /* 垂直居中 */
   height: 40px; /* 设置高度 */

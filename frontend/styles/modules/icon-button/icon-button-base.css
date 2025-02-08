@@ -12,8 +12,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: var(--size-button-md);
-  height: var(--size-button-md);
+  width: var(--size-button-sm);
+  height: var(--size-button-sm);
   border-radius: var(--radius-circle);
   overflow: hidden;
   border: none;
@@ -21,9 +21,10 @@
   cursor: pointer;
 }
 
-.icon-button:hover svg {
-  width: var(--size-icon-lg);
-  height: var(--size-icon-lg);
+.icon-button svg {
+  width: var(--size-icon-md);
+  height: var(--size-icon-md);
+  transform-origin: center;
 }
 
 

@@ -41,18 +41,7 @@
 @import 'layout/toggle-actions.css';
 @import 'layout/notification.css';
 
-/* Import Component Modules - 引入组件模块样式 */
-@import './modules/search-form.css';
-@import './modules/context-menu.css';
-@import './modules/group.css'; /* Import Group module - 引入分组模块 */
-@import './modules/website-item.css'; /* Import Website Item module - 引入网站条目模块 */
-@import './modules/icon-button.css';
-@import './modules/actions-toggle-button.css';
-@import './modules/modal-overlay.css';
-@import './modules/modal.css';
-@import './modules/tooltip.css';
-@import './modules/theme-switcher.css';
-@import './modules/layout-switcher.css';
+
 
 /* Import State styles - 引入状态模块样式 */
 @import 'state/loading.css';
@@ -75,11 +64,25 @@
 /* @import './variables.css'; */
 @import 'utilities/alternative-layout-keyframes.css';
 /* @import './theme/default-theme-colors.css'; */
-@import './theme/parchment-theme-colors.css';
-/* @import './theme/light-theme-colors.css'; */
+/* @import './theme/orange-theme-colors.css'; */
+@import './theme/light-theme-colors.css';
 /* @import './theme/dark-theme-colors.css'; */
 /* @import './theme/eye-theme-colors.css'; */
 /* @import './theme/flat-theme-colors.css'; */
 /* @import './theme/glow-theme-colors.css'; */
-@import 'theme/dis.css';
+@import 'theme/variables.css';
 /* @import 'theme/light-purple-theme-colors.css'; */
+/* @import './style.css'; */
+
+/* Import Component Modules - 引入组件模块样式 */
+@import './modules/search-form.css';
+@import './modules/context-menu.css';
+@import './modules/group.css'; /* Import Group module - 引入分组模块 */
+@import './modules/website-item.css'; /* Import Website Item module - 引入网站条目模块 */
+@import './modules/icon-button.css';
+@import './modules/actions-toggle-button.css';
+@import './modules/modal-overlay.css';
+@import './modules/modal.css';
+@import './modules/tooltip.css';
+@import './modules/theme-switcher.css';
+@import './modules/layout-switcher.css';

@@ -12,14 +12,9 @@
   opacity: 1; /* 显示状态透明度为 1，显示 */
   pointer-events: auto; /* 显示状态允许 pointer 事件 */
 }
-
-/* Action Buttons Icon Button Show State - 操作按钮组图标按钮显示状态 */
-.action-buttons.show .icon-button {
-  opacity: 1; /* 显示状态透明度为 1，显示 */
-}
-
 /* Toggle Actions Button Rotation - 切换操作按钮旋转状态 */
-.action-buttons.show + .toggle-actions #actions-toggle-button {
-  /*background: red;  Hover 状态背景色 */
-  rotate: 45deg; /* 显示状态切换按钮旋转 45 度 */
+.action-buttons.show + #actions-toggle-button {
+  transform: rotate(45deg);
+  transition: transform 0.3s ease; /* 添加过渡动画 */
 }
+
