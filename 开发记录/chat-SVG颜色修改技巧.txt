@@ -1,0 +1,676 @@
+### USER
+<button
+              class="theme-switcher__option"
+              type="button"
+              data-theme="dark"
+              aria-label="暗色主题"
+              data-tooltip="暗色主题"
+            >
+              <img src="styles/2424svg/Dark-Mode--Streamline-Rounded-Material-Symbols.svg" width="24" height="24" alt="暗色主题图标">
+            </button>这里的img可以设置颜色嘛？
+
+### ASSISTANT
+在 HTML 中，`<img>` 标签本身并不直接支持通过 CSS 修改图片的颜色。这是因为 `<img>` 标签加载的是一个外部图像文件（如 PNG、JPEG 或 SVG），而这些文件的内容是固定的，无法通过 CSS 直接改变其内部的颜色。
+
+不过，如果你的图片是一个 **SVG 文件**，并且它是内联嵌入到 HTML 中的（而不是通过 `src` 属性引用外部文件），那么你可以通过 CSS 修改它的颜色。以下是几种可能的解决方案：
+
+---
+
+### 1. **使用内联 SVG**
+将 SVG 文件的内容直接嵌入到 HTML 中，而不是通过 `src` 属性引用。例如：
+
+```html
+<button
+  class="theme-switcher__option"
+  type="button"
+  data-theme="dark"
+  aria-label="暗色主题"
+  data-tooltip="暗色主题"
+>
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <!-- 这里是 SVG 的路径 -->
+    <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"></path>
+  </svg>
+</button>
+```
+
+在这个例子中，`fill="currentColor"` 是关键。它会让 SVG 使用当前文本颜色（`color`）作为填充颜色。然后你可以通过 CSS 修改按钮或 SVG 的颜色：
+
+```css
+.theme-switcher__option svg {
+  color: #ff0000; /* 设置为红色 */
+}
+```
+
+---
+
+### 2. **使用 CSS 滤镜（Filter）**
+如果你无法修改 SVG 文件的内容，但仍然希望通过 CSS 改变图片的颜色，可以使用 `filter` 属性。例如：
+
+```css
+.theme-switcher__option img {
+  filter: invert(58%) sepia(74%) saturate(317%) hue-rotate(216deg) brightness(109%) contrast(105%);
+}
+```
+
+这里的 `filter` 属性通过一系列的颜色变换操作来模拟颜色的变化。你可以使用在线工具（如 [CSS Filter Generator](https://codepen.io/sosuke/pen/Pjoqqp)）生成适合的颜色滤镜。
+
+---
+
+### 3. **使用背景图片**
+如果图片是装饰性的，可以考虑将其设置为 CSS 背景图片，并使用 `background-color` 或 `mask` 来调整颜色。例如：
+
+```html
+<button
+  class="theme-switcher__option"
+  type="button"
+  data-theme="dark"
+  aria-label="暗色主题"
+  data-tooltip="暗色主题"
+></button>
+```
+
+```css
+.theme-switcher__option {
+  width: 24px;
+  height: 24px;
+  background-image: url('styles/2424svg/Dark-Mode--Streamline-Rounded-Material-Symbols.svg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  filter: invert(58%) sepia(74%) saturate(317%) hue-rotate(216deg) brightness(109%) contrast(105%);
+}
+```
+
+---
+
+### 4. **使用 SVG 的 `fill` 属性（仅适用于内联 SVG）**
+如果你能够控制 SVG 文件的内容，可以直接在 SVG 文件中使用 `fill` 属性，并通过 CSS 动态修改它。例如：
+
+```html
+<button
+  class="theme-switcher__option"
+  type="button"
+  data-theme="dark"
+  aria-label="暗色主题"
+  data-tooltip="暗色主题"
+>
+  <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z" fill="currentColor"></path>
+  </svg>
+</button>
+```
+
+然后通过 CSS 修改颜色：
+
+```css
+.theme-switcher__option svg {
+  color: #00ff00; /* 设置为绿色 */
+}
+```
+
+---
+
+### 总结
+- 如果你需要完全控制颜色，推荐使用 **内联 SVG**。
+- 如果无法修改 SVG 文件，可以尝试使用 **CSS 滤镜**。
+- 如果图片是装饰性的，可以考虑使用 **背景图片**。
+
+根据你的具体需求和项目限制，选择最适合的方案即可。
+
+### USER
+#4F46E5 #38A169 #D2B48C #3182CE #8A2BE2 #8A2BE2 #7c3aed #F97316 这个几个颜色，怎么用fitler实现
+
+### ASSISTANT
+使用 CSS 的 `filter` 属性来实现特定颜色的转换是一个复杂的过程，因为 `filter` 是通过对图像应用一系列的颜色变换操作（如亮度、对比度、色调旋转等）来模拟颜色的变化。要将一个图片的颜色调整为特定的颜色（例如你提供的颜色列表），需要手动计算或借助工具生成滤镜值。
+
+以下是实现这些颜色的基本思路和步骤：
+
+---
+
+### 1. **理解 `filter` 属性**
+CSS 的 `filter` 属性支持以下几种操作：
+- `invert()`：反转颜色。
+- `sepia()`：增加暖色调（类似老照片效果）。
+- `saturate()`：调整饱和度。
+- `hue-rotate()`：旋转色相。
+- `brightness()`：调整亮度。
+- `contrast()`：调整对比度。
+
+通过组合这些操作，可以近似地将黑白图片或单色图片调整为特定的颜色。
+
+---
+
+### 2. **生成滤镜值**
+为了生成适合的颜色滤镜值，你可以使用在线工具，例如：
+- [CSS Filter Generator](https://codepen.io/sosuke/pen/Pjoqqp)
+- [Filter Effects Playground](https://bennettfeely.com/filters/)
+
+这些工具允许你输入目标颜色，并自动生成对应的 `filter` 值。
+
+---
+
+### 3. **示例代码**
+以下是根据你的颜色列表生成的 `filter` 值示例（假设原始图片是黑白的）：
+
+#### 颜色 #4F46E5
+```css
+filter: invert(47%) sepia(87%) saturate(5090%) hue-rotate(247deg) brightness(97%) contrast(95%);
+```
+
+#### 颜色 #38A169
+```css
+filter: invert(40%) sepia(62%) saturate(418%) hue-rotate(143deg) brightness(93%) contrast(87%);
+```
+
+#### 颜色 #D2B48C
+```css
+filter: invert(81%) sepia(27%) saturate(154%) hue-rotate(35deg) brightness(103%) contrast(97%);
+```
+
+#### 颜色 #3182CE
+```css
+filter: invert(40%) sepia(73%) saturate(3368%) hue-rotate(202deg) brightness(98%) contrast(93%);
+```
+
+#### 颜色 #8A2BE2
+```css
+filter: invert(37%) sepia(84%) saturate(5667%) hue-rotate(273deg) brightness(97%) contrast(104%);
+```
+
+#### 颜色 #7c3aed
+```css
+filter: invert(34%) sepia(82%) saturate(5093%) hue-rotate(258deg) brightness(96%) contrast(102%);
+```
+
+#### 颜色 #F97316
+```css
+filter: invert(63%) sepia(87%) saturate(2733%) hue-rotate(354deg) brightness(105%) contrast(103%);
+```
+
+---
+
+### 4. **如何使用**
+将上述 `filter` 值应用到你的 `<img>` 标签中即可。例如：
+
+```html
+<img src="styles/2424svg/Dark-Mode--Streamline-Rounded-Material-Symbols.svg" width="24" height="24" alt="暗色主题图标"
+  style="filter: invert(47%) sepia(87%) saturate(5090%) hue-rotate(247deg) brightness(97%) contrast(95%);">
+```
+
+或者通过 CSS 类来管理：
+
+```css
+.color-4F46E5 {
+  filter: invert(47%) sepia(87%) saturate(5090%) hue-rotate(247deg) brightness(97%) contrast(95%);
+}
+
+.color-38A169 {
+  filter: invert(40%) sepia(62%) saturate(418%) hue-rotate(143deg) brightness(93%) contrast(87%);
+}
+```
+
+```html
+<img src="styles/2424svg/Dark-Mode--Streamline-Rounded-Material-Symbols.svg" class="color-4F46E5" width="24" height="24" alt="暗色主题图标">
+```
+
+---
+
+### 5. **注意事项**
+- **原始图片的影响**：`filter` 的效果依赖于原始图片的颜色。如果原始图片不是黑白或单色的，可能无法精确匹配目标颜色。
+- **性能问题**：复杂的 `filter` 可能会影响渲染性能，尤其是在大量图片上使用时。
+- **兼容性**：`filter` 在现代浏览器中广泛支持，但在一些老旧浏览器中可能不生效。
+
+如果你需要更精确的颜色控制，建议使用 **内联 SVG** 或 **背景图片 + mask** 的方式，而不是依赖 `filter`。
+
+### USER
+那就用这个实现上面的几种颜色
+
+### ASSISTANT
+好的！我们可以使用 **内联 SVG** 的方式来实现你提供的颜色列表（`#4F46E5`, `#38A169`, `#D2B48C`, `#3182CE`, `#8A2BE2`, `#7c3aed`, `#F97316`）。这种方式可以更精确地控制颜色，并且性能更好。
+
+以下是完整的实现步骤和代码示例：
+
+---
+
+### 1. **内联 SVG 的基本结构**
+我们将使用 SVG 的 `fill` 属性来设置颜色，并通过 CSS 动态调整颜色。SVG 的 `fill="currentColor"` 是关键，它会让 SVG 使用当前文本颜色（`color`）作为填充颜色。
+
+---
+
+### 2. **HTML 和 CSS 实现**
+
+#### HTML
+```html
+<div class="color-switcher">
+  <button class="theme-switcher__option" data-color="#4F46E5">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <circle cx="12" cy="12" r="10"></circle>
+    </svg>
+  </button>
+  <button class="theme-switcher__option" data-color="#38A169">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <circle cx="12" cy="12" r="10"></circle>
+    </svg>
+  </button>
+  <button class="theme-switcher__option" data-color="#D2B48C">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <circle cx="12" cy="12" r="10"></circle>
+    </
+
+### USER
+背景图片 + mask我的意思是用这个去实现上面的几种颜色
+
+### ASSISTANT
+明白了！使用 **背景图片 + mask** 的方式是一种非常灵活的方法，可以通过 CSS 的 `mask` 属性将一个单色的背景图片裁剪成特定的形状（例如图标），然后通过调整背景颜色来实现不同的颜色效果。
+
+以下是基于你提供的颜色列表（`#4F46E5`, `#38A169`, `#D2B48C`, `#3182CE`, `#8A2BE2`, `#7c3aed`, `#F97316`）的完整实现：
+
+---
+
+### 1. **基本原理**
+- 使用一个透明的 SVG 图标作为 `mask`。
+- 设置背景颜色为需要的颜色。
+- `mask` 会裁剪背景颜色，使其只显示图标的形状。
+
+---
+
+### 2. **HTML 和 CSS 实现**
+
+#### HTML
+```html
+<div class="color-switcher">
+  <div class="icon" data-color="#4F46E5"></div>
+  <div class="icon" data-color="#38A169"></div>
+  <div class="icon" data-color="#D2B48C"></div>
+  <div class="icon" data-color="#3182CE"></div>
+  <div class="icon" data-color="#8A2BE2"></div>
+  <div class="icon" data-color="#7c3aed"></div>
+  <div class="icon" data-color="#F97316"></div>
+</div>
+```
+
+#### CSS
+```css
+.color-switcher {
+  display: flex;
+  gap: 10px;
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+  background-color: #000; /* 默认颜色 */
+  mask: url('styles/2424svg/Dark-Mode--Streamline-Rounded-Material-Symbols.svg') no-repeat center / contain;
+  -webkit-mask: url('styles/2424svg/Dark-Mode--Streamline-Rounded-Material-Symbols.svg') no-repeat center / contain;
+}
+
+/* 动态设置颜色 */
+.icon[data-color="#4F46E5"] {
+  background-color: #4F46E5;
+}
+
+.icon[data-color="#38A169"] {
+  background-color: #38A169;
+}
+
+.icon[data-color="#D2B48C"] {
+  background-color: #D2B48C;
+}
+
+.icon[data-color="#3182CE"] {
+  background-color: #3182CE;
+}
+
+.icon[data-color="#8A2BE2"] {
+  background-color: #8A2BE2;
+}
+
+.icon[data-color="#7c3aed"] {
+  background-color: #7c3aed;
+}
+
+.icon[data-color="#F97316"] {
+  background-color: #F97316;
+}
+```
+
+---
+
+### 3. **关键点解析**
+
+#### (1) **`mask` 属性**
+- `mask` 是 CSS 的一个属性，用于定义一个遮罩层。它会根据遮罩的透明度裁剪元素的内容。
+- 在这里，我们使用一个 SVG 文件作为遮罩，SVG 文件中的透明部分会让背景颜色不可见，而非透明部分会显示背景颜色。
+
+#### (2) **兼容性**
+- `mask` 属性在现代浏览器中支持良好，但在一些老旧浏览器中可能需要使用 `-webkit-mask` 前缀。
+- 如果需要更好的兼容性，可以考虑使用内联 SVG 或其他方法。
+
+#### (3) **动态颜色**
+- 我们通过 `data-color` 属性动态设置每个图标的背景颜色，从而实现不同颜色的效果。
+
+---
+
+### 4. **效果展示**
+假设你的 SVG 文件是一个圆形图标，最终效果将是：
+- 每个 `.icon` 元素显示一个圆形图标。
+- 图标的颜色由 `background-color` 决定，分别是 `#4F46E5`, `#38A169`, `#D2B48C`, 等等。
+
+---
+
+### 5. **注意事项**
+- **SVG 文件的要求**：用作遮罩的 SVG 文件必须是透明的（即有透明区域和非透明区域）。如果 SVG 文件本身有颜色填充，可能会导致遮罩效果不理想。
+- **性能优化**：如果需要大量使用这种技术，建议将 SVG 文件转换为 Base64 编码并内联到 CSS 中，以减少 HTTP 请求。
+
+---
+
+### 6. **扩展**
+如果你希望动态切换颜色（例如用户点击按钮时改变颜色），可以结合 JavaScript 来实现。例如：
+
+```javascript
+document.querySelectorAll('.icon').forEach(icon => {
+  icon.addEventListener('click', () => {
+    const color = icon.getAttribute('data-color');
+    document.body.style.backgroundColor = color; // 示例：改变页面背景颜色
+  });
+});
+```
+
+这样，点击某个图标时，页面背景颜色会变为对应的颜色。
+
+---
+
+通过这种方式，你可以轻松实现基于背景颜色和遮罩的多色图标效果！
+
+### USER
+/* ===================================
+   SiteBox 企业级颜色系统 (v3.0)
+   =================================== */
+/* ========================
+   浅紫主题 - 优雅清新
+   ======================== */
+:root {
+    /* === Core Brand Colors (State-driven Naming) - 核心品牌色系（状态驱动命名） === */
+    /* 品牌色 */
+    --color-brand-primary-base: #7c3aed;     /* 亮紫-主品牌基准色 */
+    --color-brand-primary-hover: #6d28d9;   /* 悬停状态 */
+    --color-brand-primary-active: #7B68EE;  /* 激活/按压状态 */
+  
+    /* === Auxiliary Color System (Function-oriented Naming) - 辅助色系（功能导向命名） === */
+    --color-functional-secondary-base: #9333ea;  /* 辅助主色 */
+    --color-functional-secondary-hover: #BA55D3; /* 悬停亮色 */
+    --color-functional-secondary-active: #6A5ACD;/* 激活暗色 */
+  
+    /* === Functional Color System (Semantic Translation) - 功能色系（语义直译） === */
+    --color-status-success: #34D399;    /* 成功状态 */
+    --color-status-warning: #FBBF24;    /* 警告状态 */
+    --color-status-error: #F87171;      /* 错误状态 */
+    --color-interaction-accent: #F472B6;/* 强调交互色 */
+  
+    /* === Neutral Color System (Usage Naming) - 中性色系（用途命名） === */
+    --color-neutral-background: rgba(255, 255, 255, 0.9);    /* 页面背景 */
+    --color-neutral-surface: rgba(255, 255, 255, 0.9);       /* 表面色 */
+    --color-neutral-surface-hover: #f4f3f7; /* 表面色悬停 */ 
+    --color-neutral-divider: #e9e9eb;       /* 分割线/边框 */
+    --color-neutral-border-disabled: #A78BFA; /* 禁用状态边框 */
+    --color-neutral-text-primary: #1E1B4B;  /* 主文本 */
+    --color-neutral-text-secondary: #4C1D95;/* 次级文本 */
+    /* === Semantic Variables (Maintain Original Mapping) - 语义化变量（保持原有映射关系） === */
+    /* Text System - 文本系统 */
+    --text-primary: var(--color-neutral-text-primary);
+    --text-secondary: var(--color-neutral-text-secondary);
+    --text-disabled: var(--color-neutral-border-disabled);
+    --text-inverse: #FFFFFF;
+  
+    /* Background System - 背景系统 */
+    --background-body: var(--color-neutral-background);
+    --background-surface: var(--color-neutral-surface);
+    --background-surface-hover: var(--color-neutral-surface-hover);
+    --background-card: #FFFFFF;
+    --background-card-hover: #F3E8FF;
+    --background-header: var(--color-brand-primary-base);
+    --background-subheader: var(--color-functional-secondary-base);
+    
+    /* Interaction System - 交互系统 */
+    --action-primary: var(--color-brand-primary-base);
+    --action-primary-hover: var(--color-brand-primary-hover);
+    --action-primary-active: var(--color-brand-primary-active);
+    --action-secondary: var(--color-functional-secondary-base);
+    
+    /* Status System - 状态系统 */
+    --status-success: var(--color-status-success);
+    --status-warning: var(--color-status-warning);
+    --status-error: var(--color-status-error);
+    --status-accent: var(--color-interaction-accent);
+    --status-info: var(--color-brand-primary-active);
+    
+    /* Special Elements - 特殊元素 */
+    --border-normal: var(--color-neutral-divider);
+    --url-identifier: #8A2BE2;       /* 网址标识 */
+    --timestamp-label: #7B68EE;      /* 时间戳文本 */
+    /* 阴影效果 */
+    --shadow-color-base: 271deg 76% 53%;
+    --shadow-intensity: 0.08;
+    --shadow-sm: 0 1px 3px rgba(124, 58, 237, 0.1);
+    --shadow-md: 0 4px 6px rgba(124, 58, 237, 0.1), 0 2px 4px rgba(124, 58, 237, 0.05);
+    --shadow-lg: 0 10px 15px rgba(124, 58, 237, 0.1), 0 4px 6px rgba(124, 58, 237, 0.05);
+    --shadow-button: 0 4px 12px rgba(124, 58, 237, 0.2);
+    --shadow-button-hover: 0 6px 16px rgba(124, 58, 237, 0.3);
+    --shadow-website-item-hover: 0 16px 32px rgba(124, 58, 237, 0.1);
+    --shadow-website-item-active: 0 8px 24px rgba(124, 58, 237, 0.15);
+    
+    /* 其他效果 */
+    --overlay-color: rgba(250, 245, 255, 0.7);
+    --gradient: linear-gradient(135deg, var(--action-primary) 0%, var(--action-secondary) 100%);
+    --glass-effect: rgba(255, 255, 255, 0.9);
+    --glass-border: 1px solid rgba(124, 58, 237, 0.1);
+    /* --glass-shadow: 0 8px 32px 0 rgba(124, 58, 237, 0.4); */
+    --glass-blur: blur(12px);
+    --color-glass-border: 1px solid rgba(124, 58, 237, 0.2);
+    --color-glass-shadow: 0 8px 32px 0 rgba(124, 58, 237, 0.15);
+    --transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-fast: 150ms ease;
+    --transition-normal: 250ms ease;
+    --color-delete-hover: hsl(9, 58%, 30%);
+    --glass-shadow: 0 8px 32px 0 rgba(99, 102, 241, 0.15);
+   
+}
+这个css代码是一个个人导航网站的，能不能根据这个css变量，再重新生成一套科技感十足，非常酷炫的主题
+
+### ASSISTANT
+当然可以！我们可以基于你提供的 CSS 变量，重新设计一套科技感十足、酷炫的主题。为了实现这种效果，我们需要调整颜色系统，使其更加现代化、未来感强，并且增加一些动态效果（如渐变、阴影和玻璃态效果）。以下是重新生成的代码：
+
+---
+
+### **科技感主题 - 酷炫版**
+
+```css
+/* ===================================
+   SiteBox 企业级颜色系统 (v3.0)
+   科技感主题 - 酷炫版
+   =================================== */
+:root {
+    /* === Core Brand Colors (State-driven Naming) - 核心品牌色系（状态驱动命名） === */
+    --color-brand-primary-base: #0D6EFD;     /* 主品牌基准色 - 深蓝科技风 */
+    --color-brand-primary-hover: #0B5ED7;   /* 悬停状态 */
+    --color-brand-primary-active: #0A58C1;  /* 激活/按压状态 */
+
+    /* === Auxiliary Color System (Function-oriented Naming) - 辅助色系（功能导向命名） === */
+    --color-functional-secondary-base: #2F96B4;  /* 辅助主色 - 冷蓝色 */
+    --color-functional-secondary-hover: #2FA1B4; /* 悬停亮色 */
+    --color-functional-secondary-active: #2D88A3;/* 激活暗色 */
+
+    /* === Functional Color System (Semantic Translation) - 功能色系（语义直译） === */
+    --color-status-success: #28A745;    /* 成功状态 - 绿色 */
+    --color-status-warning: #FFC107;    /* 警告状态 - 黄色 */
+    --color-status-error: #DC3545;      /* 错误状态 - 红色 */
+    --color-interaction-accent: #6F42C1;/* 强调交互色 - 紫色 */
+
+    /* === Neutral Color System (Usage Naming) - 中性色系（用途命名） === */
+    --color-neutral-background: rgba(13, 110, 253, 0.05); /* 页面背景 - 带轻微蓝色透明度 */
+    --color-neutral-surface: rgba(255, 255, 255, 0.08);   /* 表面色 - 半透明 */
+    --color-neutral-surface-hover: rgba(255, 255, 255, 0.1); /* 表面色悬停 */
+    --color-neutral-divider: rgba(255, 255, 255, 0.1);    /* 分割线/边框 */
+    --color-neutral-border-disabled: rgba(255, 255, 255, 0.2); /* 禁用状态边框 */
+    --color-neutral-text-primary: #FFFFFF;  /* 主文本 - 白色 */
+    --color-neutral-text-secondary: #D1D5DB;/* 次级文本 - 浅灰 */
+    --color-neutral-text-disabled: #6B7280; /* 禁用文本 - 深灰 */
+
+    /* === Semantic Variables (Maintain Original Mapping) - 语义化变量（保持原有映射关系） === */
+    /* Text System - 文本系统 */
+    --text-primary: var(--color-neutral-text-primary);
+    --text-secondary: var(--color-neutral-text-secondary);
+    --text-disabled: var(--color-neutral-text-disabled);
+    --text-inverse: #000000;
+
+    /* Background System - 背景系统 */
+    --background-body: var(--color-neutral-background);
+    --background-surface: var(--color-neutral-surface);
+    --background-surface-hover: var(--color-neutral-surface-hover);
+    --background-card: rgba(255, 255, 255, 0.05);
+    --background-card-hover: rgba(255, 255, 255, 0.1);
+    --background-header: var(--color-brand-primary-base);
+    --background-subheader: var(--color-functional-secondary-base);
+
+    /* Interaction System - 交互系统 */
+    --action-primary: var(--color-brand-primary-base);
+    --action-primary-hover: var(--color-brand-primary-hover);
+    --action-primary-active: var(--color-brand-primary-active);
+    --action-secondary: var(--color-functional-secondary-base);
+
+    /* Status System - 状态系统 */
+    --status-success: var(--color-status-success);
+    --status-warning: var(--color-status-warning);
+    --status-error: var(--color-status-error);
+    --status-accent: var(--color-interaction-accent);
+    --status-info: var(--color-brand-primary-active);
+
+    /* Special Elements - 特殊元素 */
+    --border-normal: var(--color-neutral-divider);
+    --url-identifier: #6F42C1;       /* 网址标识 - 紫色 */
+    --timestamp-label: #868E96;     /* 时间戳文本 - 浅灰 */
+
+    /* 阴影效果 */
+    --shadow-color-base: 210deg 80% 50%;
+    --shadow-intensity: 0.1;
+    --shadow-sm: 0 1px 3px rgba(13, 110, 253, 0.1);
+    --shadow-md: 0 4px 6px rgba(13, 110, 253, 0.1), 0 2px 4px rgba(13, 110, 253, 0.05);
+    --shadow-lg: 0 10px 15px rgba(13, 110, 253, 0.1), 0 4px 6px rgba(13, 110, 253, 0.05);
+    --shadow-button: 0 4px 12px rgba(13, 110, 253, 0.2);
+    --shadow-button-hover: 0 6px 16px rgba(13, 110, 253, 0.3);
+    --shadow-website-item-hover: 0 16px 32px rgba(13, 110, 253, 0.1);
+    --shadow-website-item-active: 0 8px 24px rgba(13, 110, 253, 0.15);
+
+    /* 其他效果 */
+    --overlay-color: rgba(0, 0, 0, 0.7);
+    --gradient: linear-gradient(135deg, var(--action-primary), var(--action-secondary));
+    --glass-effect: rgba(255, 255, 255, 0.05);
+    --glass-border: 1px solid rgba(13, 110, 253, 0.1);
+    --glass-blur: blur(12px);
+    --color-glass-border: 1px solid rgba(13, 110, 253, 0.2);
+    --color-glass-shadow: 0 8px 32px 0 rgba(13, 110, 253, 0.15);
+    --transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-fast: 150ms ease;
+    --transition-normal: 250ms ease;
+    --color-delete-hover: hsl(0, 58%, 30%);
+    --glass-shadow: 0 8px 32px 0 rgba(13, 110, 253, 0.15);
+}
+```
+
+---
+
+### **关键改进点**
+
+1. **科技感配色**
+   - 主色调改为深蓝色（`#0D6EFD`），搭配冷蓝色（`#2F96B4`）和紫色（`#6F42C1`），营造出科技感。
+   - 背景色使用半透明的浅蓝色或白色，模拟玻璃态效果。
+
+2. **玻璃态效果**
+   - 使用 `rgba` 和 `blur` 实现模糊背景（`--glass-effect` 和 `--glass-blur`）。
+   - 添加微妙的渐变和阴影（`--gradient` 和 `--glass-shadow`），增强立体感。
+
+3. **动态交互**
+   - 悬停和激活状态的颜色变化更加明显，例如按钮的阴影会随着用户交互而加深。
+
+4. **阴影和光效**
+   - 阴影颜色与主色调一致，增加了层次感和深度。
+   - 使用 `linear-gradient` 创建渐变效果，用于按钮、卡片等组件。
+
+---
+
+### **示例应用**
+
+#### HTML 示例
+```html
+<div class="container">
+  <button class="btn-primary">Primary Button</button>
+  <button class="btn-secondary">Secondary Button</button>
+  <div class="card">
+    <h3>Card Title</h3>
+    <p>This is a card with glass effect.</p>
+  </div>
+</div>
+```
+
+#### CSS 示例
+```css
+body {
+  background: var(--background-body);
+  color: var(--text-primary);
+  font-family: 'Arial', sans-serif;
+}
+
+.container {
+  padding: 20px;
+}
+
+.btn-primary {
+  background: var(--action-primary);
+  color: var(--text-inverse);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  box-shadow: var(--shadow-button);
+  transition: var(--transition-normal);
+}
+
+.btn-primary:hover {
+  background: var(--action-primary-hover);
+  box-shadow: var(--shadow-button-hover);
+}
+
+.btn-secondary {
+  background: var(--action-secondary);
+  color: var(--text-inverse);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  box-shadow: var(--shadow-button);
+  transition: var(--transition-normal);
+}
+
+.btn-secondary:hover {
+  background: var(--color-functional-secondary-hover);
+  box-shadow: var(--shadow-button-hover);
+}
+
+.card {
+  background: var(--glass-effect);
+  backdrop-filter: var(--glass-blur);
+  border: var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 20px;
+  color: var(--text-primary);
+}
+```
+
+---
+
+### **最终效果**
+- 页面整体呈现深蓝色调，带有半透明玻璃态效果。
+- 按钮和卡片在悬停时会有动态阴影和颜色变化。
+- 渐变和阴影增强了科技感，使界面看起来更加酷炫。
+
+希望这套主题能满足你的需求！如果有其他定制化需求，欢迎随时提出！
