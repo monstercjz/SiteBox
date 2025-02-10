@@ -12,11 +12,7 @@ body {
               color 0.3s ease; /* 文字颜色过渡效果，duration 0.3s, ease 缓动函数 */
 }
 
-/* Eye-care theme toggle button active state - 护眼主题切换按钮激活状态 */
-#toggleEyeCare.active {
-  background: var(--action-primary); /* 激活状态背景色为 primary color CSS 变量，使用主题色 */
-  color: red; /* 激活状态文字颜色为 surface color CSS 变量，使用 surface 色 */
-}
+
 
 /* Theme Transition for all elements with data-theme attribute -  为带有 data-theme 属性的所有元素添加主题过渡效果 */
 [data-theme] * {

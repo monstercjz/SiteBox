@@ -24,3 +24,7 @@
   color: var(--action-primary); /* 激活的颜色 */
   transform: scale(1.1); /* 激活 图标放大 */
 }
+.layout-switcher__option:hover {
+  box-shadow: var(--shadow-md); /* Hover 状态阴影 */
+  transform: translateY(-2px); /* Hover 状态向上位移 */
+}

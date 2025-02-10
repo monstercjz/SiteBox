@@ -23,3 +23,8 @@
   box-shadow: var(--shadow-md); /* Hover 状态阴影 */
   transform: translateY(-2px); /* Hover 状态向上位移 */
 }
+/* Eye-care theme toggle button active state - 护眼主题切换按钮激活状态 */
+.theme-switcher__option.active {
+  transform: translateY(-2px); /* Hover 状态向上位移 */
+  animation: float 3s ease-in-out infinite;
+}
