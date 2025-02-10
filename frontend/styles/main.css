@@ -73,15 +73,6 @@
 
 /* Import Utility styles - 引入工具类模块样式 */
 /* @import 'utilities/responsive.css'; */
-@import 'utilities/accessibility.css';
-@import 'utilities/shadow.css';
-@import 'utilities/radius.css';
-@import 'utilities/transition.css';
-@import 'utilities/text.css';
-@import 'utilities/flex.css';
-@import 'utilities/size.css';
-@import 'utilities/position.css';
-@import 'utilities/z-index.css';
 @import 'utilities/alternative-layout-keyframes.css';
 /* @import './variables.css'; */
 
