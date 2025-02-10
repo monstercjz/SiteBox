@@ -19,6 +19,7 @@ function setTheme(theme) {
     // 更新主题选项的激活状态
     document.querySelectorAll('.theme-switcher__option').forEach(option => {
         option.classList.toggle('active', option.dataset.theme === theme);
+        showNotification(`主题切换到: ${theme}`, 'success');
     });
     try {
         localStorage.setItem('theme', theme);
