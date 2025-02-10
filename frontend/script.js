@@ -1,6 +1,7 @@
 'use strict';
 
 import { showNotification, renderDashboardWithData } from './modules/dashboardDataService.js';
+import * as dockerInteractionService from './modules/dockerInteractionService.js';
 //import { WebsiteDataService } from './modules/websiteDataService.js';
 import { SearchService } from './modules/searchService.js';
 import { fetchAndRenderGroupSelect, renderGroupSelect } from './modules/groupSelectDataService.js';
@@ -132,6 +133,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     const addWebsiteButton = document.getElementById('add-website-button');
     addWebsiteButton.addEventListener('click', () => {
         addWebsite();
+    });
+    // 添加添加 Docker 容器按钮点击事件监听器
+    const addDockerButton = document.getElementById('add-docker-button');
+    addDockerButton.addEventListener('click', () => {
+        dockerInteractionService.addDockerContainer();
     });
 
     // 初始化主题切换功能
