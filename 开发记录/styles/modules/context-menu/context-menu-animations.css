@@ -1,0 +1,10 @@
+/* Context Menu Animations Styles - 右键菜单动画样式 */
+/*
+  定义右键菜单 (context-menu) 组件的动画和过渡效果。
+  例如菜单项 hover 时的过渡效果。
+*/
+
+/* 右键菜单项 */
+#contextMenu div {
+  transition: background-color var(--transition-fast);
+}

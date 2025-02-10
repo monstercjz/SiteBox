@@ -1,0 +1,13 @@
+/* Website List Layout Base Styles - 网站列表基础布局样式 */
+/*
+  定义网站列表 (website-list) 组件的基础布局结构。
+  主要设置网站列表容器的 display, grid 布局相关属性，不包含主题、颜色或状态相关的样式。
+*/
+/* Website List Container - 网站列表容器 */
+.website-list {
+  display: grid; /* 使用 grid 布局 */
+  grid-template-columns: repeat(auto-fill, minmax(var(--item-width), 1fr)); /* 设置网格列，响应式 auto-fill 和 minmax */
+  padding: var(--spacing-xs); /* 设置内边距 */
+  gap: var(--spacing-lg); /* 设置网格项之间的间距 */
+  margin-top: var(--spacing-md); /* 设置上外边距 */
+}

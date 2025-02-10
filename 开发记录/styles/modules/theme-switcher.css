@@ -1,0 +1,7 @@
+/* Theme Switcher Styles - Main module - imports sub-modules */
+@import './theme-switcher/theme-switcher-base.css';
+@import './theme-switcher/theme-switcher-theme.css';
+@import './theme-switcher/theme-switcher-variants.css';
+@import './theme-switcher/theme-switcher-states.css';
+@import './theme-switcher/theme-switcher-animations.css';
+@import './theme-switcher/theme-switcher-responsive.css';

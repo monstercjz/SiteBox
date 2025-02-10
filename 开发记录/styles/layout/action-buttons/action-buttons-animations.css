@@ -1,0 +1,29 @@
+/* Toggle Actions Animations Styles - 切换操作动画样式 */
+/*
+  定义切换操作 (toggle-actions) 组件的动画效果，
+  例如显示和隐藏时的过渡效果。
+*/
+
+/* Action Buttons Animations - 操作按钮组动画 */
+.action-buttons {
+  transform: scale(0.8) translateY(100px);
+  /* 初始状态缩小和向下位移，用于动画效果 */
+  transform-origin: bottom center;
+  /* 设置 transform-origin，缩放和位移基点为底部中心 */
+  transition: opacity 0.3s, transform 0.3s;
+  /* 添加过渡效果 */
+}
+
+.action-buttons.show {
+  transform: scale(1) translateY(0);
+  /* 显示状态取消缩放和位移 */
+}
+
+/* Icon Button Animations (Optional) - 图标按钮动画 (可选) */
+/* 可以根据需要为图标按钮添加额外的动画效果 */
+.action-buttons.show .icon-button {
+  transform: scale(1) translateY(0);
+  /* 显示状态取消缩放和位移 */
+  transition-delay: 0.1s;
+  /* 延迟显示，产生层叠效果 */
+}

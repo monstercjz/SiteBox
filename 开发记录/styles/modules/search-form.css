@@ -1,0 +1,7 @@
+/* Search Form Styles - Main module - imports sub-modules */
+@import './search-form/search-form-base.css';
+@import './search-form/search-form-theme.css';
+@import './search-form/search-form-variants.css';
+@import './search-form/search-form-states.css';
+@import './search-form/search-form-animations.css';
+@import './search-form/search-form-responsive.css';

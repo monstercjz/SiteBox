@@ -1,0 +1,8 @@
+/* Dashboard Styles - Main module - 仪表盘布局样式 - 主模块 - 引入子模块 */
+/*
+  仪表盘 (dashboard) 组件的布局样式主模块，负责引入 dashboard 目录下各个子模块的样式文件。
+  通过 @import 引入 base, header, sidebar, content, footer, responsive 等子模块，
+  实现仪表盘组件的模块化样式管理。
+*/
+@import './dashboard/dashboard-base.css'; /* 引入仪表盘基础布局模块 */
+@import './dashboard/dashboard-base-responsive.css'; /* 引入仪表盘基础布局模块 */

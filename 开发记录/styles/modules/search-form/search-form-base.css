@@ -1,0 +1,38 @@
+/* Search Container Base Styles - 搜索框容器基础样式 */
+/*
+  定义搜索框 (search-form) 组件的基础布局和结构样式。
+  包括搜索框容器、图标和输入框的基础样式，不包含主题、颜色或状态相关的样式。
+*/
+
+/* 搜索框容器 */
+.search-form {
+  position: fixed; /* 使用 fixed 定位，使其脱离文档流 */
+  top: calc(var(--spacing-lg) + 48px); /* 距离顶部一定距离，考虑 header 高度 */
+  right: max(var(--spacing-md), calc((100% - 1400px) / 2)); /* 靠右对齐，并根据屏幕宽度调整右边距 */
+  display: flex; /* 使用 flex 布局 */
+  align-items: center; /* 垂直居中 */
+  height: 40px; /* 设置高度 */
+  z-index: 1000; /* 设置 z-index，确保在其他元素之上 */
+}
+
+/* 搜索框图标 */
+.search-form__icon {
+  display: flex; /* 使用 flex 布局 */
+  align-items: center; /* 垂直居中 */
+  justify-content: center; /* 水平居中 */
+  width: 40px; /* 设置宽度 */
+  height: 40px; /* 设置高度 */
+  border-radius: var(--radius-lg); /* 设置圆角 */
+  z-index: 2; /* 设置 z-index */
+}
+
+/* 搜索框输入框 */
+.search-form__input {
+  position: absolute; /* 使用 absolute 定位，相对于 .search-form 定位 */
+  right: 40px; /* 初始位置在图标右侧 */
+  width: 0; /* 初始宽度为 0，实现展开效果 */
+  height: 40px; /* 设置高度 */
+  padding: 0; /* 移除内边距，初始状态不显示 */
+  border-radius: var(--radius-lg); /* 设置圆角 */
+  border: 1px solid var(--color-border); /* 设置边框 */
+}

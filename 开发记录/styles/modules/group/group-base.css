@@ -1,0 +1,17 @@
+/* Group Base Styles - 分组组件基础样式 */
+/*
+  定义分组 (group) 组件的基础布局和结构样式。
+   依赖：base/variables.css
+  包括分组容器和分组标题的 margin, padding 等，不包含主题、颜色或状态相关的样式。
+*/
+
+/* 分组容器 */
+.group {
+  margin-bottom: var(--spacing-xl); /* 设置下外边距 */
+}
+
+/* 分组标题 */
+.group h2 {
+  margin-bottom: var(--spacing-md); /* 设置下外边距 */
+  padding-bottom: var(--spacing-xs); /* 设置下内边距 */
+}

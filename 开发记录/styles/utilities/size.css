@@ -1,0 +1,9 @@
+/* Size Utilities Styles - 尺寸工具类样式 */
+/*
+  定义全局尺寸 (size) 工具类样式，方便快速设置元素尺寸。
+  包括 w-full, h-full 等常用的尺寸工具类。
+*/
+/* Width Full - 宽度 100% */
+.w-full { width: 100%; } /* 设置 width: 100%; 宽度 100% */
+/* Height Full - 高度 100% */
+.h-full { height: 100%; } /* 设置 height: 100%; 高度 100% */

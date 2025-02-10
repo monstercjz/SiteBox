@@ -1,0 +1,8 @@
+/* frontend/styles/modules/layout-switcher.css */
+/* Imports sub-modules for layout-switcher */
+@import './layout-switcher/layout-switcher-base.css';
+@import './layout-switcher/layout-switcher-theme.css';
+@import './layout-switcher/layout-switcher-variants.css';
+@import './layout-switcher/layout-switcher-states.css';
+@import './layout-switcher/layout-switcher-animations.css';
+@import './layout-switcher/layout-switcher-responsive.css'; /* Even though it's empty */

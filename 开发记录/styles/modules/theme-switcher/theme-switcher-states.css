@@ -1,0 +1,20 @@
+/* Theme Switcher States Styles - 主题切换器状态样式 */
+/*
+  定义主题切换器 (theme-switcher) 组件在不同状态下的样式，
+  例如 show 状态 (选项列表显示时) 的样式。
+*/
+/* Theme switcher option - 主题切换器选项按钮 */
+.theme-switcher__option {
+  cursor: pointer; /* 设置鼠标指针为 pointer */
+}
+
+/* Theme Switcher Options - 主题切换器选项容器 */
+.theme-switcher__options {
+  pointer-events: none; /* 初始状态禁止 pointer 事件 */
+}
+
+/* Theme Switcher Options Show State - 主题切换器选项显示状态 */
+.theme-switcher__options.show {
+  opacity: 1; /* 显示状态透明度为 1 */
+  pointer-events: auto; /* 显示状态允许 pointer 事件 */
+}

@@ -1,0 +1,13 @@
+/* Tooltip States Styles - 工具提示状态样式 */
+/*
+  定义工具提示 (tooltip) 组件在不同状态下的样式，
+  例如 show 状态 (显示时) 的样式。
+*/
+/* Tooltip 初始状态 - 隐藏 */
+
+/* Tooltip Show State - 工具提示显示状态 */
+/* Tooltip Show State - 工具提示显示状态 */
+.tooltip.show {
+  opacity: 1; /* 显示状态透明度为 1，显示 tooltip */
+  visibility: visible; /* 显示状态显示 tooltip */
+}

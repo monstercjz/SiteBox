@@ -1,0 +1,44 @@
+/* Base Typography Styles - 基础排版样式 */
+/*
+  定义项目的基础排版样式，包括字体、字号、行高等。
+  用于设置全局的 typography 风格，例如字体栈、body 样式、标题样式等。
+*/
+
+/* 设置 html 根元素字体大小 */
+html {
+  font-size: var(--font-size-base); /* 默认字体大小 16px */
+}
+
+/* 设置 body 基础字体和颜色 */
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif; /* 设置字体栈 */
+  background-color: var(--color-background-base); /* 设置背景色，使用 CSS 变量 */
+  color: var(--color-text-base); /* 设置文字颜色，使用 CSS 变量 */
+  padding: var(--spacing-lg); /* 设置内边距 */
+}
+
+/* Typography - 标题排版样式 */
+/* Main heading - 主要标题 */
+h1 {
+  font-size: 2rem; /* 设置字体大小 */
+  font-weight: 600; /* 设置字体粗细 */
+  text-align: center; /* 居中对齐 */
+  margin-bottom: var(--spacing-xl); /* 设置下外边距 */
+  letter-spacing: -0.025em; /* 设置letter-spacing 调整字间距 */
+}
+/* Alternative Layout - 备选布局*/
+[data-layout="alternative"] body {
+  font-family: 'Inter', system-ui, sans-serif;
+  margin: 0;
+  padding: 20px;
+  background-color: var(--color-background-base);
+  color: var(--color-text-primary);
+  line-height: 1.5;
+}
+
+[data-layout="alternative"] h1 {
+  text-align: center;
+  margin: 2rem 0;
+  color: var(--color-text-primary);
+  font-weight: 600;
+}

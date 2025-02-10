@@ -1,0 +1,10 @@
+/* Search Form Variants Styles - 搜索框变体样式 */
+/*
+  定义搜索框 (search-form) 组件的变体样式和功能扩展。
+  例如不同尺寸、不同功能的搜索框样式。
+*/
+
+/* 搜索框输入框初始状态 - 隐藏 */
+.search-form__input {
+  opacity: 0; /* 初始状态透明度为 0 */
+}

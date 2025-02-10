@@ -1,0 +1,25 @@
+/* Layout Switcher States Styles - 布局切换器状态样式 */
+/*
+  定义布局切换器 (layout-switcher) 组件在不同状态下的样式，
+  例如 show 状态 (选项列表显示时) 的样式。
+*/
+/* Layout switcher option - 布局切换器选项按钮 */
+.layout-switcher__option {
+  cursor: pointer; /* 设置鼠标指针为 pointer */
+}
+
+/* Layout Switcher Options - 布局切换器选项容器 */
+.layout-switcher__options {
+  pointer-events: none; /* 初始状态禁止 pointer 事件 */
+}
+
+/* Layout Switcher Options Show State - 布局切换器选项显示状态 */
+.layout-switcher__options.show {
+  opacity: 1; /* 显示状态透明度为 1 */
+  pointer-events: auto; /* 显示状态允许 pointer 事件 */
+}
+.layout-switcher__option.active {
+
+  color: var(--color-primary); /* 激活的颜色 */
+  transform: scale(1.1); /* 激活 图标放大 */
+}

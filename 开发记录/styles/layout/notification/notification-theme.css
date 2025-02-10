@@ -1,0 +1,13 @@
+/* Notification Theme Styles - 通知组件主题样式 */
+/* 
+  定义通知 (notification) 组件的视觉主题样式。 
+  该模块用于设置通知组件的背景色、文字颜色、边框颜色等主题相关的样式，
+  使用 CSS 变量进行主题化配置，以便切换不同主题风格。
+*/
+
+:root {
+  /* Notification border colors - 通知边框颜色 */
+  --notification-border-color-info: var(--color-primary); /* 信息通知边框颜色 */
+  --notification-border-color-error: #dc2626; /* 错误通知边框颜色 */
+  --notification-border-color-success: #059669; /* 成功通知边框颜色 */
+}

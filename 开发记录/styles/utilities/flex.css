@@ -1,0 +1,15 @@
+/* Flex Utilities Styles - Flex 布局工具类样式 */
+/*
+  定义全局 Flex 布局工具类样式，方便快速使用 Flexbox 布局。
+  包括 flex 容器、align-items、justify-content、gap 等常用 Flexbox 属性的工具类。
+*/
+/* Flex Container - Flex 容器 */
+.flex { display: flex; } /* 设置 display: flex; 启用 Flexbox 布局 */
+/* Align Items Center - 垂直居中 */
+.items-center { align-items: center; } /* 设置 align-items: center; 垂直居中 flex 元素 */
+/* Justify Content Space Between - 水平两端对齐 */
+.justify-between { justify-content: space-between; } /* 设置 justify-content: space-between; 水平两端对齐 flex 元素 */
+/* Gap Small - 小间距 */
+.gap-sm { gap: var(--spacing-sm); } /* 设置 gap: var(--spacing-sm); 使用 sm 尺寸间距 CSS 变量 */
+/* Gap Medium - 中间距 */
+.gap-md { gap: var(--spacing-md); } /* 设置 gap: var(--spacing-md); 使用 md 尺寸间距 CSS 变量 */

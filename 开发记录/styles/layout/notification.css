@@ -1,0 +1,9 @@
+/* Notification Layout - Main module - 通知布局样式 - 主模块 - 引入子模块 */
+/*
+  通知 (notification) 组件的布局样式主模块，负责引入 notification 目录下各个子模块的样式文件。
+  通过 @import 引入 base, states, theme 等子模块，实现通知组件的模块化样式管理。
+*/
+@import './notification/notification-base.css'; /* 引入通知基础布局模块 */
+@import './notification/notification-states.css'; /* 引入通知状态样式模块 (如果需要状态样式)*/
+/* @import './notification/notification-elements.css'; // 如果需要元素样式 */
+@import './notification/notification-theme.css'; /* 引入通知主题样式模块 */

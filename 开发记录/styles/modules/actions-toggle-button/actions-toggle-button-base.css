@@ -1,0 +1,17 @@
+/* Actions Toggle Button Base Styles - 切换按钮基础样式 */
+/*
+  定义切换按钮 (actions-toggle-button) 组件的基础布局和结构样式。
+  包括尺寸、定位、display 属性等，不包含主题、颜色或状态相关的样式。
+*/
+
+/* 切换按钮容器 */
+#actions-toggle-button {
+  position: relative; /* 设置定位为 relative */
+  display: flex; /* 使用 flex 布局 */
+  align-items: center; /* 垂直居中 */
+  justify-content: center; /* 水平居中 */
+  width: 48px; /* 设置宽度 */
+  height: 48px; /* 设置高度 */
+  border-radius: 50%; /* 设置圆形边框 */
+  z-index: 11; /* 设置 z-index */
+}

@@ -1,0 +1,22 @@
+/* Actions Toggle Button State Styles - 切换按钮状态样式 */
+/*
+  定义切换按钮 (actions-toggle-button) 组件在不同状态下的样式，
+  例如 hover, active 等交互状态。
+*/
+/* 切换按钮容器 */
+#actions-toggle-button {
+  cursor: pointer; /* 设置鼠标指针为 pointer */
+}
+
+/* Hover 状态 */
+#actions-toggle-button:hover {
+  background: var(--color-primary-hover); /* Hover 状态背景色 */
+  box-shadow: var(--shadow-lg); /* Hover 状态阴影 */
+  transform: translateY(-2px) rotate(45deg); /* Hover 状态位移和旋转45度，显示为“x” */
+}
+
+/* Active 状态 */
+#actions-toggle-button:active {
+  box-shadow: var(--shadow-md); /* Active 状态阴影 */
+  transform: translateY(0) rotate(45deg); /* Active 状态位移和旋转45度，显示为“x” */
+}

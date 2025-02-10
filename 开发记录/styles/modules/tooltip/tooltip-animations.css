@@ -1,0 +1,16 @@
+/* Tooltip Animations Styles - 工具提示动画样式 */
+/*
+  定义工具提示 (tooltip) 组件的动画和过渡效果。
+  例如 tooltip 显示/隐藏时的动画效果。
+*/
+/* Tooltip 容器过渡效果 */
+.tooltip, .website-tooltip {
+  transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out; /* 透明度和可见性过渡效果 */
+}
+.fade-in {
+  opacity: 1;
+}
+
+.fade-out {
+  opacity: 0;
+}
