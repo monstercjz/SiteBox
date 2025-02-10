@@ -14,6 +14,7 @@
 .theme-switcher__option[data-theme="light"] {
   background: rgba(255, 255, 255, 0.9); /* 亮色主题选项背景色为白色 */
   color: #7c3aed; /* 重置计数器 theme-light */
+  border: 1px solid #7c3aed; /* 设置边框 */
 }
 
 /* Theme switcher option - 主题切换器选项按钮 */

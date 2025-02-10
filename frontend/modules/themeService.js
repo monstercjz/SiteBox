@@ -1,3 +1,4 @@
+import { showNotification } from './dashboardDataService.js';
 const body = document.body;
 
 // 添加主题类型常量
@@ -26,6 +27,48 @@ function setTheme(theme) {
     }
 }
 
+// 主题列表
+const themeList = [
+    'green-bean',
+    'galaxy-white',
+    'almond-yellow',
+    'autumn-leaf-brown',
+    'rouge-red',
+    'sea-sky-blue',
+    'lotus-purple',
+    'aurora-gray',
+    'grass-green',
+    'computer-manager',
+    'wps-eye-care',
+    'eye-parchment'
+];
+
+// 已使用主题列表
+let usedThemes = localStorage.getItem('usedThemes') ? JSON.parse(localStorage.getItem('usedThemes')) : [];
+
+// 随机设置主题
+function setRandomTheme() {
+    let availableThemes = themeList.filter(theme => !usedThemes.includes(theme));
+
+    if (availableThemes.length === 0) {
+        // 所有主题都已使用过，重置已使用主题列表
+        usedThemes = [];
+        availableThemes = themeList;
+    }
+
+    // 随机选择一个主题
+    const randomIndex = Math.floor(Math.random() * availableThemes.length);
+    const randomTheme = availableThemes[randomIndex];
+
+    // 应用主题
+    setTheme(randomTheme);
+    showNotification(`主题切换到: ${randomTheme}`, 'success');
+
+    // 更新已使用主题列表
+    usedThemes.push(randomTheme);
+    localStorage.setItem('usedThemes', JSON.stringify(usedThemes));
+}
+
 // 初始化主题切换功能
 export function initThemeToggle() {
     const themeSwitcherToggle = document.getElementById('theme-switcher-toggle');
@@ -36,6 +79,14 @@ export function initThemeToggle() {
         themeSwitcherOptions.classList.toggle('show');
     });
     
+    // 获取随机主题按钮元素
+    const randomThemeButton = document.getElementById('random-theme-button');
+    // 添加随机主题按钮点击事件监听器
+    randomThemeButton.addEventListener('click', () => {
+        setRandomTheme();
+        // themeSwitcherOptions.classList.remove('show'); // 切换主题后关闭主题选项面板 (如果需要)
+    });
+
     // 点击其他地方时隐藏主题选项
     document.addEventListener('click', (e) => {
         if (!themeSwitcherToggle.contains(e.target) && !themeSwitcherOptions.contains(e.target)) {
@@ -57,6 +108,8 @@ export function initThemeToggle() {
 
 // 应用保存的主题
 export function applySavedTheme() {
+
+
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme) {
         setTheme(savedTheme);
