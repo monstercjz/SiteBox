@@ -1,5 +1,5 @@
 import modalInteractionService from './modalInteractionService.js';
-import { getGroups } from './api.js';
+import { getWebsiteGroups } from './api.js';
 
 export class WebsiteImportModalHandler {
   constructor() {
@@ -13,7 +13,7 @@ export class WebsiteImportModalHandler {
     // 填充分组选择
     const groupSelect = document.getElementById('importWebsitesGroupSelect');
     if (groupSelect) {
-      const groups = await getGroups();
+      const groups = await getWebsiteGroups();
       groupSelect.innerHTML = '<option value="">选择分组</option>';
       groups.forEach(group => {
         const option = document.createElement('option');

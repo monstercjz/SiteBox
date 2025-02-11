@@ -9,8 +9,11 @@ app.use(cors());
 // 配置静态文件服务
 app.use('/api/data/icons', express.static(path.join(__dirname, 'data', 'icons')));
 // Routes
-const groupRoutes = require('./routes/groupRoutes');
-app.use('/api/groups', groupRoutes);
+const websiteGroupRoutes = require('./routes/websiteGroupRoutes'); // 网站分组路由
+app.use('/api/website-groups', websiteGroupRoutes); // 网站分组路由，路径保持不变
+
+const dockerGroupRoutes = require('./routes/dockerGroupRoutes'); // Docker 容器分组路由
+app.use('/api/docker-groups', dockerGroupRoutes); // Docker 容器分组路由，新路径 /api/docker-groups
 
 const websiteRoutes = require('./routes/websiteRoutes');
 app.use('/api/websites', websiteRoutes);

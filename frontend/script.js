@@ -2,6 +2,7 @@
 
 import { showNotification, renderDashboardWithData } from './modules/dashboardDataService.js';
 import * as dockerInteractionService from './modules/dockerInteractionService.js';
+import { renderDockerDashboardWithData } from './modules/dockerDashboardService.js';;
 //import { WebsiteDataService } from './modules/websiteDataService.js';
 import { SearchService } from './modules/searchService.js';
 import { fetchAndRenderGroupSelect, renderGroupSelect } from './modules/groupSelectDataService.js';
@@ -9,6 +10,7 @@ import { applySavedTheme, initThemeToggle } from './modules/themeService.js';
 import { applySavedLayout, initLayoutToggle } from './modules/layoutService.js'; // 导入 layoutService
 import { loadColorPreference, toggleRandomColors } from './modules/colorThemeService.js';
 import { addGroup, deleteGroup, editGroup } from './modules/groupInteractionService.js';
+
 import { addWebsite, deleteWebsite, getWebsiteInfo, handleWebsiteHover, openImportWebsitesModal ,handleWebsiteClick } from './modules/websiteInteractionService.js';
 import { hideContextMenu, createContextMenu, showGroupContextMenu, showWebsiteContextMenu } from './modules/contextMenu.js';
 import { validateAndCompleteUrl, showTooltip, hideTooltip } from './modules/utils.js';
@@ -24,6 +26,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     const groupSelect = document.getElementById('groupSelect');
     // 获取仪表盘元素
     const dashboard = document.getElementById('dashboard');
+    // 获取仪表盘元素
+    const dockerdashboard = document.getElementById('dockerdashboard');
     // 获取数据导入按钮元素
     const importConfigButton = document.getElementById('import-config-button');
     // 获取数据导出按钮元素
@@ -44,8 +48,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     const groupColorToggleButton = document.getElementById('group-color-toggle');
     groupColorToggleButton.classList.toggle('active', loadColorPreference());
 
+    
     // 渲染仪表盘数据
     await renderDashboardWithData();
+    // 渲染 Docker 容器仪表盘
+    await renderDockerDashboardWithData();
 
     // 初始化搜索功能
     const searchService = new SearchService();

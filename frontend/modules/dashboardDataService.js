@@ -1,19 +1,19 @@
 import {
     fetchDataFromApi,
     getWebsites,
-    getGroups,
+    getWebsiteGroups,
     getWebsiteById,
-    getGroupById,
+    getWebsiteGroupById,
     getWebsitesByGroupId,
     createWebsite,
-    createGroup,
+    createWebsiteGroup,
     updateWebsite,
-    updateGroup,
+    updateWebsiteGroup,
     deleteWebsite,
-    deleteGroup,
+    deleteWebsiteGroup,
     batchDeleteWebsites,
     batchMoveWebsites,
-    reorderGroups,
+    reorderWebsiteGroups,
   } from './api.js';
 import { backendUrl } from '../config.js';
 import { setRandomGroupColors, resetGroupColors } from './utils.js';
@@ -105,8 +105,8 @@ function renderDashboard({ websites, groups }) {
  */
 async function fetchDashboardData() {
     try {
-        // 调用 apiService 获取分组数据
-        const groups = await getGroups();
+        // 调用 apiService 获取网站分组数据
+        const groups = await getWebsiteGroups();
         if (!Array.isArray(groups)) {
             console.error('Groups data is not an array:', groups);
             return { groups: [] , websites: []};

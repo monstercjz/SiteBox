@@ -44,7 +44,7 @@ const Website = require('../models/Website');
 const fileHandler = require('../utils/fileHandler');
 const { v4: uuidv4 } = require('uuid');
 const Joi = require('joi');
-const { getGroupById } = require('./groupService');
+const { getGroupById } = require('./websiteGroupService'); // 修改引用为 websiteGroupService
 const logger = require('../utils/logger');
 
 const { WEBSITE_DATA_FILE_PATH, PORT, backendUrl } = require('../config/constants');

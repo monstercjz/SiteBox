@@ -10,9 +10,9 @@ export class WebsiteSaveService {
         console.log('websiteId:', websiteId);
         let actualGroupId = groupId;
         if (!actualGroupId) {
-            const { getGroups, createGroup } = await import('./api.js');
+            const { getWebsiteGroups, createWebsiteGroup } = await import('./api.js');
             try {
-                const  groups  = await getGroups();
+                const  groups  = await getWebsiteGroups();
                 console.log('groups:', groups);
                 let defaultGroup;
                 if (groups) {
@@ -22,7 +22,7 @@ export class WebsiteSaveService {
                 }
                 if (!defaultGroup) {
                     const groupName = new Date().toLocaleString();
-                    const newGroup = await createGroup({ name: groupName, isCollapsible: false });
+                    const newGroup = await createWebsiteGroup({ name: groupName, isCollapsible: false });
                     actualGroupId = newGroup.id;
                 } else {
                     actualGroupId = defaultGroup.id;
@@ -159,10 +159,10 @@ export class WebsiteSaveService {
 
       let actualGroupId = groupId;
       if (!actualGroupId) {
-        const { getGroups, createGroup } = await import('./api.js');
-        const groups = await getGroups();
+        const { getWebsiteGroups, createWebsiteGroup } = await import('./api.js');
+        const groups = await getWebsiteGroups();
         const groupName = new Date().toLocaleString();
-        const newGroup = await createGroup({ name: groupName, isCollapsible: false });
+        const newGroup = await createWebsiteGroup({ name: groupName, isCollapsible: false });
         actualGroupId = newGroup.id;
       }
 

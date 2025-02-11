@@ -1,4 +1,4 @@
-import { createGroup, updateGroup, deleteGroup ,getWebsitesByGroupId, moveToTrash} from './api.js';
+import { createWebsiteGroup, updateWebsiteGroup, deleteWebsiteGroup ,getWebsitesByGroupId, moveToTrash} from './api.js';
 import { showNotification } from './dashboardDataService.js';
 
 export class GroupSaveService {
@@ -7,12 +7,12 @@ export class GroupSaveService {
     try {
       if (groupId) {
         // 更新分组
-        const updatedGroup = await updateGroup(groupId, groupData);
+        const updatedGroup = await updateWebsiteGroup(groupId, groupData);
         showNotification('分组更新成功', 'success');
         return updatedGroup;
       } else {
         // 创建分组
-        const newGroup = await createGroup(groupData);
+        const newGroup = await createWebsiteGroup(groupData);
         showNotification('分组创建成功', 'success');
         return newGroup;
       }
@@ -28,7 +28,7 @@ export class GroupSaveService {
     try {
         let response;
         if (deleteOption === 'permanentDelete') {
-            response = await deleteGroup(groupId);
+            response = await deleteWebsiteGroup(groupId);
         } else if (deleteOption === 'moveToTrash') {
             //const { getWebsitesByGroupId, moveToTrash } = await import('./api.js');
             const websites = await getWebsitesByGroupId(groupId);
@@ -37,7 +37,7 @@ export class GroupSaveService {
                 console.log('websites', websiteIds);
                 await moveToTrash(websiteIds);
             }
-            response = await deleteGroup(groupId);
+            response = await deleteWebsiteGroup(groupId);
         }
       showNotification('分组删除成功', 'success');
       return response;

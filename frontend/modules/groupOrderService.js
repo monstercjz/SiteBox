@@ -1,5 +1,5 @@
 import { renderDashboardWithData, showNotification } from './dashboardDataService.js';
-import { reorderGroups } from './api.js';
+import { reorderWebsiteGroups } from './api.js';
 
 let dashboard;
 let saveTimeout;
@@ -104,7 +104,7 @@ async function saveGroupOrder() {
         // 根据当前顺序生成orderedGroups数组
         const orderedGroups = groupIds.map((id, index) => ({ id: id, order: index + 1 }));
         
-        const updateResponse = await reorderGroups(orderedGroups);
+        const updateResponse = await reorderWebsiteGroups(orderedGroups);
         if (!updateResponse) {
             throw new Error('Failed to update group order');
         }

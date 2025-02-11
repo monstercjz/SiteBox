@@ -1,7 +1,7 @@
 import modalInteractionService from './modalInteractionService.js';
 import { WebsiteSaveService } from './websiteDataService.js';
 import { fetchAndRenderGroupSelect } from './groupSelectDataService.js';
-import { getGroups, createGroup } from './api.js';
+import { getWebsiteGroups, createWebsiteGroup } from './api.js';
 import { showNotification } from './dashboardDataService.js';
 import { validateAndCompleteUrl } from './utils.js';
 export class WebsiteOperationService {

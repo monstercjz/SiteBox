@@ -1,19 +1,19 @@
 import {
     fetchDataFromApi,
     getWebsites,
-    getGroups,
+    getWebsiteGroups,
     getWebsiteById,
-    getGroupById,
+    getWebsiteGroupById,
     getWebsitesByGroupId,
     createWebsite,
-    createGroup,
+    createWebsiteGroup,
     updateWebsite,
-    updateGroup,
+    updateWebsiteGroup,
     deleteWebsite,
-    deleteGroup,
+    deleteWebsiteGroup,
     batchDeleteWebsites,
     batchMoveWebsites,
-    reorderGroups,
+    reorderWebsiteGroups,
   } from './api.js';
 
 // 渲染分组下拉框
@@ -33,7 +33,7 @@ export function renderGroupSelect(data) {
 // 获取分组下拉框数据
 export async function fetchGroupSelectData() {
     try {
-        const groups = await getGroups();
+        const groups = await getWebsiteGroups();
         return { groups };
     } catch (error) {
         console.error('Failed to fetch group data:', error);

@@ -2,7 +2,7 @@
 // 常量配置
 
 const GROUP_DATA_FILE_PATH = `${__dirname}/../data/sites-data.json`;
-
+const DOCKER_GROUP_DATA_FILE_PATH = `${__dirname}/../data/docker-data.json`;
 const PORT = process.env.PORT || 3000;
 const backendUrl = process.env.BACKEND_URL || 'http://localhost';
 const WEBSITE_DATA_FILE_PATH = `${__dirname}/../data/sites-data.json`;
@@ -21,4 +21,5 @@ module.exports = {
     [HISTORY_DATA_FILE_PATH]: { websiteInfos: [] },
   },
   ICONS_DIR,
+  DOCKER_GROUP_DATA_FILE_PATH,
 };
