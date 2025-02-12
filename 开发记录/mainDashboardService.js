@@ -1,10 +1,10 @@
 // mainDashboardService.js
-import { showNotification } from './websiteDashboardService.js';
-import { getWebsiteGroups, getWebsites, getDockerGroups, getDockerContainers } from './api.js';
-import { setRandomGroupColors, resetGroupColors } from './utils.js';
-import { isRandomColorsEnabled } from './colorThemeService.js';
+import { showNotification } from '../frontend/modules/websiteDashboardService.js';
+import { getWebsiteGroups, getWebsites, getDockerGroups, getDockerContainers } from '../frontend/modules/api.js';
+import { setRandomGroupColors, resetGroupColors } from '../frontend/modules/utils.js';
+import { isRandomColorsEnabled } from '../frontend/modules/colorThemeService.js';
 
-import { backendUrl } from '../config.js';
+import { backendUrl } from '../frontend/config.js';
 
 
 /**
