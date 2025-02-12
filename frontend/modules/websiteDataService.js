@@ -1,5 +1,5 @@
 import { createWebsite, updateWebsite, deleteWebsite, batchMoveWebsites, moveToTrash, recordWebsiteClick } from './api.js';
-import { showNotification } from './dashboardDataService.js';
+import { showNotification } from './websiteDashboardService.js';
 import { validateAndCompleteUrl } from './utils.js';
 
 export class WebsiteSaveService {

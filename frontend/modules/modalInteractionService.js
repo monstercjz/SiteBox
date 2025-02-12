@@ -1,6 +1,6 @@
 // modalInteractionService.js
 import { GroupSaveService } from './groupDataService.js';
-import { renderDashboardWithData, showNotification } from './dashboardDataService.js';
+import { renderDashboardWithData, showNotification } from './websiteDashboardService.js';
 
 class ModalInteractionService {
   constructor() {

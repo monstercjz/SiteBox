@@ -1,8 +1,8 @@
 'use strict';
 
-import { showNotification, renderDashboardWithData } from './modules/dashboardDataService.js';
+import { showNotification, renderDashboardWithData } from './modules/websiteDashboardService.js';
 import * as dockerInteractionService from './modules/dockerInteractionService.js';
-import { renderDockerDashboardWithData } from './modules/dockerDashboardService.js';;
+import { renderDockerDashboardWithData } from './modules/dockerDashboardService.js';
 //import { WebsiteDataService } from './modules/websiteDataService.js';
 import { SearchService } from './modules/searchService.js';
 import { fetchAndRenderGroupSelect, renderGroupSelect } from './modules/groupSelectDataService.js';
@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // 获取分组选择下拉框元素
     const groupSelect = document.getElementById('groupSelect');
     // 获取仪表盘元素
-    const dashboard = document.getElementById('dashboard');
+    const websitedashboard = document.getElementById('websitedashboard');
     // 获取仪表盘元素
     const dockerdashboard = document.getElementById('dockerdashboard');
     // 获取数据导入按钮元素
@@ -50,9 +50,14 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     
     // 渲染仪表盘数据
-    await renderDashboardWithData();
+    // await renderDashboardWithData(); // Commenting out sequential calls
     // 渲染 Docker 容器仪表盘
-    await renderDockerDashboardWithData();
+    // await renderDockerDashboardWithData();
+
+    await Promise.all([ // Parallel rendering of dashboards
+        renderDashboardWithData(),
+        renderDockerDashboardWithData()
+    ]);
 
     // 初始化搜索功能
     const searchService = new SearchService();
@@ -69,7 +74,7 @@ document.addEventListener('DOMContentLoaded', async () => {
      * 使用事件委托，监听仪表盘容器的点击事件
      * @param {Event} e - 点击事件对象
      */
-    dashboard.addEventListener('click', async (e) => {
+    websitedashboard.addEventListener('click', async (e) => {
         const target = e.target.closest('.website-item');
         if (target) {
             const link = target.querySelector('a');
@@ -94,7 +99,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     // 添加鼠标悬停事件监听器
-    dashboard.addEventListener('mouseover', (e) => {
+    websitedashboard.addEventListener('mouseover', (e) => {
         const target = e.target.closest('.website-item');
         if (target) {
             // 显示网站详细信息tooltip

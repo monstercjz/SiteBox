@@ -1,64 +1,110 @@
-// frontend/modules/dockerDashboardService.js
-
-import * as dockerDataService from './dockerDataService.js';
-import * as dockerInteractionService from './dockerInteractionService.js';
+import { showNotification } from './websiteDashboardService.js';
+import {
+    fetchDataFromApi,
+    getDockerContainers,
+    getDockerGroups,
+    getDockerContainerById,
+    getDockerGroupById,
+    getDockerGroupById as getDockerGroupsByGroupId, // 注意这里可能需要根据实际情况调整
+    createDockerGroup,
+    updateDockerGroup,
+    deleteDockerGroup,
+    reorderDockerGroups,
+} from './api.js';
 import { backendUrl } from '../config.js';
+import { setRandomGroupColors, resetGroupColors } from './utils.js';
+import { isRandomColorsEnabled } from './colorThemeService.js';
 
-// 渲染 Docker 容器仪表盘
-export async function renderDockerDashboard() {
-    console.log('renderDockerDashboard called');
-    const dashboard = document.getElementById('dashboard');
-    const dockerDashboardElement = document.createElement('div');
-    dockerDashboardElement.id = 'docker-dashboard';
-    dashboard.appendChild(dockerDashboardElement);
+/**
+ * Render Docker dockerdashboard
+ * @param {object} data - Data containing docker containers and groups
+ * @param {Array} data.containers - Docker containers list
+ * @param {Array} data.groups - Docker groups list
+ */
+function renderDockerDashboard({ containers, groups }) {
+    const dockerdashboard = document.getElementById('dockerdashboard');
+    dockerdashboard.innerHTML = '';
+    const fragment = document.createDocumentFragment();
 
-    // 1. 调用 dockerDataService.js 获取 Docker 容器列表
-    const dockerContainers = await dockerDataService.getDockerContainers(); // TODO: 实现 getDockerContainers 函数
+    const orderedGroups = (groups || []).sort((a, b) => a.order - b.order);
 
-    // 2. 渲染 Docker 容器列表到页面
-    if (dockerContainers && dockerContainers.length > 0) {
-        dockerDashboardElement.innerHTML = ''; // 清空现有内容
-        const dockerListElement = document.createElement('ul');
-        dockerListElement.className = 'docker-list'; // 添加 Docker 容器列表样式
-        dockerContainers.forEach(container => {
-            const dockerItemElement = createDockerItemElement(container);
-            dockerListElement.appendChild(dockerItemElement);
+    orderedGroups.forEach(group => {
+        const groupDiv = document.createElement('div');
+        groupDiv.classList.add('docker-group'); // Use docker-group class
+        groupDiv.setAttribute('draggable', true);
+        groupDiv.id = `docker-group-${group.id}`; // Use docker-group prefix for IDs
+        groupDiv.innerHTML = `
+            <h2>
+                ${group?.name}
+                <input type="text" id="editDockerGroupName-${group.id}" style="display:none;" placeholder="New Group Name">
+                <button onclick="saveDockerGroup(${group.id})" style="display:none;">Save</button>
+            </h2>
+            <div class="docker-list" id="docker-list-${group.id}"></div>
+        `;
+        const dockerList = groupDiv.querySelector(`#docker-list-${group.id}`);
+        containers?.filter(container => container.groupId === group.id).forEach(container => {
+            const dockerItem = document.createElement('div');
+            dockerItem.classList.add('docker-item');
+            dockerItem.setAttribute('data-description', container.description);
+            dockerItem.setAttribute('data-docker-id', container.id);
+            dockerItem.setAttribute('data-group-id', container.groupId);
+            dockerItem.innerHTML = `
+                <i class="icon docker-icon"></i> 
+                <span class="docker-name">${container.name}</span> 
+                <span class="docker-status">${container.status}</span>  
+            `;
+            dockerList.appendChild(dockerItem);
         });
-        dockerDashboardElement.appendChild(dockerListElement);
-    } else {
-        dockerDashboardElement.innerHTML = '<p>没有 Docker 容器信息</p>'; // 显示没有 Docker 容器的提示信息
+        fragment.appendChild(groupDiv);
+    });
+    dockerdashboard.appendChild(fragment);
+}
+
+/**
+ * Fetch dockerdashboard data for Docker
+ * @returns {Promise<object|null>} - Data object with docker containers and groups, or null on failure
+ */
+async function fetchDockerDashboardData() {
+    try {
+        const [groups, containers] = await Promise.all([
+            getDockerGroups(),
+            getDockerContainers()
+        ]);
+        if (!Array.isArray(groups)) {
+            console.error('Docker Groups data is not an array:', groups);
+            return { groups: [], containers: [] };
+        }
+        
+        if (!Array.isArray(containers)) {
+            console.error('Docker containers data is not an array:', containers);
+            return { groups, containers: [] };
+        }
+        return { containers, groups };
+    } catch (error) {
+        console.error('Failed to fetch dockerdashboard data:', error);
+        showNotification('Docker 数据加载失败，请重试', 'error');
+        return null;
     }
 }
 
-// 创建单个 Docker 容器项的 HTML 元素
-function createDockerItemElement(container) {
-    const dockerItemElement = document.createElement('li');
-    dockerItemElement.className = 'docker-item'; // 添加 Docker 容器项样式
-    dockerItemElement.innerHTML = `
-        <div class="docker-item-content">
-            <h3 class="docker-container-name">${container.containerName}</h3>
-            <p class="docker-access-info">访问地址: ${container.accessIp}:${container.accessPort}</p>
-            <p class="docker-api-info">API 地址: ${container.dockerApiAddress}:${container.dockerApiPort}</p>
-        </div>
-        <div class="docker-item-actions">
-            <button class="edit-docker-button" data-container-id="${container.id}">编辑</button>
-            <button class="delete-docker-button" data-container-id="${container.id}">删除</button>
-        </div>
-    `;
-
-    // 添加编辑按钮事件监听器
-    const editButton = dockerItemElement.querySelector('.edit-docker-button');
-    editButton.addEventListener('click', () => {
-        const containerId = editButton.dataset.containerId;
-        dockerInteractionService.editDockerContainer(containerId); // TODO: 实现 editDockerContainer 函数
-    });
-
-    // 添加删除按钮事件监听器
-    const deleteButton = dockerItemElement.querySelector('.delete-docker-button');
-    deleteButton.addEventListener('click', () => {
-        const containerId = deleteButton.dataset.containerId;
-        dockerInteractionService.deleteDockerContainer(containerId); // TODO: 实现 deleteDockerContainer 函数
-    });
-
-    return dockerItemElement;
+/**
+ * Render Docker dockerdashboard with data
+ */
+export async function renderDockerDashboardWithData() {
+    const dockerdashboard = document.getElementById('dockerdashboard');
+    dockerdashboard.classList.add('loading');
+    try {
+        const data = await fetchDockerDashboardData();
+        if (data) {
+            renderDockerDashboard(data);
+            showNotification('Docker 数据加载成功', 'success');
+        }
+    } finally {
+        dockerdashboard.classList.remove('loading');
+        if (isRandomColorsEnabled()) {
+            // setRandomGroupColors(); // Consider if group colors are relevant for docker
+        } else {
+            // resetGroupColors(); // Consider if group colors are relevant for docker
+        }
+    }
 }

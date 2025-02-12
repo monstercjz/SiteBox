@@ -30,3 +30,27 @@
   justify-content: space-between;
   align-items: center;
 }
+.docker-group {
+  margin-bottom: var(--spacing-stack-xl); /* 设置下外边距 */
+}
+
+/* 分组标题 */
+.docker-group h2 {
+  margin-bottom: var(--spacing-stack-md); /* 设置下外边距 */
+  padding-bottom: var(--spacing-stack-xxs); /* 设置下内边距 */
+}
+[data-layout="alternative"] .docker-group {
+  padding: var(--spacing-inset-md);
+  position: relative;
+  overflow: hidden;
+  margin: var(--spacing-stack-xxs);
+  /* will-change: transform, opacity; */
+  /* text-rendering: optimizeLegibility; */
+}
+[data-layout="alternative"] .docker-group h2 {
+  margin: 0 0 var(--spacing-stack-md) 0;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

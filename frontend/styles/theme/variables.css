@@ -47,7 +47,7 @@
   /* 作用：定义容器和组件尺寸，采用 rem 和 px 混合单位，兼顾灵活性和精确性。 */
   /* 依赖：基准单位，基准字体大小 */
   /* 容器尺寸 (rem + px混合) */
-  --size-dashboard-max-width: 80rem; /* 1280px */
+  --size-websitedashboard-max-width: 80rem; /* 1280px */
   --size-websitelist-max-width: 80rem; /* 1280px */
   --size-contextmenu-min-width: 12rem; /* Context menu width - 上下文菜单宽度 */
   --size-websitetooltip-min-width: 15rem; /* Website tooltip width - 网站工具提示宽度 */

@@ -56,7 +56,7 @@
 
 
 /* Import Layout styles - 引入布局模块样式 */
-@import 'layout/dashboard.css';
+@import 'layout/websitedashboard.css';
 @import 'layout/website-list.css'; /* Import Website List layout module - 引入网站列表布局模块 */
 @import 'layout/action-buttons.css';
 @import 'layout/toggle-actions.css';

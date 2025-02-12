@@ -1,18 +1,18 @@
-import { createWebsiteGroup, updateWebsiteGroup, deleteWebsiteGroup ,getWebsitesByGroupId, moveToTrash} from './api.js';
-import { showNotification } from './dashboardDataService.js';
+import { createWebsiteGroup, updateWebsiteGroup, deleteWebsiteGroup ,getWebsitesByGroupId, moveToTrash, createDockerGroup, updateDockerGroup} from './api.js';
+import { showNotification } from './websiteDashboardService.js';
 
 export class GroupSaveService {
   // 保存分组
-  async saveGroup(groupId, groupData) {
+  async saveGroup(groupId, groupData, groupType) {
     try {
       if (groupId) {
         // 更新分组
-        const updatedGroup = await updateWebsiteGroup(groupId, groupData);
+        const updatedGroup = await (groupType === 'docker' ? updateDockerGroup(groupId, groupData) : updateWebsiteGroup(groupId, groupData));
         showNotification('分组更新成功', 'success');
         return updatedGroup;
       } else {
         // 创建分组
-        const newGroup = await createWebsiteGroup(groupData);
+        const newGroup = await (groupType === 'docker' ? createDockerGroup(groupData) : createWebsiteGroup(groupData));
         showNotification('分组创建成功', 'success');
         return newGroup;
       }

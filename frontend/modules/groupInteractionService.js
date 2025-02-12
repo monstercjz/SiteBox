@@ -1,4 +1,4 @@
-import { renderDashboardWithData, showNotification } from './dashboardDataService.js';
+import { renderDashboardWithData, showNotification } from './websiteDashboardService.js';
 import { hideContextMenu } from './contextMenu.js';
 import { confirmGroupDelete } from './groupDeleteService.js';
 import { GroupOperationService } from './groupOperationService.js';
@@ -12,12 +12,13 @@ export async function addGroup() {
     try {
         await groupOperationService.openGroupModal({
             mode: 'add',
-            callback: async ({ newGroupName }) => {
+            groupType: 'website', // 默认网站分组
+            callback: async ({ newGroupName, groupType }) => { // 接收 groupType
                 const groupSaveService = new GroupSaveService();
-                const result = await groupSaveService.saveGroup(null, {
+                const result = await groupSaveService.saveGroup(null, { // 传递 groupType
                     name: newGroupName,
                     isCollapsible: false
-                });
+                }, groupType);
                 if (result) {
                     renderDashboardWithData();
                 }
@@ -30,16 +31,17 @@ export async function addGroup() {
 }
 
 // 编辑分组
-export async function editGroup(groupId) {
+export async function editGroup(groupId, groupType) {
     try {
         await groupOperationService.openGroupModal({
             groupId,
             mode: 'edit',
-            callback: async ({ newGroupName }) => {
+            groupType: groupType, // 使用传递的 groupType
+            callback: async ({ newGroupName, groupType }) => { // 接收 groupType
                 const result = await groupSaveService.saveGroup(groupId, {
                     name: newGroupName,
                     isCollapsible: false
-                });
+                }, groupType); // 传递 groupType
                 if (result) {
                     const groupDiv = document.querySelector(`#group-${groupId}`);
                     if (groupDiv) {
@@ -57,7 +59,7 @@ export async function editGroup(groupId) {
 }
 
 // 删除分组
-export async function deleteGroup(groupId) {
+export async function deleteGroup(groupId, groupType) {
     try {
         // 获取删除选项
         const deleteOption = await confirmGroupDelete({

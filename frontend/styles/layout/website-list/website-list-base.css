@@ -19,3 +19,18 @@
   /* width: 100%; */
   box-sizing: border-box;
 }
+.docker-list {
+  display: grid; /* 使用 grid 布局 */
+  grid-template-columns: repeat(auto-fill, minmax(var(--size-website-item-min-width), 1fr)); /* 设置网格列，响应式 auto-fill 和 minmax */
+  padding: var(--spacing-inset-xxs); /* 设置内边距 */
+  gap: var(--spacing-inline-xl); /* 设置网格项之间的间距 */
+  margin-top: var(--spacing-stack-md); /* 设置上外边距 */
+}
+[data-layout="alternative"] .docker-list {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(10px, 1fr));
+  padding: var(--spacing-inset-xxs);
+  gap: var(--spacing-inline-lg);  
+  /* width: 100%; */
+  box-sizing: border-box;
+}

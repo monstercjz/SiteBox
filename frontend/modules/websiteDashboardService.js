@@ -57,8 +57,8 @@ export function showNotification(message, type = 'info') {
  * @param {Array} data.groups - 分组列表
  */
 function renderDashboard({ websites, groups }) {
-    const dashboard = document.getElementById('dashboard');
-    dashboard.innerHTML = '';
+    const websitedashboard = document.getElementById('websitedashboard');
+    websitedashboard.innerHTML = '';
     const fragment = document.createDocumentFragment();
     
     const orderedGroups = (groups || []).sort((a, b) => a.order - b.order);
@@ -96,7 +96,7 @@ function renderDashboard({ websites, groups }) {
         });
         fragment.appendChild(groupDiv);
     });
-    dashboard.appendChild(fragment);
+    websitedashboard.appendChild(fragment);
 }
 
 /**
@@ -119,7 +119,7 @@ async function fetchDashboardData() {
         }
         return { websites, groups };
     } catch (error) {
-        console.error('Failed to fetch dashboard data:', error);
+        console.error('Failed to fetch websitedashboard data:', error);
         showNotification('数据加载失败，请重试', 'error');
         return null;
     }
@@ -129,7 +129,7 @@ async function fetchDashboardData() {
  * 渲染仪表盘数据
  */
 export async function renderDashboardWithData() {
-     dashboard.classList.add('loading');
+     websitedashboard.classList.add('loading');
     try {
         const data = await fetchDashboardData();
         if (data) {
@@ -137,7 +137,7 @@ export async function renderDashboardWithData() {
             showNotification('数据加载成功', 'success');
         }
     } finally {
-         dashboard.classList.remove('loading');
+         websitedashboard.classList.remove('loading');
          // 根据用户偏好设置应用或重置颜色
          if (isRandomColorsEnabled()) {
              setRandomGroupColors();

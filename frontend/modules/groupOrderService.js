@@ -1,23 +1,23 @@
-import { renderDashboardWithData, showNotification } from './dashboardDataService.js';
+import { renderDashboardWithData, showNotification } from './websiteDashboardService.js';
 import { reorderWebsiteGroups } from './api.js';
 
-let dashboard;
+let websitedashboard;
 let saveTimeout;
 
 // 初始化拖拽排序功能
 function initGroupOrderService() {
     // 获取dashboard元素并验证其存在性
-    dashboard = document.getElementById('dashboard');
-    if (!dashboard) {
-        console.error('Dashboard element not found');
+    websitedashboard = document.getElementById('websitedashboard');
+    if (!websitedashboard) {
+        console.error('websitedashboard element not found');
         return;
     }
 
     // 绑定事件监听器
-    dashboard.addEventListener('dragstart', handleDragStart);
-    dashboard.addEventListener('dragover', handleDragOver);
-    dashboard.addEventListener('dragleave', handleDragLeave);
-    dashboard.addEventListener('drop', handleDrop);
+    websitedashboard.addEventListener('dragstart', handleDragStart);
+    websitedashboard.addEventListener('dragover', handleDragOver);
+    websitedashboard.addEventListener('dragleave', handleDragLeave);
+    websitedashboard.addEventListener('drop', handleDrop);
 }
 
 // 添加防抖的saveGroupOrder函数
@@ -74,13 +74,13 @@ function handleDrop(e) {
         return;
     }
 
-    const draggedIndex = Array.from(dashboard.children).indexOf(draggedGroup);
-    const targetIndex = Array.from(dashboard.children).indexOf(targetGroup);
+    const draggedIndex = Array.from(websitedashboard.children).indexOf(draggedGroup);
+    const targetIndex = Array.from(websitedashboard.children).indexOf(targetGroup);
     
     if (draggedIndex < targetIndex) {
-        dashboard.insertBefore(draggedGroup, targetGroup.nextSibling);
+        websitedashboard.insertBefore(draggedGroup, targetGroup.nextSibling);
     } else {
-        dashboard.insertBefore(draggedGroup, targetGroup);
+        websitedashboard.insertBefore(draggedGroup, targetGroup);
     }
     
     debouncedSaveGroupOrder();
@@ -88,13 +88,13 @@ function handleDrop(e) {
 
 // 保存分组顺序
 async function saveGroupOrder() {
-    if (!dashboard) {
-        console.error('Dashboard element not found');
+    if (!websitedashboard) {
+        console.error('websitedashboard element not found');
         return;
     }
 
     // 显示loading状态
-    dashboard.classList.add('loading');
+    websitedashboard.classList.add('loading');
 
     try {
         // 获取所有group元素的id，去掉"group-"前缀得到完整UUID
@@ -120,7 +120,7 @@ async function saveGroupOrder() {
         showNotification('保存分组顺序失败: ' + error.message, 'error');
     } finally {
         // 移除loading状态
-        dashboard.classList.remove('loading');
+        websitedashboard.classList.remove('loading');
     }
 }
 

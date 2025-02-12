@@ -67,10 +67,10 @@ function showWebsiteContextMenu(e, groupId, websiteId) {
     });
 }
 
-const dashboard = document.getElementById('dashboard');
+const websitedashboard = document.getElementById('websitedashboard');
 
 // 右键菜单事件监听器
-dashboard.addEventListener('contextmenu', function (e) {
+websitedashboard.addEventListener('contextmenu', function (e) {
     const target = e.target;
     hideContextMenu();
     
