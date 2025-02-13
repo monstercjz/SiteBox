@@ -17,12 +17,6 @@
       "name": "收集备用",
       "order": 3,
       "isCollapsible": false
-    },
-    {
-      "id": "3bfc1b95-efbf-418d-aa08-1d8da58f1116",
-      "name": "12",
-      "order": 70,
-      "isCollapsible": false
     }
   ],
   "websites": [
@@ -58,19 +52,8 @@
       "lastAccessTime": "2025-01-22T17:46:05.811Z",
       "order": 6,
       "isAccessible": true
-    },
-    {
-      "id": "7cf44072-0a0d-489d-a95d-25078ad96ff2",
-      "groupId": "3c666808-af92-454e-a9ff-8c880fef369e",
-      "name": "扩展",
-      "url": "edge://extensions/",
-      "description": "",
-      "faviconUrl": "https://www.google.com/s2/favicons?sz=64&domain_url=extensions",
-      "lastAccessTime": "2025-02-02T16:48:20.122Z",
-      "order": 1,
-      "isAccessible": true
     }
   ],
-  "nextGroupId": 71,
+  "nextGroupId": 72,
   "nextWebsiteId": 7
 }

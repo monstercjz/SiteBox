@@ -65,13 +65,13 @@ function renderDashboard({ websites, groups }) {
 
     orderedGroups.forEach(group => {
         const groupDiv = document.createElement('div');
-        groupDiv.classList.add('group');
+        groupDiv.classList.add('website-group');
         groupDiv.setAttribute('draggable', true);
-        groupDiv.id = `group-${group.id}`;
+        groupDiv.id = `website-group-${group.id}`;
         groupDiv.innerHTML = `
             <h2>
                 ${group?.name}
-                <input type="text" id="editGroupName-${group.id}" style="display:none;" placeholder="New Group Name">
+                <input type="text" id="editWebsiteGroupName-${group.id}" style="display:none;" placeholder="New website-group Name">
                 <button onclick="saveGroup(${group.id})" style="display:none;">保存</button>
             </h2>
             <div class="website-list" id="website-list-${group.id}"></div>
@@ -82,7 +82,7 @@ function renderDashboard({ websites, groups }) {
             websiteItem.classList.add('website-item');
             websiteItem.setAttribute('data-description', website.description);
             websiteItem.setAttribute('data-website-id', website.id);
-            websiteItem.setAttribute('data-group-id', website.groupId);
+            websiteItem.setAttribute('data-website-group-id', website.groupId);
             // style="width: 20px; height: 20px; margin-right: 3px;"移除img内联样式，改用css样式
             // ${website.faviconUrl ? `<img src="${backendUrl}${website.faviconUrl}" title="${website.name}" style="margin-right: 3px;">` : ''}
             websiteItem.innerHTML = `
@@ -128,7 +128,7 @@ async function fetchDashboardData() {
 /**
  * 渲染仪表盘数据
  */
-export async function renderDashboardWithData() {
+export async function renderWebsiteDashboardWithData() {
      websitedashboard.classList.add('loading');
     try {
         const data = await fetchDashboardData();

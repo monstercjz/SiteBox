@@ -4,7 +4,7 @@
    依赖：state/animations.css
   例如分组展开/折叠时的动画效果，目前暂无动画样式。
 */
-[data-layout="alternative"] .group {
+[data-layout="alternative"] .website-group {
 
   transition: var(--transition);
   transform-origin: center;

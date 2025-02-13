@@ -22,3 +22,36 @@
 ### 其他要求
 1. 请勿改变当前其他功能模块的代码，当前项目各项功能均正常
 2. 新增代码，应该也具有完整的标准注释
+## apitest
+```bash
+$ curl -X POST -H "Content-Type: application/json" -d '{
+>   "groupId": "a9962f72-4460-4504-b1b9-c50b5e050aad",
+>   "dockerData": {
+>     "name": "test-docker",
+>     "url": "http://test-docker.com",
+>     "urlPort": 8080,
+>     "description": "测试 Docker 记录",
+>     "server": "192.168.3.245",
+>     "serverPort": 2375
+>   }
+> }' http://localhost:3000/api/docker/docker
+{"success":true,"data":{"id":"c8f2f355-2724-4bd5-bf13-7c65b20082b8","groupId":"a9962f72-4460-4504-b1b9-c50b5e050aad","name":"test-docker","url":"http://test-docker.com","urlPort":8080,"description":"���� Docker ��¼","server":"192.168.3.245","serverPort":2375,"faviconUrl":"/data/icons/Docker.png.ico","createdAt":"2025-02-12T19:51:37.022Z","updatedAt":"2025-02-12T19:51:37.022Z"}}
+```
+```bash
+$ curl -X PUT -H "Content-Type: application/json" -d '{
+>   "dockerData": {
+>     "name": "updated-docker-name",
+>     "url": "http://updated-docker.com",
+>     "urlPort": 8081,
+>     "description": "更新后的 Docker 记录描述",
+>     "server": "192.168.3.245",
+>     "serverPort": 2375
+>   }
+> }' http://localhost:3000/api/docker/docker/c8f2f355-2724-4bd5-bf13-7c65b20082b8
+{"success":true,"data":{"id":"c8f2f355-2724-4bd5-bf13-7c65b20082b8","groupId":"a9962f72-4460-4504-b1b9-c50b5e050aad","name":"updated-docker-name","url":"http://updated-docker.com","urlPort":8081,"description":"���º�� Docker ��¼����","server":"192.168.3.245","serverPort":2375,"faviconUrl":"/data/icons/Docker.png.ico","createdAt":"2025-02-12T19:51:37.022Z","updatedAt":"2025-02-12T19:53:51.333Z"}}
+```
+```bash
+$ curl -X DELETE http://localhost:3000/api/docker/docker/c8f2f355-2724-4bd5-bf13-7c65b20082b8
+{"success":true,"data":{"deleted":1,"message":"Docker 记录已删除"}}
+```
+

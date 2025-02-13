@@ -1,4 +1,5 @@
-import { renderDashboardWithData, showNotification } from './websiteDashboardService.js';
+import { showNotification } from './websiteDashboardService.js';
+import { renderDashboardWithData} from './mainDashboardService.js';
 import { reorderWebsiteGroups } from './api.js';
 
 let websitedashboard;
@@ -28,7 +29,7 @@ function debouncedSaveGroupOrder() {
 
 // 处理dragstart事件
 function handleDragStart(e) {
-    const group = e.target.closest('.group');
+    const group = e.target.closest('.website-group');
     if (!group) {
         e.preventDefault();
         return;
@@ -41,7 +42,7 @@ function handleDragStart(e) {
 function handleDragOver(e) {
     e.preventDefault();
     // 添加视觉反馈
-    const targetGroup = e.target.closest('.group');
+    const targetGroup = e.target.closest('.website-group');
     if (targetGroup) {
         targetGroup.classList.add('drag-over');
     }
@@ -49,7 +50,7 @@ function handleDragOver(e) {
 
 // 处理dragleave事件
 function handleDragLeave(e) {
-    const targetGroup = e.target.closest('.group');
+    const targetGroup = e.target.closest('.website-group');
     if (targetGroup) {
         targetGroup.classList.remove('drag-over');
     }
@@ -60,7 +61,7 @@ function handleDrop(e) {
     e.preventDefault();
     
     // 移除视觉反馈
-    const targetGroup = e.target.closest('.group');
+    const targetGroup = e.target.closest('.website-group');
     if (targetGroup) {
         targetGroup.classList.remove('drag-over');
     }
@@ -98,7 +99,7 @@ async function saveGroupOrder() {
 
     try {
         // 获取所有group元素的id，去掉"group-"前缀得到完整UUID
-        const groupIds = Array.from(document.querySelectorAll('.group'))
+        const groupIds = Array.from(document.querySelectorAll('.website-group'))
             .map(group => group.id.replace('group-', ''));
         
         // 根据当前顺序生成orderedGroups数组

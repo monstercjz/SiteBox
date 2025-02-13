@@ -74,9 +74,9 @@ websitedashboard.addEventListener('contextmenu', function (e) {
     const target = e.target;
     hideContextMenu();
     
-    if (target.closest('.group h2')) {
+    if (target.closest('.website-group h2')) {
         e.preventDefault();
-        const groupDiv = target.closest('.group');
+        const groupDiv = target.closest('.website-group');
         const groupId = getGroupId(groupDiv);
         console.log('右键监听到的groupId:', groupId);
         if (groupId) {
@@ -85,7 +85,7 @@ websitedashboard.addEventListener('contextmenu', function (e) {
     } else if (target.closest('.website-item')) {
         e.preventDefault();
         const websiteItem = target.closest('.website-item');
-        const groupDiv = websiteItem.closest('.group');
+        const groupDiv = websiteItem.closest('.website-group');
         const groupId = getGroupId(groupDiv);
         const websiteId = websiteItem.getAttribute('data-website-id');
         console.log('右键监听到的groupId:', groupId, '网站ID:', websiteId);
@@ -98,9 +98,9 @@ websitedashboard.addEventListener('contextmenu', function (e) {
 // 辅助函数：从 groupDiv 中提取 groupId
 function getGroupId(groupDiv) {
     return (
-        groupDiv.querySelector('h2')?.getAttribute('id')?.match(/editGroupName-([0-9a-fA-F-]+)/)?.[1] ||
-        groupDiv.querySelector('h2 input[id^="editGroupName-"]')?.getAttribute('id')?.match(/editGroupName-([0-9a-fA-F-]+)/)?.[1] ||
-        groupDiv.getAttribute('data-group-id')
+        groupDiv.querySelector('h2')?.getAttribute('id')?.match(/editWebsiteGroupName-([0-9a-fA-F-]+)/)?.[1] ||
+        groupDiv.querySelector('h2 input[id^="editWebsiteGroupName-"]')?.getAttribute('id')?.match(/editWebsiteGroupName-([0-9a-fA-F-]+)/)?.[1] ||
+        groupDiv.getAttribute('data-website-group-id')
     );
 }
 

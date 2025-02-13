@@ -1,8 +1,9 @@
 'use strict';
 
-import { showNotification, renderDashboardWithData } from './modules/websiteDashboardService.js';
+import { showNotification } from './modules/websiteDashboardService.js';
+import { renderDashboardWithData} from './modules/mainDashboardService.js';
 import * as dockerInteractionService from './modules/dockerInteractionService.js';
-import { renderDockerDashboardWithData } from './modules/dockerDashboardService.js';
+// import { renderDockerDashboardWithData } from './modules/dockerDashboardService.js';
 //import { WebsiteDataService } from './modules/websiteDataService.js';
 import { SearchService } from './modules/searchService.js';
 import { fetchAndRenderGroupSelect, renderGroupSelect } from './modules/groupSelectDataService.js';
@@ -56,7 +57,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     await Promise.all([ // Parallel rendering of dashboards
         renderDashboardWithData(),
-        renderDockerDashboardWithData()
+        // renderDockerDashboardWithData()
     ]);
 
     // 初始化搜索功能

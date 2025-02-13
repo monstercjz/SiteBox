@@ -1,4 +1,5 @@
-import { showNotification, renderDashboardWithData } from './websiteDashboardService.js';
+import { showNotification } from './websiteDashboardService.js';
+import { renderDashboardWithData} from './mainDashboardService.js';
 import { backendUrl } from '../config.js';
 
 /**

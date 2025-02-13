@@ -1,15 +1,8 @@
 import { showNotification } from './websiteDashboardService.js';
 import {
-    fetchDataFromApi,
-    getDockerContainers,
+    
+    getAllDockers,
     getDockerGroups,
-    getDockerContainerById,
-    getDockerGroupById,
-    getDockerGroupById as getDockerGroupsByGroupId, // 注意这里可能需要根据实际情况调整
-    createDockerGroup,
-    updateDockerGroup,
-    deleteDockerGroup,
-    reorderDockerGroups,
 } from './api.js';
 import { backendUrl } from '../config.js';
 import { setRandomGroupColors, resetGroupColors } from './utils.js';
@@ -17,11 +10,11 @@ import { isRandomColorsEnabled } from './colorThemeService.js';
 
 /**
  * Render Docker dockerdashboard
- * @param {object} data - Data containing docker containers and groups
- * @param {Array} data.containers - Docker containers list
+ * @param {object} data - Data containing docker dockers and groups
+ * @param {Array} data.dockers - Docker dockers list
  * @param {Array} data.groups - Docker groups list
  */
-function renderDockerDashboard({ containers, groups }) {
+function renderDockerDashboard({ dockers, groups }) {
     const dockerdashboard = document.getElementById('dockerdashboard');
     dockerdashboard.innerHTML = '';
     const fragment = document.createDocumentFragment();
@@ -42,16 +35,17 @@ function renderDockerDashboard({ containers, groups }) {
             <div class="docker-list" id="docker-list-${group.id}"></div>
         `;
         const dockerList = groupDiv.querySelector(`#docker-list-${group.id}`);
-        containers?.filter(container => container.groupId === group.id).forEach(container => {
+        dockers?.filter(docker => docker.groupId === group.id).forEach(docker => {
             const dockerItem = document.createElement('div');
             dockerItem.classList.add('docker-item');
-            dockerItem.setAttribute('data-description', container.description);
-            dockerItem.setAttribute('data-docker-id', container.id);
-            dockerItem.setAttribute('data-group-id', container.groupId);
+            dockerItem.setAttribute('data-description', docker.description);
+            dockerItem.setAttribute('data-docker-id', docker.id);
+            dockerItem.setAttribute('data-docker-group-id', docker.groupId);
+            // <span class="docker-status">${docker.status}</span>
             dockerItem.innerHTML = `
-                <i class="icon docker-icon"></i> 
-                <span class="docker-name">${container.name}</span> 
-                <span class="docker-status">${container.status}</span>  
+                <i class="icon docker-icon"></i>
+                <a href="#" class="docker-name">${docker.name}</a>
+                
             `;
             dockerList.appendChild(dockerItem);
         });
@@ -62,24 +56,24 @@ function renderDockerDashboard({ containers, groups }) {
 
 /**
  * Fetch dockerdashboard data for Docker
- * @returns {Promise<object|null>} - Data object with docker containers and groups, or null on failure
+ * @returns {Promise<object|null>} - Data object with docker dockers and groups, or null on failure
  */
 async function fetchDockerDashboardData() {
     try {
-        const [groups, containers] = await Promise.all([
+        const [groups, dockers] = await Promise.all([
             getDockerGroups(),
-            getDockerContainers()
+            getAllDockers()
         ]);
         if (!Array.isArray(groups)) {
             console.error('Docker Groups data is not an array:', groups);
-            return { groups: [], containers: [] };
+            return { groups: [], dockers: [] };
         }
         
-        if (!Array.isArray(containers)) {
-            console.error('Docker containers data is not an array:', containers);
-            return { groups, containers: [] };
+        if (!Array.isArray(dockers)) {
+            console.error('Docker dockers data is not an array:', dockers);
+            return { groups, dockers: [] };
         }
-        return { containers, groups };
+        return { dockers, groups };
     } catch (error) {
         console.error('Failed to fetch dockerdashboard data:', error);
         showNotification('Docker 数据加载失败，请重试', 'error');

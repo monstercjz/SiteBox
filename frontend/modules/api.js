@@ -5,7 +5,7 @@ import { backendUrl } from '../config.js';
  * @param {string} url - 请求 URL
  * @param {string} [method='GET'] - 请求方法
  * @param {object} [body=null] - 请求体
- * @returns {Promise<any>} - 返回 Promise，解析为 API 返回的数据
+ * @returns {Promise<any>}- 返回 Promise，解析为 API 返回的数据
  * @throws {Error} - 如果 API 请求失败
  */
 async function fetchDataFromApi(url, method = 'GET', body = null) {
@@ -32,7 +32,7 @@ async function fetchDataFromApi(url, method = 'GET', body = null) {
 
 /**
  * 获取所有网站
- * @returns {Promise<any>} - 返回 Promise，解析为网站列表
+ * @returns {Promise<any>}- 返回 Promise，解析为网站列表
  */
 async function getWebsites() {
   return fetchDataFromApi('/websites');
@@ -40,7 +40,7 @@ async function getWebsites() {
 
 /**
  * 获取所有网站分组
- * @returns {Promise<any>} - 返回 Promise，解析为网站分组列表
+ * @returns {Promise<any>}- 返回 Promise，解析为网站分组列表
  */
 async function getWebsiteGroups() {
   return fetchDataFromApi('/website-groups'); // 网站分组路由保持不变
@@ -48,7 +48,7 @@ async function getWebsiteGroups() {
 
 /**
  * 获取所有 Docker 容器分组
- * @returns {Promise<any>} - 返回 Promise，解析为 Docker 容器分组列表
+ * @returns {Promise<any>}- 返回 Promise，解析为 Docker 容器分组列表
  */
 async function getDockerGroups() {
   return fetchDataFromApi('/docker-groups'); // Docker 容器分组使用新路由
@@ -57,7 +57,7 @@ async function getDockerGroups() {
 /**
  * 获取单个网站
  * @param {string} websiteId - 网站 ID
- * @returns {Promise<any>} - 返回 Promise，解析为网站详情
+ * @returns {Promise<any>}- 返回 Promise，解析为网站详情
  */
 async function getWebsiteById(websiteId) {
   return fetchDataFromApi(`/websites/${websiteId}`);
@@ -66,7 +66,7 @@ async function getWebsiteById(websiteId) {
 /**
  * 获取单个网站分组
  * @param {string} groupId - 分组 ID
- * @returns {Promise<any>} - 返回 Promise，解析为网站分组详情
+ * @returns {Promise<any>}- 返回 Promise，解析为网站分组详情
  */
 async function getWebsiteGroupById(groupId) {
   return fetchDataFromApi(`/website-groups/${groupId}`); // 网站分组路由保持不变
@@ -75,7 +75,7 @@ async function getWebsiteGroupById(groupId) {
 /**
  * 获取单个 Docker 容器分组
  * @param {string} groupId - 分组 ID
- * @returns {Promise<any>} - 返回 Promise，解析为 Docker 容器分组详情
+ * @returns {Promise<any>}- 返回 Promise，解析为 Docker 容器分组详情
  */
 async function getDockerGroupById(groupId) {
   return fetchDataFromApi(`/docker-groups/${groupId}`); // Docker 容器分组使用新路由
@@ -84,7 +84,7 @@ async function getDockerGroupById(groupId) {
 /**
  * 获取某个分组下的所有网站
  * @param {string} groupId - 分组 ID
- * @returns {Promise<any>} - 返回 Promise，解析为网站列表
+ * @returns {Promise<any>}- 返回 Promise，解析为网站列表
  */
 async function getWebsitesByGroupId(groupId) {
   return fetchDataFromApi(`/websites/groups/${groupId}/websites`);
@@ -94,7 +94,7 @@ async function getWebsitesByGroupId(groupId) {
  * 创建网站
  * @param {string} groupId - 分组 ID
  * @param {object} websiteData - 网站数据
- * @returns {Promise<any>} - 返回 Promise，解析为新创建的网站
+ * @returns {Promise<any>}- 返回 Promise，解析为新创建的网站
  */
 async function createWebsite(groupId, websiteData) {
   return fetchDataFromApi(`/websites/groups/${groupId}/websites`, 'POST', websiteData);
@@ -103,7 +103,7 @@ async function createWebsite(groupId, websiteData) {
 /**
  * 创建网站分组
  * @param {object} groupData - 分组数据
- * @returns {Promise<any>} - 返回 Promise，解析为新创建的网站分组
+ * @returns {Promise<any>}- 返回 Promise，解析为新创建的网站分组
  */
 async function createWebsiteGroup(groupData) {
   return fetchDataFromApi('/website-groups', 'POST', groupData); // 网站分组路由保持不变
@@ -112,7 +112,7 @@ async function createWebsiteGroup(groupData) {
 /**
  * 创建 Docker 容器分组
  * @param {object} groupData - 分组数据
- * @returns {Promise<any>} - 返回 Promise，解析为新创建的 Docker 容器分组
+ * @returns {Promise<any>}- 返回 Promise，解析为新创建的 Docker 容器分组
  */
 async function createDockerGroup(groupData) {
   return fetchDataFromApi('/docker-groups', 'POST', groupData); // Docker 容器分组使用新路由
@@ -122,7 +122,7 @@ async function createDockerGroup(groupData) {
  * 更新网站
  * @param {string} websiteId - 网站 ID
  * @param {object} websiteData - 网站数据
- * @returns {Promise<any>} - 返回 Promise，解析为更新后的网站
+ * @returns {Promise<any>}- 返回 Promise，解析为更新后的网站
  */
 async function updateWebsite(websiteId, websiteData) {
   return fetchDataFromApi(`/websites/${websiteId}`, 'PUT', websiteData);
@@ -132,7 +132,7 @@ async function updateWebsite(websiteId, websiteData) {
  * 更新网站分组
  * @param {string} groupId - 分组 ID
  * @param {object} groupData - 分组数据
- * @returns {Promise<any>} - 返回 Promise，解析为更新后的网站分组
+ * @returns {Promise<any>}- 返回 Promise，解析为更新后的网站分组
  */
 async function updateWebsiteGroup(groupId, groupData) {
   return fetchDataFromApi(`/website-groups/${groupId}`, 'PUT', groupData); // 网站分组路由保持不变
@@ -142,7 +142,7 @@ async function updateWebsiteGroup(groupId, groupData) {
  * 更新 Docker 容器分组
  * @param {string} groupId - 分组 ID
  * @param {object} groupData - 分组数据
- * @returns {Promise<any>} - 返回 Promise，解析为更新后的 Docker 容器分组
+ * @returns {Promise<any>}- 返回 Promise，解析为更新后的 Docker 容器分组
  */
 async function updateDockerGroup(groupId, groupData) {
   return fetchDataFromApi(`/docker-groups/${groupId}`, 'PUT', groupData); // Docker 容器分组使用新路由
@@ -151,7 +151,7 @@ async function updateDockerGroup(groupId, groupData) {
 /**
  * 删除网站
  * @param {string} websiteId - 网站 ID
- * @returns {Promise<any>} - 返回 Promise，解析为删除结果
+ * @returns {Promise<any>}- 返回 Promise，解析为删除结果
  */
 async function deleteWebsite(websiteId) {
   return fetchDataFromApi(`/websites/${websiteId}`, 'DELETE');
@@ -160,7 +160,7 @@ async function deleteWebsite(websiteId) {
 /**
  * 删除网站分组
  * @param {string} groupId - 分组 ID
- * @returns {Promise<any>} - 返回 Promise，解析为删除结果
+ * @returns {Promise<any>}- 返回 Promise，解析为删除结果
  */
 async function deleteWebsiteGroup(groupId) {
   return fetchDataFromApi(`/website-groups/${groupId}`, 'DELETE'); // 网站分组路由保持不变
@@ -169,7 +169,7 @@ async function deleteWebsiteGroup(groupId) {
 /**
  * 删除 Docker 容器分组
  * @param {string} groupId - 分组 ID
- * @returns {Promise<any>} - 返回 Promise，解析为删除结果
+ * @returns {Promise<any>}- 返回 Promise，解析为删除结果
  */
 async function deleteDockerGroup(groupId) {
   return fetchDataFromApi(`/docker-groups/${groupId}`, 'DELETE'); // Docker 容器分组使用新路由
@@ -178,7 +178,7 @@ async function deleteDockerGroup(groupId) {
 /**
  * 批量删除网站
  * @param {string[]} websiteIds - 网站 ID 数组
- * @returns {Promise<any>} - 返回 Promise，解析为删除结果
+ * @returns {Promise<any>}- 返回 Promise，解析为删除结果
  */
 async function batchDeleteWebsites(websiteIds) {
   return fetchDataFromApi('/websites/batch', 'DELETE', { websiteIds });
@@ -188,7 +188,7 @@ async function batchDeleteWebsites(websiteIds) {
  * 批量移动网站
  * @param {string[]} websiteIds - 网站 ID 数组
  * @param {string} targetGroupId - 目标分组 ID
- * @returns {Promise<any>} - 返回 Promise，解析为移动结果
+ * @returns {Promise<any>}- 返回 Promise，解析为移动结果
  */
 async function batchMoveWebsites(websiteIds, targetGroupId) {
   return fetchDataFromApi('/websites/batch-move', 'PATCH', { websiteIds, targetGroupId });
@@ -197,7 +197,7 @@ async function batchMoveWebsites(websiteIds, targetGroupId) {
 /**
  * 重新排序网站分组
  * @param {object[]} groups - 分组数组，包含 id 和 order 属性
- * @returns {Promise<any>} - 返回 Promise，解析为排序结果
+ * @returns {Promise<any>}- 返回 Promise，解析为排序结果
  */
 async function reorderWebsiteGroups(groups) {
   return fetchDataFromApi('/website-groups/reorder', 'PATCH', groups); // 网站分组路由保持不变
@@ -206,7 +206,7 @@ async function reorderWebsiteGroups(groups) {
 /**
  * 重新排序 Docker 容器分组
  * @param {object[]} groups - 分组数组，包含 id 和 order 属性
- * @returns {Promise<any>} - 返回 Promise，解析为排序结果
+ * @returns {Promise<any>}- 返回 Promise，解析为排序结果
  */
 async function reorderDockerGroups(groups) {
   return fetchDataFromApi('/docker-groups/reorder', 'PATCH', groups); // Docker 容器分组使用新路由
@@ -215,7 +215,7 @@ async function reorderDockerGroups(groups) {
 /**
  * 移动网站到回收站
  * @param {string|string[]} websiteIds - 网站 ID 或网站 ID 数组
- * @returns {Promise<any>} - 返回 Promise，解析为移动结果
+ * @returns {Promise<any>}- 返回 Promise，解析为移动结果
  */
 async function moveToTrash(websiteIds) {
   return fetchDataFromApi('/sync/moveToTrash', 'POST', { websiteIds });
@@ -225,7 +225,7 @@ async function moveToTrash(websiteIds) {
  * 批量导入网站
  * @param {Array} websites - 网站数据数组
  * @param {string} groupId - 分组ID
- * @returns {Promise<any>} - 返回 Promise，解析为导入结果
+ * @returns {Promise<any>}- 返回 Promise，解析为导入结果
  */
 async function batchImportWebsites(websites, groupId) {
   return fetchDataFromApi('/websites/batchImportWebsites', 'POST', { websites, groupId });
@@ -234,61 +234,81 @@ async function batchImportWebsites(websites, groupId) {
 /**
  * 记录网站点击时间
  * @param {string} websiteId - 网站ID
- * @returns {Promise<any>} - 返回 Promise，解析为记录结果
+ * @returns {Promise<any>}- 返回 Promise，解析为记录结果
  */
 async function recordWebsiteClick(websiteId) {
   return fetchDataFromApi('/analytics/click', 'POST', { websiteId });
 }
 /**
- * 获取单个 Docker 容器
- * @param {string} containerId - 容器 ID
- * @returns {Promise<any>} - 返回 Promise，解析为 Docker 容器详情
+ * 获取所有 Docker 记录
+ * @returns {Promise<any>}- 返回 Promise，解析为 Docker 记录列表
  */
-async function getDockerContainerById(containerId) {
-    return fetchDataFromApi(`/docker/containers/${containerId}`);
-}
-/**
- * 添加 Docker 容器
- * @param {object} containerInfo - 容器信息
- * @returns {Promise<any>} - 返回 Promise，解析为 API 返回的数据
- */
-async function addDockerContainer(containerInfo) {
-    return fetchDataFromApi('/docker/containers', 'POST', containerInfo);
+async function getAllDockers() {
+  return fetchDataFromApi('/dockers');
 }
 
 /**
- * 修改 Docker 容器
- * @param {string} containerId - 容器 ID
- * @param {object} containerInfo - 容器信息
- * @returns {Promise<any>} - 返回 Promise，解析为 API 返回的数据
+ * 获取某个分组下的所有 Docker 记录
+ * @param {string} groupId - 分组 ID
+ * @returns {Promise<any>}- 返回 Promise，解析为 Docker 记录列表
  */
-async function editDockerContainer(containerId, containerInfo) {
-    return fetchDataFromApi(`/docker/containers/${containerId}`, 'PUT', containerInfo);
-}
-/**
- * 获取 Docker 容器列表
- * @returns {Promise<any>} - 返回 Promise，解析为 Docker 容器列表
- */
-async function getDockerContainers() {
-    return fetchDataFromApi('/docker/containers');
+async function getDockersByGroupId(groupId) {
+  return fetchDataFromApi(`/dockers/groups/${groupId}/dockers`);
 }
 
-  getDockerContainerById,
 /**
- * 删除 Docker 容器
- * @param {string} containerId - 容器 ID
- * @returns {Promise<any>} - 返回 Promise，解析为 API 返回的数据
+ * 创建 Docker 记录
+ * @param {string} groupId - 分组 ID
+ * @param {object} dockerData - Docker 记录数据
+ * @returns {Promise<any>}- 返回 Promise，解析为新创建的 Docker 记录
  */
-async function deleteDockerContainer(containerId) {
-    return fetchDataFromApi(`/docker/containers/${containerId}`, 'DELETE');
+async function createDocker(groupId, dockerData) {
+  return fetchDataFromApi(`/dockers/groups/${groupId}/dockers`, 'POST', dockerData);
 }
+
 /**
- * 删除 Docker 容器
- * @param {string} containerId - 容器 ID
- * @returns {Promise<any>} - 返回 Promise，解析为 API 返回的数据
+ * 获取单个 Docker 记录详情
+ * @param {string} dockerId - Docker 记录 ID
+ * @returns {Promise<any>}- 返回 Promise，解析为 Docker 记录详情
  */
-async function deleteDockerContainer(containerId) {
-    return fetchDataFromApi(`/docker/containers/${containerId}`, 'DELETE');
+async function getDockerById(dockerId) {
+  return fetchDataFromApi(`/dockers/${dockerId}`);
+}
+
+/**
+ * 更新 Docker 记录
+ * @param {string} dockerId - Docker 记录 ID
+ * @param {object} dockerData - Docker 记录数据
+ * @returns {Promise<any>}- 返回 Promise，解析为更新后的 Docker 记录
+ */
+async function updateDocker(dockerId, dockerData) {
+  return fetchDataFromApi(`/dockers/${dockerId}`, 'PUT', dockerData);
+}
+
+/**
+ * 删除 Docker 记录
+ * @param {string} dockerId - Docker 记录 ID
+ * @returns {Promise<any>}- 返回 Promise，解析为删除结果
+ */
+async function deleteDocker(dockerId) {
+  return fetchDataFromApi(`/dockers/${dockerId}`, 'DELETE');
+}
+
+/**
+ * 获取所有 Docker 容器实时信息
+ * @returns {Promise<any>}- 返回 Promise，解析为 Docker 容器实时信息列表
+ */
+async function getRealdockerinfo() {
+  return fetchDataFromApi('/dockers/realdockerinfo');
+}
+
+/**
+ * 获取单个 Docker 容器实时信息
+ * @param {string} dockerId - Docker 记录 ID
+ * @returns {Promise<any>}- 返回 Promise，解析为 Docker 容器实时信息详情
+ */
+async function getRealdockerinfobyId(dockerId) {
+  return fetchDataFromApi(`/dockers/realdockerinfo/${dockerId}`);
 }
 
 export {
@@ -305,20 +325,24 @@ export {
   deleteWebsite,
   deleteWebsiteGroup, // 删除网站分组 (原 deleteGroup)
   batchDeleteWebsites,
-  getDockerContainers,
   batchMoveWebsites,
   reorderWebsiteGroups, // 重新排序网站分组 (原 reorderGroups)
   moveToTrash,
   batchImportWebsites,
   recordWebsiteClick,
-  getDockerContainerById,
-  addDockerContainer,
-  editDockerContainer,
-  deleteDockerContainer,
   getDockerGroups, // 获取 Docker 容器分组 (新增)
   getDockerGroupById, // 获取 Docker 容器分组详情 (新增)
   createDockerGroup, // 创建 Docker 容器分组 (新增)
   updateDockerGroup, // 更新 Docker 容器分组 (新增)
   deleteDockerGroup, // 删除 Docker 容器分组 (新增)
-  reorderDockerGroups // 重新排序 Docker 容器分组 (新增)
+  reorderDockerGroups, // 重新排序 Docker 容器分组 (新增)
+  getAllDockers,
+  getDockersByGroupId,
+  createDocker,
+  getDockerById,
+  updateDocker,
+  deleteDocker,
+  getRealdockerinfo,
+  getRealdockerinfobyId,
+
 };

@@ -1,4 +1,5 @@
-import { renderDashboardWithData, showNotification } from './websiteDashboardService.js';
+import { showNotification } from './websiteDashboardService.js';
+import { renderDashboardWithData} from './mainDashboardService.js';
 import { hideContextMenu } from './contextMenu.js';
 import { confirmGroupDelete } from './groupDeleteService.js';
 import { GroupOperationService } from './groupOperationService.js';
@@ -43,11 +44,11 @@ export async function editGroup(groupId, groupType) {
                     isCollapsible: false
                 }, groupType); // 传递 groupType
                 if (result) {
-                    const groupDiv = document.querySelector(`#group-${groupId}`);
+                    const groupDiv = document.querySelector(`#website-group-${groupId}`);
                     if (groupDiv) {
                         groupDiv.querySelector('h2').textContent = newGroupName;
-                        groupDiv.setAttribute('data-group-id', groupId);
-                        groupDiv.id = `group-${groupId}`;
+                        groupDiv.setAttribute('data-website-group-id', groupId);
+                        groupDiv.id = `website-group-${groupId}`;
                     }
                 }
             }
@@ -77,7 +78,7 @@ export async function deleteGroup(groupId, groupType) {
         await groupSaveService.deleteGroup(groupId, deleteOption);
 
         // 更新UI
-        const groupElement = document.querySelector(`#group-${groupId}`);
+        const groupElement = document.querySelector(`#website-group-${groupId}`);
         if (groupElement) {
             groupElement.remove();
         }

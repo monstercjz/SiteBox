@@ -1,4 +1,5 @@
-import { renderDashboardWithData, showNotification } from './websiteDashboardService.js';
+import { showNotification } from './websiteDashboardService.js';
+import { renderDashboardWithData} from './mainDashboardService.js';
 import { WebsiteSaveService } from './websiteDataService.js';
 import { hideContextMenu } from './contextMenu.js';
 import { backendUrl } from '../config.js';

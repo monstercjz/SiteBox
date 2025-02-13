@@ -127,7 +127,7 @@ function setRandomGroupColors() {
     '#7e22ce'  // violet
   ];
   
-  const groupTitles = document.querySelectorAll('.group h2');
+  const groupTitles = document.querySelectorAll('.website-group h2');
   groupTitles.forEach(title => {
     const color = colors[Math.floor(Math.random() * colors.length)];
     title.style.setProperty('--group-title-random-color', color);
@@ -139,7 +139,7 @@ function setRandomGroupColors() {
  * @description 重置所有分组标题的颜色为默认值
  */
 function resetGroupColors() {
-  const groupTitles = document.querySelectorAll('.group h2');
+  const groupTitles = document.querySelectorAll('.website-group h2');
   groupTitles.forEach(title => {
     title.style.removeProperty('--group-title-random-color');
   });

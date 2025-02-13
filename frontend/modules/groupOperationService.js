@@ -130,7 +130,7 @@ export class GroupOperationService {
     if (!modal) return;
 
     modal.setAttribute('data-group-id', groupId);
-    const groupDiv = document.querySelector(`.group:has(h2 input[id^="editGroupName-${groupId}"])`);
+    const groupDiv = document.querySelector(`.website-group:has(h2 input[id^="editGroupName-${groupId}"])`);
     if (!groupDiv) return;
 
     const editInput = groupDiv.querySelector(`#editGroupName-${groupId}`);

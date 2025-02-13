@@ -37,7 +37,7 @@ const miscRoutes = require('./routes/miscRoutes');
 app.use('/api/misc', miscRoutes);
 // 添加 dockerRoutes
 const dockerRoutes = require('./routes/dockerRoutes');
-app.use('/api/docker', dockerRoutes);
+app.use('/api/dockers', dockerRoutes);
 
 app.get('/api/', (req, res) => {
   res.send('Backend service is running');

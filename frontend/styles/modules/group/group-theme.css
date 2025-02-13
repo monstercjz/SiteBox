@@ -5,18 +5,18 @@
   包括分组标题的字体大小、字体粗细、文字颜色、边框颜色等，使用 CSS 变量进行主题化配置。
 */
 /* 分组标题 */
-.group {
+.website-group {
   background: var(--background-body); /* 设置背景色 */
 
 }
-.group h2 {
+.website-group h2 {
   color: var(--group-title-random-color, var(--text-primary)); /* 设置文字颜色，优先使用 --group-title-random-color 变量， fallback 到 --text-primary */
   border-bottom: var(--border-width-xxs) solid var(--border-normal); /* 设置底部边框 */
   font-size: var(--font-size-heading-xs); /* 设置字体大小 */
   font-weight: var(--font-weight-semibold); /* 设置字体粗细 */
   /* border-bottom-color: var(--border-normal);  仅添加颜色部分 */
 }
-[data-layout="alternative"] .group {
+[data-layout="alternative"] .website-group {
   /* background: var(--glass-effect); */
   background: var(--background-body);
   border-radius: var(--radius-sm);
@@ -24,7 +24,7 @@
   border: var(--glass-border);
 
 }
-[data-layout="alternative"] .group h2 {
+[data-layout="alternative"] .website-group h2 {
   font-size: var(--font-size-heading-xs);
   color: var(--group-title-random-color, var(--text-primary));
   border-bottom: 1px solid transparent; /* 设置底部边框为透明 */

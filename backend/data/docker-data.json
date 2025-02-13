@@ -5,9 +5,29 @@
       "name": "dd",
       "order": 1,
       "isCollapsible": false
+    },
+    {
+      "id": "31fb1816-03d7-48b3-ac75-29e466c284b5",
+      "name": "33",
+      "order": 2,
+      "isCollapsible": false
     }
   ],
-  "dockerContainers": [],
-  "nextGroupId": 2,
+  "dockers": [
+    {
+      "id": "1da5ea47-81f8-4509-bb70-c15ac5ed6317",
+      "groupId": "a9962f72-4460-4504-b1b9-c50b5e050aad",
+      "name": "test-docker",
+      "url": "http://localhost",
+      "urlPort": 8080,
+      "description": "���� Docker ��¼",
+      "server": "localhost",
+      "serverPort": 2375,
+      "faviconUrl": "/data/icons/Docker.png.ico",
+      "createdAt": "2025-02-12T22:53:59.471Z",
+      "updatedAt": "2025-02-12T22:53:59.471Z"
+    }
+  ],
+  "nextGroupId": 3,
   "nextDockerContainerId": 1
 }
