@@ -5,7 +5,7 @@ import * as dockerDataService from './dockerDataService.js';
 import { showNotification } from './websiteDashboardService.js';
 
 // 处理添加 Docker 容器的逻辑
-export async function addDockerContainer() {
+export async function addDocker() {
     console.log('addDockerContainer called');
     // 1. 调用 dockerOperationService.js 创建模态框，获取用户输入
     dockerOperationService.openAddDockerModal({
@@ -30,7 +30,7 @@ export async function addDockerContainer() {
 
 // 处理修改 Docker 容器的逻辑
 // 编辑 Docker 容器
-export async function editDockerContainer(containerId) {
+export async function editDocker(containerId) {
     console.log('editDockerContainer called', containerId);
     // 1. 调用 dockerOperationService.js 创建编辑模态框，获取用户输入
     dockerOperationService.openEditDockerModal({
@@ -54,9 +54,18 @@ export async function editDockerContainer(containerId) {
     });
 }
 
-// 处理删除 Docker 容器的逻辑
-export async function deleteDockerContainer(containerId) {
-    console.log('deleteDockerContainer called', containerId);
-    // TODO: 实现删除 Docker 容器的逻辑
-}
 
+// 处理删除 Docker 容器的逻辑
+export async function deleteDocker(dockerId) { //  重命名为 deleteDocker
+    console.log('deleteDocker called', dockerId);
+    try {
+        // 调用 dockerDataService.deleteDocker 删除 Docker 容器
+        const result = await dockerDataService.deleteDocker(dockerId);
+        console.log('删除 Docker 容器成功', result);
+        // TODO: 成功删除容器后的处理，例如刷新仪表盘
+        showNotification('Docker 容器删除成功', 'success');
+    } catch (error) {
+        console.error('删除 Docker 容器失败', error);
+        showNotification('Docker 容器删除失败', 'error');
+    }
+}

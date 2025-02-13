@@ -69,10 +69,10 @@ function renderDashboard({ websites, groups }) {
         groupDiv.setAttribute('draggable', true);
         groupDiv.id = `website-group-${group.id}`;
         groupDiv.innerHTML = `
-            <h2>
+            <h2 id="websiteGroupTitle-${group.id}">
                 ${group?.name}
-                <input type="text" id="editWebsiteGroupName-${group.id}" style="display:none;" placeholder="New website-group Name">
-                <button onclick="saveGroup(${group.id})" style="display:none;">保存</button>
+                
+                
             </h2>
             <div class="website-list" id="website-list-${group.id}"></div>
         `;
@@ -82,7 +82,7 @@ function renderDashboard({ websites, groups }) {
             websiteItem.classList.add('website-item');
             websiteItem.setAttribute('data-description', website.description);
             websiteItem.setAttribute('data-website-id', website.id);
-            websiteItem.setAttribute('data-website-group-id', website.groupId);
+            websiteItem.setAttribute('data-group-id', website.groupId);
             // style="width: 20px; height: 20px; margin-right: 3px;"移除img内联样式，改用css样式
             // ${website.faviconUrl ? `<img src="${backendUrl}${website.faviconUrl}" title="${website.name}" style="margin-right: 3px;">` : ''}
             websiteItem.innerHTML = `

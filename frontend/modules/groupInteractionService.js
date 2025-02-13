@@ -13,7 +13,7 @@ export async function addGroup() {
     try {
         await groupOperationService.openGroupModal({
             mode: 'add',
-            groupType: 'website', // 默认网站分组
+            groupType: 'website-group', // 默认网站分组
             callback: async ({ newGroupName, groupType }) => { // 接收 groupType
                 const groupSaveService = new GroupSaveService();
                 const result = await groupSaveService.saveGroup(null, { // 传递 groupType
@@ -33,22 +33,31 @@ export async function addGroup() {
 
 // 编辑分组
 export async function editGroup(groupId, groupType) {
+    console.log('editGroup called', groupId, groupType);
     try {
         await groupOperationService.openGroupModal({
             groupId,
             mode: 'edit',
             groupType: groupType, // 使用传递的 groupType
             callback: async ({ newGroupName, groupType }) => { // 接收 groupType
+                console.log('newGrouptype:', groupType);
                 const result = await groupSaveService.saveGroup(groupId, {
                     name: newGroupName,
                     isCollapsible: false
                 }, groupType); // 传递 groupType
                 if (result) {
-                    const groupDiv = document.querySelector(`#website-group-${groupId}`);
+                    // const groupDiv = document.querySelector(`#website-group-${groupId}`);
+                    // if (groupDiv) {
+                    //     groupDiv.querySelector('h2').textContent = newGroupName;
+                    //     groupDiv.setAttribute('data-group-id', groupId);
+                    //     groupDiv.id = `website-group-${groupId}`;
+                    // }
+                    // groupInteractionService.js
+                    const groupDiv = document.querySelector(`#${groupType.replace('-group', '')}-group-${groupId}`);
                     if (groupDiv) {
                         groupDiv.querySelector('h2').textContent = newGroupName;
-                        groupDiv.setAttribute('data-website-group-id', groupId);
-                        groupDiv.id = `website-group-${groupId}`;
+                        groupDiv.setAttribute('data-group-id', groupId);
+                        groupDiv.id = `${groupType.replace('-group', '')}-group-${groupId}`;
                     }
                 }
             }
@@ -75,10 +84,10 @@ export async function deleteGroup(groupId, groupType) {
         if (!deleteOption) return;
 
         // 执行删除操作
-        await groupSaveService.deleteGroup(groupId, deleteOption);
+        await groupSaveService.deleteGroup(groupId, deleteOption, groupType);
 
         // 更新UI
-        const groupElement = document.querySelector(`#website-group-${groupId}`);
+        const groupElement = document.querySelector(`#${groupType.replace('-group', '')}-group-${groupId}`);
         if (groupElement) {
             groupElement.remove();
         }

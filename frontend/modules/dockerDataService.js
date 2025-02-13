@@ -3,7 +3,7 @@
 import * as api from './api.js';
 
 // 添加 Docker 容器
-export async function addDockerContainer(containerInfo) {
+export async function addDocker(containerInfo) { // 重命名为 addDocker
     try {
         const response = await api.addDockerContainer(containerInfo);
         return response;
@@ -13,16 +13,22 @@ export async function addDockerContainer(containerInfo) {
     }
 }
 
-// TODO: 实现修改 Docker 容器
-export async function editDockerContainer(containerId, containerInfo) {
-    console.log('editDockerContainer called', containerId, containerInfo);
+// 修改 Docker 容器
+export async function editDocker(containerId, containerInfo) { // 重命名为 editDocker
+    console.log('editDocker called', containerId, containerInfo);
     // TODO: 实现修改 Docker 容器
 }
 
-// TODO: 实现删除 Docker 容器
-export async function deleteDockerContainer(containerId) {
-    console.log('deleteDockerContainer called', containerId);
-    // TODO: 实现删除 Docker 容器
+//  实现删除 Docker 容器
+export async function deleteDocker(dockerId) { //  重命名为 deleteDocker
+    console.log('deleteDocker called', dockerId);
+    try {
+        const response = await api.deleteDocker(dockerId); // 调用 api.deleteDocker
+        return response;
+    } catch (error) {
+        console.error('调用后端 API 删除 Docker 容器失败', error);
+        throw error;
+    }
 }
 
 // 获取单个 Docker 容器

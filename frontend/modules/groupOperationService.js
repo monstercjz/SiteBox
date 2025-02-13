@@ -27,7 +27,7 @@ export class GroupOperationService {
    */
   async openGroupModal(options) {
     try {
-      const { groupId, mode, callback, groupType = 'website' } = options;
+      const { groupId, mode, callback, groupType = 'website-group' } = options;
       
       // 参数验证
       if (groupId && typeof groupId !== 'string') {
@@ -42,12 +42,13 @@ export class GroupOperationService {
       if (mode === 'add' && groupId) {
         throw new Error('groupId should be empty in add mode');
       }
-      if (!['website', 'docker'].includes(groupType)) {
+      if (!['website-group', 'docker-group'].includes(groupType)) {
         throw new Error('Invalid groupType');
       }
 
       this.currentGroupId = groupId;
       this.callback = callback;
+      this.groupType = groupType; // Store groupType
 
       // 创建并配置模态框
       await this.setupGroupModal(mode, groupId, groupType);
@@ -70,7 +71,7 @@ export class GroupOperationService {
     modalInteractionService.createModal(this.modalId, modalContent);
 
     if (mode === 'edit') {
-      this.setupEditGroupModalData(this.modalId, groupId);
+      this.setupEditGroupModalData(this.modalId, groupId,this.groupType); // 传递 groupType
     }
 
     modalInteractionService.openModal(this.modalId, {
@@ -78,9 +79,10 @@ export class GroupOperationService {
         try {
           console.log('Save button clicked');
           const newGroupName = modal.querySelector('#newGroupName').value;
-          const selectedGroupType = modal.querySelector('#groupTypeSelect').value; // 获取选择的分组类型
+          const groupTypeSelect = modal.querySelector('#groupTypeSelect').value; // 获取选择的分组类型
+          console.log('groupTypeSelect:', groupTypeSelect);
           if (this.callback) {
-            await this.callback({ newGroupName, groupType: selectedGroupType }); // 传递 groupType
+            await this.callback({ newGroupName, groupType: groupTypeSelect }); // 传递 groupType
           }
         } catch (error) {
           console.error('Failed to save group:', error);
@@ -109,13 +111,15 @@ export class GroupOperationService {
             <label for="newGroupName">分组名称:</label>
             <input type="text" id="newGroupName" placeholder="新分组名称">
         </div>
+        
         <div class="modal-input-group">
             <label for="groupTypeSelect">分组类型:</label>
-            <select id="groupTypeSelect">
-                <option value="website" ${groupType === 'website' ? 'selected' : ''}>网站分组</option>
-                <option value="docker" ${groupType === 'docker' ? 'selected' : ''}>Docker 分组</option>
+            <select id="groupTypeSelect" ${mode === 'edit' ? 'disabled' : ''}>
+                <option value="website-group" ${groupType === 'website-group' ? 'selected' : ''}>website 分组</option>
+                <option value="docker-group" ${groupType === 'docker-group' ? 'selected' : ''}>Docker 分组</option>
             </select>
         </div>
+        
         <div class="modal-buttons-container">
           <button class="save-modal-button" data-action="save" aria-label="保存">保存</button>
           <button class="cancel-modal-button" data-action="cancel" aria-label="取消">取消</button>
@@ -125,19 +129,27 @@ export class GroupOperationService {
   }
 
   // 设置编辑分组模态框数据
-  setupEditGroupModalData(modalId, groupId) {
+  setupEditGroupModalData(modalId, groupId, groupType) {
+    console.log('setupEditGroupModalData called', groupId, groupType);
     const modal = document.getElementById(modalId);
     if (!modal) return;
 
     modal.setAttribute('data-group-id', groupId);
-    const groupDiv = document.querySelector(`.website-group:has(h2 input[id^="editGroupName-${groupId}"])`);
+    // 根据 groupType 动态构建选择器
+  
+    const groupClass = groupType === 'website-group' ? 'website-group' : 'docker-group';
+    const groupDiv = document.querySelector(`.${groupClass}:has(h2[id^="${groupType.replace('-group', '')}GroupTitle-${groupId}"])`);
     if (!groupDiv) return;
 
-    const editInput = groupDiv.querySelector(`#editGroupName-${groupId}`);
+    const editInput = groupDiv.querySelector('h2');
+    console.log('editInput:', editInput);
     if (editInput) {
+      const newGroupName = editInput.textContent.trim();
       modalInteractionService.setModalData(modalId, { 
-        newGroupName: editInput.value || '' 
+        newGroupName: newGroupName || '',
+        groupTypeSelect: groupType  // Set groupType from stored value
       });
     }
+    
   }
 }

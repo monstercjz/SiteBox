@@ -27,10 +27,10 @@ function renderDockerDashboard({ dockers, groups }) {
         groupDiv.setAttribute('draggable', true);
         groupDiv.id = `docker-group-${group.id}`; // Use docker-group prefix for IDs
         groupDiv.innerHTML = `
-            <h2>
+            <h2 id="dockerGroupTitle-${group.id}">
                 ${group?.name}
-                <input type="text" id="editDockerGroupName-${group.id}" style="display:none;" placeholder="New Group Name">
-                <button onclick="saveDockerGroup(${group.id})" style="display:none;">Save</button>
+                
+                
             </h2>
             <div class="docker-list" id="docker-list-${group.id}"></div>
         `;
@@ -40,7 +40,7 @@ function renderDockerDashboard({ dockers, groups }) {
             dockerItem.classList.add('docker-item');
             dockerItem.setAttribute('data-description', docker.description);
             dockerItem.setAttribute('data-docker-id', docker.id);
-            dockerItem.setAttribute('data-docker-group-id', docker.groupId);
+            dockerItem.setAttribute('data-group-id', docker.groupId);
             // <span class="docker-status">${docker.status}</span>
             dockerItem.innerHTML = `
                 <i class="icon docker-icon"></i>

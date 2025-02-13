@@ -17,6 +17,12 @@
       "name": "收集备用",
       "order": 3,
       "isCollapsible": false
+    },
+    {
+      "id": "dc30d488-aee8-4236-b3b8-f01fa75ea768",
+      "name": "1",
+      "order": 72,
+      "isCollapsible": false
     }
   ],
   "websites": [
@@ -54,6 +60,6 @@
       "isAccessible": true
     }
   ],
-  "nextGroupId": 72,
+  "nextGroupId": 73,
   "nextWebsiteId": 7
 }
