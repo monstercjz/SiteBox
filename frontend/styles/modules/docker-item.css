@@ -1,0 +1,10 @@
+/* === Website Item Styles - 网站条目样式 === */
+/* 作用：组织和导入网站条目相关的子模块样式。 */
+/* 依赖： docker-item 子模块 */
+/* Website Item Styles - Main module - imports sub-modules */
+@import './docker-item/docker-item-base.css';
+@import './docker-item/docker-item-theme.css';
+@import './docker-item/docker-item-variants.css';
+@import './docker-item/docker-item-states.css';
+@import './docker-item/docker-item-animations.css';
+@import './docker-item/docker-item-responsive.css';

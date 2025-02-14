@@ -1,0 +1,12 @@
+/* Website Item Animations */
+.docker-item {
+  transition: all var(--transition-normal);
+}
+[data-layout="alternative"] .docker-item {
+  transition: var(--transition);
+  transform-origin: center;
+  animation: fadeInItem 0.3s ease-out;
+}
+[data-layout="alternative"] .docker-item a {
+  transition: var(--transition);
+}

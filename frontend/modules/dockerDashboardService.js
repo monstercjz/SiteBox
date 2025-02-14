@@ -46,7 +46,7 @@ function renderDockerDashboard({ dockers, groups }) {
             // <span class="docker-status">${docker.status}</span>
             dockerItem.innerHTML = `
                 
-                
+                ${docker.faviconUrl ? `<img src="${docker.faviconUrl.startsWith('http') ? docker.faviconUrl : backendUrl + docker.faviconUrl}" title="${docker.name}" style="margin-right: 3px;">` : ''}
                 <a href="${docker.url}" target="_blank">${docker.name}</a>
                 
             `;
