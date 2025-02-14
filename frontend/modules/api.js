@@ -308,7 +308,7 @@ async function getRealdockerinfo() {
  * @returns {Promise<any>}- 返回 Promise，解析为 Docker 容器实时信息详情
  */
 async function getRealdockerinfobyId(dockerId) {
-  return fetchDataFromApi(`/dockers/realdockerinfo/${dockerId}`);
+  return fetchDataFromApi(`/dockers/realdockerinfobyId/${dockerId}`);
 }
 
 export {

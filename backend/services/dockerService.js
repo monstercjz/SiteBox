@@ -99,6 +99,7 @@ const getRealdockerinfo = async () => {
  * @description 获取单个 Docker 容器实时状态
  */
 const getRealdockerinfobyId = async (containerId) => {
+  console.log('getRealdockerinfobyId', containerId);
   try {
     const container = docker.getContainer(containerId);
     const stats = await container.stats({ stream: false }); // 获取容器的实时统计信息

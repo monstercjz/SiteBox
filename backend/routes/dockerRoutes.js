@@ -21,6 +21,16 @@ router.get('/groups/:groupId/dockers', dockerController.getdockersByGroupId);
  */
 router.post('/groups/:groupId/dockers', dockerController.createDocker);
 /**
+ * @route get /realdockerinfo
+ * @description 渲染全部dockercontainer实时信息
+ */
+router.get('/realdockerinfo', dockerController.getRealdockerinfo);
+/**
+ * @route get /realdockerinfo/:dockerId
+ * @description 渲染单个dockercontainer实时信息
+ */
+router.get('/realdockerinfobyId/:dockerId', dockerController.getRealdockerinfobyId);
+/**
  * @route GET /dockers/:dockerId
  * @description 获取单个docker记录详情
  */
@@ -35,16 +45,7 @@ router.put('/:dockerId', dockerController.updateDocker);
  * @description 删除docker记录
  */
 router.delete('/:dockerId', dockerController.deleteDocker);
-/**
- * @route get /realdockerinfo
- * @description 渲染全部dockercontainer实时信息
- */
-router.get('/realdockerinfo', dockerController.getRealdockerinfo);
 
-/**
- * @route get /realdockerinfo/:dockerId
- * @description 渲染单个dockercontainer实时信息
- */
-router.get('/realdockerinfo/:dockerId', dockerController.getRealdockerinfobyId);
+
 
 module.exports = router;
