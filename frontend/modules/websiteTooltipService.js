@@ -263,14 +263,14 @@ export class WebsiteTooltipService {
    * @param {string} websiteId 网站 ID
    * @private
    */
-  _createTooltip(target, website, websiteId) {
-    requestAnimationFrame(() => { // 使用 requestAnimationFrame 批量更新 DOM
+  _createTooltip(target, website, websiteId) {    
       const tooltip = this.domService.createTooltipElement(); // 创建 tooltip 元素 (复用)
       tooltip.innerHTML = generateTooltipContent(website); // 生成 tooltip 内容
-      this.domService.positionTooltip(tooltip, target); // 定位 tooltip
+      tooltip.targetElement = target; // 保存目标元素引用
       document.body.appendChild(tooltip); // 将 tooltip 添加到 DOM 中
       this.domService.showTooltip(tooltip); // 显示 tooltip
-
+      requestAnimationFrame(() => { // 使用 requestAnimationFrame 批量更新 DOM
+      this.domService.positionTooltip(tooltip, tooltip.targetElement); // 定位 tooltip
       this.domService.setCurrentTooltip(tooltip); // 设置 domService 的 currentTooltip
       this.currentTooltip = tooltip; // 更新 websiteTooltipService 的 currentTooltip
       this.currentWebsiteId = websiteId; // 更新当前悬停的网站 ID

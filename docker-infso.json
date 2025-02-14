@@ -1,0 +1,59 @@
+{
+    "success": true,
+    "data": [
+        {
+            "id": "22fc6558b733efee1de669d3bb5a57358cb78388c8758925e6f1efe5bec1f94f",
+            "dockerItemId": "1da5ea47-81f8-4509-bb70-c15ac5ed6317",
+            "name": "alist",
+            "state": "running",
+            "networkIO": {
+                "eth0": {
+                    "rx_bytes": 62668600,
+                    "rx_packets": 1084341,
+                    "rx_errors": 0,
+                    "rx_dropped": 0,
+                    "tx_bytes": 8645885748,
+                    "tx_packets": 495878,
+                    "tx_errors": 0,
+                    "tx_dropped": 0
+                }
+            }
+        },
+        {
+            "id": "0847132644d697901ec1b215bb262e471805f62aa81dee77df7d9dd81bbf05c2",
+            "dockerItemId": "2c2e3929-b452-4d7f-8b5b-914dab725de6",
+            "name": "syncthing",
+            "state": "running",
+            "networkIO": {
+                "eth0": {
+                    "rx_bytes": 1454318846,
+                    "rx_packets": 4621174,
+                    "rx_errors": 0,
+                    "rx_dropped": 0,
+                    "tx_bytes": 2631649092,
+                    "tx_packets": 2501204,
+                    "tx_errors": 0,
+                    "tx_dropped": 0
+                }
+            }
+        },
+        {
+            "id": "1f849693f9e6c70e7c9a76d7682fba301543b9ed4e421347fdb9ab6d01d2d0ce",
+            "dockerItemId": "cfe37ddf-5c0c-477a-9f4e-03f8adc3ca15",
+            "name": "npm",
+            "state": "running",
+            "networkIO": {
+                "eth0": {
+                    "rx_bytes": 2785182665,
+                    "rx_packets": 451537,
+                    "rx_errors": 0,
+                    "rx_dropped": 0,
+                    "tx_bytes": 906574198,
+                    "tx_packets": 466007,
+                    "tx_errors": 0,
+                    "tx_dropped": 0
+                }
+            }
+        }
+    ]
+}

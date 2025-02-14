@@ -5,12 +5,15 @@ import { hideContextMenu } from './contextMenu.js';
 import { backendUrl } from '../config.js';
 import { DockerOperationService } from './dockerOperationService.js';
 import { confirmWebsiteDelete } from './websiteDeleteService.js';
+import { DockerTooltipService } from './DockerTooltipService.js'; // 导入 DockerTooltipService
 
 
 
 let currentEditDockerGroupId = null;
 let currentEditDockerId = null;
 const dockerOperationService = new DockerOperationService();
+const dockerTooltipService = new DockerTooltipService(); // 创建 DockerTooltipService 实例
+
 
 
 // 获取图标函数
@@ -93,6 +96,11 @@ export async function deleteDocker(groupId, dockerId) {
     }
 }
 
+// 处理网站悬停事件 (函数名应为 handleDockerHover)
+export async function handleDockerHover(target) {
+    console.log('handleDockerHover called');
+    await dockerTooltipService.handleDockerHover(target); // 调用 dockerTooltipService 的 handleDockerHover 方法
+}
 
 
 

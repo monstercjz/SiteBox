@@ -46,12 +46,13 @@ function renderDockerDashboard({ dockers, groups }) {
             dockerItem.setAttribute('data-group-id', docker.groupId);
             dockerItem.setAttribute('data-docker-server-ip', docker.server);
             dockerItem.setAttribute('data-docker-server-port', docker.serverPort);
+            dockerItem.setAttribute('data-docker-urlport', docker.urlPort); // 添加 data-docker-urlport 属性
             // <span class="docker-status">${docker.status}</span>
             dockerItem.innerHTML = `
                 <div class="docker-item-header">
                     ${docker.faviconUrl ? `<img src="${docker.faviconUrl.startsWith('http') ? docker.faviconUrl : backendUrl + docker.faviconUrl}" title="${docker.name}" style="margin-right: 3px;">` : ''}
                     <div class="docker-item-title">
-                        <a href="${docker.url}" target="_blank">${docker.name}</a>
+                        <a href="${docker.url}:${docker.urlPort}" target="_blank">${docker.name}</a>
                         <span class="docker-item-description">${docker.description}</span> 
                     </div>
                     <span class="docker-status-indicator"></span> 

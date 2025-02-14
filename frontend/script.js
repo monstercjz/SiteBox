@@ -2,7 +2,7 @@
 
 import { showNotification } from './modules/websiteDashboardService.js';
 import { renderDashboardWithData} from './modules/mainDashboardService.js';
-import { addDocker } from './modules/dockerInteractionService.js';
+import { addDocker,handleDockerHover } from './modules/dockerInteractionService.js';
 // import { renderDockerDashboardWithData } from './modules/dockerDashboardService.js';
 //import { WebsiteDataService } from './modules/websiteDataService.js';
 import { SearchService } from './modules/searchService.js';
@@ -18,6 +18,7 @@ import { validateAndCompleteUrl, showTooltip, hideTooltip } from './modules/util
 import modalInteractionService from './modules/modalInteractionService.js';
 import './modules/groupOrderService.js';
 import { importData, exportData } from './modules/historyDataService.js';
+import { dockerUpdateInfoAll } from './modules/dockerIfonUpdate.js';
 
 // 用于存储分组数据
 let groupsData = null;
@@ -59,7 +60,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         renderDashboardWithData(),
         // renderDockerDashboardWithData()
     ]);
-
+    // 实时刷新容器信息
+    setInterval(async () => {
+        await dockerUpdateInfoAll();
+    }, 30000);
     // 初始化搜索功能
     const searchService = new SearchService();
 
@@ -87,6 +91,26 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
         }
     });
+    /**
+     * 处理仪表盘点击事件，打开网站链接
+     * 使用事件委托，监听仪表盘容器的点击事件
+     * @param {Event} e - 点击事件对象
+     */
+    dockerdashboard.addEventListener('click', (e) => {
+        // 查找最近的 .docker-item 元素
+        const target = e.target.closest('.docker-item');
+        if (!target) return;
+    
+        // 查找 <a> 元素
+        const link = target.querySelector('a');
+        if (!link) {
+            console.warn('No <a> element found within the clicked .docker-item');
+            return;
+        }
+    
+        // 打开链接
+        window.open(link.href, '_blank');
+    });
 
     // 添加数据导入按钮点击事件监听器
     importConfigButton.addEventListener('click', importData);
@@ -105,6 +129,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (target) {
             // 显示网站详细信息tooltip
             handleWebsiteHover(target);
+        }
+    });
+    // 添加鼠标悬停事件监听器
+    dockerdashboard.addEventListener('mouseover', (e) => {
+        const target = e.target.closest('.docker-item');
+        if (target) {
+            // 显示网站详细信息tooltip
+            handleDockerHover(target);
         }
     });
 

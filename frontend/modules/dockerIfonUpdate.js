@@ -5,7 +5,7 @@ import {
     getRealdockerinfobyId,
     getRealdockerinfo
 } from './api.js';
-// Function to update docker item stats
+// Function to update docker item stats单个docker的实时信息
 const updateDockerStats = async () => {
     
     try {

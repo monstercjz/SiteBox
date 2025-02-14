@@ -1,3 +1,5 @@
+
+
 // tooltipDomService.js - 负责 tooltip 的 DOM 操作
 
 /**
@@ -32,9 +34,33 @@ export class TooltipDomService {
    */
   positionTooltip(tooltip, target) {
     const rect = target.getBoundingClientRect(); // 获取目标元素 Rect
-    tooltip.style.position = 'absolute'; // 设置绝对定位
-    tooltip.style.left = `${rect.left + window.scrollX}px`; // 设置 left 偏移量
-    tooltip.style.top = `${rect.bottom + window.scrollY + 5}px`; // 设置 top 偏移量，显示在目标元素下方 5px
+    const tooltipRect = tooltip.getBoundingClientRect(); // 获取工具提示 Rect
+    console.log(tooltipRect);
+    const windowHeight = window.innerHeight; // 获取窗口高度
+    const windowWidth = window.innerWidth; // 获取窗口宽度
+
+    // 设置绝对定位
+    tooltip.style.position = 'absolute';
+
+    // 计算工具提示的初始位置
+    let left = rect.left + window.scrollX;
+    let top = rect.bottom + window.scrollY + 5;
+
+    // 检查工具提示是否超出页面底部
+    if (top + tooltipRect.height > windowHeight) {
+        // 如果超出底部，则向上显示
+        top = rect.top + window.scrollY - tooltipRect.height - 5;
+    }
+
+    // 检查工具提示是否超出页面右侧
+    if (left + tooltipRect.width > windowWidth) {
+        // 如果超出右侧，则向左对齐
+        left = windowWidth - tooltipRect.width - 10; // 留一些边距
+    }
+
+    // 设置工具提示的位置
+    tooltip.style.left = `${left}px`;
+    tooltip.style.top = `${top}px`;
   }
 
   /**

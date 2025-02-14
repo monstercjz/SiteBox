@@ -150,8 +150,10 @@ export class DockerOperationService {
             return {};
         }
         const dockerName = dockerNameElement.textContent;
-        const accessIp = dockerItem.querySelector('a').getAttribute('href');
-        const accessPort = dockerItem.getAttribute('data-docker-server-port');
+        const accessUrl = dockerItem.querySelector('a').getAttribute('href');
+        const urlObj = new URL(accessUrl);
+        const accessIp = `${urlObj.protocol}//${urlObj.hostname}`; // 提取协议和主机名或 IP 地址
+        const accessPort = urlObj.port; // 假设 href 格式为 "ip:port"
         const dockerApiAddress = dockerItem.getAttribute('data-docker-server-ip');
         const dockerApiPort = dockerItem.getAttribute('data-docker-server-port');
         const dockerDescription = dockerItem.getAttribute('data-description');

@@ -12,14 +12,14 @@
       "id": "1da5ea47-81f8-4509-bb70-c15ac5ed6317",
       "groupId": "a9962f72-4460-4504-b1b9-c50b5e050aad",
       "name": "alist",
-      "url": "https://192.168.3.246",
-      "urlPort": "2930",
+      "url": "http://192.168.3.246",
+      "urlPort": "2375",
       "description": "alist",
       "server": "192.168.3.246",
       "serverPort": "2375",
       "faviconUrl": "/data/icons/Docker.png.ico",
       "createdAt": "2025-02-12T22:53:59.471Z",
-      "updatedAt": "2025-02-14T09:26:05.961Z"
+      "updatedAt": "2025-02-14T18:47:10.642Z"
     },
     {
       "id": "2c2e3929-b452-4d7f-8b5b-914dab725de6",
@@ -38,14 +38,14 @@
       "id": "cfe37ddf-5c0c-477a-9f4e-03f8adc3ca15",
       "groupId": "a9962f72-4460-4504-b1b9-c50b5e050aad",
       "name": "npm",
-      "url": "https://192.168.3.245",
-      "urlPort": "2375",
+      "url": "http://192.168.3.245",
+      "urlPort": "181",
       "server": "192.168.3.245",
       "serverPort": "2375",
       "description": "1231452",
       "faviconUrl": "/data/icons/Docker.png.ico",
       "createdAt": "2025-02-13T22:39:43.917Z",
-      "updatedAt": "2025-02-14T12:49:18.335Z"
+      "updatedAt": "2025-02-14T19:10:29.396Z"
     }
   ],
   "nextGroupId": 8,
