@@ -20,8 +20,8 @@
     },
     {
       "id": "dc30d488-aee8-4236-b3b8-f01fa75ea768",
-      "name": "1",
-      "order": 72,
+      "name": "website1",
+      "order": 4,
       "isCollapsible": false
     }
   ],
@@ -60,6 +60,6 @@
       "isAccessible": true
     }
   ],
-  "nextGroupId": 73,
+  "nextGroupId": 76,
   "nextWebsiteId": 7
 }

@@ -35,9 +35,13 @@ const getdockersByGroupId = async (req, res) => {
  */
 const createDocker = async (req, res) => {
   try {
-    const { groupId } = req.params;
-        const { dockerData } = req.body;
-    const newDocker = await dockerService.createDocker(groupId, dockerData);
+    // const { groupId } = req.params;
+    // const { groupId } = req.params;
+    // const { dockerData } = req.body;
+    // console.log('Received groupId:', groupId);
+    // console.log('Received dockerData:', dockerData);
+    // console.log('req.body:', req.body);
+    const newDocker = await dockerService.createDocker(req.params.groupId, req.body.dockerData);
     apiResponse.success(res, newDocker, 201); // 201 Created
   } catch (error) {
     apiResponse.error(res, error.message, 400); // 400 Bad Request

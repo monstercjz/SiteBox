@@ -1,54 +1,83 @@
-// frontend/modules/dockerDataService.js
+import { createDocker, updateDocker, deleteDocker, batchMoveWebsites, moveToTrash, recordWebsiteClick } from './api.js';
+import { showNotification } from './websiteDashboardService.js';
+import { validateAndCompleteUrl } from './utils.js';
 
-import * as api from './api.js';
-
-// 添加 Docker 容器
-export async function addDocker(containerInfo) { // 重命名为 addDocker
+export class DockerSaveService {
+  async saveDocker(dockerId, dockerData, groupId) {
     try {
-        const response = await api.addDockerContainer(containerInfo);
-        return response;
+        console.log('groupId:', groupId);
+        console.log('dockerData:', dockerData);
+        console.log('dockerId:', dockerId);
+        let actualGroupId = groupId;
+        if (!actualGroupId) {
+            const { getDockerGroups, createDockerGroup } = await import('./api.js');
+            try {
+                const  groups  = await getDockerGroups();
+                console.log('groups:', groups);
+                let defaultGroup;
+                if (groups) {
+                    
+                    defaultGroup = groups.find(group => group.name === 'Default');
+                    console.log('defaultGroup:', defaultGroup);
+                }
+                if (!defaultGroup) {
+                    const groupName = new Date().toLocaleString();
+                    const newGroup = await createDockerGroup({ name: groupName, isCollapsible: false });
+                    actualGroupId = newGroup.id;
+                } else {
+                    actualGroupId = defaultGroup.id;
+                }
+            } catch (error) {
+                console.error('Failed to fetch or create default group:', error);
+                showNotification('创建默认分组失败', 'error');
+                throw error;
+            }
+        }
+      if (dockerId) {
+        // 更新网站
+        const updatedDocker = await updateDocker(dockerId, {dockerData});
+        showNotification('网站更新成功', 'success');
+        return updatedDocker;
+      } else {
+        // 创建网站
+        const newDocker = await createDocker(actualGroupId, { dockerData });
+        showNotification('网站创建成功', 'success');
+        return newDocker;
+      }
     } catch (error) {
-        console.error('调用后端 API 添加 Docker 容器失败', error);
-        throw error;
+      console.error('Failed to save website:', error);
+      showNotification('保存网站失败，请重试', 'error');
+      throw error;
     }
-}
+  }
 
-// 修改 Docker 容器
-export async function editDocker(containerId, containerInfo) { // 重命名为 editDocker
-    console.log('editDocker called', containerId, containerInfo);
-    // TODO: 实现修改 Docker 容器
-}
-
-//  实现删除 Docker 容器
-export async function deleteDocker(dockerId) { //  重命名为 deleteDocker
-    console.log('deleteDocker called', dockerId);
+  async deleteDocker(dockerId, deleteOption) {
     try {
-        const response = await api.deleteDocker(dockerId); // 调用 api.deleteDocker
+      if (deleteOption === 'permanentDelete') {
+        const response = await deleteDocker(dockerId);
+        showNotification('容器删除成功', 'success');
         return response;
+      } else if (deleteOption === 'moveToTrash') {
+        // const response = await moveToTrash(dockerId);
+        // showNotification('网站已移动到回收站', 'success');
+        const response = await deleteDocker(dockerId);
+        showNotification('容器删除成功', 'success');
+        return response;
+      }
     } catch (error) {
-        console.error('调用后端 API 删除 Docker 容器失败', error);
-        throw error;
+      console.error('Failed to delete website:', error);
+      showNotification('删除网站失败，请重试', 'error');
+      throw error;
     }
-}
+  }
 
-// 获取单个 Docker 容器
-export async function getDockerContainerById(containerId) {
-    try {
-        const response = await api.getDockerContainerById(containerId);
-        return response;
-    } catch (error) {
-        console.error('调用后端 API 获取 Docker 容器失败', error);
-        throw error;
-    }
-}
+  
 
-// 获取 Docker 容器列表
-export async function getDockerContainers() {
-    try {
-        const response = await api.getDockerContainers();
-        return response;
-    } catch (error) {
-        console.error('调用后端 API 获取 Docker 容器列表失败', error);
-        throw error;
-    }
+  
+
+  
+
+  
+
+  
 }

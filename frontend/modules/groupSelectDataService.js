@@ -2,6 +2,7 @@ import {
     fetchDataFromApi,
     getWebsites,
     getWebsiteGroups,
+    getDockerGroups,
     getWebsiteById,
     getWebsiteGroupById,
     getWebsitesByGroupId,
@@ -31,10 +32,15 @@ export function renderGroupSelect(data) {
 }
 
 // 获取分组下拉框数据
-export async function fetchGroupSelectData() {
+export async function fetchGroupSelectData(groupType) {
     try {
-        const groups = await getWebsiteGroups();
-        return { groups };
+        if (groupType === 'website') {
+            const groups = await getWebsiteGroups();
+            return { groups };
+        }else if(groupType === 'docker') {
+            const groups = await getDockerGroups();
+            return { groups };
+        }
     } catch (error) {
         console.error('Failed to fetch group data:', error);
         showNotification('加载分组数据失败，请检查控制台获取详细信息', 'error');
@@ -43,14 +49,14 @@ export async function fetchGroupSelectData() {
 }
 
 // 渲染分组下拉框数据
-export async function renderGroupSelectWithData() {
-    const data = await fetchGroupSelectData();
+export async function renderGroupSelectWithData(groupType) {
+    const data = await fetchGroupSelectData(groupType);
     if (data) {
         renderGroupSelect(data);
     }
 }
 
 // 获取分组数据并渲染下拉框
-export async function fetchAndRenderGroupSelect() {
-    await renderGroupSelectWithData();
+export async function fetchAndRenderGroupSelect(groupType) {
+    await renderGroupSelectWithData(groupType);
 }

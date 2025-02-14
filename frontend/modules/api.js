@@ -15,7 +15,7 @@ async function fetchDataFromApi(url, method = 'GET', body = null) {
       'Content-Type': 'application/json',
     },
   };
-
+  // console.log('fetchDataFromApi', url, method, body);
   if (body) {
     options.body = JSON.stringify(body);
   }

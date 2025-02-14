@@ -70,14 +70,14 @@ function showWebsiteContextMenu(e, groupId, websiteId) {
 // 显示 Docker 分组右键菜单
 function showDockerGroupContextMenu(e, groupId, groupType) { // 添加 groupType 参数
     const menuItems = [
-        `<div class="edit-docker-group-item" data-group-id="${groupId}" data-group-type="${groupType}">编辑分组</div>`, // 传递 groupType
-        `<div class="delete-docker-group-item" data-group-id="${groupId}" data-group-type="${groupType}">删除分组</div>` // 传递 groupType
+        `<div class="edit-group-item" data-group-id="${groupId}" data-group-type="${groupType}">编辑分组</div>`, // 传递 groupType
+        `<div class="delete-group-item" data-group-id="${groupId}" data-group-type="${groupType}">删除分组</div>` // 传递 groupType
     ];
     const menu = createContextMenu(e, menuItems);
-    menu.querySelector('.edit-docker-group-item').addEventListener('click', () => {
+    menu.querySelector('.edit-group-item').addEventListener('click', () => {
         editGroup(groupId, groupType); // 传递 groupType，这里复用 editGroup，后续可能需要修改
     });
-    menu.querySelector('.delete-docker-group-item').addEventListener('click', () => {
+    menu.querySelector('.delete-group-item').addEventListener('click', () => {
         deleteGroup(groupId, groupType); // 传递 groupType，这里复用 deleteGroup，后续可能需要修改
     });
 }
@@ -93,10 +93,10 @@ function showDockerItemContextMenu(e, groupId, dockerId) {
     const menu = createContextMenu(e, menuItems);
      menu.querySelector('.edit-docker-item').addEventListener('click', () => {
         console.log('编辑 Docker', dockerId);
-        editDocker(dockerId); // 调用 editDocker
+        editDocker(groupId,dockerId); // 调用 editDocker
     });
     menu.querySelector('.delete-docker-item').addEventListener('click', () => {
-        deleteDocker(dockerId); // 调用 deleteDocker
+        deleteDocker(groupId,dockerId); // 调用 deleteDocker
         console.log('删除 Docker', dockerId);
     });
 }

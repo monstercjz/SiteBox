@@ -1,7 +1,8 @@
-const dockerController = require('../controllers/dockerController');
+
 // backend/routes/dockerRoutes.js (简化后的代码)
 const express = require('express');
 const router = express.Router();
+const dockerController = require('../controllers/dockerController');
 
 /**
  * @route GET /dockers

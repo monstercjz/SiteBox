@@ -54,7 +54,7 @@ export class WebsiteOperationService {
     modalInteractionService.createModal(this.modalId, modalContent);
     const groupSelect = document.getElementById('groupSelect');
     if (groupSelect) {
-        await fetchAndRenderGroupSelect();
+        await fetchAndRenderGroupSelect('website');
     }
 
     if (mode === 'edit') {

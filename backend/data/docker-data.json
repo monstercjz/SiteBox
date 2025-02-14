@@ -5,18 +5,6 @@
       "name": "dd",
       "order": 1,
       "isCollapsible": false
-    },
-    {
-      "id": "31fb1816-03d7-48b3-ac75-29e466c284b5",
-      "name": "33",
-      "order": 2,
-      "isCollapsible": false
-    },
-    {
-      "id": "6fb384b7-4eb3-416c-9963-80babe34ef3b",
-      "name": "2",
-      "order": 3,
-      "isCollapsible": false
     }
   ],
   "dockers": [
@@ -34,6 +22,6 @@
       "updatedAt": "2025-02-12T22:53:59.471Z"
     }
   ],
-  "nextGroupId": 4,
+  "nextGroupId": 7,
   "nextDockerContainerId": 1
 }

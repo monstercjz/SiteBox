@@ -41,10 +41,13 @@ function renderDockerDashboard({ dockers, groups }) {
             dockerItem.setAttribute('data-description', docker.description);
             dockerItem.setAttribute('data-docker-id', docker.id);
             dockerItem.setAttribute('data-group-id', docker.groupId);
+            dockerItem.setAttribute('data-docker-server-ip', docker.server);
+            dockerItem.setAttribute('data-docker-server-port', docker.serverPort);
             // <span class="docker-status">${docker.status}</span>
             dockerItem.innerHTML = `
-                <i class="icon docker-icon"></i>
-                <a href="#" class="docker-name">${docker.name}</a>
+                
+                
+                <a href="${docker.url}" target="_blank">${docker.name}</a>
                 
             `;
             dockerList.appendChild(dockerItem);

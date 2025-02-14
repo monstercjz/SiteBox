@@ -34,10 +34,10 @@ const CREATE_DOCKER_SCHEMA = Joi.object({
   groupId: Joi.string().uuid().required(),
   dockerData: Joi.object({
     name: Joi.string().required(),
-    url: Joi.string().uri().required(),
+    url: Joi.string(),
     urlPort: Joi.number().port().required(),
     description: Joi.string().allow(''),
-    server: Joi.string().hostname().required(),
+    server: Joi.string().required(),
     serverPort: Joi.number().port().required(),
     faviconUrl: Joi.string().uri()
   }).required()
@@ -48,10 +48,10 @@ const UPDATE_DOCKER_SCHEMA = Joi.object({
   dockerData: Joi.object({
     groupId: Joi.string().uuid(),
     name: Joi.string().required(),
-    url: Joi.string().uri().required(),
+    url: Joi.string().required(),
     urlPort: Joi.number().port().required(),
     description: Joi.string().allow(''),
-    server: Joi.string().hostname().required(),
+    server: Joi.string().required(),
     serverPort: Joi.number().port().required(),
     faviconUrl: Joi.string().uri()
   }).required()
@@ -171,8 +171,12 @@ const getdockersByGroupId = async (groupId) => {
  * 创建 Docker 记录 
  */
 const createDocker = async (groupId, dockerData) => {
+  console.log('dockerData', dockerData);
   try {
+    
+    // console.log('dockerData before validation:', dockerData);
     await CREATE_DOCKER_SCHEMA.validateAsync({ groupId, dockerData });
+    // console.log('dockerData after validation:', dockerData);
     
     const data = await fileHandler.readData(DOCKER_DATA_FILE_PATH);
     const existing = (data.dockers || []).find(d => 
@@ -190,7 +194,7 @@ const createDocker = async (groupId, dockerData) => {
     const newDocker = {
       id: uuidv4(),
       groupId,
-      ...dockerData,
+      ...dockerData,//这个写法就导致必须在controller里先解析出来，并且前端调用的时候必须加大括号包裹
       faviconUrl,
       createdAt: new Date(),
       updatedAt: new Date()
@@ -201,7 +205,8 @@ const createDocker = async (groupId, dockerData) => {
     
     return newDocker;
   } catch (error) {
-    handleDockerError(error, '创建 Docker 记录失败');
+   console.error('Joi validation error:', error); // 打印 Joi 验证错误信息
+   handleDockerError(error, '创建 Docker 记录失败');
   }
 
 };

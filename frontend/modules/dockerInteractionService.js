@@ -1,71 +1,99 @@
-// frontend/modules/dockerInteractionService.js
-
-import { dockerOperationService } from './dockerOperationService.js';
-import * as dockerDataService from './dockerDataService.js';
 import { showNotification } from './websiteDashboardService.js';
+import { renderDashboardWithData} from './mainDashboardService.js';
+import { DockerSaveService } from './dockerDataService.js';
+import { hideContextMenu } from './contextMenu.js';
+import { backendUrl } from '../config.js';
+import { DockerOperationService } from './dockerOperationService.js';
+import { confirmWebsiteDelete } from './websiteDeleteService.js';
 
-// 处理添加 Docker 容器的逻辑
+
+
+let currentEditDockerGroupId = null;
+let currentEditDockerId = null;
+const dockerOperationService = new DockerOperationService();
+
+
+// 获取图标函数
+
+
+// 添加网站
 export async function addDocker() {
-    console.log('addDockerContainer called');
-    // 1. 调用 dockerOperationService.js 创建模态框，获取用户输入
-    dockerOperationService.openAddDockerModal({
-        callback: async (containerInfo) => {
-            if (!containerInfo) {
-                return; // 用户取消操作
-            }
-
-            // 2. 调用 dockerDataService.js 将容器信息发送到后端 API
-            try {
-                const result = await dockerDataService.addDockerContainer(containerInfo);
-                console.log('添加 Docker 容器成功', result);
-                // TODO: 成功添加容器后的处理，例如刷新仪表盘
-                showNotification('Docker 容器添加成功', 'success');
-            } catch (error) {
-                console.error('添加 Docker 容器失败', error);
-                showNotification('Docker 容器添加失败', 'error');
-            }
-        }
-    });
-}
-
-// 处理修改 Docker 容器的逻辑
-// 编辑 Docker 容器
-export async function editDocker(containerId) {
-    console.log('editDockerContainer called', containerId);
-    // 1. 调用 dockerOperationService.js 创建编辑模态框，获取用户输入
-    dockerOperationService.openEditDockerModal({
-        containerId: containerId,
-        callback: async (containerInfo) => {
-            if (!containerInfo) {
-                return; // 用户取消操作
-            }
-
-            // 2. 调用 dockerDataService.js 将容器信息发送到后端 API
-            try {
-                const result = await dockerDataService.editDockerContainer(containerId, containerInfo);
-                console.log('修改 Docker 容器成功', result);
-                // TODO: 成功修改容器后的处理，例如刷新仪表盘
-                showNotification('Docker 容器修改成功', 'success');
-            } catch (error) {
-                console.error('修改 Docker 容器失败', error);
-                showNotification('Docker 容器修改失败', 'error');
-            }
-        }
-    });
-}
-
-
-// 处理删除 Docker 容器的逻辑
-export async function deleteDocker(dockerId) { //  重命名为 deleteDocker
-    console.log('deleteDocker called', dockerId);
     try {
-        // 调用 dockerDataService.deleteDocker 删除 Docker 容器
-        const result = await dockerDataService.deleteDocker(dockerId);
-        console.log('删除 Docker 容器成功', result);
-        // TODO: 成功删除容器后的处理，例如刷新仪表盘
-        showNotification('Docker 容器删除成功', 'success');
+        await dockerOperationService.openDockerModal({
+            mode: 'add',
+            callback: async ({ dockerName, newaccessIp, accessPort, dockerApiAddress,dockerApiPort,dockerDescription, groupSelect }) => {
+                const dockerSaveService = new DockerSaveService();
+                const dockerData = {  // 确保 dockerData 对象被正确构建
+                    name: dockerName,
+                    url: newaccessIp,
+                    urlPort: accessPort,
+                    server: dockerApiAddress,
+                    serverPort: dockerApiPort,
+                    description: dockerDescription
+                };
+                const result = await dockerSaveService.saveDocker(null, dockerData, groupSelect);  // 传递 dockerData 对象
+                if (result) {
+                    renderDashboardWithData();
+                }
+            }
+        });
     } catch (error) {
-        console.error('删除 Docker 容器失败', error);
-        showNotification('Docker 容器删除失败', 'error');
+        console.error('Failed to add website:', error);
+        showNotification('添加网站失败', 'error');
     }
 }
+
+// 编辑网站
+export async function editDocker(groupId, dockerId) {
+    hideContextMenu();
+    currentEditDockerGroupId = groupId;
+    currentEditDockerId = dockerId;
+    dockerOperationService.openDockerModal({
+        mode: 'edit',
+        dockerId: dockerId,
+        groupId: groupId,
+        callback: async ({ dockerName, newaccessIp, accessPort, dockerApiAddress,dockerApiPort,dockerDescription, groupSelect }) => {
+            const dockerSaveService = new DockerSaveService();
+            const dockerData = {  // 确保 dockerData 对象被正确构建
+                name: dockerName,
+                url: newaccessIp,
+                urlPort: accessPort,
+                server: dockerApiAddress,
+                serverPort: dockerApiPort,
+                description: dockerDescription
+            };
+            const result = await dockerSaveService.saveDocker(dockerId, dockerData, groupSelect);  // 传递 dockerData 对象
+            if (result) {
+                renderDashboardWithData();
+            }
+        }
+    });
+}
+
+// 删除网站
+export async function deleteDocker(groupId, dockerId) {
+    try {
+        //没有再新建一个模态框处理文件，直接调用了website的删除模态框
+        const deleteOption = await confirmWebsiteDelete({
+            title: '删除网站',
+            message: '请选择删除选项:',
+            options: [
+                { id: 'permanentDelete', label: '永久删除网站' },
+                { id: 'moveToTrash', label: '将网站移动到回收站' }
+            ]
+        });
+        if (!deleteOption) return;
+
+        const dockerSaveService = new DockerSaveService();
+        await dockerSaveService.deleteDocker(dockerId, deleteOption);
+        renderDashboardWithData();
+    } catch (error) {
+        console.error('Failed to delete website:', error);
+        showNotification('删除网站失败', 'error');
+    }
+}
+
+
+
+
+
