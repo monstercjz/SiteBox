@@ -58,6 +58,17 @@
       "lastAccessTime": "2025-01-22T17:46:05.811Z",
       "order": 6,
       "isAccessible": true
+    },
+    {
+      "id": "cb59693e-48a0-49c6-aaf7-7dadd1989cb9",
+      "groupId": "dc30d488-aee8-4236-b3b8-f01fa75ea768",
+      "name": "123",
+      "url": "https://taobao.com/v1",
+      "description": "1",
+      "faviconUrl": "/data/icons/taobao.com.ico",
+      "lastAccessTime": "2025-02-15T01:14:56.487Z",
+      "order": 1,
+      "isAccessible": true
     }
   ],
   "nextGroupId": 76,

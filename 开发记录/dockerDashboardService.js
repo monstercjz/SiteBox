@@ -5,8 +5,6 @@ import {
     getDockerGroups,
     getRealdockerinfobyId,
 } from './api.js';
-import { dockerUpdateInfoAll } from './dockerIfonUpdate.js';
-
 import { backendUrl } from '../config.js';
 import { setRandomGroupColors, resetGroupColors } from './utils.js';
 import { isRandomColorsEnabled } from './colorThemeService.js';
@@ -46,6 +44,7 @@ function renderDockerDashboard({ dockers, groups }) {
             dockerItem.setAttribute('data-group-id', docker.groupId);
             dockerItem.setAttribute('data-docker-server-ip', docker.server);
             dockerItem.setAttribute('data-docker-server-port', docker.serverPort);
+            dockerItem.setAttribute('data-docker-name', docker.name); // 添加 data-docker-name 属性
             // <span class="docker-status">${docker.status}</span>
             dockerItem.innerHTML = `
                 <div class="docker-item-header">
@@ -62,11 +61,11 @@ function renderDockerDashboard({ dockers, groups }) {
                             <span class="docker-item-stats-value">0%</span>
                             <span class="docker-item-stats-label">处理器</span>
                         </div>
-                        <div class="docker-item-networkIo-receive">
+                        <div class="docker-item-memory-receive">
                             <span class="docker-item-stats-value">0 GB</span>
                             <span class="docker-item-stats-label">接收</span>
                         </div>
-                        <div class="docker-item-networkIo-send">
+                        <div class="docker-item-memory-send">
                             <span class="docker-item-stats-value">0 MB</span>
                             <span class="docker-item-stats-label">发送</span>
                         </div>
@@ -74,12 +73,14 @@ function renderDockerDashboard({ dockers, groups }) {
                 </div>
             `;
             dockerList.appendChild(dockerItem);
+            
+
+            updateDockerStats(dockerItem); // Initial update - 传递 dockerItem
+            setInterval(() => updateDockerStats(dockerItem), 500000); // Update every 5 seconds - 传递 dockerItem
         });
         fragment.appendChild(groupDiv);
     });
     dockerdashboard.appendChild(fragment);
-    dockerUpdateInfoAll(); // Call dockerUpdateInfoAll to update real-time info
-
 }
 
 /**

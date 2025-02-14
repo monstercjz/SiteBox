@@ -24,3 +24,26 @@
   color: var(--text-primary);
 
 }
+.docker-item-header {
+    color: var(--color-text-primary);
+}
+
+.docker-item-title a {
+    color: var(--color-text-primary);
+}
+
+.docker-item-id {
+    color: var(--color-text-secondary);
+}
+
+.docker-status-indicator {
+    /* You can add theme-specific styles for the status indicator here */
+}
+
+.docker-item-stats-value {
+    color: var(--color-text-primary);
+}
+
+.docker-item-stats-label {
+    color: var(--color-text-secondary);
+}

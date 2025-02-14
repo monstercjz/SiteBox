@@ -64,65 +64,30 @@ const handleDockerError = (error, message) => {
 };
 
 /**
- * @description 获取所有 Docker 容器实时信息 (修改后，从数据文件读取服务器信息并批量获取)
+ * @description 获取 Docker 容器列表及详细信息 (原功能保留，用于获取所有容器)
  */
 const getRealdockerinfo = async () => {
   try {
-    const dockerRecords = await getAlldockers(); // 从数据文件读取 Docker 记录 
-    if (!dockerRecords || dockerRecords.length === 0) {
-      return []; // 如果没有 Docker 记录，则返回空数组
-    }
+    const containers = await docker.listContainers({ all: true }); // 获取所有容器，包括运行和停止的
+    const containerInfoList = await Promise.all(containers.map(async (containerInfo) => {
+      const container = docker.getContainer(containerInfo.Id);
+      const stats = await container.stats({ stream: false }); // 获取容器的实时统计信息
+      const details = await container.inspect(); // 获取容器的详细信息
 
-    // 提取去重的服务器列表
-    const servers = [...new Set(dockerRecords.map(d => `${d.server}:${d.serverPort}`))];
-    const dockerClients = {}; // 用于缓存 Docker 客户端
-    const allContainerInfoList = [];
-
-    for (const server of servers) {
-      const [serverHost, serverPort] = server.split(':');
-      const clientKey = `${serverHost}:${serverPort}`;
-
-      // 动态创建 Docker 客户端
-      if (!dockerClients[clientKey]) {
-        dockerClients[clientKey] = new Docker({
-          host: serverHost,
-          port: parseInt(serverPort, 10),
-          protocol: 'http',
-        });
-      }
-      const dockerClient = dockerClients[clientKey];
-
-      try {
-        const containers = await dockerClient.listContainers({ all: true });
-        const containerInfoList = await Promise.all(containers.map(async (containerInfo) => {
-          const container = dockerClient.getContainer(containerInfo.Id);
-          const stats = await container.stats({ stream: false });
-          const details = await container.inspect();
-
-          const dockerRecord = dockerRecords.find(record => `${record.server}:${record.serverPort}` === server && record.name === containerInfo.Names[0].substring(1)); // 查找匹配的 Docker 记录
-
-          return {
-            id: containerInfo.Id,
-            dockerItemId: dockerRecord ? dockerRecord.id : null, // 添加 dockerItemId
-            name: containerInfo.Names[0].substring(1),
-            state: containerInfo.State,
-            image: containerInfo.Image,
-            ports: containerInfo.Ports,
-            cpuUsage: stats.cpu_stats.cpu_usage.total_usage,
-            memoryUsage: stats.memory_stats.usage,
-            memoryLimit: stats.memory_stats.limit,
-            networkIO: stats.networks,
-            details: details,
-          };
-        }));
-        allContainerInfoList.push(...containerInfoList);
-      } catch (serverError) {
-        console.error(`Error getting containers from server ${server}:`, serverError);
-        // 忽略单个服务器的错误，继续获取其他服务器的信息
-      }
-    }
-
-    return allContainerInfoList; // 返回整合后的所有容器信息
+      return {
+        id: containerInfo.Id,
+        name: containerInfo.Names[0].substring(1), // 去掉容器名称前面的 "/"
+        state: containerInfo.State,
+        image: containerInfo.Image,
+        ports: containerInfo.Ports,
+        cpuUsage: stats.cpu_stats.cpu_usage.total_usage,
+        memoryUsage: stats.memory_stats.usage,
+        memoryLimit: stats.memory_stats.limit,
+        networkIO: stats.networks, // 网络 IO 信息
+        details: details, // 包含更详细的容器配置信息，如果需要可以前端展示
+      };
+    }));
+    return containerInfoList;
   } catch (error) {
     console.error('Error getting Docker containers:', error);
     throw error;

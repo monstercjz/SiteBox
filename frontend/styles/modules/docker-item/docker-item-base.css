@@ -49,3 +49,55 @@
   display: inline-block;
   padding-bottom: var(--spacing-inset-xs);/* 待调整 */
 }
+.docker-item-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-inline-xs);
+    margin-bottom: var(--spacing-stack-xs);
+}
+
+.docker-item-title {
+    display: flex;
+    flex-direction: column;
+}
+
+.docker-item-id {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-secondary);
+}
+
+.docker-status-indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: var(--color-running); /* Default to success color */
+}
+
+.docker-item-body {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}
+
+.docker-item-stats {
+    display: flex;
+    gap: var(--spacing-inline-sm);
+}
+
+.docker-item-cpu,
+.docker-item-memory-receive,
+.docker-item-memory-send {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.docker-item-stats-value {
+    font-size: var(--font-size-md);
+    font-weight: var(--font-weight-bold);
+}
+
+.docker-item-stats-label {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-secondary);
+}

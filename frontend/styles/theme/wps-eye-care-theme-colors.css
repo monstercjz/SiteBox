@@ -17,10 +17,13 @@
     --color-functional-secondary-active: #5A8045;/* 激活暗色 - 深绿色 */
   
     /* === Functional Color System (Semantic Translation) - 功能色系（语义直译） === */
+    --color-running:green;
+    --color-stop:red;
     --color-status-success: #A3E78A;    /* 成功状态 - 亮绿色 */
     --color-status-warning: #FACC15;    /* 警告状态 - 黄色 */
     --color-status-error: #F87171;      /* 错误状态 - 红色 */
     --color-interaction-accent: #F472B6;/* 强调交互色 - 粉色 */
+
   
     /* === Neutral Color System (Usage Naming) - 中性色系（用途命名） === */
     --color-neutral-background: #6E7B6C;    /* 页面背景 - WPS护眼色 */

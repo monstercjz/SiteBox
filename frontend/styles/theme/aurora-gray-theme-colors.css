@@ -17,6 +17,8 @@
     --color-functional-secondary-active: #777777;/* 激活暗色 - 深灰色 */
   
     /* === Functional Color System (Semantic Translation) - 功能色系（语义直译） === */
+    --color-running:green;
+    --color-stop:red;
     --color-status-success: #A3E78A;    /* 成功状态 - 亮绿色 */
     --color-status-warning: #FACC15;    /* 警告状态 - 黄色 */
     --color-status-error: #F87171;      /* 错误状态 - 红色 */
