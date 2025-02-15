@@ -20,45 +20,50 @@
   </head>
 
   <body>
-    <h1 aria-label="个人导航面板">SiteBox</h1>
-    <div class="search-form">
-      <div class="search-form__icon">
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <circle
-            cx="10"
-            cy="10"
-            r="8"
-            stroke="#eee"
-            stroke-width="1.5"
+    <!&ndash; Header Section Start &ndash;>
+    <header>
+      <h1 aria-label="个人导航面板">SiteBox</h1>
+      <div class="search-form">
+        <div class="search-form__icon">
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
             fill="none"
-          />
-          <line
-            x1="20"
-            y1="20"
-            x2="15"
-            y2="15"
-            stroke="#eee"
-            stroke-width="1.5"
-          />
-        </svg>
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <circle
+              cx="12"
+              cy="12"
+              r="8"
+              stroke="#eee"
+              stroke-width="1.5"
+              fill="none"
+            />
+            <line
+              x1="20"
+              y1="20"
+              x2="15"
+              y2="15"
+              stroke="#eee"
+              stroke-width="1.5"
+            />
+          </svg>
+        </div>
+        <input
+          type="search"
+          class="search-form__input"
+          id="search-input"
+          placeholder="搜索网站名称或网址..."
+          aria-label="搜索网站"
+          writingsuggestions="off"
+        />
       </div>
-      <input
-        type="search"
-        class="search-form__input"
-        id="search-input"
-        placeholder="搜索网站名称或网址..."
-        aria-label="搜索网站"
-        writingsuggestions="off"
-      />
-    </div>
+    </header>
+    <!&ndash; Header Section End &ndash;>
 
-    <div class="toggle-actions">
+    <!&ndash; Aside Section Start &ndash;>
+    <aside class="toggle-actions">
       <div class="action-buttons">
         <button
           id="add-group-button"
@@ -252,12 +257,12 @@
               fill-rule="evenodd"
               stroke-width="0.048"
             ></path>
-          </svg>
+        </svg>
         </button>
         <div class="layout-switcher">
           <div class="layout-switcher__options">
             <button
-              
+
               class="layout-switcher__option"
               type="button"
               data-layout="default"
@@ -279,7 +284,7 @@
               </svg>
             </button>
             <button
-              
+
               class="layout-switcher__option"
               type="button"
               data-layout="alternative"
@@ -343,6 +348,7 @@
                 height="24"
                 alt="紫色主题图标"
                 loading="lazy"
+                onerror="this.onerror=null; this.src='styles/2424svg/image-fallback.svg';"
               />
             </button>
             <button
@@ -358,6 +364,7 @@
                 height="24"
                 alt="橙色主题图标"
                 loading="lazy"
+                onerror="this.onerror=null; this.src='styles/2424svg/image-fallback.svg';"
               />
             </button>
 
@@ -374,6 +381,7 @@
                 height="24"
                 alt="扁平主题图标"
                 loading="lazy"
+                onerror="this.onerror=null; this.src='styles/2424svg/image-fallback.svg';"
               />
             </button>
             <button
@@ -389,6 +397,7 @@
                 height="24"
                 alt="流光主题图标"
                 loading="lazy"
+                onerror="this.onerror=null; this.src='styles/2424svg/image-fallback.svg';"
               />
             </button>
             <button
@@ -404,6 +413,7 @@
                 height="24"
                 alt="护眼绿主题图标"
                 loading="lazy"
+                onerror="this.onerror=null; this.src='styles/2424svg/image-fallback.svg';"
               />
             </button>
             <button
@@ -419,6 +429,7 @@
                 height="24"
                 alt="暗色主题图标"
                 loading="lazy"
+                onerror="this.onerror=null; this.src='styles/2424svg/image-fallback.svg';"
               />
             </button>
             <button
@@ -434,6 +445,7 @@
                 height="24"
                 alt="亮色主题图标"
                 loading="lazy"
+                onerror="this.onerror=null; this.src='styles/2424svg/image-fallback.svg';"
               />
             </button>
           </div>
@@ -484,15 +496,20 @@
           />
         </svg>
       </button>
-    </div>
+    </aside>
+    <!&ndash; Aside Section End &ndash;>
+
+    <!&ndash; Main Section Start &ndash;>
     <main>
       <section id="websitedashboard">
-        <!-- website will be rendered here -->
+        <!&ndash; website will be rendered here &ndash;>
       </section>
       <section id="dockerdashboard">
-        <!-- Docker websitedashboard content -->
+        <!&ndash; Docker websitedashboard content &ndash;>
       </section>
     </main>
+    <!&ndash; Main Section End &ndash;>
+
     <div id="tooltip"></div>
     <script src="script.js" type="module"></script>
   </body>
