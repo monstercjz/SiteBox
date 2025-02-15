@@ -18,4 +18,6 @@
   flex-wrap: nowrap;
   align-items: center;
   gap: var(--spacing-inline-md); /* 设置按钮之间的间距 */
+  /* margin-right: calc(100% - 100vw); 可以解决滚动条的问题*/
+  /* padding: 17px; 可以解决滚动条的问题*/
 }

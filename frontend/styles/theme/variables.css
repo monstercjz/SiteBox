@@ -25,6 +25,7 @@
   --spacing-inset-lg: 1.5rem; /* 24px - 大容器 */
   --spacing-inset-xl: 2rem; /* 32px - 极大间距 */
 
+
   /* 外边距 (rem单位) */
   --spacing-stack-xxs: 0.25rem; /* 4px */
   --spacing-stack-xs: 0.5rem; /* 8px */
@@ -32,6 +33,8 @@
   --spacing-stack-md: 1rem; /* 16px */
   --spacing-stack-lg: 1.5rem; /* 24px */
   --spacing-stack-xl: 2rem; /* 32px - 极大间距 */
+  --spacing-stack-xxl: 3rem; /* 48px - 极大间距 */
+  --scrollbar-width: 17px; /* 假设滚动条宽度为17px */
 
   /* 行内间距 (px单位保持精确) */
   --spacing-inline-xxxs: 2px; /* 超密级间距 */

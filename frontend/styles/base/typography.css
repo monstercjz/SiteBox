@@ -1,42 +1,65 @@
 /* === Base Typography Styles - 基础排版样式 === */
+/* Purpose: Defines base typography styles for the project, including font, font size, line height, etc. */
 /* 作用：定义项目的基础排版样式，包括字体、字号、行高等。 */
+/* Dependencies: theme/variables.css (font sizes, color variables) */
 /* 依赖：theme/variables.css (字体大小、颜色变量) */
 
+/* Set font size for the root html element */
 /* 设置 html 根元素字体大小 */
 html {
-  font-size: var(--base-font-size); /* 设置默认字体大小，使用 CSS 变量 --base-font-size 16px */
+  font-size: var(--base-font-size); /* Set default font size, using CSS variable --base-font-size (16px) */
+  /* 设置默认字体大小，使用 CSS 变量 --base-font-size 16px */
+  scrollbar-width: none;
+  /* overflow-y: auto;
+  overflow-x: hidden; 可以解决滚动条偏移的问题*/
 }
 
+/* Set base font and color for body */
 /* 设置 body 基础字体和颜色 */
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif; /* 设置全局字体栈，提供跨平台字体选择 */
-  background-color: var(--background-body); /* 设置背景色，使用 CSS 变量 --background-body */
-  color: var(--text-primary); /* 设置文字颜色，使用 CSS 变量 --text-primary */
-  padding: var(--spacing-inset-lg); /* 设置 body 内边距，使用 CSS 变量 --spacing-inset-lg */
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif; /* Set global font stack for cross-platform font selection */
+  /* 设置全局字体栈，提供跨平台字体选择 */
+  background-color: var(--background-body); /* Set background color, using CSS variable --background-body */
+  /* 设置背景色，使用 CSS 变量 --background-body */
+  color: var(--text-primary); /* Set text color, using CSS variable --text-primary */
+  /* 设置文字颜色，使用 CSS 变量 --text-primary */
+  padding: var(--spacing-inset-lg); /* Set body padding, using CSS variable --spacing-inset-lg */
+  /* 设置 body 内边距，使用 CSS 变量 --spacing-inset-lg */
+  
 }
 
+/* Typography - Heading styles */
 /* Typography - 标题排版样式 */
 /* Main heading - 主要标题 */
 h1 {
-  font-size: var(--font-size-heading-md); /* 设置 H1 标题字体大小为 2rem */
-  font-weight: var(--font-weight-semibold); /* 设置 H1 标题字体粗细为 600 (Semi-bold) */
-  text-align: center; /* 设置 H1 标题文本居中对齐 */
-  margin-bottom: var(--spacing-stack-xl); /* 设置 H1 标题下外边距，使用 CSS 变量 --spacing-stack-xl */
-  letter-spacing: -0.025em; /* 设置 letter-spacing 调整字间距，使标题更紧凑 */
-}
-/* Alternative Layout - 备选布局 */
-[data-layout="alternative"] body {
-  font-family: 'Inter', system-ui, sans-serif; /* 备选布局下的字体栈 */
-  margin: 0; /* 清除备选布局 body 的外边距 */
-  padding: 20px; /* 设置备选布局 body 的内边距为 20px */
-  background-color: var(--background-body); /* 备选布局背景色，使用 CSS 变量 --background-body */
-  color: var(--text-primary); /* 备选布局文字颜色，使用 CSS 变量 --text-primary */
-  line-height: 1.5; /* 备选布局行高 */
+  font-size: var(--font-size-heading-md); /* Set H1 font size to 2rem */
+  /* 设置 H1 标题字体大小为 2rem */
+  font-weight: var(--font-weight-semibold); /* Set H1 font weight to 600 (Semi-bold) */
+  /* 设置 H1 标题字体粗细为 600 (Semi-bold) */
+  text-align: center; /* Set H1 text alignment to center */
+  /* 设置 H1 标题文本居中对齐 */
+  margin-bottom: var(--spacing-stack-xl); /* Set H1 bottom margin, using CSS variable --spacing-stack-xl */
+  /* 设置 H1 标题下外边距，使用 CSS 变量 --spacing-stack-xl */
+  letter-spacing: -0.025em; /* Set letter-spacing to adjust character spacing, making the title more compact */
+  /* 设置 letter-spacing 调整字间距，使标题更紧凑 */
 }
 
-[data-layout="alternative"] h1 {
-  text-align: center; /* 备选布局 H1 标题文本居中对齐 */
-  margin: 2rem 0; /* 备选布局 H1 标题上下外边距 */
-  color: var(--text-primary); /* 备选布局 H1 标题颜色，使用 CSS 变量 --text-primary */
-  font-weight: var(--font-weight-semibold); /* 备选布局 H1 标题字体粗细 */
+/* Alternative Layout - 备选布局 */
+/* Styles for alternative layout, applied when [data-layout="alternative"] attribute is present */
+/* 备选布局样式，当存在 [data-layout="alternative"] 属性时应用 */
+[data-layout="alternative"] body {
+  font-family: 'Inter', system-ui, sans-serif; /* Font stack for alternative layout */
+  /* 备选布局下的字体栈 */
+  margin: 0; /* Clear body margin for alternative layout */
+  /* 清除备选布局 body 的外边距 */
+  padding: 20px; /* Set body padding to 20px for alternative layout */
+  /* 设置备选布局 body 的内边距为 20px */
+  line-height: 1.5; /* Line height for alternative layout */
+  /* 备选布局行高 */
+  
 }
+
+/* [data-layout="alternative"] h1 { */
+  /* margin: 2rem 0; Top and bottom margin for H1 in alternative layout */
+  /* 备选布局 H1 标题上下外边距 */
+/* } */
