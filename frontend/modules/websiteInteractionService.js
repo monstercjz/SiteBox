@@ -9,6 +9,7 @@ import { confirmWebsiteDelete } from './websiteDeleteService.js';
 import websiteImportModalHandler from './websiteImportModalHandler.js';
 
 
+
 let currentEditWebsiteGroupId = null;
 let currentEditWebsiteId = null;
 const websiteOperationService = new WebsiteOperationService();
@@ -62,10 +63,12 @@ export async function editWebsite(groupId, websiteId) {
         groupId: groupId,
         callback: async ({ newWebsiteName, checknewWebsiteUrl, newWebsiteDescription, newWebsiteGroup }) => {
             const websiteSaveService = new WebsiteSaveService();
+            
             const result = await websiteSaveService.saveWebsite(websiteId, {
                 name: newWebsiteName,
                 url: checknewWebsiteUrl,
-                description: newWebsiteDescription
+                description: newWebsiteDescription,
+                groupId: newWebsiteGroup,
             }, newWebsiteGroup);
             if (result) {
                 renderDashboardWithData();

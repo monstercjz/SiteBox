@@ -176,18 +176,9 @@ export async function renderMainDashboardWithData() {
     dockerdashboard.classList.add('loading');
 
     try {
-        const startTime = performance.now();
-        console.log('time1', new Date(), 'Starting renderMainDashboardWithData');
-
         const data = await fetchMainDashboardData();
-        const fetchDataTime = performance.now() - startTime;
-        console.log('time2', new Date(), `Fetch data took ${fetchDataTime} ms`);
-
-        if (data) {
-            const renderStartTime = performance.now();
+        if (data) {          
             renderMainDashboard(data);
-            const renderTime = performance.now() - renderStartTime;
-            console.log('time7', new Date(), `Render main dashboard took ${renderTime} ms`);
             showNotification('数据加载成功', 'success');
         }
     } finally {

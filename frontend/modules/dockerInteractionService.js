@@ -58,6 +58,7 @@ export async function editDocker(groupId, dockerId) {
         callback: async ({ dockerName, newaccessIp, accessPort, dockerApiAddress,dockerApiPort,dockerDescription, groupSelect }) => {
             const dockerSaveService = new DockerSaveService();
             const dockerData = {  // 确保 dockerData 对象被正确构建
+                groupId: groupSelect,
                 name: dockerName,
                 url: newaccessIp,
                 urlPort: accessPort,
