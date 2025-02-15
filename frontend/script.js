@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // 实时刷新容器信息
     setInterval(async () => {
         await dockerUpdateInfoAll();
-    }, 30000);
+    }, 300000);
     // 初始化搜索功能
     const searchService = new SearchService();
 

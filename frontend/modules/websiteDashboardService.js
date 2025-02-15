@@ -69,7 +69,7 @@ function renderDashboard({ websites, groups }) {
         groupDiv.setAttribute('draggable', true);
         groupDiv.id = `website-group-${group.id}`;
         groupDiv.innerHTML = `
-            <h2 id="websiteGroupTitle-${group.id}">
+            <h2 id="websiteGroupTitle-${group.id}" class="website-group__title">
                 ${group?.name}
                 
                 
@@ -88,8 +88,8 @@ function renderDashboard({ websites, groups }) {
             websiteItem.innerHTML = `
                 
                 
-                ${website.faviconUrl ? `<img src="${website.faviconUrl.startsWith('http') ? website.faviconUrl : backendUrl + website.faviconUrl}" title="${website.name}" style="margin-right: 3px;">` : ''}
-                <a href="${website.url}" target="_blank">${website.name}</a>
+                ${website.faviconUrl ? `<img src="${website.faviconUrl.startsWith('http') ? website.faviconUrl : backendUrl + website.faviconUrl}" title="${website.name}" alt="Image" loading="lazy" style="margin-right: 3px;">` : ''}
+                <a href="${website.url}" target="_blank" class="website-item__link">${website.name}</a>
                 <span style="display:none;">${website.faviconUrl}</span>
             `;
             websiteList.appendChild(websiteItem);

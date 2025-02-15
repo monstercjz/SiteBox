@@ -6,5 +6,6 @@
 
 /* 搜索框容器 */
 .search-form {
+  will-change: transform;
   transition: all var(--transition-normal); /* 添加过渡效果 */
 }

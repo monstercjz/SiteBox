@@ -30,7 +30,7 @@ function renderDockerDashboard({ dockers, groups }) {
         groupDiv.setAttribute('draggable', true);
         groupDiv.id = `docker-group-${group.id}`; // Use docker-group prefix for IDs
         groupDiv.innerHTML = `
-            <h2 id="dockerGroupTitle-${group.id}">
+            <h2 id="dockerGroupTitle-${group.id}" class="docker-group__title">
                 ${group?.name}
                 
                 
@@ -50,12 +50,12 @@ function renderDockerDashboard({ dockers, groups }) {
             // <span class="docker-status">${docker.status}</span>
             dockerItem.innerHTML = `
                 <div class="docker-item-header">
-                    ${docker.faviconUrl ? `<img src="${docker.faviconUrl.startsWith('http') ? docker.faviconUrl : backendUrl + docker.faviconUrl}" title="${docker.name}" style="margin-right: 3px;">` : ''}
+                    ${docker.faviconUrl ? `<img src="${docker.faviconUrl.startsWith('http') ? docker.faviconUrl : backendUrl + docker.faviconUrl}" title="${docker.name}" alt="Image" loading="lazy" style="margin-right: 3px;">` : ''}
                     <div class="docker-item-title">
-                        <a href="${docker.url}:${docker.urlPort}" target="_blank">${docker.name}</a>
-                        <span class="docker-item-description">${docker.description}</span> 
+                        <a href="${docker.url}:${docker.urlPort}" target="_blank" class="docker-item__link">${docker.name}</a>
+                        <span class="docker-item-description">${docker.description}</span>
                     </div>
-                    <span class="docker-status-indicator"></span> 
+                    <span class="docker-status-indicator"></span>
                 </div>
                 <div class="docker-item-body">
                     <div class="docker-item-stats">
