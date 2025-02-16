@@ -17,24 +17,6 @@
       "name": "收集备用",
       "order": 3,
       "isCollapsible": false
-    },
-    {
-      "id": "290edd44-45c8-485c-a6e0-22f68fb7da5f",
-      "name": "1",
-      "order": 4,
-      "isCollapsible": false
-    },
-    {
-      "id": "473ccfca-4a6c-4572-add2-833d844cb59c",
-      "name": "2",
-      "order": 5,
-      "isCollapsible": false
-    },
-    {
-      "id": "0dd5511b-97f6-4220-94a0-626618c652a0",
-      "name": "3",
-      "order": 6,
-      "isCollapsible": false
     }
   ],
   "websites": [

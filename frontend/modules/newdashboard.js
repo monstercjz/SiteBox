@@ -46,14 +46,20 @@ async function fetchMainDashboardData() {
 function renderMainDashboard(data) {
     console.log(data);
     const websitedashboard = document.getElementById('websitedashboard');
+    const dockerdashboard = document.getElementById('dockerdashboard');//添加docker仪表盘
+    const main=document.querySelector('main');//添加主体添加main
     websitedashboard.innerHTML = '';
+    dockerdashboard.innerHTML = '';//清空dashboard
+    main.innerHTML = '';//清空主体
     const fragment = document.createDocumentFragment();    
     const websitefragment = renderDashboard(data,fragment); 
     console.log(fragment);
     websitedashboard.appendChild(websitefragment);
     const fragments = document.createDocumentFragment(); 
     const newfragment= renderDockerDashboard(data,fragments);
-    websitedashboard.appendChild(newfragment);
+    dockerdashboard.appendChild(newfragment);
+    main.appendChild(websitedashboard);//将website仪表盘添加到main
+    main.appendChild(dockerdashboard);//将docker仪表盘添加到main
     
 }
 
@@ -139,10 +145,11 @@ function renderDockerDashboard({ dockers, dockerGroups },fragment) {
             // <span class="docker-status">${docker.status}</span>
             dockerItem.innerHTML = `
                 <div class="docker-item-header">
-                    ${docker.faviconUrl ? `<img src="${docker.faviconUrl.startsWith('http') ? docker.faviconUrl : backendUrl + docker.faviconUrl}" title="${docker.name}" alt="Image" loading="lazy" style="margin-right: 3px;">` : ''}
                     <div class="docker-item-title">
+                        ${docker.faviconUrl ? `<img src="${docker.faviconUrl.startsWith('http') ? docker.faviconUrl : backendUrl + docker.faviconUrl}" title="${docker.name}" alt="Image" loading="lazy" ">` : ''}
+                    
                         <a href="${docker.url}:${docker.urlPort}" target="_blank" class="docker-item__link">${docker.name}</a>
-                        <span class="docker-item-description">${docker.description}</span>
+                        
                     </div>
                     <span class="docker-status-indicator"></span>
                 </div>

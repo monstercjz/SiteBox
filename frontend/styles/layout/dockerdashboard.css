@@ -1,0 +1,11 @@
+/* === dockerdashboard Layout Styles - 仪表盘布局样式 === */
+/* 作用：组织和导入仪表盘布局相关的子模块样式。 */
+/* 依赖： dockerdashboard 子模块 */
+/* dockerdashboard Styles - Main module - 仪表盘布局样式 - 主模块 - 引入子模块 */
+/*
+  仪表盘 (dockerdashboard) 组件的布局样式主模块，负责引入 dockerdashboard 目录下各个子模块的样式文件。
+  通过 @import 引入 base, header, sidebar, content, footer, responsive 等子模块，
+  实现仪表盘组件的模块化样式管理。
+*/
+@import './dockerdashboard/dockerdashboard-base.css'; /* 引入仪表盘基础布局模块 */
+@import './dockerdashboard/dockerdashboard-base-responsive.css'; /* 引入仪表盘基础布局模块 */

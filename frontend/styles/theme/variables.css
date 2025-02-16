@@ -64,8 +64,10 @@
   --size-component-xs: 2rem; /* 32px */
   --size-component-sm: 2.5rem; /* 40px */
   --size-component-md: 3rem; /* 48px */
-  --size-icon-md: 1.5rem; /* 16px */
-  --size-icon-lg: 2rem; /* 24px */
+  --size-icon-xxs：: 0.5rem;/* 8px */
+  --size-icon-xs: 0.75rem; /* 12px */
+  --size-icon-md: 1.5rem; /* 24px */
+  --size-icon-lg: 2rem; /* 32px */
   --size-button-sm: 2.5rem; /* 32px */
   --size-button-md: 3rem; /* 48px */
   --size-website-item-min-width: 10rem; /* Website item min height - 网站项最小高度 */
@@ -97,6 +99,7 @@
   /* 作用：定义字体大小和行高，基于 rem 单位和无单位值，灵活适应不同屏幕。 */
   /* 依赖：基准字体大小 */
   /* 字体大小 (rem单位) */
+  --font-size-xxs: 0.5rem; /* 8px */
   --font-size-xs: 0.75rem; /* 12px */
   --font-size-sm: 0.875rem; /* 14px */
   --font-size-body: 1rem; /* 16px */

@@ -57,7 +57,9 @@
 
 /* Import Layout styles - 引入布局模块样式 */
 @import 'layout/websitedashboard.css';
+@import 'layout/dockerdashboard.css';
 @import 'layout/website-list.css'; /* Import Website List layout module - 引入网站列表布局模块 */
+@import 'layout/docker-list.css'; /* Import Website List layout module - 引入网站列表布局模块 */
 @import 'layout/action-buttons.css';
 @import 'layout/toggle-actions.css';
 @import 'layout/notification.css';
@@ -81,6 +83,7 @@
 @import './modules/search-form.css';
 @import './modules/context-menu.css';
 @import './modules/group.css'; /* Import Group module - 引入分组模块 */
+@import './modules/docker-group.css'; /* Import Group module - 引入分组模块 */
 @import './modules/website-item.css'; /* Import Website Item module - 引入网站条目模块 */
 @import './modules/icon-button.css';
 @import './modules/actions-toggle-button.css';

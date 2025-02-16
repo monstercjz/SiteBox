@@ -100,11 +100,11 @@ async function saveGroupOrder() {
     try {
         // 获取所有group元素的id，去掉"group-"前缀得到完整UUID
         const groupIds = Array.from(document.querySelectorAll('.website-group'))
-            .map(group => group.id.replace('group-', ''));
+            .map(group => group.id.replace('website-group-', ''));
         
         // 根据当前顺序生成orderedGroups数组
         const orderedGroups = groupIds.map((id, index) => ({ id: id, order: index + 1 }));
-        
+        console.log('orderedGroups:', orderedGroups);
         const updateResponse = await reorderWebsiteGroups(orderedGroups);
         if (!updateResponse) {
             throw new Error('Failed to update group order');

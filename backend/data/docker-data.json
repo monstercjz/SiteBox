@@ -9,19 +9,13 @@
     {
       "id": "50744b74-5fe4-48d6-a4a9-a279fb6d6b83",
       "name": "docker2",
-      "order": 9,
+      "order": 2,
       "isCollapsible": false
     },
     {
       "id": "7455ef9f-0cbc-4c8b-a714-21217ae034e8",
       "name": "docker3",
-      "order": 10,
-      "isCollapsible": false
-    },
-    {
-      "id": "d6e7be79-0580-4186-84d3-dc8475230009",
-      "name": "docker4",
-      "order": 11,
+      "order": 3,
       "isCollapsible": false
     }
   ],
@@ -32,12 +26,12 @@
       "name": "alist",
       "url": "http://192.168.3.246",
       "urlPort": "2375",
-      "description": "alist",
+      "description": "monstercjz/admin1111111",
       "server": "192.168.3.246",
       "serverPort": "2375",
       "faviconUrl": "/data/icons/Docker.png.ico",
       "createdAt": "2025-02-12T22:53:59.471Z",
-      "updatedAt": "2025-02-14T18:47:10.642Z"
+      "updatedAt": "2025-02-15T21:34:24.766Z"
     },
     {
       "id": "2c2e3929-b452-4d7f-8b5b-914dab725de6",
@@ -63,7 +57,7 @@
       "description": "1231452",
       "faviconUrl": "/data/icons/Docker.png.ico",
       "createdAt": "2025-02-13T22:39:43.917Z",
-      "updatedAt": "2025-02-14T19:10:29.396Z"
+      "updatedAt": "2025-02-15T23:15:55.333Z"
     }
   ],
   "nextGroupId": 12,
