@@ -4,19 +4,33 @@
       "id": "8365b8e9-4e51-434b-a1dc-4632f424389b",
       "name": "自建网络",
       "order": 1,
-      "isCollapsible": false
+      "isCollapsible": false,
+      "groupType": "website-group",
+      "dashboardType": "website"
     },
     {
       "id": "1fd77e26-625e-419e-9940-85b59a14fcea",
       "name": "日常使用",
       "order": 2,
-      "isCollapsible": false
+      "isCollapsible": false,
+      "groupType": "website-group",
+      "dashboardType": "website"
     },
     {
       "id": "589756ee-86ee-4eb6-bab7-e51879422418",
       "name": "收集备用",
       "order": 3,
-      "isCollapsible": false
+      "isCollapsible": false,
+      "groupType": "website-group",
+      "dashboardType": "website"
+    },
+    {
+      "id": "bc3356d6-8572-4681-aced-33be14b0ddd4",
+      "name": "web1",
+      "order": 4,
+      "isCollapsible": false,
+      "groupType": "website-group",
+      "dashboardType": "website"
     }
   ],
   "websites": [
@@ -65,6 +79,6 @@
       "isAccessible": true
     }
   ],
-  "nextGroupId": 86,
+  "nextGroupId": 87,
   "nextWebsiteId": 7
 }

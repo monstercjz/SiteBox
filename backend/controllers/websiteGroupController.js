@@ -80,7 +80,8 @@ const deleteGroup = async (req, res) => {
  */
 const reorderGroups = async (req, res) => {
     try {
-        const groups = await websiteGroupService.reorderGroups(req.body); // 修改 service 调用
+        const reorderData = req.body; // 获取请求体数据
+        const groups = await websiteGroupService.reorderGroups(reorderData); // 修改 service 调用，传递 reorderData
         apiResponse.success(res, groups);
     } catch (error) {
         apiResponse.error(res, error.message);

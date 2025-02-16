@@ -13,6 +13,7 @@ export class GroupSaveService {
       } else {
         // 创建分组
         const newGroup = await (groupType === 'docker-group' ? createDockerGroup(groupData) : createWebsiteGroup(groupData));
+        //const newGroup = await (groupType === 'docker-group' ? createDockerGroup({...groupData, dashboardType: 'docker'}) : createWebsiteGroup({...groupData, dashboardType: 'website'})); // Pass dashboardType
         showNotification('分组创建成功', 'success');
         return newGroup;
       }

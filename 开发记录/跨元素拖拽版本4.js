@@ -1,10 +1,10 @@
+//在未添加2个group属性的时候，是正常运行了
 import { showNotification } from './websiteDashboardService.js';
 import { renderDashboardWithData} from './mainDashboardService.js';
-import { reorderWebsiteGroups,reorderDockerGroups, updateWebsiteGroup, updateDockerGroup } from './api.js';
+import { reorderWebsiteGroups,reorderDockerGroups } from './api.js';
 
 let websitedashboard;
 let saveTimeout;
-// let dashboardTypeUpdates = []; // Array to store dashboardType updates
 
 // 初始化拖拽排序功能
 function initGroupOrderService() {
@@ -99,7 +99,6 @@ function handleDrop(e) {
     } else if (targetGroup && targetDashboard && draggedDashboard) {
         // 跨 dashboard 移动，实现容器位置互换
         const targetGroupIndex = Array.from(targetDashboard.children).indexOf(targetGroup);
-        // const targetDashboardType = targetDashboard.id === 'websitedashboard' ? 'website' : 'docker'; // Determine target dashboardType
 
         if (targetGroupIndex !== -1) {
             targetDashboard.insertBefore(draggedGroup, targetGroup);
@@ -107,13 +106,6 @@ function handleDrop(e) {
             targetDashboard.appendChild(draggedGroup);
         }
         debouncedSaveGroupOrder(); // 保存排序
-
-        // Defer dashboardType update, add to updates array
-        // dashboardTypeUpdates.push({ 
-        //     groupId: draggedGroupId,
-        //     groupType: draggedGroupType,
-        //     dashboardType: targetDashboardType 
-        // });
     }
 }
 // 保存分组顺序
@@ -127,7 +119,12 @@ async function saveGroupOrder() {
 
     // 显示loading状态
     mainDashboard.classList.add('loading');
-
+    //排序逻辑已修改:
+    // 从 <main> 容器中获取所有 .website-group 和 .docker-group 元素。
+    // 将所有 group 元素合并到一个数组 allGroups 中。
+    // 按照 DOM 顺序对 allGroups 数组进行排序。
+    // 根据排序后的 allGroups 数组， 分别构建 orderedWebsiteGroups 和 orderedDockerGroups 数组。
+    // 分别调用 reorderWebsiteGroups 和 reorderDockerGroups API 进行保存
     try {
         // 获取所有 group 元素 (website-group 和 docker-group)
         const allGroups = Array.from(mainDashboard.querySelectorAll('.website-group, .docker-group'));
@@ -143,25 +140,10 @@ async function saveGroupOrder() {
         const orderedWebsiteGroups = [];
         const orderedDockerGroups = [];
         allGroups.forEach((group, index) => {
-            let dashboardType = '';
-            if (group.closest('#websitedashboard')) {
-                dashboardType = 'website';
-            } else if (group.closest('#dockerdashboard')) {
-                dashboardType = 'docker';
-            }
-
             if (group.classList.contains('website-group')) {
-                orderedWebsiteGroups.push({
-                    id: group.id.replace('website-group-', ''),
-                    order: index + 1,
-                    dashboardType: dashboardType // Dynamically determine dashboardType
-                });
+                orderedWebsiteGroups.push({ id: group.id.replace('website-group-', ''), order: index + 1 });
             } else if (group.classList.contains('docker-group')) {
-                orderedDockerGroups.push({
-                    id: group.id.replace('docker-group-', ''),
-                    order: index + 1,
-                    dashboardType: dashboardType // Dynamically determine dashboardType
-                });
+                orderedDockerGroups.push({ id: group.id.replace('docker-group-', ''), order: index + 1 });
             }
         });
 
@@ -176,22 +158,6 @@ async function saveGroupOrder() {
         if (!dockerUpdateResponse) {
             throw new Error('Failed to update docker group order');
         }
-        
-
-        // Process dashboardType updates
-        // const dashboardTypeUpdatePromises = dashboardTypeUpdates.map(update => {
-        //     const { groupId, groupType, dashboardType } = update;
-        //     const updatedGroupData = { dashboardType: dashboardType };
-        //     if (groupType === 'website-group') {
-        //         return updateWebsiteGroup(groupId, updatedGroupData);
-        //     } else if (groupType === 'docker-group') {
-        //         return updateDockerGroup(groupId, updatedGroupData);
-        //     }
-        // });
-
-        // await Promise.all(dashboardTypeUpdatePromises); // Batch update dashboardType
-
-        // dashboardTypeUpdates = []; // Clear updates array
 
         // 成功提示
         showNotification('分组顺序已保存', 'success');

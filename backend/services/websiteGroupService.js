@@ -55,11 +55,11 @@ const deleteGroup = async (groupId) => {
 
 /**
  * @description 网站分组排序
- * @param {Array<{id: string, order: number}>} reorderData - 包含分组ID和新顺序的数组
+ * @param {Array<{id: string, order: number, dashboardType?: string}>} reorderData - 包含分组ID、新顺序和仪表盘类型的数组
  * @returns {Promise<Array<Group|undefined>>} 返回排序后的网站分组数组
  */
 const reorderGroups = async (reorderData) => {
-  return abstractGroupService.reorderGroups(GROUP_DATA_FILE_PATH, reorderData);
+  return abstractGroupService.reorderGroups(GROUP_DATA_FILE_PATH, reorderData); // Directly pass reorderData
 };
 
 module.exports = {

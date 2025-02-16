@@ -80,9 +80,10 @@ export class GroupOperationService {
           console.log('Save button clicked');
           const newGroupName = modal.querySelector('#newGroupName').value;
           const groupTypeSelect = modal.querySelector('#groupTypeSelect').value; // 获取选择的分组类型
+          const dashboardType = groupTypeSelect.startsWith('website') ? 'website' : 'docker'; // Determine dashboardType
           console.log('groupTypeSelect:', groupTypeSelect);
           if (this.callback) {
-            await this.callback({ newGroupName, groupType: groupTypeSelect }); // 传递 groupType
+            await this.callback({ newGroupName, groupType: groupTypeSelect, dashboardType }); // Pass dashboardType to callback
           }
         } catch (error) {
           console.error('Failed to save group:', error);

@@ -63,3 +63,9 @@ h1 {
   /* margin: 2rem 0; Top and bottom margin for H1 in alternative layout */
   /* 备选布局 H1 标题上下外边距 */
 /* } */
+/* main { */
+  /* display: flex; */
+  /* flex-direction: column; 确保子元素按代码顺序排列 */
+  /* flex-direction:column-reverse ; */
+  /* min-height: 100vh; */
+/* } */

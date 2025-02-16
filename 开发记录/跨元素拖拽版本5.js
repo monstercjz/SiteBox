@@ -4,7 +4,7 @@ import { reorderWebsiteGroups,reorderDockerGroups, updateWebsiteGroup, updateDoc
 
 let websitedashboard;
 let saveTimeout;
-// let dashboardTypeUpdates = []; // Array to store dashboardType updates
+// let dashboardTypeUpdates = []; // Array to store dashboardType updates被我注释的
 
 // 初始化拖拽排序功能
 function initGroupOrderService() {
@@ -107,7 +107,7 @@ function handleDrop(e) {
             targetDashboard.appendChild(draggedGroup);
         }
         debouncedSaveGroupOrder(); // 保存排序
-
+//被我注释的
         // Defer dashboardType update, add to updates array
         // dashboardTypeUpdates.push({ 
         //     groupId: draggedGroupId,
@@ -176,8 +176,7 @@ async function saveGroupOrder() {
         if (!dockerUpdateResponse) {
             throw new Error('Failed to update docker group order');
         }
-        
-
+//被我注释的
         // Process dashboardType updates
         // const dashboardTypeUpdatePromises = dashboardTypeUpdates.map(update => {
         //     const { groupId, groupType, dashboardType } = update;

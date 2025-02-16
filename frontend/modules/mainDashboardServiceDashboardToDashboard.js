@@ -1,3 +1,6 @@
+/* === 根据dashboard结构，一个个dashboard进行渲染 === */
+/* 作用: 组织和导入仪表盘主样式，当前存档，原名newdashboard.js */
+/* 依赖： websitedashboard 子模块 */
 import { showNotification } from './websiteDashboardService.js';
 import { getWebsiteGroups, getWebsites, getAllDockers,getDockerGroups } from './api.js';
 import { setRandomGroupColors, resetGroupColors } from './utils.js';
@@ -79,6 +82,7 @@ function renderDashboard({ websites, websiteGroups },fragment) {
         groupDiv.classList.add('website-group');
         groupDiv.setAttribute('draggable', true);
         groupDiv.id = `website-group-${group.id}`;
+        groupDiv.setAttribute('groupType',group.groupType);
         groupDiv.innerHTML = `
             <h2 id="websiteGroupTitle-${group.id}" class="website-group__title">
                 ${group?.name}
@@ -123,7 +127,8 @@ function renderDockerDashboard({ dockers, dockerGroups },fragment) {
         const groupDiv = document.createElement('div');
         groupDiv.classList.add('docker-group'); // Use docker-group class
         groupDiv.setAttribute('draggable', true);
-        groupDiv.id = `docker-group-${group.id}`; // Use docker-group prefix for IDs
+        groupDiv.id = `docker-group-${group.id}`; // Use docker-group prefix for 
+        groupDiv.setAttribute('groupType',group.groupType);
         groupDiv.innerHTML = `
             <h2 id="dockerGroupTitle-${group.id}" class="docker-group__title">
                 ${group?.name}

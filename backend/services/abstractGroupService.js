@@ -6,6 +6,7 @@ const fileHandler = require('../utils/fileHandler');
 const { v4: uuidv4 } = require('uuid');
 const Joi = require('joi');
 const logger = require('../utils/logger');
+const { WEBSITE_GROUP_TYPE, DOCKER_GROUP_TYPE, WEBSITE_DASHBOARD_TYPE, DOCKER_DASHBOARD_TYPE } = require('../config/constants'); // Import all constants
 
 /**
  * @description 获取所有分组
@@ -16,7 +17,7 @@ const getAllGroups = async (dataFilepath) => {
   const data = await fileHandler.readData(dataFilepath);
   return (data.groups || [])
     .filter(group => typeof group.isCollapsible === 'boolean')
-    .map(group => new Group(group.id, group.name, group.order, group.isCollapsible));
+    .map(group => new Group(group.id, group.name, group.order, group.isCollapsible, group.groupType, group.dashboardType)); // Include dashboardType in getAllGroups
 };
 
 /**
@@ -24,19 +25,23 @@ const getAllGroups = async (dataFilepath) => {
  * @param {string} dataFilepath - 数据文件路径
  * @param {Object} groupData - 包含分组信息的对象
  * @param {string} groupData.name - 分组名称
- * @param {boolean} groupData.isCollapsible - 分组是否可折叠。
+ * @param {boolean} groupData.isCollapsible - 分组是否可折叠.
+ * @param {string} groupData.dashboardType - 仪表盘类型 (website 或 docker).
+ * @param {string} groupData.groupType - 分组类型 (website-group 或 docker-group).
  * @returns {Promise<Group>} 新创建的分组
  */
 const createGroup = async (dataFilepath, groupData) => {
   const schema = Joi.object({
     name: Joi.string().required(),
-    isCollapsible: Joi.boolean().required()
+    isCollapsible: Joi.boolean().required(),
+    dashboardType: Joi.string().valid(WEBSITE_DASHBOARD_TYPE, DOCKER_DASHBOARD_TYPE).required(), // 使用常量验证 dashboardType
+    groupType: Joi.string().valid(WEBSITE_GROUP_TYPE, DOCKER_GROUP_TYPE).required() // 使用常量验证 groupType
   });
 
   try {
     await schema.validateAsync(groupData);
     const data = await fileHandler.readData(dataFilepath);
-    const newGroup = new Group(uuidv4(), groupData.name, data.nextGroupId, groupData.isCollapsible);
+    const newGroup = new Group(uuidv4(), groupData.name, data.nextGroupId, groupData.isCollapsible, groupData.groupType, groupData.dashboardType); // 传递 dashboardType and groupType
     data.groups = [...(data.groups || []), newGroup];
     data.nextGroupId = data.nextGroupId + 1;
     await fileHandler.writeData(dataFilepath, data);
@@ -57,7 +62,7 @@ const createGroup = async (dataFilepath, groupData) => {
 const getGroupById = async (dataFilepath, groupId) => {
   const data = await fileHandler.readData(dataFilepath);
   const groupData = (data.groups || []).find((group) => group.id === groupId);
-  return groupData ? new Group(groupData.id, groupData.name, groupData.order, groupData.isCollapsible) : undefined;
+  return groupData ? new Group(groupData.id, groupData.name, groupData.order, groupData.isCollapsible, groupData.groupType, groupData.dashboardType) : undefined;
 };
 
 /**
@@ -70,9 +75,12 @@ const getGroupById = async (dataFilepath, groupId) => {
  * @returns {Promise<Group|undefined>} 返回更新后的分组，如果不存在则返回 undefined
  */
 const updateGroup = async (dataFilepath, groupId, groupData) => {
+  console.log("updateGroupiscalled");
   const schema = Joi.object({
     name: Joi.string().required(),
-    isCollapsible: Joi.boolean().required()
+    isCollapsible: Joi.boolean().required(),
+    dashboardType: Joi.string().valid(WEBSITE_DASHBOARD_TYPE, DOCKER_DASHBOARD_TYPE), // 使用常量验证 dashboardType (optional)
+    groupType: Joi.string().valid(WEBSITE_GROUP_TYPE, DOCKER_GROUP_TYPE) // 使用常量验证 groupType (optional)
   });
 
   try {
@@ -80,7 +88,7 @@ const updateGroup = async (dataFilepath, groupId, groupData) => {
     const data = await fileHandler.readData(dataFilepath);
     const updatedGroups = (data.groups || []).map(group => {
       if (group.id === groupId) {
-        return new Group(group.id, groupData.name, group.order, groupData.isCollapsible);
+        return new Group(group.id, groupData.name, group.order, groupData.isCollapsible, group.groupType, groupData.dashboardType); // 传递 groupType and dashboardType
       }
       return group;
     });
@@ -122,9 +130,12 @@ const deleteGroup = async (dataFilepath, groupId) => {
  * @returns {Promise<Array<Group|undefined>>} 返回排序后的分组数组
  */
 const reorderGroups = async (dataFilepath, reorderData) => {
+  console.log("reorderDataiscalled");
+  console.log(reorderData);
   const schema = Joi.array().items(Joi.object({
     id: Joi.string().uuid().required(),
-    order: Joi.number().integer().required()
+    order: Joi.number().integer().required(),
+    dashboardType: Joi.string().valid(WEBSITE_DASHBOARD_TYPE, DOCKER_DASHBOARD_TYPE) //  dashboardType is now optional
   })).required();
 
   try {
@@ -133,7 +144,9 @@ const reorderGroups = async (dataFilepath, reorderData) => {
     const groups = data.groups || [];
     const orderedGroups = reorderData.map(item => {
       const groupData = groups.find(group => group.id === item.id);
-      return groupData ? new Group(groupData.id, groupData.name, item.order, groupData.isCollapsible) : undefined;
+      // 保留现有的 dashboardType，如果 reorderData 中有新的 dashboardType，则使用新的
+      const dashboardType = item.dashboardType !== undefined ? item.dashboardType : groupData.dashboardType;
+      return groupData ? new Group(groupData.id, groupData.name, item.order, groupData.isCollapsible, groupData.groupType, dashboardType) : undefined;
     });
     data.groups = orderedGroups;
     await fileHandler.writeData(dataFilepath, data);

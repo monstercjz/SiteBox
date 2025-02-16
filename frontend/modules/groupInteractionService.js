@@ -14,11 +14,13 @@ export async function addGroup() {
         await groupOperationService.openGroupModal({
             mode: 'add',
             groupType: 'website-group', // 默认网站分组
-            callback: async ({ newGroupName, groupType }) => { // 接收 groupType
+            callback: async ({ newGroupName, groupType,dashboardType }) => { // 接收 groupType
                 const groupSaveService = new GroupSaveService();
                 const result = await groupSaveService.saveGroup(null, { // 传递 groupType
                     name: newGroupName,
-                    isCollapsible: false
+                    isCollapsible: false,
+                    groupType : groupType, // 分组类型：website-group 或 docker-group
+                    dashboardType: dashboardType // 仪表盘类型: website 或 docker
                 }, groupType);
                 if (result) {
                     renderDashboardWithData();
@@ -39,11 +41,13 @@ export async function editGroup(groupId, groupType) {
             groupId,
             mode: 'edit',
             groupType: groupType, // 使用传递的 groupType
-            callback: async ({ newGroupName, groupType }) => { // 接收 groupType
+            callback: async ({ newGroupName, groupType ,dashboardType}) => { // 接收 groupType
                 console.log('newGrouptype:', groupType);
                 const result = await groupSaveService.saveGroup(groupId, {
                     name: newGroupName,
-                    isCollapsible: false
+                    isCollapsible: false,
+                    groupType : groupType, // 分组类型：website-group 或 docker-group
+                    dashboardType: dashboardType // 仪表盘类型: website 或 docker
                 }, groupType); // 传递 groupType
                 if (result) {
                     // const groupDiv = document.querySelector(`#website-group-${groupId}`);

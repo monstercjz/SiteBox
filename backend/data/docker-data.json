@@ -2,21 +2,35 @@
   "groups": [
     {
       "id": "a9962f72-4460-4504-b1b9-c50b5e050aad",
-      "name": "dd",
-      "order": 1,
-      "isCollapsible": false
+      "name": "docker1",
+      "order": 5,
+      "isCollapsible": false,
+      "groupType": "docker-group",
+      "dashboardType": "docker"
     },
     {
       "id": "50744b74-5fe4-48d6-a4a9-a279fb6d6b83",
       "name": "docker2",
-      "order": 2,
-      "isCollapsible": false
+      "order": 6,
+      "isCollapsible": false,
+      "groupType": "docker-group",
+      "dashboardType": "docker"
     },
     {
       "id": "7455ef9f-0cbc-4c8b-a714-21217ae034e8",
       "name": "docker3",
-      "order": 3,
-      "isCollapsible": false
+      "order": 7,
+      "isCollapsible": false,
+      "groupType": "docker-group",
+      "dashboardType": "docker"
+    },
+    {
+      "id": "3e803c27-671f-428a-bcc9-157865e2a9fd",
+      "name": "docker4",
+      "order": 8,
+      "isCollapsible": false,
+      "groupType": "docker-group",
+      "dashboardType": "docker"
     }
   ],
   "dockers": [
@@ -60,6 +74,6 @@
       "updatedAt": "2025-02-15T23:15:55.333Z"
     }
   ],
-  "nextGroupId": 12,
+  "nextGroupId": 13,
   "nextDockerContainerId": 1
 }

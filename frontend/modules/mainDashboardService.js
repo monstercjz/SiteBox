@@ -1,7 +1,7 @@
 import { showNotification, renderWebsiteDashboardWithData } from './websiteDashboardService.js';
 import { renderDockerDashboardWithData } from './dockerDashboardService.js';
 
-import { renderMainDashboardWithData } from './newdashboard.js';
+import { renderMainDashboardWithData } from './mainDashboardServiceOrderFirst.js';
 
 export async function renderDashboardWithData() {
     renderMainDashboardWithData()

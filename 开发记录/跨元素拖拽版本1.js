@@ -1,10 +1,10 @@
+//没有实现数据保存功能，可以拖动，但是没有保存
 import { showNotification } from './websiteDashboardService.js';
 import { renderDashboardWithData} from './mainDashboardService.js';
-import { reorderWebsiteGroups,reorderDockerGroups, updateWebsiteGroup, updateDockerGroup } from './api.js';
+import { reorderWebsiteGroups } from './api.js';
 
 let websitedashboard;
 let saveTimeout;
-// let dashboardTypeUpdates = []; // Array to store dashboardType updates
 
 // 初始化拖拽排序功能
 function initGroupOrderService() {
@@ -99,7 +99,6 @@ function handleDrop(e) {
     } else if (targetGroup && targetDashboard && draggedDashboard) {
         // 跨 dashboard 移动，实现容器位置互换
         const targetGroupIndex = Array.from(targetDashboard.children).indexOf(targetGroup);
-        // const targetDashboardType = targetDashboard.id === 'websitedashboard' ? 'website' : 'docker'; // Determine target dashboardType
 
         if (targetGroupIndex !== -1) {
             targetDashboard.insertBefore(draggedGroup, targetGroup);
@@ -107,105 +106,45 @@ function handleDrop(e) {
             targetDashboard.appendChild(draggedGroup);
         }
         debouncedSaveGroupOrder(); // 保存排序
-
-        // Defer dashboardType update, add to updates array
-        // dashboardTypeUpdates.push({ 
-        //     groupId: draggedGroupId,
-        //     groupType: draggedGroupType,
-        //     dashboardType: targetDashboardType 
-        // });
     }
 }
 // 保存分组顺序
 async function saveGroupOrder() {
-    // 获取 main dashboard 元素
-    const mainDashboard = document.querySelector('main');
-    if (!mainDashboard) {
-        console.error('Main dashboard element not found');
+    if (!websitedashboard) {
+        console.error('websitedashboard element not found');
         return;
     }
 
     // 显示loading状态
-    mainDashboard.classList.add('loading');
+    websitedashboard.classList.add('loading');
 
     try {
-        // 获取所有 group 元素 (website-group 和 docker-group)
-        const allGroups = Array.from(mainDashboard.querySelectorAll('.website-group, .docker-group'));
-
-        // 按照 DOM 顺序排序 group 元素
-        allGroups.sort((a, b) => {
-            const indexA = Array.from(mainDashboard.children).indexOf(a);
-            const indexB = Array.from(mainDashboard.children).indexOf(b);
-            return indexA - indexB;
-        });
-
-        // 分别构建 website group 和 docker group 的排序数据
-        const orderedWebsiteGroups = [];
-        const orderedDockerGroups = [];
-        allGroups.forEach((group, index) => {
-            let dashboardType = '';
-            if (group.closest('#websitedashboard')) {
-                dashboardType = 'website';
-            } else if (group.closest('#dockerdashboard')) {
-                dashboardType = 'docker';
-            }
-
-            if (group.classList.contains('website-group')) {
-                orderedWebsiteGroups.push({
-                    id: group.id.replace('website-group-', ''),
-                    order: index + 1,
-                    dashboardType: dashboardType // Dynamically determine dashboardType
-                });
-            } else if (group.classList.contains('docker-group')) {
-                orderedDockerGroups.push({
-                    id: group.id.replace('docker-group-', ''),
-                    order: index + 1,
-                    dashboardType: dashboardType // Dynamically determine dashboardType
-                });
-            }
-        });
-
-        console.log('orderedWebsiteGroups:', orderedWebsiteGroups);
-        const websiteUpdateResponse = await reorderWebsiteGroups(orderedWebsiteGroups);
-        if (!websiteUpdateResponse) {
-            throw new Error('Failed to update website group order');
-        }
-
-        console.log('orderedDockerGroups:', orderedDockerGroups);
-        const dockerUpdateResponse = await reorderDockerGroups(orderedDockerGroups); // 调用 docker group 排序 API
-        if (!dockerUpdateResponse) {
-            throw new Error('Failed to update docker group order');
+        // 获取所有group元素的id，去掉"group-"前缀得到完整UUID
+        const groupIds = Array.from(document.querySelectorAll('.website-group'))
+            .map(group => group.id.replace('website-group-', ''));
+        
+        // 根据当前顺序生成orderedGroups数组
+        const orderedGroups = groupIds.map((id, index) => ({ id: id, order: index + 1 }));
+        console.log('orderedGroups:', orderedGroups);
+        const updateResponse = await reorderWebsiteGroups(orderedGroups);
+        if (!updateResponse) {
+            throw new Error('Failed to update group order');
         }
         
-
-        // Process dashboardType updates
-        // const dashboardTypeUpdatePromises = dashboardTypeUpdates.map(update => {
-        //     const { groupId, groupType, dashboardType } = update;
-        //     const updatedGroupData = { dashboardType: dashboardType };
-        //     if (groupType === 'website-group') {
-        //         return updateWebsiteGroup(groupId, updatedGroupData);
-        //     } else if (groupType === 'docker-group') {
-        //         return updateDockerGroup(groupId, updatedGroupData);
-        //     }
-        // });
-
-        // await Promise.all(dashboardTypeUpdatePromises); // Batch update dashboardType
-
-        // dashboardTypeUpdates = []; // Clear updates array
-
         // 成功提示
         showNotification('分组顺序已保存', 'success');
-
+        
         // 重新渲染dashboard
-        // await renderDashboardWithData();
-
+        await renderDashboardWithData();
+        
     } catch (error) {
         console.error('Failed to save group order:', error);
         showNotification('保存分组顺序失败: ' + error.message, 'error');
     } finally {
         // 移除loading状态
-        mainDashboard.classList.remove('loading');
+        websitedashboard.classList.remove('loading');
     }
 }
+
 // 初始化服务
 initGroupOrderService();
