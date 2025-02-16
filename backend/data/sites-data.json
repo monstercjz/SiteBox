@@ -1,14 +1,14 @@
 {
   "groups": [
     {
-      "id": "1fd77e26-625e-419e-9940-85b59a14fcea",
-      "name": "日常使用",
+      "id": "8365b8e9-4e51-434b-a1dc-4632f424389b",
+      "name": "自建网络",
       "order": 1,
       "isCollapsible": false
     },
     {
-      "id": "8365b8e9-4e51-434b-a1dc-4632f424389b",
-      "name": "自建网络",
+      "id": "1fd77e26-625e-419e-9940-85b59a14fcea",
+      "name": "日常使用",
       "order": 2,
       "isCollapsible": false
     },

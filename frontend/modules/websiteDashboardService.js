@@ -1,3 +1,6 @@
+/* === websitedashboard Main Styles - 仪表盘主样式 === */
+/* 作用: 组织和导入仪表盘主样式，当前存档，功能代码已经转移到newdashboard.js */
+/* 依赖： websitedashboard 子模块 */
 import {
     fetchDataFromApi,
     getWebsites,
