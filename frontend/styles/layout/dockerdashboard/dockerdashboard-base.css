@@ -12,15 +12,7 @@
   margin: 0 auto; /* 水平居中 */
   gap: var(--spacing-inline-xl); /* 设置子元素间距为 xl 尺寸 CSS 变量 */
 }
-[data-layout="alternative"] #dockerdashboard {
-  display: grid;
-  /* grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); */
-  gap: var(--spacing-inline-xl);
-  max-width: var(--size-websitedashboard-max-width);
-  margin: 0 auto;
-  padding: var(--spacing-inset-xl);
-  position: relative;
-}
+
 [data-layout="alternative"] #dockerdashboard {
   display: grid;
   /* grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); */
