@@ -67,7 +67,7 @@ export class SearchService {
    * @param {string} searchTerm - 搜索关键词
    */
   filterSites(searchTerm) {
-    const siteElements = document.querySelectorAll('.website-item');
+    const siteElements = document.querySelectorAll('.website-item');//需要扩大范围
     siteElements.forEach(element => {
       const siteLink = element.querySelector('a');
       const siteName = siteLink.textContent.toLowerCase();

@@ -1,24 +1,30 @@
-/* ===  仪表盘主样式 === */
-/* 作用: 组织和导入仪表盘主样式，以group全局order顺序为第一优先级，进行渲染 */
-/* 依赖： websitedashboard 子模块 */
-/**全局排序 ：
-在 renderMainDashboard 方法中，合并了 websiteGroups 和 dockerGroups，并通过 sort((a, b) => a.order - b.order) 对所有分组进行全局排序。
-这样可以确保无论分组属于哪个仪表盘，它们都能按照全局顺序正确显示。
-分离文档片段 ：
-使用两个文档片段（fragmentWebsite 和 fragmentDocker）分别存储 websitedashboard 和 dockerdashboard 的内容。
-最后再将文档片段一次性插入到对应的仪表盘中，减少直接操作 DOM 的次数。
-灵活性 ：
-通过 group.dashboardType 决定分组显示在哪个仪表盘。
-通过 group.groupType 决定分组的显示结构。
-性能优化 ：
-使用 DocumentFragment 减少直接操作 DOM 的次数，提升渲染性能。
-*/
-
 import { showNotification } from './websiteDashboardService.js';
 import { getWebsiteGroups, getWebsites, getAllDockers, getDockerGroups } from './api.js';
 import { setRandomGroupColors, resetGroupColors } from './utils.js';
 import { isRandomColorsEnabled } from './colorThemeService.js';
 import { backendUrl } from '../config.js';
+import {
+    WEBSITE_DASHBOARD_ID,
+    DOCKER_DASHBOARD_ID,
+    MAIN_CONTAINER_SELECTOR,
+    DASHBOARD_TYPE_WEBSITE,
+    DASHBOARD_TYPE_DOCKER,
+    GROUP_TYPE_WEBSITE,
+    GROUP_TYPE_DOCKER,
+    CLASS_WEBSITE_GROUP,
+    CLASS_DOCKER_GROUP,
+    CLASS_WEBSITE_ITEM,
+    CLASS_DOCKER_ITEM,
+    DATA_DESCRIPTION,
+    DATA_ITEM_ID,
+    DATA_GROUP_ID,
+    DATA_DOCKER_SERVER_IP,
+    DATA_DOCKER_SERVER_PORT,
+    DATA_DOCKER_URLPORT,
+    LOADING_CLASS,
+    NOTIFICATION_SUCCESS,
+    NOTIFICATION_ERROR,
+} from '../config.js';
 
 /**
  * 获取主仪表盘数据，包括网站和 Docker 数据
@@ -53,7 +59,7 @@ async function fetchMainDashboardData() {
         };
     } catch (error) {
         console.error('Failed to fetch main dashboard data:', error);
-        showNotification('数据加载失败，请重试', 'error');
+        showNotification('数据加载失败，请重试', NOTIFICATION_ERROR);
         return null;
     }
 }
@@ -63,14 +69,13 @@ async function fetchMainDashboardData() {
  * @param {object} data - 包含网站和 Docker 数据的对象
  */
 function renderMainDashboard(data) {
-    const websitedashboard = document.getElementById('websitedashboard');
-    const dockerdashboard = document.getElementById('dockerdashboard');
-    const main = document.querySelector('main');
+    // 定义常量，避免重复查找 DOM 元素
+    const WEBSITE_DASHBOARD = document.getElementById(WEBSITE_DASHBOARD_ID);
+    const DOCKER_DASHBOARD = document.getElementById(DOCKER_DASHBOARD_ID);
+    const MAIN_CONTAINER = document.querySelector(MAIN_CONTAINER_SELECTOR);
 
     // 清空现有内容
-    websitedashboard.innerHTML = '';
-    dockerdashboard.innerHTML = '';
-    main.innerHTML = '';
+    clearDashboard([WEBSITE_DASHBOARD, DOCKER_DASHBOARD, MAIN_CONTAINER]);
 
     // 合并所有分组，并按全局顺序排序
     const allGroups = [...data.websiteGroups, ...data.dockerGroups].sort((a, b) => a.order - b.order);
@@ -84,20 +89,42 @@ function renderMainDashboard(data) {
         const groupFragment = renderGroup(group, data.websites, data.dockers);
 
         // 根据 dashboardType 决定将分组添加到哪个仪表盘
-        if (group.dashboardType === 'website') {
+        if (group.dashboardType === DASHBOARD_TYPE_WEBSITE) {
             fragmentWebsite.appendChild(groupFragment);
-        } else if (group.dashboardType === 'docker') {
+        } else if (group.dashboardType === DASHBOARD_TYPE_DOCKER) {
             fragmentDocker.appendChild(groupFragment);
         }
     });
 
-    // 将分组添加到对应的仪表盘
-    websitedashboard.appendChild(fragmentWebsite);
-    dockerdashboard.appendChild(fragmentDocker);
+    // 将文档片段附加到仪表盘
+    appendFragmentsToDashboards({
+        [DASHBOARD_TYPE_WEBSITE]: { dashboard: WEBSITE_DASHBOARD, fragment: fragmentWebsite },
+        [DASHBOARD_TYPE_DOCKER]: { dashboard: DOCKER_DASHBOARD, fragment: fragmentDocker },
+    });
 
     // 将两个仪表盘添加到主体中
-    main.appendChild(websitedashboard);
-    main.appendChild(dockerdashboard);
+    MAIN_CONTAINER.appendChild(WEBSITE_DASHBOARD);
+    MAIN_CONTAINER.appendChild(DOCKER_DASHBOARD);
+}
+
+/**
+ * 清空仪表盘内容
+ * @param {HTMLElement[]} dashboards - 要清空的仪表盘元素数组
+ */
+function clearDashboard(dashboards) {
+    dashboards.forEach(dashboard => (dashboard.innerHTML = ''));
+}
+
+/**
+ * 将文档片段附加到仪表盘
+ * @param {Object} fragmentsMap - 仪表盘和文档片段的映射
+ */
+function appendFragmentsToDashboards(fragmentsMap) {
+    Object.values(fragmentsMap).forEach(({ dashboard, fragment }) => {
+        if (fragment.children.length > 0) {
+            dashboard.appendChild(fragment);
+        }
+    });
 }
 
 /**
@@ -109,9 +136,9 @@ function renderMainDashboard(data) {
  */
 function renderGroup(group, websites, dockers) {
     // 根据 groupType 决定分组的显示结构
-    if (group.groupType === 'website-group') {
+    if (group.groupType === GROUP_TYPE_WEBSITE) {
         return renderWebsiteGroup(group, websites);
-    } else if (group.groupType === 'docker-group') {
+    } else if (group.groupType === GROUP_TYPE_DOCKER) {
         return renderDockerGroup(group, dockers);
     }
     return null;
@@ -124,35 +151,17 @@ function renderGroup(group, websites, dockers) {
  * @returns {HTMLDivElement} - 网站分组的 DOM 元素
  */
 function renderWebsiteGroup(group, websites) {
-    const groupDiv = document.createElement('div');
-    groupDiv.classList.add('website-group');
-    groupDiv.setAttribute('draggable', true);
-    groupDiv.id = `website-group-${group.id}`;
-    groupDiv.setAttribute('groupType', group.groupType);
+    const groupDiv = createGroupElement(group, CLASS_WEBSITE_GROUP);
+    const listId = `website-list-${group.id}`;
+    const listContainer = createListContainer(listId);
 
-    groupDiv.innerHTML = `
-        <h2 id="websiteGroupTitle-${group.id}" class="website-group__title">
-            ${group?.name}
-        </h2>
-        <div class="website-list" id="website-list-${group.id}"></div>
-    `;
+    groupDiv.appendChild(listContainer);
 
-    const websiteList = groupDiv.querySelector(`#website-list-${group.id}`);
     websites
         ?.filter(website => website.groupId === group.id)
         .forEach(website => {
-            const websiteItem = document.createElement('div');
-            websiteItem.classList.add('website-item');
-            websiteItem.setAttribute('data-description', website.description);
-            websiteItem.setAttribute('data-website-id', website.id);
-            websiteItem.setAttribute('data-group-id', website.groupId);
-
-            websiteItem.innerHTML = `
-                ${website.faviconUrl ? `<img src="${website.faviconUrl.startsWith('http') ? website.faviconUrl : backendUrl + website.faviconUrl}" title="${website.name}" alt="Image" loading="lazy">` : ''}
-                <a href="${website.url}" target="_blank" class="website-item__link">${website.name}</a>
-            `;
-
-            websiteList.appendChild(websiteItem);
+            const websiteItem = createWebsiteItem(website);
+            listContainer.appendChild(websiteItem);
         });
 
     return groupDiv;
@@ -165,79 +174,144 @@ function renderWebsiteGroup(group, websites) {
  * @returns {HTMLDivElement} - Docker 分组的 DOM 元素
  */
 function renderDockerGroup(group, dockers) {
-    const groupDiv = document.createElement('div');
-    groupDiv.classList.add('docker-group');
-    groupDiv.setAttribute('draggable', true);
-    groupDiv.id = `docker-group-${group.id}`;
-    groupDiv.setAttribute('groupType', group.groupType);
+    const groupDiv = createGroupElement(group, CLASS_DOCKER_GROUP);
+    const listId = `docker-list-${group.id}`;
+    const listContainer = createListContainer(listId);
 
-    groupDiv.innerHTML = `
-        <h2 id="dockerGroupTitle-${group.id}" class="docker-group__title">
-            ${group?.name}
-        </h2>
-        <div class="docker-list" id="docker-list-${group.id}"></div>
-    `;
+    groupDiv.appendChild(listContainer);
 
-    const dockerList = groupDiv.querySelector(`#docker-list-${group.id}`);
     dockers
         ?.filter(docker => docker.groupId === group.id)
         .forEach(docker => {
-            const dockerItem = document.createElement('div');
-            dockerItem.classList.add('docker-item');
-            dockerItem.setAttribute('data-description', docker.description);
-            dockerItem.setAttribute('data-docker-id', docker.id);
-            dockerItem.setAttribute('data-group-id', docker.groupId);
-            dockerItem.setAttribute('data-docker-server-ip', docker.server);
-            dockerItem.setAttribute('data-docker-server-port', docker.serverPort);
-            dockerItem.setAttribute('data-docker-urlport', docker.urlPort);
-
-            dockerItem.innerHTML = `
-                <div class="docker-item-header">
-                    <div class="docker-item-title">
-                        ${docker.faviconUrl ? `<img src="${docker.faviconUrl.startsWith('http') ? docker.faviconUrl : backendUrl + docker.faviconUrl}" title="${docker.name}" alt="Image" loading="lazy">` : ''}
-                        <a href="${docker.url}:${docker.urlPort}" target="_blank" class="docker-item__link">${docker.name}</a>
-                    </div>
-                    <span class="docker-status-indicator"></span>
-                </div>
-                <div class="docker-item-body">
-                    <div class="docker-item-stats">
-                        <div class="docker-item-cpu">
-                            <span class="docker-item-stats-value">0%</span>
-                            <span class="docker-item-stats-label">处理器</span>
-                        </div>
-                        <div class="docker-item-networkIo-receive">
-                            <span class="docker-item-stats-value">0 GB</span>
-                            <span class="docker-item-stats-label">接收</span>
-                        </div>
-                        <div class="docker-item-networkIo-send">
-                            <span class="docker-item-stats-value">0 MB</span>
-                            <span class="docker-item-stats-label">发送</span>
-                        </div>
-                    </div>
-                </div>
-            `;
-
-            dockerList.appendChild(dockerItem);
+            const dockerItem = createDockerItem(docker);
+            listContainer.appendChild(dockerItem);
         });
 
     return groupDiv;
 }
 
 /**
+ * 创建分组的 DOM 元素
+ * @param {object} group - 分组对象
+ * @param {string} className - 分组的 CSS 类名
+ * @returns {HTMLDivElement} - 分组的 DOM 元素
+ */
+function createGroupElement(group, className) {
+    const groupDiv = document.createElement('div');
+    groupDiv.classList.add(className);
+    groupDiv.setAttribute('draggable', true);
+    groupDiv.id = `${group.id}`;
+    groupDiv.setAttribute('groupType', group.groupType);
+
+    groupDiv.innerHTML = `
+        <h2 id="${className}-title-${group.id}" class="${className}__title">
+            ${group?.name}
+        </h2>
+    `;
+
+    return groupDiv;
+}
+
+/**
+ * 创建分组内的列表容器
+ * @param {string} listId - 列表容器的 ID
+ * @returns {HTMLDivElement} - 列表容器的 DOM 元素
+ */
+function createListContainer(listId) {
+    const listContainer = document.createElement('div');
+    listContainer.classList.add(`${listId.split('-')[0]}-list`);
+    listContainer.id = listId;
+    return listContainer;
+}
+
+/**
+ * 创建网站项的 DOM 元素
+ * @param {object} website - 网站对象
+ * @returns {HTMLDivElement} - 网站项的 DOM 元素
+ */
+function createWebsiteItem(website) {
+    const websiteItem = document.createElement('div');
+    websiteItem.classList.add(CLASS_WEBSITE_ITEM);
+    websiteItem.setAttribute(DATA_DESCRIPTION, website.description);
+    websiteItem.setAttribute(DATA_ITEM_ID, website.id);
+    websiteItem.setAttribute(DATA_GROUP_ID, website.groupId);
+
+    websiteItem.innerHTML = `
+        ${website.faviconUrl ? `<img src="${getFullUrl(website.faviconUrl)}" title="${website.name}" alt="Image" loading="lazy">` : ''}
+        <a href="${website.url}" target="_blank" class="website-item__link">${website.name}</a>
+    `;
+
+    return websiteItem;
+}
+
+/**
+ * 创建 Docker 项的 DOM 元素
+ * @param {object} docker - Docker 容器对象
+ * @returns {HTMLDivElement} - Docker 项的 DOM 元素
+ */
+function createDockerItem(docker) {
+    const dockerItem = document.createElement('div');
+    dockerItem.classList.add(CLASS_DOCKER_ITEM);
+    dockerItem.setAttribute(DATA_DESCRIPTION, docker.description);
+    dockerItem.setAttribute(DATA_ITEM_ID, docker.id);
+    dockerItem.setAttribute(DATA_GROUP_ID, docker.groupId);
+    dockerItem.setAttribute(DATA_DOCKER_SERVER_IP, docker.server);
+    dockerItem.setAttribute(DATA_DOCKER_SERVER_PORT, docker.serverPort);
+    dockerItem.setAttribute(DATA_DOCKER_URLPORT, docker.urlPort);
+
+    dockerItem.innerHTML = `
+        <div class="docker-item-header">
+            <div class="docker-item-title">
+                ${docker.faviconUrl ? `<img src="${getFullUrl(docker.faviconUrl)}" title="${docker.name}" alt="Image" loading="lazy">` : ''}
+                <a href="${docker.url}:${docker.urlPort}" target="_blank" class="docker-item__link">${docker.name}</a>
+            </div>
+            <span class="docker-status-indicator"></span>
+        </div>
+        <div class="docker-item-body">
+            <div class="docker-item-stats">
+                <div class="docker-item-cpu">
+                    <span class="docker-item-stats-value">0%</span>
+                    <span class="docker-item-stats-label">处理器</span>
+                </div>
+                <div class="docker-item-networkIo-receive">
+                    <span class="docker-item-stats-value">0 GB</span>
+                    <span class="docker-item-stats-label">接收</span>
+                </div>
+                <div class="docker-item-networkIo-send">
+                    <span class="docker-item-stats-value">0 MB</span>
+                    <span class="docker-item-stats-label">发送</span>
+                </div>
+            </div>
+        </div>
+    `;
+
+    return dockerItem;
+}
+
+/**
+ * 获取完整的 URL
+ * @param {string} url - 原始 URL
+ * @returns {string} - 完整的 URL
+ */
+function getFullUrl(url) {
+    return url.startsWith('http') ? url : backendUrl + url;
+}
+
+/**
  * 使用数据渲染主仪表盘（包括网站和 Docker）
  */
 export async function renderMainDashboardWithData() {
-    const websitedashboard = document.getElementById('websitedashboard');
-    websitedashboard.classList.add('loading');
+    const WEBSITE_DASHBOARD = document.getElementById(WEBSITE_DASHBOARD_ID);
+    WEBSITE_DASHBOARD.classList.add(LOADING_CLASS);
 
     try {
         const data = await fetchMainDashboardData();
         if (data) {
             renderMainDashboard(data);
-            showNotification('数据加载成功', 'success');
+            showNotification('数据加载成功', NOTIFICATION_SUCCESS);
         }
     } finally {
-        websitedashboard.classList.remove('loading');
+        WEBSITE_DASHBOARD.classList.remove(LOADING_CLASS);
 
         if (isRandomColorsEnabled()) {
             setRandomGroupColors();

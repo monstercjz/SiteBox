@@ -3,142 +3,202 @@ import { fetchAndRenderGroupSelect } from './groupSelectDataService.js';
 import { getWebsiteGroups, createWebsiteGroup } from './api.js';
 import { showNotification } from './websiteDashboardService.js';
 import { validateAndCompleteUrl } from './utils.js';
+import {
+    DOCKER_MODAL_ID,
+    INPUT_ID_DOCKER_NAME,
+    INPUT_ID_ACCESS_IP,
+    INPUT_ID_ACCESS_PORT,
+    INPUT_ID_DOCKER_API_ADDRESS,
+    INPUT_ID_DOCKER_API_PORT,
+    INPUT_ID_DOCKER_DESCRIPTION,
+    SELECT_ID_GROUP_SELECT,
+    DATA_ITEM_ID,
+    DATA_DOCKER_SERVER_IP,
+    DATA_DOCKER_SERVER_PORT,
+    DATA_DESCRIPTION,
+    DATA_GROUP_ID,
+    MODAL_TITLE_EDIT_DOCKER,
+    MODAL_TITLE_ADD_DOCKER,
+    BUTTON_CLASS_SAVE,
+    BUTTON_CLASS_CANCEL,
+    ARIA_LABEL_CLOSE_MODAL,
+    ARIA_LABEL_SAVE,
+    ARIA_LABEL_CANCEL,
+    CLASS_DOCKER_ITEM,
+} from '../config.js';
+
 export class DockerOperationService {
-  constructor() {
-    this.currentWebsiteId = null;
-    this.callback = null;
-    this.modalId = 'dockerModal';
-    
-  }
-
-  cleanup() {
-    this.currentWebsiteId = null;
-    this.callback = null;
-  }
-
-  async openDockerModal(options) {
-    console.log('opendockerModal', options);
-    try {
-      const { dockerId, mode, callback, groupId } = options;
-      
-      if (dockerId && typeof dockerId !== 'string') {
-        throw new Error('dockerId must be a string when provided');
-      }
-      if (!['edit', 'add'].includes(mode)) {
-        throw new Error('Invalid mode');
-      }
-      if (typeof callback !== 'function') {
-        throw new Error('Invalid callback');
-      }
-      if (mode === 'add' && dockerId) {
-          throw new Error('dockerId should be empty in add mode');
-      }
-
-      this.currentWebsiteId = dockerId;
-      this.callback = callback;
-
-      let validatedGroupId = groupId;
-      
-      await this.setupWebsiteModal(mode, dockerId, validatedGroupId);
-
-    } catch (error) {
-      console.error('Failed to open website modal:', error);
-      this.cleanup();
-      throw error;
-    }
-  }
-
-  async setupWebsiteModal(mode, dockerId, groupId) {
-    const modalContent = this.createModalContent(mode);
-    modalInteractionService.createModal(this.modalId, modalContent);
-    const groupSelect = document.getElementById('groupSelect');
-    if (groupSelect) {
-        await fetchAndRenderGroupSelect('docker');
+    constructor() {
+        this.currentWebsiteId = null;
+        this.callback = null;
+        this.modalId = DOCKER_MODAL_ID; // 使用常量
     }
 
-    if (mode === 'edit') {
-      this.setupEditDockerModalData(this.modalId, dockerId, groupId);
+    /**
+     * 清理实例状态
+     */
+    cleanup() {
+        this.currentWebsiteId = null;
+        this.callback = null;
     }
 
-    modalInteractionService.openModal(this.modalId, {
-      onSave: async (modal) => {
+    /**
+     * 打开 Docker 操作模态框
+     * @param {object} options - 配置选项
+     * @param {string} options.dockerId - Docker 容器 ID
+     * @param {'edit'|'add'} options.mode - 操作模式
+     * @param {function} options.callback - 保存回调函数
+     * @param {string} options.groupId - 分组 ID
+     * @throws {Error} 如果参数无效或操作失败
+     */
+    async openDockerModal(options) {
+        console.log('opendockerModal', options);
         try {
-            const dockerName = modal.querySelector('#dockerName').value;
-            const accessIp = modal.querySelector('#accessIp').value;
-            const accessPort = modal.querySelector('#accessPort').value;
-            const dockerApiAddress = modal.querySelector('#dockerApiAddress').value;
-            const dockerApiPort = modal.querySelector('#dockerApiPort').value;
-            const dockerDescription = modal.querySelector('#dockerDescription').value;
-            const groupSelect = modal.querySelector('#groupSelect').value; // 获取分组选择的值
-          if (this.callback) {
-            const newaccessIp = validateAndCompleteUrl(accessIp);
-            await this.callback({ dockerName, newaccessIp, accessPort, dockerApiAddress,dockerApiPort, dockerDescription,groupSelect });
-          }
+            const { dockerId, mode, callback, groupId } = options;
+
+            if (dockerId && typeof dockerId !== 'string') {
+                throw new Error('dockerId must be a string when provided');
+            }
+            if (!['edit', 'add'].includes(mode)) {
+                throw new Error('Invalid mode');
+            }
+            if (typeof callback !== 'function') {
+                throw new Error('Invalid callback');
+            }
+            if (mode === 'add' && dockerId) {
+                throw new Error('dockerId should be empty in add mode');
+            }
+
+            this.currentWebsiteId = dockerId;
+            this.callback = callback;
+            let validatedGroupId = groupId;
+
+            await this.setupWebsiteModal(mode, dockerId, validatedGroupId);
         } catch (error) {
-          console.error('Failed to save docker:', error);
-          throw error;
-        } finally {
-          modalInteractionService.closeModal(this.modalId);
-          this.cleanup();
+            console.error('Failed to open website modal:', error);
+            this.cleanup();
+            throw error;
         }
-      },
-      onCancel: () => {
-        modalInteractionService.closeModal(this.modalId);
-        this.cleanup();
-      }
-    });
-  }
+    }
 
-  createModalContent(mode) {
-    const title = mode === 'edit' ? '编辑 Docker 容器' : '添加 Docker 容器';
-    return `
-        <div class="modal-content">
-            <span class="close close-modal-button" aria-label="关闭模态框">&times;</span>
-            <h2>${title}</h2>
-            <input type="text" id="dockerName" placeholder="容器名称">
-            <input type="text" id="accessIp" placeholder="容器访问地址">
-            <input type="text" id="accessPort" placeholder="容器访问端口">
-            <input type="text" id="dockerApiAddress" placeholder=" Docker API 地址">
-            <input type="text" id="dockerApiPort" placeholder=" Docker API 端口">
-            <input type="text" id="dockerDescription" placeholder="容器描述">
-            <select id="groupSelect"></select>
-            <div class="modal-buttons-container">
-                <button class="save-modal-button" aria-label="保存">保存</button>
-                <button class="cancel-modal-button" aria-label="取消">取消</button>
+    /**
+     * 设置并打开 Docker 模态框
+     * @param {'edit'|'add'} mode - 操作模式
+     * @param {string} dockerId - Docker 容器 ID
+     * @param {string} groupId - 分组 ID
+     */
+    async setupWebsiteModal(mode, dockerId, groupId) {
+        const modalContent = this.createModalContent(mode);
+        modalInteractionService.createModal(this.modalId, modalContent);
+
+        const groupSelect = document.getElementById(SELECT_ID_GROUP_SELECT);
+        if (groupSelect) {
+            await fetchAndRenderGroupSelect('docker');
+        }
+
+        if (mode === 'edit') {
+            this.setupEditDockerModalData(this.modalId, dockerId, groupId);
+        }
+
+        modalInteractionService.openModal(this.modalId, {
+            onSave: async (modal) => {
+                try {
+                    const dockerName = modal.querySelector(`#${INPUT_ID_DOCKER_NAME}`).value;
+                    const accessIp = modal.querySelector(`#${INPUT_ID_ACCESS_IP}`).value;
+                    const accessPort = modal.querySelector(`#${INPUT_ID_ACCESS_PORT}`).value;
+                    const dockerApiAddress = modal.querySelector(`#${INPUT_ID_DOCKER_API_ADDRESS}`).value;
+                    const dockerApiPort = modal.querySelector(`#${INPUT_ID_DOCKER_API_PORT}`).value;
+                    const dockerDescription = modal.querySelector(`#${INPUT_ID_DOCKER_DESCRIPTION}`).value;
+                    const groupSelectValue = modal.querySelector(`#${SELECT_ID_GROUP_SELECT}`).value;
+
+                    if (this.callback) {
+                        const newAccessIp = validateAndCompleteUrl(accessIp);
+                        console.log('newAccessIp', newAccessIp);
+                        await this.callback({
+                            dockerName,
+                            newAccessIp,
+                            accessPort,
+                            dockerApiAddress,
+                            dockerApiPort,
+                            dockerDescription,
+                            groupSelect: groupSelectValue,
+                        });
+                    }
+                } catch (error) {
+                    console.error('Failed to save docker:', error);
+                    throw error;
+                } finally {
+                    modalInteractionService.closeModal(this.modalId);
+                    this.cleanup();
+                }
+            },
+            onCancel: () => {
+                modalInteractionService.closeModal(this.modalId);
+                this.cleanup();
+            },
+        });
+    }
+
+    /**
+     * 创建模态框内容
+     * @param {'edit'|'add'} mode - 操作模式
+     * @returns {string} - 模态框的 HTML 内容
+     */
+    createModalContent(mode) {
+        const title = mode === 'edit' ? MODAL_TITLE_EDIT_DOCKER : MODAL_TITLE_ADD_DOCKER;
+        return `
+            <div class="modal-content">
+                <span class="close close-modal-button" aria-label="${ARIA_LABEL_CLOSE_MODAL}">&times;</span>
+                <h2>${title}</h2>
+                <input type="text" id="${INPUT_ID_DOCKER_NAME}" placeholder="容器名称">
+                <input type="text" id="${INPUT_ID_ACCESS_IP}" placeholder="容器访问地址">
+                <input type="text" id="${INPUT_ID_ACCESS_PORT}" placeholder="容器访问端口">
+                <input type="text" id="${INPUT_ID_DOCKER_API_ADDRESS}" placeholder="Docker API 地址">
+                <input type="text" id="${INPUT_ID_DOCKER_API_PORT}" placeholder="Docker API 端口">
+                <input type="text" id="${INPUT_ID_DOCKER_DESCRIPTION}" placeholder="容器描述">
+                <select id="${SELECT_ID_GROUP_SELECT}"></select>
+                <div class="modal-buttons-container">
+                    <button class="${BUTTON_CLASS_SAVE}" aria-label="${ARIA_LABEL_SAVE}">保存</button>
+                    <button class="${BUTTON_CLASS_CANCEL}" aria-label="${ARIA_LABEL_CANCEL}">取消</button>
+                </div>
             </div>
-        </div>
-    `;
-  }
+        `;
+    }
 
-  async setupEditDockerModalData(modalId, dockerId, groupId) {
-    const modal = document.getElementById(modalId);
-    if (!modal) return;
+    /**
+     * 设置编辑 Docker 模态框数据
+     * @param {string} modalId - 模态框 ID
+     * @param {string} dockerId - Docker 容器 ID
+     * @param {string} groupId - 分组 ID
+     */
+    async setupEditDockerModalData(modalId, dockerId, groupId) {
+        const modal = document.getElementById(modalId);
+        if (!modal) return;
 
-    modal.setAttribute('data-docker-id', dockerId);
-    const { dockerName, accessIp, accessPort, dockerApiAddress,dockerApiPort, dockerDescription,groupSelect } = this.getDockerInfo(dockerId);  
-    modalInteractionService.setModalData(modalId, {
-        dockerName: dockerName,
-        accessIp: accessIp,
-        accessPort: accessPort,
-        dockerApiAddress: dockerApiAddress,
-        dockerApiPort: dockerApiPort,
-        dockerDescription: dockerDescription,
-        groupSelect: groupSelect
+        modal.setAttribute(DATA_ITEM_ID, dockerId);
 
-    });
-    // const groupSelect = modal.querySelector('groupSelect');// 删除了一个#在groupSelect前面
-    // if (groupSelect) {
-    //     const option = document.createElement('option');
-    //     option.value = groupId;
-    //     option.textContent = groupId;
-    //     groupSelect.appendChild(option);
-    //     groupSelect.value = groupId;
-    // }
-  }
+        const { dockerName, accessIp, accessPort, dockerApiAddress, dockerApiPort, dockerDescription, groupSelect } =
+            this.getDockerInfo(dockerId);
 
+        modalInteractionService.setModalData(modalId, {
+            dockerName,
+            accessIp,
+            accessPort,
+            dockerApiAddress,
+            dockerApiPort,
+            dockerDescription,
+            groupSelect,
+        });
+    }
+
+    /**
+     * 获取 Docker 容器信息
+     * @param {string} dockerId - Docker 容器 ID
+     * @returns {object} - Docker 容器信息
+     */
     getDockerInfo(dockerId) {
         console.log('getDockerInfo dockerId:', dockerId);
-        const dockerItem = document.querySelector(`.docker-item[data-docker-id="${dockerId}"]`);
+        const dockerItem = document.querySelector(`.${CLASS_DOCKER_ITEM}[${DATA_ITEM_ID}="${dockerId}"]`);
         if (!dockerItem) {
             console.error(`Docker item with id ${dockerId} not found`);
             return {};
@@ -149,16 +209,25 @@ export class DockerOperationService {
             console.error(`<a> element not found within docker item with id ${dockerId}`);
             return {};
         }
+
         const dockerName = dockerNameElement.textContent;
-        const accessUrl = dockerItem.querySelector('a').getAttribute('href');
+        const accessUrl = dockerNameElement.getAttribute('href');
         const urlObj = new URL(accessUrl);
         const accessIp = `${urlObj.protocol}//${urlObj.hostname}`; // 提取协议和主机名或 IP 地址
         const accessPort = urlObj.port; // 假设 href 格式为 "ip:port"
-        const dockerApiAddress = dockerItem.getAttribute('data-docker-server-ip');
-        const dockerApiPort = dockerItem.getAttribute('data-docker-server-port');
-        const dockerDescription = dockerItem.getAttribute('data-description');
-        const groupSelect = dockerItem.getAttribute('data-group-id');
+        const dockerApiAddress = dockerItem.getAttribute(DATA_DOCKER_SERVER_IP);
+        const dockerApiPort = dockerItem.getAttribute(DATA_DOCKER_SERVER_PORT);
+        const dockerDescription = dockerItem.getAttribute(DATA_DESCRIPTION);
+        const groupSelect = dockerItem.getAttribute(DATA_GROUP_ID);
 
-        return { dockerName, accessIp, accessPort, dockerApiAddress,dockerApiPort, dockerDescription,groupSelect };
+        return {
+            dockerName,
+            accessIp,
+            accessPort,
+            dockerApiAddress,
+            dockerApiPort,
+            dockerDescription,
+            groupSelect,
+        };
     }
 }

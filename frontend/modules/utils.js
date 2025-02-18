@@ -1,5 +1,5 @@
 // utils.js - 工具函数模块
-
+import { RANDOM_COLORS } from "../config.js";
 /**
  * @function validateAndCompleteUrl
  * @description URL 校验和补全函数，校验 URL 格式是否有效，并补全 URL 协议头
@@ -114,22 +114,11 @@ function generateTooltipContent(website) {
  * @description 为每个分组标题设置随机颜色
  */
 function setRandomGroupColors() {
-  const colors = [
-    '#2563eb', // blue
-    '#7c3aed', // purple
-    '#db2777', // pink
-    '#059669', // emerald
-    '#d97706', // amber
-    '#dc2626', // red
-    '#4f46e5', // indigo
-    '#0891b2', // cyan
-    '#ea580c', // orange
-    '#7e22ce'  // violet
-  ];
   
-  const groupTitles = document.querySelectorAll('.website-group h2');
+  //从config.js导入RANDOM_COLORS
+  const groupTitles = document.querySelectorAll('.website-group h2,.docker-group h2');
   groupTitles.forEach(title => {
-    const color = colors[Math.floor(Math.random() * colors.length)];
+    const color = RANDOM_COLORS[Math.floor(Math.random() * RANDOM_COLORS.length)];
     title.style.setProperty('--group-title-random-color', color);
   });
 }

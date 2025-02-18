@@ -24,7 +24,7 @@ const config = {
  */
 export class WebsiteTooltipService {
   constructor() {
-    this.currentWebsiteId = null; // 当前悬停的网站 ID
+    this.currentitemId = null; // 当前悬停的网站 ID
     this.timeouts = {}; // 存储 timeout 定时器
     this.pendingRequests = new Map(); // 存储正在进行的请求 Promise
     this.domService = new TooltipDomService(); // DOM 操作服务
@@ -38,9 +38,9 @@ export class WebsiteTooltipService {
     // 使用事件委托处理鼠标移出事件，避免为每个 tooltip 元素绑定事件监听器
     document.body.addEventListener('mouseout', (e) => {
       if (this.currentTooltip && !this.currentTooltip.contains(e.relatedTarget)) {
-        const relatedTargetWebsiteId = e.relatedTarget?.dataset?.websiteId;
+        const relatedTargetitemId = e.relatedTarget?.dataset?.itemId;
         // 鼠标移出 tooltip 且移出的目标不是同个网站链接，则清除 tooltip
-        if (relatedTargetWebsiteId !== this.currentWebsiteId) {
+        if (relatedTargetitemId !== this.currentitemId) {
           this._clearTimeouts();
           this._cleanupTooltip(this.currentTooltip);
         }
@@ -54,16 +54,17 @@ export class WebsiteTooltipService {
    * @param {HTMLElement} target 悬停的目标元素
    */
   async handleWebsiteHover(target) {
-    if (!target?.dataset?.websiteId) return;
+    console.log(target);
+    if (!target?.dataset?.itemId) return;
 
-    const websiteId = target.dataset.websiteId;
-    
+    const itemId = target.dataset.itemId;
+    console.log('handleWebsiteHover:', itemId);
     this._clearTimeouts(); // 清除所有 timeout 定时器和未完成请求
     this._preloadAdjacentData(target); // 预加载相邻网站数据
 
     // 使用 debounceDelay 防抖延迟处理鼠标悬停事件，避免频繁触发
     this.timeouts.debounce = setTimeout(() => {
-      this._handleHoverDebounced(target, websiteId);
+      this._handleHoverDebounced(target, itemId);
     }, config.debounceDelay);
   }
 
@@ -84,14 +85,14 @@ export class WebsiteTooltipService {
    * @method _handleHoverDebounced
    * @description 防抖处理鼠标悬停事件
    * @param {HTMLElement} target 悬停的目标元素
-   * @param {string} websiteId 网站 ID
+   * @param {string} itemId 网站 ID
    * @private
    */
-  async _handleHoverDebounced(target, websiteId) {
+  async _handleHoverDebounced(target, itemId) {
     // 使用 hoverDelay 延迟显示 tooltip，避免快速悬停导致 tooltip 闪烁
     this.timeouts.hover = setTimeout(async () => {
       try {
-        const website = await this._getWebsiteData(websiteId);
+        const website = await this._getWebsiteData(itemId);
         if (website) {
           this._showTooltip(target, website);
         }
@@ -106,27 +107,27 @@ export class WebsiteTooltipService {
   /**
    * @method _getWebsiteData
    * @description 获取网站数据，优先从缓存中获取，如果缓存不存在则从 API 获取
-   * @param {string} websiteId 网站 ID
+   * @param {string} itemId 网站 ID
    * @returns {Promise<Website>} 网站数据 Promise
    * @private
    */
-  async _getWebsiteData(websiteId) {
+  async _getWebsiteData(itemId) {
     // 检查是否有正在进行的请求，避免重复请求
-    if (this.pendingRequests.has(websiteId)) {
-      return this.pendingRequests.get(websiteId);
+    if (this.pendingRequests.has(itemId)) {
+      return this.pendingRequests.get(itemId);
     }
 
     // 尝试从缓存中获取数据
-    const cachedData = this.cacheService.getCachedData(websiteId);
+    const cachedData = this.cacheService.getCachedData(itemId);
     if (cachedData) {
       return cachedData;
     }
 
-    // 检查最近是否有相同 websiteId 的请求，如果存在且在合并阈值内，则直接返回之前的请求 Promise，实现请求合并
-    if (this.recentRequests.has(websiteId)) {
-      const recentRequest = this.recentRequests.get(websiteId);
+    // 检查最近是否有相同 itemId 的请求，如果存在且在合并阈值内，则直接返回之前的请求 Promise，实现请求合并
+    if (this.recentRequests.has(itemId)) {
+      const recentRequest = this.recentRequests.get(itemId);
       if (Date.now() - recentRequest.timestamp < config.requestMergeThreshold) {
-        console.log('合并请求:', websiteId);
+        console.log('合并请求:', itemId);
         return recentRequest.promise; // 直接返回最近请求的 Promise
       }
     }
@@ -135,7 +136,7 @@ export class WebsiteTooltipService {
     if (this.concurrentRequestCount >= config.maxConcurrentRequests) {
       // 加入请求队列，等待执行
       return new Promise(resolve => {
-        this.requestQueue.push({ websiteId, resolve });
+        this.requestQueue.push({ itemId, resolve });
       });
     }
 
@@ -144,41 +145,41 @@ export class WebsiteTooltipService {
 
     // 创建 AbortController 实例，用于取消请求
     const abortController = new AbortController();
-    this.abortControllerMap.set(websiteId, abortController);
+    this.abortControllerMap.set(itemId, abortController);
     const signal = abortController.signal;
 
     // 发起 API 请求获取网站数据
-    const requestPromise = getWebsiteById(websiteId, signal) // 传递 AbortSignal，支持取消请求
+    const requestPromise = getWebsiteById(itemId, signal) // 传递 AbortSignal，支持取消请求
       .then(website => {
         if (!website || !website.url) {
           throw new Error('Invalid website data');
         }
         // 缓存数据
-        this.cacheService.setCacheData(websiteId, website);
+        this.cacheService.setCacheData(itemId, website);
         return website;
       })
       .catch(error => {
         // 错误处理移至 tooltipErrorService
         if (error.name === 'AbortError') {
           // 请求被取消，不处理错误，返回 null
-          console.log('Request aborted:', websiteId);
+          console.log('Request aborted:', itemId);
           return null; // 返回 null，避免影响后续处理
         }
         throw error; // 其他错误继续抛出，由 _handleHoverDebounced 统一处理
       })
       .finally(() => {
         // 请求完成后，从 pendingRequests 中移除
-        this.pendingRequests.delete(websiteId);
+        this.pendingRequests.delete(itemId);
         // 减少并发请求计数器
         this.concurrentRequestCount--;
         // 从 abortControllerMap 中移除
-        this.abortControllerMap.delete(websiteId);
+        this.abortControllerMap.delete(itemId);
         // 处理请求队列，执行下一个请求
         this._processRequestQueue();
       });
 
     // 将本次请求添加到 recentRequests Map 中，用于请求合并
-    this.recentRequests.set(websiteId, {
+    this.recentRequests.set(itemId, {
       promise: requestPromise,
       timestamp: Date.now()
     });
@@ -197,7 +198,7 @@ export class WebsiteTooltipService {
       // 从请求队列中取出第一个请求
       const request = this.requestQueue.shift();
       // 立即执行请求
-      this._getWebsiteData(request.websiteId).then(request.resolve);
+      this._getWebsiteData(request.itemId).then(request.resolve);
     }
   }
 
@@ -216,10 +217,10 @@ export class WebsiteTooltipService {
     adjacentIndexes.forEach(index => {
       if (index >= 0 && index < allTargets.length) {
         const adjacentTarget = allTargets[index];
-        const adjacentWebsiteId = adjacentTarget.dataset.websiteId;
+        const adjacentitemId = adjacentTarget.dataset.itemId;
         // 预加载时也检查缓存和正在进行的请求，避免重复加载
-        if (!this.cacheService.getCachedData(adjacentWebsiteId) && !this.pendingRequests.has(adjacentWebsiteId)) {
-          this._getWebsiteData(adjacentWebsiteId);
+        if (!this.cacheService.getCachedData(adjacentitemId) && !this.pendingRequests.has(adjacentitemId)) {
+          this._getWebsiteData(adjacentitemId);
         }
       }
     });
@@ -234,12 +235,12 @@ export class WebsiteTooltipService {
    * @private
    */
   _showTooltip(target, website) {
-    const websiteId = target.dataset.websiteId;
+    const itemId = target.dataset.itemId;
     // 如果当前 tooltip 正在显示且网站 ID 相同，则不重复显示
-    if (this.currentWebsiteId === websiteId) return;
+    if (this.currentitemId === itemId) return;
 
     this._removeCurrentTooltip(); // 移除当前 tooltip
-    this._createTooltip(target, website, websiteId); // 创建并显示新的 tooltip
+    this._createTooltip(target, website, itemId); // 创建并显示新的 tooltip
   }
 
   /**
@@ -251,7 +252,7 @@ export class WebsiteTooltipService {
     this.domService.removeCurrentTooltip();
     this.currentTooltip = this.domService.getCurrentTooltip(); // 更新 currentTooltip
     if (!this.currentTooltip) { // 确保 currentTooltip 为 null
-      this.currentWebsiteId = null;
+      this.currentitemId = null;
     }
   }
 
@@ -260,10 +261,10 @@ export class WebsiteTooltipService {
    * @description 创建并显示工具提示
    * @param {HTMLElement} target 悬停的目标元素
    * @param {Website} website 网站数据
-   * @param {string} websiteId 网站 ID
+   * @param {string} itemId 网站 ID
    * @private
    */
-  _createTooltip(target, website, websiteId) {    
+  _createTooltip(target, website, itemId) {    
       const tooltip = this.domService.createTooltipElement(); // 创建 tooltip 元素 (复用)
       tooltip.innerHTML = generateTooltipContent(website); // 生成 tooltip 内容
       tooltip.targetElement = target; // 保存目标元素引用
@@ -273,7 +274,7 @@ export class WebsiteTooltipService {
       this.domService.positionTooltip(tooltip, tooltip.targetElement); // 定位 tooltip
       this.domService.setCurrentTooltip(tooltip); // 设置 domService 的 currentTooltip
       this.currentTooltip = tooltip; // 更新 websiteTooltipService 的 currentTooltip
-      this.currentWebsiteId = websiteId; // 更新当前悬停的网站 ID
+      this.currentitemId = itemId; // 更新当前悬停的网站 ID
 
       this._setupAutoClose(tooltip, target); // 设置自动关闭 tooltip
     });
@@ -315,7 +316,7 @@ export class WebsiteTooltipService {
     this.domService.cleanupTooltip(tooltip); // 清理 tooltip DOM 元素
     this.currentTooltip = this.domService.getCurrentTooltip(); // 更新 currentTooltip
     if (!this.currentTooltip) { // 确保 currentTooltip 为 null
-      this.currentWebsiteId = null;
+      this.currentitemId = null;
     }
   }
 }

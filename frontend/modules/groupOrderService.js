@@ -152,13 +152,15 @@ async function saveGroupOrder() {
 
             if (group.classList.contains('website-group')) {
                 orderedWebsiteGroups.push({
-                    id: group.id.replace('website-group-', ''),
+                    //: group.id.replace('website-group-', ''),
+                    id: group.id,
                     order: index + 1,
                     dashboardType: dashboardType // Dynamically determine dashboardType
                 });
             } else if (group.classList.contains('docker-group')) {
                 orderedDockerGroups.push({
-                    id: group.id.replace('docker-group-', ''),
+                    // id: group.id.replace('docker-group-', ''),
+                    id: group.id,
                     order: index + 1,
                     dashboardType: dashboardType // Dynamically determine dashboardType
                 });
@@ -197,7 +199,7 @@ async function saveGroupOrder() {
         showNotification('分组顺序已保存', 'success');
 
         // 重新渲染dashboard
-        // await renderDashboardWithData();
+        await renderDashboardWithData();
 
     } catch (error) {
         console.error('Failed to save group order:', error);

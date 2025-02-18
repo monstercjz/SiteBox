@@ -1,24 +1,55 @@
 import { editGroup, deleteGroup } from './groupInteractionService.js';
 import { editWebsite, deleteWebsite } from './websiteInteractionService.js';
+import { editDocker, deleteDocker } from './dockerInteractionService.js';
+import {
+    CONTEXT_MENU_ID,
+    EDIT_GROUP_ITEM_CLASS,
+    DELETE_GROUP_ITEM_CLASS,
+    EDIT_WEBSITE_ITEM_CLASS,
+    DELETE_WEBSITE_ITEM_CLASS,
+    EDIT_DOCKER_ITEM_CLASS,
+    DELETE_DOCKER_ITEM_CLASS,
+    DATA_GROUP_ID,
+    DATA_ITEM_ID,
+
+    DATA_GROUP_TYPE,
+    GROUP_TYPE_WEBSITE,
+    GROUP_TYPE_DOCKER,
+    MENU_TEXT_EDIT_GROUP,
+    MENU_TEXT_DELETE_GROUP,
+    MENU_TEXT_EDIT_WEBSITE,
+    MENU_TEXT_DELETE_WEBSITE,
+    MENU_TEXT_EDIT_DOCKER,
+    MENU_TEXT_DELETE_DOCKER,
+    EVENT_CONTEXTMENU,
+    CLASS_WEBSITE_GROUP,
+    CLASS_DOCKER_GROUP,
+    CLASS_WEBSITE_ITEM,
+    CLASS_DOCKER_ITEM,
+    REGEX_WEBSITE_GROUP_ID,
+    REGEX_DOCKER_GROUP_ID,
+    
+} from '../config.js';
+
 // 隐藏右键菜单
 function hideContextMenu() {
-    document.getElementById('contextMenu')?.remove();
+    document.getElementById(CONTEXT_MENU_ID)?.remove();
 }
 
 // 创建右键菜单
 function createContextMenu(e, menuItems) {
     const menu = document.createElement('div');
-    menu.id = 'contextMenu';
+    menu.id = CONTEXT_MENU_ID;
     menu.style.position = 'fixed';
-    
+
     // 获取视口尺寸
     const viewportWidth = window.innerWidth;
     const viewportHeight = window.innerHeight;
-    
+
     // 直接使用鼠标位置
     let left = e.clientX;
     let top = e.clientY;
-    
+
     // 确保菜单不会超出屏幕边界
     if (left + 200 > viewportWidth) {
         left = viewportWidth - 200;
@@ -26,7 +57,7 @@ function createContextMenu(e, menuItems) {
     if (top + 100 > viewportHeight) {
         top = viewportHeight - 100;
     }
-    
+
     menu.style.left = `${left}px`;
     menu.style.top = `${top}px`;
     menu.style.zIndex = '1000';
@@ -36,112 +67,104 @@ function createContextMenu(e, menuItems) {
     return menu;
 }
 
-
 // 显示分组右键菜单
-function showGroupContextMenu(e, groupId, groupType) { // 添加 groupType 参数
+function showGroupContextMenu(e, groupId, groupType) {
     const menuItems = [
-        `<div class="edit-group-item" data-group-id="${groupId}" data-group-type="${groupType}">编辑分组</div>`, // 传递 groupType
-        `<div class="delete-group-item" data-group-id="${groupId}" data-group-type="${groupType}">删除分组</div>` // 传递 groupType
+        `<div class="${EDIT_GROUP_ITEM_CLASS}" ${DATA_GROUP_ID}="${groupId}" ${DATA_GROUP_TYPE}="${groupType}">${MENU_TEXT_EDIT_GROUP}</div>`,
+        `<div class="${DELETE_GROUP_ITEM_CLASS}" ${DATA_GROUP_ID}="${groupId}" ${DATA_GROUP_TYPE}="${groupType}">${MENU_TEXT_DELETE_GROUP}</div>`,
     ];
     const menu = createContextMenu(e, menuItems);
-    menu.querySelector('.edit-group-item').addEventListener('click', () => {
-        editGroup(groupId, groupType); // 传递 groupType
+    menu.querySelector(`.${EDIT_GROUP_ITEM_CLASS}`).addEventListener('click', () => {
+        editGroup(groupId, groupType);
     });
-    menu.querySelector('.delete-group-item').addEventListener('click', () => {
-        deleteGroup(groupId, groupType); // 传递 groupType
+    menu.querySelector(`.${DELETE_GROUP_ITEM_CLASS}`).addEventListener('click', () => {
+        deleteGroup(groupId, groupType);
     });
 }
+
 // 显示网站右键菜单
 function showWebsiteContextMenu(e, groupId, websiteId) {
     const menuItems = [
-        `<div class="edit-website-item" data-group-id="${groupId}" data-website-id="${websiteId}">编辑网站</div>`,
-        `<div class="delete-website-item" data-group-id="${groupId}" data-website-id="${websiteId}">删除网站</div>`
+        `<div class="${EDIT_WEBSITE_ITEM_CLASS}" ${DATA_GROUP_ID}="${groupId}" ${DATA_ITEM_ID}="${websiteId}">${MENU_TEXT_EDIT_WEBSITE}</div>`,
+        `<div class="${DELETE_WEBSITE_ITEM_CLASS}" ${DATA_GROUP_ID}="${groupId}" ${DATA_ITEM_ID}="${websiteId}">${MENU_TEXT_DELETE_WEBSITE}</div>`,
     ];
     const menu = createContextMenu(e, menuItems);
-     menu.querySelector('.edit-website-item').addEventListener('click', () => {
-        console.log('编辑网站', websiteId);
+    menu.querySelector(`.${EDIT_WEBSITE_ITEM_CLASS}`).addEventListener('click', () => {
         editWebsite(groupId, websiteId);
     });
-    menu.querySelector('.delete-website-item').addEventListener('click', () => {
+    menu.querySelector(`.${DELETE_WEBSITE_ITEM_CLASS}`).addEventListener('click', () => {
         deleteWebsite(groupId, websiteId);
     });
 }
 
 // 显示 Docker 分组右键菜单
-function showDockerGroupContextMenu(e, groupId, groupType) { // 添加 groupType 参数
+function showDockerGroupContextMenu(e, groupId, groupType) {
     const menuItems = [
-        `<div class="edit-group-item" data-group-id="${groupId}" data-group-type="${groupType}">编辑分组</div>`, // 传递 groupType
-        `<div class="delete-group-item" data-group-id="${groupId}" data-group-type="${groupType}">删除分组</div>` // 传递 groupType
+        `<div class="${EDIT_GROUP_ITEM_CLASS}" ${DATA_GROUP_ID}="${groupId}" ${DATA_GROUP_TYPE}="${groupType}">${MENU_TEXT_EDIT_GROUP}</div>`,
+        `<div class="${DELETE_GROUP_ITEM_CLASS}" ${DATA_GROUP_ID}="${groupId}" ${DATA_GROUP_TYPE}="${groupType}">${MENU_TEXT_DELETE_GROUP}</div>`,
     ];
     const menu = createContextMenu(e, menuItems);
-    menu.querySelector('.edit-group-item').addEventListener('click', () => {
-        editGroup(groupId, groupType); // 传递 groupType，这里复用 editGroup，后续可能需要修改
+    menu.querySelector(`.${EDIT_GROUP_ITEM_CLASS}`).addEventListener('click', () => {
+        editGroup(groupId, groupType);
     });
-    menu.querySelector('.delete-group-item').addEventListener('click', () => {
-        deleteGroup(groupId, groupType); // 传递 groupType，这里复用 deleteGroup，后续可能需要修改
+    menu.querySelector(`.${DELETE_GROUP_ITEM_CLASS}`).addEventListener('click', () => {
+        deleteGroup(groupId, groupType);
     });
 }
 
-
 // 显示 Docker Item 右键菜单
-import { editDocker, deleteDocker } from './dockerInteractionService.js'; // 导入 dockerInteractionService
 function showDockerItemContextMenu(e, groupId, dockerId) {
     const menuItems = [
-        `<div class="edit-docker-item" data-group-id="${groupId}" data-docker-id="${dockerId}">编辑 Docker</div>`,
-        `<div class="delete-docker-item" data-group-id="${groupId}" data-docker-id="${dockerId}">删除 Docker</div>`
+        `<div class="${EDIT_DOCKER_ITEM_CLASS}" ${DATA_GROUP_ID}="${groupId}" ${DATA_ITEM_ID}="${dockerId}">${MENU_TEXT_EDIT_DOCKER}</div>`,
+        `<div class="${DELETE_DOCKER_ITEM_CLASS}" ${DATA_GROUP_ID}="${groupId}" ${DATA_ITEM_ID}="${dockerId}">${MENU_TEXT_DELETE_DOCKER}</div>`,
     ];
     const menu = createContextMenu(e, menuItems);
-     menu.querySelector('.edit-docker-item').addEventListener('click', () => {
-        console.log('编辑 Docker', dockerId);
-        editDocker(groupId,dockerId); // 调用 editDocker
+    menu.querySelector(`.${EDIT_DOCKER_ITEM_CLASS}`).addEventListener('click', () => {
+        editDocker(groupId, dockerId);
     });
-    menu.querySelector('.delete-docker-item').addEventListener('click', () => {
-        deleteDocker(groupId,dockerId); // 调用 deleteDocker
-        console.log('删除 Docker', dockerId);
+    menu.querySelector(`.${DELETE_DOCKER_ITEM_CLASS}`).addEventListener('click', () => {
+        deleteDocker(groupId, dockerId);
     });
 }
 
 const dashboard = document.body;
 
-// 右键菜单事件监听器
-dashboard.addEventListener('contextmenu', function (e) {
+dashboard.addEventListener(EVENT_CONTEXTMENU, function (e) {
     const target = e.target;
     hideContextMenu();
-    
-    if (target.closest('.website-group h2')) {
+
+    if (target.closest(`.${CLASS_WEBSITE_GROUP} h2`)) {
         e.preventDefault();
-        const groupDiv = target.closest('.website-group');
+        const groupDiv = target.closest(`.${CLASS_WEBSITE_GROUP}`);
         const groupId = getGroupId(groupDiv);
         console.log('右键监听到的groupId:', groupId);
         if (groupId) {
-            showGroupContextMenu(e, groupId, 'website-group'); // 传递 group 类型
+            showGroupContextMenu(e, groupId, GROUP_TYPE_WEBSITE);
         }
-    } else if (target.closest('.website-item')) {
+    } else if (target.closest(`.${CLASS_WEBSITE_ITEM}`)) {
         e.preventDefault();
-        const websiteItem = target.closest('.website-item');
-        const groupDiv = websiteItem.closest('.website-group');
+        const websiteItem = target.closest(`.${CLASS_WEBSITE_ITEM}`);
+        const groupDiv = websiteItem.closest(`.${CLASS_WEBSITE_GROUP}`);
         const groupId = getGroupId(groupDiv);
-        const websiteId = websiteItem.getAttribute('data-website-id');
+        const websiteId = websiteItem.getAttribute(DATA_ITEM_ID);
         console.log('右键监听到的groupId:', groupId, '网站ID:', websiteId);
         if (groupId && websiteId) {
-            showWebsiteContextMenu(e, groupId, websiteId, 'website-item'); // 传递 itemType
+            showWebsiteContextMenu(e, groupId, websiteId);
         }
-    } else if (target.closest('.docker-group h2')) { // 新增 docker group 的处理
+    } else if (target.closest(`.${CLASS_DOCKER_GROUP} h2`)) {
         e.preventDefault();
-        const groupDiv = target.closest('.docker-group');
-        // const groupId = getGroupId(groupDiv); //  groupId 需要修改为能获取 docker group 的 id
+        const groupDiv = target.closest(`.${CLASS_DOCKER_GROUP}`);
         const groupId = getDockerGroupId(groupDiv);
         console.log('右键监听到的dockerGroupId:', groupId);
         if (groupId) {
-            showDockerGroupContextMenu(e, groupId, 'docker-group'); // 传递 group 类型
+            showDockerGroupContextMenu(e, groupId, GROUP_TYPE_DOCKER);
         }
-    } else if (target.closest('.docker-item')) { // 新增 docker item 的处理
+    } else if (target.closest(`.${CLASS_DOCKER_ITEM}`)) {
         e.preventDefault();
-        const dockerItem = target.closest('.docker-item');
-        const groupDiv = dockerItem.closest('.docker-group');
-        // const groupId = getGroupId(groupDiv); // groupId 需要修改为能获取 docker group 的 id
+        const dockerItem = target.closest(`.${CLASS_DOCKER_ITEM}`);
+        const groupDiv = dockerItem.closest(`.${CLASS_DOCKER_GROUP}`);
         const groupId = getDockerGroupId(groupDiv);
-        const dockerId = dockerItem.getAttribute('data-docker-id');
+        const dockerId = dockerItem.getAttribute(DATA_ITEM_ID);
         console.log('右键监听到的dockerGroupId:', groupId, 'dockerId:', dockerId);
         if (groupId && dockerId) {
             showDockerItemContextMenu(e, groupId, dockerId);
@@ -152,17 +175,28 @@ dashboard.addEventListener('contextmenu', function (e) {
 // 辅助函数：从 groupDiv 中提取 groupId
 function getGroupId(groupDiv) {
     return (
-        groupDiv.querySelector('h2')?.getAttribute('id')?.match(/websiteGroupTitle-([0-9a-fA-F-]+)/)?.[1] ||
-        groupDiv.getAttribute('data-group-id')
+        groupDiv.getAttribute('id') ||
+        groupDiv.querySelector('h2')?.getAttribute('id')?.match(REGEX_WEBSITE_GROUP_ID)?.[1] ||
+        groupDiv.getAttribute(DATA_GROUP_ID)
+        // groupDiv.getAttribute('id')
     );
 }
 
 // 辅助函数：从 docker group Div 中提取 dockerGroupId
 function getDockerGroupId(groupDiv) {
     return (
-        groupDiv.querySelector('h2')?.getAttribute('id')?.match(/dockerGroupTitle-([0-9a-fA-F-]+)/)?.[1] ||
-        groupDiv.getAttribute('data-group-id')
+        //在group添加了id页面显示，可以直接调用了
+        groupDiv.getAttribute('id') ||
+        groupDiv.querySelector('h2')?.getAttribute('id')?.match(REGEX_DOCKER_GROUP_ID)?.[1] ||
+        groupDiv.getAttribute(DATA_GROUP_ID)
     );
 }
 
-export { hideContextMenu, createContextMenu, showGroupContextMenu, showWebsiteContextMenu, showDockerGroupContextMenu, showDockerItemContextMenu };
+export {
+    hideContextMenu,
+    createContextMenu,
+    showGroupContextMenu,
+    showWebsiteContextMenu,
+    showDockerGroupContextMenu,
+    showDockerItemContextMenu,
+};

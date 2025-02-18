@@ -112,7 +112,7 @@ const deleteGroup = async (dataFilepath, groupId) => {
   try {
     const data = await fileHandler.readData(dataFilepath);
     let groups = (data.groups || []).filter((group) => group.id !== groupId);
-    groups = groups.map((group, index) => new Group(group.id, group.name, index + 1, group.isCollapsible));
+    groups = groups.map((group) => new Group(group.id, group.name, group.order, group.isCollapsible,group.groupType, group.dashboardType));
     data.groups = groups;
     await fileHandler.writeData(dataFilepath, data);
     logger.info(`Group deleted: ${groupId}`);

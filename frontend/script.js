@@ -3,7 +3,7 @@
 import { showNotification } from './modules/websiteDashboardService.js';
 import { renderDashboardWithData} from './modules/mainDashboardService.js';
 import { addDocker,handleDockerHover } from './modules/dockerInteractionService.js';
-// import { renderDockerDashboardWithData } from './modules/dockerDashboardService.js';
+// import { rendermainWithData } from './modules/dockerDashboardService.js';
 //import { WebsiteDataService } from './modules/websiteDataService.js';
 import { SearchService } from './modules/searchService.js';
 import { fetchAndRenderGroupSelect, renderGroupSelect } from './modules/groupSelectDataService.js';
@@ -28,6 +28,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     const groupSelect = document.getElementById('groupSelect');
     // 获取仪表盘元素
     const websitedashboard = document.getElementById('websitedashboard');
+    
+    const main = document.querySelector('main');
     // 获取仪表盘元素
     const dockerdashboard = document.getElementById('dockerdashboard');
     // 获取数据导入按钮元素
@@ -79,7 +81,7 @@ document.addEventListener('DOMContentLoaded', async () => {
      * 使用事件委托，监听仪表盘容器的点击事件
      * @param {Event} e - 点击事件对象
      */
-    websitedashboard.addEventListener('click', async (e) => {
+    main.addEventListener('click', async (e) => {
         const target = e.target.closest('.website-item');
         if (target) {
             const link = target.querySelector('a');
@@ -96,7 +98,7 @@ document.addEventListener('DOMContentLoaded', async () => {
      * 使用事件委托，监听仪表盘容器的点击事件
      * @param {Event} e - 点击事件对象
      */
-    dockerdashboard.addEventListener('click', (e) => {
+    main.addEventListener('click', (e) => {
         // 查找最近的 .docker-item 元素
         const target = e.target.closest('.docker-item');
         if (!target) return;
@@ -124,7 +126,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     // 添加鼠标悬停事件监听器
-    websitedashboard.addEventListener('mouseover', (e) => {
+    main.addEventListener('mouseover', (e) => {
         const target = e.target.closest('.website-item');
         if (target) {
             // 显示网站详细信息tooltip
@@ -132,7 +134,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     });
     // 添加鼠标悬停事件监听器
-    dockerdashboard.addEventListener('mouseover', (e) => {
+    main.addEventListener('mouseover', (e) => {
         const target = e.target.closest('.docker-item');
         if (target) {
             // 显示网站详细信息tooltip
