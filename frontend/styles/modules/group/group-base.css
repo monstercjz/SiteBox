@@ -7,7 +7,7 @@
 
 /* 分组容器 */
 .website-group {
-  margin-bottom: var(--spacing-stack-xl); /* 设置下外边距 */
+  /* margin-bottom: var(--spacing-stack-xl); 设置下外边距 */
 }
 
 /* 分组标题 */
@@ -25,10 +25,7 @@
 }
 [data-layout="alternative"] .website-group h2 {
   margin: 0 0 var(--spacing-stack-md) 0;
-  position: relative;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  
 }
 
 .quickly-item-add-button {

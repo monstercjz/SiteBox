@@ -7,7 +7,7 @@
 
 
 .docker-group {
-  margin-bottom: var(--spacing-stack-xl); /* 设置下外边距 */
+  /* margin-bottom: var(--spacing-stack-xl); 设置下外边距 */
 }
 
 /* 分组标题 */
@@ -28,9 +28,7 @@
 [data-layout="alternative"] .docker-group h2 {
   margin: 0 0 var(--spacing-stack-md) 0;
 
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  
 }
 
 
