@@ -7,6 +7,10 @@ export class WebsiteImportModalHandler {
   }
 
   async showImportModal(onSave, onCancel) {
+    if (document.getElementById(this.modalId)) {
+                modalInteractionService.closeModal(this.modalId);
+                return;
+    }
     const modalContent = this.createModalContent();
     modalInteractionService.createModal(this.modalId, modalContent);
     

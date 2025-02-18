@@ -52,7 +52,10 @@ export class DockerOperationService {
      * @throws {Error} 如果参数无效或操作失败
      */
     async openDockerModal(options) {
-        console.log('opendockerModal', options);
+        if (document.getElementById(this.modalId)) {
+                    modalInteractionService.closeModal(this.modalId);
+                    return;
+        }
         try {
             const { dockerId, mode, callback, groupId } = options;
 

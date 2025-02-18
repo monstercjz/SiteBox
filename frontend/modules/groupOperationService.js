@@ -45,6 +45,10 @@ export class GroupOperationService {
      * @throws {Error} 如果参数无效或操作失败
      */
     async openGroupModal(options) {
+        if (document.getElementById(this.modalId)) {
+            modalInteractionService.closeModal(this.modalId);
+            return;
+        }
         try {
             const { groupId, mode, callback, groupType = GROUP_TYPE_WEBSITE } = options;
 

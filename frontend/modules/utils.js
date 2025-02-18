@@ -1,4 +1,25 @@
 // utils.js - 工具函数模块
+
+/**
+ * Debounce function to limit function execution rate.
+ * @param {Function} func - The function to debounce.
+ * @param {number} wait - The delay in milliseconds.
+ * @returns {Function} - Debounced function.
+ */
+function debounce(func, wait) {
+  let timeout;
+  return function executedFunction(...args) {
+    const later = () => {
+      clearTimeout(timeout);
+      func(...args);
+    };
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
+}
+
+
+// utils.js - 工具函数模块
 import { RANDOM_COLORS } from "../config.js";
 /**
  * @function validateAndCompleteUrl
@@ -134,4 +155,4 @@ function resetGroupColors() {
   });
 }
 
-export { validateAndCompleteUrl, showTooltip, hideTooltip, escapeHtml, generateTooltipContent, setRandomGroupColors, resetGroupColors };
+export { validateAndCompleteUrl, showTooltip, hideTooltip, escapeHtml, generateTooltipContent, setRandomGroupColors, resetGroupColors ,debounce};

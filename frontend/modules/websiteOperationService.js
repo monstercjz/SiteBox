@@ -55,6 +55,10 @@ export class WebsiteOperationService {
      * @throws {Error} 如果参数无效或操作失败
      */
     async openWebsiteModal(options) {
+        if (document.getElementById(this.modalId)) {
+                    modalInteractionService.closeModal(this.modalId);
+                    return;
+        }
         console.log('openWebsiteModal', options);
         try {
             const { websiteId, mode, callback, groupId } = options;

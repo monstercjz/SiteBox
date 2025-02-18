@@ -91,6 +91,13 @@ class ModalInteractionService {
    * @param {function} [options.onCancel] - 取消按钮点击时的回调
    */
   openModal(modalId, options = {}) {
+    // 检查模态框是否已存在，如果存在则先关闭
+    // const existingModal = document.getElementById(modalId);
+    // if (existingModal) {
+    //   this.closeModal(modalId);
+    // }
+
+
     if (!modalId || typeof modalId !== 'string') {
       throw new Error('Invalid modalId: must be a non-empty string');
     }
@@ -158,6 +165,7 @@ class ModalInteractionService {
     }
 
     if (document.getElementById(modalId)) {
+      // this.closeModal(modalId);
       throw new Error(`Modal with ID "${modalId}" already exists`);
     }
 
