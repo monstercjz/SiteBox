@@ -206,6 +206,7 @@ function createGroupElement(group, className) {
     groupDiv.innerHTML = `
         <h2 id="${className}-title-${group.id}" class="${className}__title">
             ${group?.name}
+            <span class="quickly-item-add-button">+</span>
         </h2>
     `;
 

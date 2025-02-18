@@ -45,10 +45,11 @@ export async function fetchIcon(url) {
 }
 
 // 添加网站
-export async function addWebsite() {
+export async function addWebsite(groupId) {
     try {
         await websiteOperationService.openWebsiteModal({
             mode: 'add',
+            groupId: groupId,
             callback: async ({ newWebsiteName, checkNewWebsiteUrl, newWebsiteDescription, newWebsiteGroup }) => {
                 const websiteSaveService = new WebsiteSaveService();
                 const result = await websiteSaveService.saveWebsite(null, {

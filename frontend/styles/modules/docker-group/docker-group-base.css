@@ -32,3 +32,10 @@
   justify-content: space-between;
   align-items: center;
 }
+
+
+
+.docker-group__title:hover .quickly-item-add-button,
+.quickly-item-add-button:hover  {
+  display: inline; /* 悬停时显示 */
+}

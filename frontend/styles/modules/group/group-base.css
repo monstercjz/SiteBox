@@ -25,8 +25,23 @@
 }
 [data-layout="alternative"] .website-group h2 {
   margin: 0 0 var(--spacing-stack-md) 0;
-
+  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
+
+.quickly-item-add-button {
+  position: relative;
+  padding: 0.5rem;
+  /* font-size: var(  --font-size-heading-xs); 加号图标的大小 */
+  /*color: var(--text-primary); /* 加号图标的颜色 */
+  cursor: pointer; /* 鼠标悬停时显示 pointer */
+  display: none; /* 初始状态隐藏 */
+}
+
+.website-group__title:hover .quickly-item-add-button,
+.quickly-item-add-button:hover {
+  display: inline; /* 悬停时显示 */
+}
+

@@ -93,6 +93,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
         }
     });
+
     /**
      * 处理仪表盘点击事件，打开网站链接
      * 使用事件委托，监听仪表盘容器的点击事件
@@ -185,6 +186,29 @@ document.addEventListener('DOMContentLoaded', async () => {
     const addDockerButton = document.getElementById('add-docker-button');
     addDockerButton.addEventListener('click', () => {
         addDocker();
+    });
+    /**
+     * 处理分组加号图标点击事件
+     * 使用事件委托监听 main 容器 
+     */
+    main.addEventListener('click', async (e) => {
+        const addIcon = e.target.closest('.quickly-item-add-button');
+        if (addIcon) {
+            const groupElement = addIcon.closest('.website-group, .docker-group');
+            if (groupElement) {
+                const groupType = groupElement.getAttribute('groupType');
+                const groupId = groupElement.getAttribute('id');
+                if (groupType === 'website-group') {
+                    // 调用 addWebsite 函数
+                    addWebsite(groupId);
+                } else if (groupType === 'docker-group') {
+                    // 调用 addDocker 函数
+                    addDocker(groupId);
+                } else {
+                    console.warn('Unknown group type:', groupType);
+                }
+            }
+        }
     });
 
     // 初始化主题切换功能

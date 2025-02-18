@@ -91,6 +91,7 @@ export class WebsiteOperationService {
      * @param {string} groupId - 分组 ID
      */
     async setupWebsiteModal(mode, websiteId, groupId) {
+        console.log('setupWebsiteModal', mode, websiteId, groupId);
         const modalContent = this.createModalContent(mode);
         modalInteractionService.createModal(this.modalId, modalContent);
 
@@ -102,7 +103,11 @@ export class WebsiteOperationService {
         if (mode === MODE_EDIT) {
             this.setupEditWebsiteModalData(this.modalId, websiteId, groupId);
         }
-
+        if (mode === MODE_ADD && groupId) {
+            //分组id不为空，并且是添加模式
+            this.setupAddWebsiteModalData(this.modalId,groupId);
+        }
+        
         modalInteractionService.openModal(this.modalId, {
             onSave: async (modal) => {
                 try {
@@ -173,6 +178,26 @@ export class WebsiteOperationService {
             newWebsiteUrl: websiteUrl,
             newWebsiteDescription: websiteDescription,
             groupSelect: websiteGroupId,
+        });
+    }
+    /**
+     * 设置添加网站模态框数据，适配的是+号添加
+     * @param {string} modalId - 模态框 ID
+     * @param {string} groupId - 分组 ID
+     */
+    async setupAddWebsiteModalData(modalId,groupId) {
+        const modal = document.getElementById(modalId);
+        if (!modal) return;
+        console.log('setupAddWebsiteModalData', groupId);
+        // modal.setAttribute(DATA_ITEM_ID, websiteId);
+
+        // const { websiteName, websiteUrl, websiteDescription, websiteGroupId } = this.getWebsiteInfo(websiteId);
+
+        modalInteractionService.setModalData(modalId, {
+            // newWebsiteName: websiteName,
+            // newWebsiteUrl: websiteUrl,
+            // newWebsiteDescription: websiteDescription,
+            groupSelect: groupId,
         });
     }
 

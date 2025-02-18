@@ -23,10 +23,11 @@ const dockerOperationService = new DockerOperationService();
 const dockerTooltipService = new DockerTooltipService(); // 创建 DockerTooltipService 实例
 
 // 添加 Docker
-export async function addDocker() {
+export async function addDocker(groupId) {
     try {
         await dockerOperationService.openDockerModal({
             mode: 'add',
+            groupId: groupId,
             callback: async ({ dockerName, newAccessIp, accessPort, dockerApiAddress, dockerApiPort, dockerDescription, groupSelect }) => {
                 const dockerSaveService = new DockerSaveService();
                 const dockerData = {

@@ -99,7 +99,9 @@ export class DockerOperationService {
         if (mode === 'edit') {
             this.setupEditDockerModalData(this.modalId, dockerId, groupId);
         }
-
+        if (mode === 'add' && groupId) {
+            this.setupAddDockerModalData(this.modalId, groupId);
+        }
         modalInteractionService.openModal(this.modalId, {
             onSave: async (modal) => {
                 try {
@@ -188,6 +190,25 @@ export class DockerOperationService {
             dockerApiPort,
             dockerDescription,
             groupSelect,
+        });
+    }
+    /**
+     * 设置添加 Docker 模态框数据
+     * @param {string} modalId - 模态框 ID
+     
+     * @param {string} groupId - 分组 ID
+     */
+    async setupAddDockerModalData(modalId, groupId) {
+        const modal = document.getElementById(modalId);
+        if (!modal) return;
+
+        
+
+        
+
+        modalInteractionService.setModalData(modalId, {
+            
+            groupSelect: groupId,
         });
     }
 
