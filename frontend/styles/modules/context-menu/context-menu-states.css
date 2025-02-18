@@ -69,7 +69,7 @@
 }
 
 [data-layout="alternative"] #contextMenu div:hover {
-  color: var(--action-primary);
+  color: var(--color-interaction-accent);
 }
 
 [data-layout="alternative"] #contextMenu div:hover::before {

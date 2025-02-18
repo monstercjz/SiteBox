@@ -31,6 +31,11 @@
 #contextMenu .delete-group-item {
   color: #ef4444; /* 设置删除分组菜单项文字颜色为红色 */
 }
+/* 删除分组菜单项样式 */
+/* Group context menu items */
+#contextMenu .delete-docker-item {
+  color: #ef4444; /* 设置删除分组菜单项文字颜色为红色 */
+}
 
 [data-layout="alternative"] #contextMenu {
   position: fixed;
@@ -50,6 +55,9 @@
   overflow: hidden;
 }
 [data-layout="alternative"] #contextMenu .delete-website-item {
+  color: #ef4444; /* 设置删除网站条目菜单项文字颜色为红色 */
+}
+[data-layout="alternative"] #contextMenu .delete-docker-item {
   color: #ef4444; /* 设置删除网站条目菜单项文字颜色为红色 */
 }
 [data-layout="alternative"] #contextMenu .delete-group-item {

@@ -11,7 +11,6 @@ import {
     DELETE_DOCKER_ITEM_CLASS,
     DATA_GROUP_ID,
     DATA_ITEM_ID,
-
     DATA_GROUP_TYPE,
     GROUP_TYPE_WEBSITE,
     GROUP_TYPE_DOCKER,
@@ -28,12 +27,19 @@ import {
     CLASS_DOCKER_ITEM,
     REGEX_WEBSITE_GROUP_ID,
     REGEX_DOCKER_GROUP_ID,
-    
 } from '../config.js';
+
+// 定义全局变量存储定时器 ID
+let contextMenuTimeout;
 
 // 隐藏右键菜单
 function hideContextMenu() {
     document.getElementById(CONTEXT_MENU_ID)?.remove();
+    // 清除定时器
+    if (contextMenuTimeout) {
+        clearTimeout(contextMenuTimeout);
+        contextMenuTimeout = null;
+    }
 }
 
 // 创建右键菜单
@@ -63,7 +69,28 @@ function createContextMenu(e, menuItems) {
     menu.style.zIndex = '1000';
     menu.innerHTML = menuItems.join('');
     document.body.appendChild(menu);
+
+    // 添加定时器，10秒后隐藏菜单
+    contextMenuTimeout = setTimeout(() => {
+        hideContextMenu();
+    }, 10000); // 10秒
+
+    // 用户与菜单交互时重置定时器
+    const resetTimer = () => {
+        if (contextMenuTimeout) {
+            clearTimeout(contextMenuTimeout);
+        }
+        contextMenuTimeout = setTimeout(() => {
+            hideContextMenu();
+        }, 10000); // 重新设置 10 秒定时器
+    };
+
+    // 监听菜单上的鼠标移动事件
+    menu.addEventListener('mousemove', resetTimer);
+
+    // 监听文档点击事件以隐藏菜单
     document.addEventListener('click', hideContextMenu);
+
     return menu;
 }
 
@@ -128,11 +155,9 @@ function showDockerItemContextMenu(e, groupId, dockerId) {
 }
 
 const dashboard = document.body;
-
 dashboard.addEventListener(EVENT_CONTEXTMENU, function (e) {
     const target = e.target;
     hideContextMenu();
-
     if (target.closest(`.${CLASS_WEBSITE_GROUP} h2`)) {
         e.preventDefault();
         const groupDiv = target.closest(`.${CLASS_WEBSITE_GROUP}`);

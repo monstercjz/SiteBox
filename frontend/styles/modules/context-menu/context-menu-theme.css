@@ -16,11 +16,11 @@
   color: var(--text-primary);
 }
 [data-layout="alternative"] #contextMenu {
-  background: linear-gradient(
+  /* background: linear-gradient(
     145deg,
     rgba(255, 255, 255, 0.95) 0%,
     rgba(245, 243, 255, 0.95) 100%
-  );
+  ); */
   border-radius: var(--radius-sm);
   box-shadow: 0 8px 32px rgba(99, 102, 241, 0.2);
   backdrop-filter: blur(20px);
