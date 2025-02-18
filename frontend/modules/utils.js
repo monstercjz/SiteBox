@@ -6,16 +6,43 @@
  * @param {number} wait - The delay in milliseconds.
  * @returns {Function} - Debounced function.
  */
-function debounce(func, wait) {
-  let timeout;
-  return function executedFunction(...args) {
-    const later = () => {
-      clearTimeout(timeout);
-      func(...args);
-    };
-    clearTimeout(timeout);
-    timeout = setTimeout(later, wait);
+// function debounce(func, wait) {
+//   let timeout;
+//   return function executedFunction(...args) {
+//     const later = () => {
+//       clearTimeout(timeout);
+//       func(...args);
+//     };
+//     clearTimeout(timeout);
+//     timeout = setTimeout(later, wait);
+//   };
+// }
+function debounce(func, delay) {
+  let timer;
+  return function (...args) {
+      clearTimeout(timer);
+      timer = setTimeout(() => func.apply(this, args), delay);
   };
+}
+function throttle(func, limit) {
+  let inThrottle;
+  return function (...args) {
+      if (!inThrottle) {
+          func.apply(this, args);
+          inThrottle = true;
+          setTimeout(() => inThrottle = false, limit);
+      }
+  };
+}
+function safeExecute(fn, errorMessage = 'An error occurred') {
+  try {
+      fn();
+  } catch (error) {
+      console.error(errorMessage, error);
+  }
+}
+function logEvent(eventType, details = {}) {
+  console.log(`[${new Date().toISOString()}] ${eventType}:`, details);
 }
 
 
@@ -70,7 +97,7 @@ function showTooltip(e) {
         // 设置 5 秒后自动隐藏 tooltip
         tooltipTimeout = setTimeout(() => {
             hideTooltip(e); // 调用 hideTooltip 函数隐藏 tooltip
-        }, 5000); // 5 秒后自动隐藏 tooltip
+        }, 2500); // 5 秒后自动隐藏 tooltip
     }
 }
 
@@ -155,4 +182,4 @@ function resetGroupColors() {
   });
 }
 
-export { validateAndCompleteUrl, showTooltip, hideTooltip, escapeHtml, generateTooltipContent, setRandomGroupColors, resetGroupColors ,debounce};
+export { validateAndCompleteUrl, showTooltip, hideTooltip, escapeHtml, generateTooltipContent, setRandomGroupColors, resetGroupColors ,debounce,throttle,safeExecute,logEvent};
