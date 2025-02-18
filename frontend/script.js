@@ -1,8 +1,8 @@
 'use strict';
 
 import { SELECTORS, elements, initializeDOMElements } from './modules/eventDomManager.js';
-import { 
-    handleWebsiteItemClick, 
+import {
+    handleWebsiteItemClick,
     handleDockerItemClick,
     handleQuicklyAddClick,
     handleHoverEvents
@@ -59,9 +59,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     // 绑定点击事件监听器
-    elements.main.addEventListener('click', handleQuicklyAddClick); // 分组快速添加item
-    elements.main.addEventListener('click', handleWebsiteItemClick); // 打开网站链接
-    elements.main.addEventListener('click', handleDockerItemClick); // 打开Docker 容器链接
+    elements.main.addEventListener('click', (event) => {
+        handleQuicklyAddClick(event);  // 处理快速添加按钮点击
+        handleWebsiteItemClick(event); // 处理网站项点击
+        handleDockerItemClick(event);  // 处理 Docker 项点击
+    });
 
     // 防抖处理鼠标移出事件
     document.addEventListener('mouseout', debounce(hideTooltip, 100));
