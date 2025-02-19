@@ -18,6 +18,7 @@ import {
     ARIA_LABEL_SAVE,
     ARIA_LABEL_CANCEL,
     SELECTOR_GROUP_TEMPLATE,
+    GROUP_NAME,
 } from '../config.js';
 
 export class GroupOperationService {
@@ -166,11 +167,16 @@ export class GroupOperationService {
         const editInput = groupDiv.querySelector('h2');
         console.log('editInput:', editInput);
         if (editInput) {
-            const newGroupName = editInput.textContent.trim();
-            modalInteractionService.setModalData(modalId, {
-                newGroupName: newGroupName || '',
-                groupTypeSelect: groupType // Set groupType from stored value
-            });
+            // const newGroupName = editInput.textContent.trim();
+            const groupNameSpan = editInput.querySelector(`.${GROUP_NAME}`);
+            if (groupNameSpan) {
+                const newGroupName = groupNameSpan.textContent.trim();
+                modalInteractionService.setModalData(modalId, {
+                    newGroupName: newGroupName || '',
+                    groupTypeSelect: groupType // Set groupType from stored value
+                });
+            }
+            
         }
     }
 }

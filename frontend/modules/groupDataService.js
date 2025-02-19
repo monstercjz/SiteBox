@@ -1,5 +1,5 @@
 import { createWebsiteGroup, updateWebsiteGroup, deleteWebsiteGroup, getWebsitesByGroupId, moveToTrash, createDockerGroup, updateDockerGroup, deleteDockerGroup } from './api.js';
-import { showNotification } from './websiteDashboardService.js';
+import { showNotification } from './notificationService.js';
 import {
     NOTIFICATION_GROUP_UPDATE_SUCCESS,
     NOTIFICATION_GROUP_CREATE_SUCCESS,

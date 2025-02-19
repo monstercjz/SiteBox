@@ -1,4 +1,4 @@
-import { showNotification } from './websiteDashboardService.js';
+import { showNotification } from './notificationService.js';
 import { renderDashboardWithData } from './mainDashboardService.js';
 import { DockerSaveService } from './dockerDataService.js';
 import { hideContextMenu } from './contextMenu.js';

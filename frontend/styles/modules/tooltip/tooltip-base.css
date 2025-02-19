@@ -14,7 +14,7 @@
   color: var(--text-primary);
   padding: var(--spacing-inset-xs) var(--spacing-inset-md);
   position: absolute;
-  z-index: 1000;
+  z-index: -1;
   white-space: nowrap;
 }
 

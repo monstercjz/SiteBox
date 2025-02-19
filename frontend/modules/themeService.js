@@ -1,4 +1,4 @@
-import { showNotification } from './websiteDashboardService.js';
+import { showNotification } from './notificationService.js';
 import {
     NOTIFICATION_THEME_CHANGED,
     DATA_ATTRIBUTE_THEME,

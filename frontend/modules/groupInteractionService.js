@@ -1,4 +1,4 @@
-import { showNotification } from './websiteDashboardService.js';
+import { showNotification } from './notificationService.js';
 import { renderDashboardWithData } from './mainDashboardService.js';
 import { hideContextMenu } from './contextMenu.js';
 import { confirmGroupDelete } from './groupDeleteService.js';
@@ -22,6 +22,7 @@ import {
     OPTION_ID_MOVE_TO_TRASH,
     DEFAULT_GROUP_TYPE,
     SELECTOR_GROUP_TEMPLATE,
+    GROUP_NAME,
 } from '../config.js';
 
 const groupOperationService = new GroupOperationService();
@@ -69,11 +70,11 @@ export async function editGroup(groupId, groupType) {
                 }, groupType); // 传递 groupType
                 if (result) {
                     const groupDiv = document.querySelector(SELECTOR_GROUP_TEMPLATE(groupType, groupId));
-                    
+                    const groupNameSpan = groupDiv.querySelector(`.${GROUP_NAME}`);
                     
                     console.log('groupDiv:', groupDiv);
                     if (groupDiv) {
-                        groupDiv.querySelector('h2').textContent = newGroupName;
+                        groupNameSpan.textContent = newGroupName;
                         groupDiv.setAttribute(DATA_GROUP_ID, groupId);
                         groupDiv.id = `${groupId}`;
                     }

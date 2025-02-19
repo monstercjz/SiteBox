@@ -1,7 +1,7 @@
 /* === 根据dashboard结构，一个个dashboard进行渲染 === */
 /* 作用: 组织和导入仪表盘主样式，当前存档，原名newdashboard.js */
 /* 依赖： websitedashboard 子模块 */
-import { showNotification } from './websiteDashboardService.js';
+import { showNotification } from './notificationService.js';
 import { getWebsiteGroups, getWebsites, getAllDockers,getDockerGroups } from './api.js';
 import { setRandomGroupColors, resetGroupColors } from './utils.js';
 import { isRandomColorsEnabled } from './colorThemeService.js';

@@ -2,7 +2,7 @@ import modalInteractionService from './modalInteractionService.js';
 import { WebsiteSaveService } from './websiteDataService.js';
 import { fetchAndRenderGroupSelect } from './groupSelectDataService.js';
 import { getWebsiteGroups, createWebsiteGroup } from './api.js';
-import { showNotification } from './websiteDashboardService.js';
+import { showNotification } from './notificationService.js';
 import { validateAndCompleteUrl } from './utils.js';
 import {
     WEBSITE_MODAL_ID,
