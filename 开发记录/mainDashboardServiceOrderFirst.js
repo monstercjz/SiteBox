@@ -1,4 +1,4 @@
-import { showNotification } from './websiteDashboardService.js';
+import { showNotification } from './notificationService.js';
 import { getWebsiteGroups, getWebsites, getAllDockers, getDockerGroups } from './api.js';
 import { setRandomGroupColors, resetGroupColors } from './utils.js';
 import { isRandomColorsEnabled } from './colorThemeService.js';
@@ -24,6 +24,7 @@ import {
     LOADING_CLASS,
     NOTIFICATION_SUCCESS,
     NOTIFICATION_ERROR,
+    GROUP_NAME,
 } from '../config.js';
 
 /**
@@ -205,7 +206,7 @@ function createGroupElement(group, className) {
 
     groupDiv.innerHTML = `
         <h2 id="${className}-title-${group.id}" class="${className}__title">
-            ${group?.name}
+            <span class="${GROUP_NAME}">${group?.name}</span>
             <span class="quickly-item-add-button">+</span>
         </h2>
     `;
