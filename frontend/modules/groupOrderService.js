@@ -167,13 +167,13 @@ async function saveGroupOrder() {
             }
         });
 
-        console.log('orderedWebsiteGroups:', orderedWebsiteGroups);
+        
         const websiteUpdateResponse = await reorderWebsiteGroups(orderedWebsiteGroups);
         if (!websiteUpdateResponse) {
             throw new Error('Failed to update website group order');
         }
 
-        console.log('orderedDockerGroups:', orderedDockerGroups);
+        
         const dockerUpdateResponse = await reorderDockerGroups(orderedDockerGroups); // 调用 docker group 排序 API
         if (!dockerUpdateResponse) {
             throw new Error('Failed to update docker group order');

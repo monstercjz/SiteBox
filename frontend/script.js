@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     ]);
 
     // 实时刷新容器信息
-    setInterval(dockerUpdateInfoAll, 10000);
+    setInterval(dockerUpdateInfoAll, 1800000);
     // 功能按钮显示总开关
     elements.actionsToggleButton.addEventListener('click', toggleActionButtons);
     // 初始化搜索功能

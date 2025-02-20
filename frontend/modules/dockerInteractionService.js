@@ -63,7 +63,7 @@ export async function editDocker(groupId, dockerId) {
         dockerId: dockerId,
         groupId: groupId,
         callback: async ({ dockerName, newAccessIp, accessPort, dockerApiAddress, dockerApiPort, dockerDescription, groupSelect }) => {
-            console.log(newAccessIp);
+            
             const dockerSaveService = new DockerSaveService();
             const dockerData = {
                 groupId: groupSelect,
@@ -110,6 +110,6 @@ export async function deleteDocker(groupId, dockerId) {
 
 // 处理 Docker 悬停事件
 export async function handleDockerHover(target) {
-    console.log('handleDockerHover called');
+    
     await dockerTooltipService.handleDockerHover(target); // 调用 dockerTooltipService 的 handleDockerHover 方法
 }

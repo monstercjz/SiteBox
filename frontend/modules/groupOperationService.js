@@ -99,11 +99,11 @@ export class GroupOperationService {
         modalInteractionService.openModal(this.modalId, {
             onSave: async (modal, event) => {
                 try {
-                    console.log('Save button clicked');
+                    
                     const newGroupName = modal.querySelector(`#${INPUT_ID_NEW_GROUP_NAME}`).value;
                     const groupTypeSelect = modal.querySelector(`#${SELECT_ID_GROUP_TYPE}`).value; // 获取选择的分组类型
                     const dashboardType = groupTypeSelect.startsWith(GROUP_TYPE_WEBSITE) ? DASHBOARD_TYPE_WEBSITE : DASHBOARD_TYPE_DOCKER; // Determine dashboardType
-                    console.log('groupTypeSelect:', groupTypeSelect);
+                    
                     if (this.callback) {
                         await this.callback({ newGroupName, groupType: groupTypeSelect, dashboardType }); // Pass dashboardType to callback
                     }
@@ -111,13 +111,13 @@ export class GroupOperationService {
                     console.error('Failed to save group:', error);
                     throw error;
                 } finally {
-                    console.log('Closing modal after save');
+                    
                     modalInteractionService.closeModal(this.modalId); // 确保关闭模态框
                     this.cleanup();
                 }
             },
             onCancel: (modal, event) => {
-                console.log('Cancel button clicked');
+                
                 modalInteractionService.closeModal(this.modalId); // 确保关闭模态框
                 this.cleanup();
             }
@@ -153,7 +153,7 @@ export class GroupOperationService {
 
     // 设置编辑分组模态框数据
     setupEditGroupModalData(modalId, groupId, groupType) {
-        console.log('setupEditGroupModalData called', groupId, groupType);
+        
         const modal = document.getElementById(modalId);
         if (!modal) return;
         modal.setAttribute('data-group-id', groupId);
@@ -165,7 +165,7 @@ export class GroupOperationService {
         if (!groupDiv) return;
 
         const editInput = groupDiv.querySelector('h2');
-        console.log('editInput:', editInput);
+        
         if (editInput) {
             // const newGroupName = editInput.textContent.trim();
             const groupNameSpan = editInput.querySelector(`.${GROUP_NAME}`);

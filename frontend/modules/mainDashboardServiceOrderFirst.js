@@ -5,6 +5,7 @@ import { isRandomColorsEnabled } from './h2colorThemeService.js';
 import { backendUrl } from '../config.js';
 import { createAndRunWorker } from './workerService.js';
 import { initializeDockerItemCache,updateDockerItemCache,removeDockerItemFromCache } from './dockerCache.js';
+import { dockerUpdateInfoAll } from './dockerIfonUpdate.js';
 import {
     WEBSITE_DASHBOARD_ID,
     DOCKER_DASHBOARD_ID,
@@ -466,8 +467,9 @@ export async function renderMainDashboardWithData() {
 
     try {
         // 使用 Web Worker 获取数据
+        console.time('fetchMainDashboardDataWithWorker');
         const data = await fetchMainDashboardDataWithWorker();
-        console.log('Data from worker:', data);
+        console.timeEnd('fetchMainDashboardDataWithWorker');
         if (data) {
             console.time('renderMainDashboard');
             renderMainDashboard(data);
@@ -489,6 +491,10 @@ export async function renderMainDashboardWithData() {
                 const dockerItems = document.querySelectorAll('.docker-item');
                 initializeDockerItemCache(dockerItems);
             });
+            requestIdleCallback(() => {
+                dockerUpdateInfoAll();
+            });
+            
             console.timeEnd('querySelectorAll');
             // initializeDockerItemCache();
     }

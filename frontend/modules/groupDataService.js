@@ -66,7 +66,7 @@ export class GroupSaveService {
                 const websites = await getWebsitesByGroupId(groupId);
                 if (websites && websites.length > 0) {
                     const websiteIds = websites.map(website => website.id);
-                    console.log('websites', websiteIds);
+                    
                     await moveToTrash(websiteIds);
                 }
                 response = await deleteWebsiteGroup(groupId);//根据 groupType 调用不同的删除 API

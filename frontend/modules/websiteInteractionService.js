@@ -154,7 +154,7 @@ export async function openImportWebsitesModal() {
 
 // 处理网站悬停事件
 export async function handleWebsiteHover(target) {
-    console.log('handleWebsiteHover', target);
+    
     await websiteTooltipService.handleWebsiteHover(target);
 }
 

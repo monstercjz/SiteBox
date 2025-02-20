@@ -56,14 +56,14 @@ export async function addGroup() {
 
 // 编辑分组
 export async function editGroup(groupId, groupType) {
-    console.log('editGroup called', groupId, groupType);
+    
     try {
         await groupOperationService.openGroupModal({
             groupId,
             mode: 'edit',
             groupType: groupType, // 使用传递的 groupType
             callback: async ({ newGroupName, groupType, dashboardType }) => {
-                console.log('newGrouptype:', groupType);
+                
                 const result = await groupSaveService.saveGroup(groupId, {
                     name: newGroupName,
                     isCollapsible: false,
@@ -74,7 +74,7 @@ export async function editGroup(groupId, groupType) {
                     const groupDiv = document.querySelector(SELECTOR_GROUP_TEMPLATE(groupType, groupId));
                     const groupNameSpan = groupDiv.querySelector(`.${GROUP_NAME}`);
                     
-                    console.log('groupDiv:', groupDiv);
+                    
                     if (groupDiv) {
                         groupNameSpan.textContent = newGroupName;
                         groupDiv.setAttribute(DATA_GROUP_ID, groupId);
@@ -101,7 +101,7 @@ export async function deleteGroup(groupId, groupType) {
                 { id: OPTION_ID_MOVE_TO_TRASH, label: MODAL_OPTION_MOVE_TO_TRASH },
             ],
         });
-        console.log('deleteOption:', deleteOption);
+        
         if (!deleteOption) return;
 
         // 执行删除操作

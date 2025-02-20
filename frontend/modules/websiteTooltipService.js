@@ -64,11 +64,11 @@ export class WebsiteTooltipService {
    * @param {HTMLElement} target 悬停的目标元素
    */
   async handleWebsiteHover(target) {
-    console.log(target);
+    
     if (!target?.dataset?.itemId) return;
 
     const itemId = target.dataset.itemId;
-    console.log('handleWebsiteHover:', itemId);
+    
     this._clearTimeouts(); // 清除所有 timeout 定时器和未完成请求
     this._preloadAdjacentData(target); // 预加载相邻网站数据
 
@@ -137,7 +137,7 @@ export class WebsiteTooltipService {
     if (this.recentRequests.has(itemId)) {
       const recentRequest = this.recentRequests.get(itemId);
       if (Date.now() - recentRequest.timestamp < config.requestMergeThreshold) {
-        console.log('合并请求:', itemId);
+        
         return recentRequest.promise; // 直接返回最近请求的 Promise
       }
     }
@@ -172,7 +172,7 @@ export class WebsiteTooltipService {
         // 错误处理移至 tooltipErrorService
         if (error.name === 'AbortError') {
           // 请求被取消，不处理错误，返回 null
-          console.log('Request aborted:', itemId);
+          
           return null; // 返回 null，避免影响后续处理
         }
         throw error; // 其他错误继续抛出，由 _handleHoverDebounced 统一处理

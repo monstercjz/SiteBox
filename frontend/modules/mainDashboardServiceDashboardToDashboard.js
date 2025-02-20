@@ -47,7 +47,7 @@ async function fetchMainDashboardData() {
  * @param {object} data - 包含网站和 Docker 数据的对象
  */
 function renderMainDashboard(data) {
-    console.log(data);
+    
     const websitedashboard = document.getElementById('websitedashboard');
     const dockerdashboard = document.getElementById('dockerdashboard');//添加docker仪表盘
     const main=document.querySelector('main');//添加主体添加main
@@ -56,7 +56,7 @@ function renderMainDashboard(data) {
     main.innerHTML = '';//清空主体
     const fragment = document.createDocumentFragment();    
     const websitefragment = renderDashboard(data,fragment); 
-    console.log(fragment);
+    
     websitedashboard.appendChild(websitefragment);
     const fragments = document.createDocumentFragment(); 
     const newfragment= renderDockerDashboard(data,fragments);
@@ -74,7 +74,7 @@ function renderMainDashboard(data) {
  */
 function renderDashboard({ websites, websiteGroups },fragment) {
 
-    console.log(websiteGroups);
+    
     const orderedGroups = (websiteGroups || []).sort((a, b) => a.order - b.order);
 
     orderedGroups.forEach(group => {

@@ -118,7 +118,7 @@ export class DockerOperationService {
 
                     if (this.callback) {
                         const newAccessIp = validateAndCompleteUrl(accessIp);
-                        console.log('newAccessIp', newAccessIp);
+                        
                         await this.callback({
                             dockerName,
                             newAccessIp,
@@ -221,7 +221,7 @@ export class DockerOperationService {
      * @returns {object} - Docker 容器信息
      */
     getDockerInfo(dockerId) {
-        console.log('getDockerInfo dockerId:', dockerId);
+        
         const dockerItem = document.querySelector(`.${CLASS_DOCKER_ITEM}[${DATA_ITEM_ID}="${dockerId}"]`);
         if (!dockerItem) {
             console.error(`Docker item with id ${dockerId} not found`);

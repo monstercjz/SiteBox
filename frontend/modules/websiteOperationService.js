@@ -59,7 +59,7 @@ export class WebsiteOperationService {
                     modalInteractionService.closeModal(this.modalId);
                     return;
         }
-        console.log('openWebsiteModal', options);
+        
         try {
             const { websiteId, mode, callback, groupId } = options;
 
@@ -95,7 +95,7 @@ export class WebsiteOperationService {
      * @param {string} groupId - 分组 ID
      */
     async setupWebsiteModal(mode, websiteId, groupId) {
-        console.log('setupWebsiteModal', mode, websiteId, groupId);
+        
         const modalContent = this.createModalContent(mode);
         modalInteractionService.createModal(this.modalId, modalContent);
 
@@ -192,7 +192,7 @@ export class WebsiteOperationService {
     async setupAddWebsiteModalData(modalId,groupId) {
         const modal = document.getElementById(modalId);
         if (!modal) return;
-        console.log('setupAddWebsiteModalData', groupId);
+        
         // modal.setAttribute(DATA_ITEM_ID, websiteId);
 
         // const { websiteName, websiteUrl, websiteDescription, websiteGroupId } = this.getWebsiteInfo(websiteId);

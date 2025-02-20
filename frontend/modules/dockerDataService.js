@@ -22,21 +22,15 @@ import {
 export class DockerSaveService {
     async saveDocker(dockerId, dockerData, groupId) {
         try {
-            console.log('groupId:', groupId);
-            console.log('dockerData:', dockerData);
-            console.log('dockerId:', dockerId);
-
             let actualGroupId = groupId;
             if (!actualGroupId) {
                 const { getDockerGroups, createDockerGroup } = await import('./api.js');
                 try {
                     const groups = await getDockerGroups();
-                    console.log('groups:', groups);
-
                     let defaultGroup;
                     if (groups) {
                         defaultGroup = groups.find(group => group.name === DEFAULT_GROUP_NAME);
-                        console.log('defaultGroup:', defaultGroup);
+                        
                     }
 
                     if (!defaultGroup) {

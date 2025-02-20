@@ -30,21 +30,19 @@ import {
 export class WebsiteSaveService {
     async saveWebsite(websiteId, websiteData, groupId) {
         try {
-            console.log('groupId:', groupId);
-            console.log('websiteData:', websiteData);
-            console.log('websiteId:', websiteId);
+            
 
             let actualGroupId = groupId;
             if (!actualGroupId) {
                 const { getWebsiteGroups, createWebsiteGroup } = await import('./api.js');
                 try {
                     const groups = await getWebsiteGroups();
-                    console.log('groups:', groups);
+                    
 
                     let defaultGroup;
                     if (groups) {
                         defaultGroup = groups.find(group => group.name === DEFAULT_GROUP_NAME);
-                        console.log('defaultGroup:', defaultGroup);
+                        
                     }
 
                     if (!defaultGroup) {

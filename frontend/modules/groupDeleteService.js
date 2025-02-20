@@ -71,7 +71,7 @@ export async function confirmGroupDelete({ title, message, options }) {
         onSave: (modal, event) => {
           try {
             const action = event.target.dataset.action;
-            console.log('用户选择的选项ID:', action);
+            // console.log('用户选择的选项ID:', action);
             resolve(action === 'cancel' ? null : action);
           } finally {
             modalInteractionService.closeModal(MODAL_ID);

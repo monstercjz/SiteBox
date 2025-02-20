@@ -45,7 +45,7 @@ export async function exportData() {
         const response = await fetch(`${backendUrl}/sync/export`);
         const responseexportdatas = await response.json();
         if (!responseexportdatas.success) throw new Error(`HTTP error! status: ${response.status}`);
-        console.log('responseexportdata', responseexportdatas);
+        // console.log('responseexportdata', responseexportdatas);
         const responseexportdata = responseexportdatas.data;
         const { websites, groups, nextGroupId, nextWebsiteId } = responseexportdata;
         const jsonString = JSON.stringify({ websites, groups, nextGroupId, nextWebsiteId }, null, 2);

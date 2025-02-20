@@ -89,7 +89,7 @@ function showTooltip(e) {
         currentTooltip.textContent = tooltipText; // 设置 tooltip 文本内容
         currentTooltip.style.display = 'block'; // 显示 tooltip
         const rect = target.getBoundingClientRect(); // 获取目标元素 Rect
-        console.log(rect);
+        
                 currentTooltip.style.left = `${rect.left - currentTooltip.offsetWidth - 10}px`; //  按钮左侧，留出间距
                 currentTooltip.style.top = `${rect.top + rect.height / 2 - 15}px`; // 与按钮垂直中心对齐，并向上偏移
 
@@ -111,7 +111,7 @@ function hideTooltip(e) {
     const target = e.target.closest('[data-tooltip]'); // 获取最近的 data-tooltip 元素
     
     if (target && currentTooltip) {
-      console.log('hideTooltip', target);
+      
         currentTooltip.style.display = 'none'; // 隐藏 tooltip
         currentTooltip.remove(); // 从 DOM 中移除 tooltip
         currentTooltip = null; // 清空 currentTooltip 引用

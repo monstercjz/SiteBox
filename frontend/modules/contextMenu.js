@@ -162,7 +162,7 @@ dashboard.addEventListener(EVENT_CONTEXTMENU, function (e) {
         e.preventDefault();
         const groupDiv = target.closest(`.${CLASS_WEBSITE_GROUP}`);
         const groupId = getGroupId(groupDiv);
-        console.log('右键监听到的groupId:', groupId);
+        // console.log('右键监听到的groupId:', groupId);
         if (groupId) {
             showGroupContextMenu(e, groupId, GROUP_TYPE_WEBSITE);
         }
@@ -172,7 +172,7 @@ dashboard.addEventListener(EVENT_CONTEXTMENU, function (e) {
         const groupDiv = websiteItem.closest(`.${CLASS_WEBSITE_GROUP}`);
         const groupId = getGroupId(groupDiv);
         const websiteId = websiteItem.getAttribute(DATA_ITEM_ID);
-        console.log('右键监听到的groupId:', groupId, '网站ID:', websiteId);
+        // console.log('右键监听到的groupId:', groupId, '网站ID:', websiteId);
         if (groupId && websiteId) {
             showWebsiteContextMenu(e, groupId, websiteId);
         }
@@ -180,7 +180,7 @@ dashboard.addEventListener(EVENT_CONTEXTMENU, function (e) {
         e.preventDefault();
         const groupDiv = target.closest(`.${CLASS_DOCKER_GROUP}`);
         const groupId = getDockerGroupId(groupDiv);
-        console.log('右键监听到的dockerGroupId:', groupId);
+        // console.log('右键监听到的dockerGroupId:', groupId);
         if (groupId) {
             showDockerGroupContextMenu(e, groupId, GROUP_TYPE_DOCKER);
         }
@@ -190,7 +190,7 @@ dashboard.addEventListener(EVENT_CONTEXTMENU, function (e) {
         const groupDiv = dockerItem.closest(`.${CLASS_DOCKER_GROUP}`);
         const groupId = getDockerGroupId(groupDiv);
         const dockerId = dockerItem.getAttribute(DATA_ITEM_ID);
-        console.log('右键监听到的dockerGroupId:', groupId, 'dockerId:', dockerId);
+        // console.log('右键监听到的dockerGroupId:', groupId, 'dockerId:', dockerId);
         if (groupId && dockerId) {
             showDockerItemContextMenu(e, groupId, dockerId);
         }
