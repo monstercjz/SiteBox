@@ -4,6 +4,7 @@ import { hideContextMenu } from './contextMenu.js';
 import { confirmGroupDelete } from './groupDeleteService.js';
 import { GroupOperationService } from './groupOperationService.js';
 import { GroupSaveService } from './groupDataService.js';
+import { domremoveGroup,domaddGroup } from './mainDashboardServiceOrderFirst.js';
 import {
     NOTIFICATION_ADD_GROUP_FAIL,
     NOTIFICATION_EDIT_GROUP_FAIL,
@@ -42,7 +43,8 @@ export async function addGroup() {
                     dashboardType: dashboardType, // 仪表盘类型: website 或 docker
                 }, groupType);
                 if (result) {
-                    renderDashboardWithData();
+                    domaddGroup(result);
+                    // renderDashboardWithData();
                 }
             },
         });
@@ -104,12 +106,13 @@ export async function deleteGroup(groupId, groupType) {
 
         // 执行删除操作
         await groupSaveService.deleteGroup(groupId, deleteOption, groupType);
-
+        // 调用统一接口更新 UI
+        domremoveGroup(groupId);
         // 更新 UI
-        const groupElement = document.querySelector(SELECTOR_GROUP_TEMPLATE(groupType, groupId));
-        if (groupElement) {
-            groupElement.remove();
-        }
+        // const groupElement = document.querySelector(SELECTOR_GROUP_TEMPLATE(groupType, groupId));
+        // if (groupElement) {
+        //     groupElement.remove();
+        // }
     } catch (error) {
         console.error('Failed to delete group:', error);
         showNotification(NOTIFICATION_DELETE_GROUP_FAIL, 'error');

@@ -47,7 +47,7 @@ function logEvent(eventType, details = {}) {
 
 
 // utils.js - 工具函数模块
-import { RANDOM_COLORS } from "../config.js";
+
 /**
  * @function validateAndCompleteUrl
  * @description URL 校验和补全函数，校验 URL 格式是否有效，并补全 URL 协议头
@@ -89,6 +89,7 @@ function showTooltip(e) {
         currentTooltip.textContent = tooltipText; // 设置 tooltip 文本内容
         currentTooltip.style.display = 'block'; // 显示 tooltip
         const rect = target.getBoundingClientRect(); // 获取目标元素 Rect
+        console.log(rect);
                 currentTooltip.style.left = `${rect.left - currentTooltip.offsetWidth - 10}px`; //  按钮左侧，留出间距
                 currentTooltip.style.top = `${rect.top + rect.height / 2 - 15}px`; // 与按钮垂直中心对齐，并向上偏移
 
@@ -97,7 +98,7 @@ function showTooltip(e) {
         // 设置 5 秒后自动隐藏 tooltip
         tooltipTimeout = setTimeout(() => {
             hideTooltip(e); // 调用 hideTooltip 函数隐藏 tooltip
-        }, 2500); // 5 秒后自动隐藏 tooltip
+        }, 1500); // 5 秒后自动隐藏 tooltip
     }
 }
 
@@ -108,7 +109,9 @@ function showTooltip(e) {
  */
 function hideTooltip(e) {
     const target = e.target.closest('[data-tooltip]'); // 获取最近的 data-tooltip 元素
+    
     if (target && currentTooltip) {
+      console.log('hideTooltip', target);
         currentTooltip.style.display = 'none'; // 隐藏 tooltip
         currentTooltip.remove(); // 从 DOM 中移除 tooltip
         currentTooltip = null; // 清空 currentTooltip 引用
@@ -157,29 +160,6 @@ function generateTooltipContent(website) {
     return content;
   }
 
-/**
- * @function setRandomGroupColors
- * @description 为每个分组标题设置随机颜色
- */
-function setRandomGroupColors() {
-  
-  //从config.js导入RANDOM_COLORS
-  const groupTitles = document.querySelectorAll('.website-group h2,.docker-group h2');
-  groupTitles.forEach(title => {
-    const color = RANDOM_COLORS[Math.floor(Math.random() * RANDOM_COLORS.length)];
-    title.style.setProperty('--group-title-random-color', color);
-  });
-}
 
-/**
- * @function resetGroupColors
- * @description 重置所有分组标题的颜色为默认值
- */
-function resetGroupColors() {
-  const groupTitles = document.querySelectorAll('.website-group h2');
-  groupTitles.forEach(title => {
-    title.style.removeProperty('--group-title-random-color');
-  });
-}
 
-export { validateAndCompleteUrl, showTooltip, hideTooltip, escapeHtml, generateTooltipContent, setRandomGroupColors, resetGroupColors ,debounce,throttle,safeExecute,logEvent};
+export { validateAndCompleteUrl, showTooltip, hideTooltip, escapeHtml, generateTooltipContent,debounce,throttle,safeExecute,logEvent};

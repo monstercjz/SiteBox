@@ -24,6 +24,7 @@ import {
     ERROR_TARGET_ELEMENT_REQUIRED,
     ERROR_WEBSITE_ID_REQUIRED,
 } from '../config.js';
+import { domaddWebsiteItem, domremoveWebsiteItem } from './mainDashboardServiceOrderFirst.js';
 
 let currentEditWebsiteGroupId = null;
 let currentEditWebsiteId = null;
@@ -58,7 +59,9 @@ export async function addWebsite(groupId) {
                     description: newWebsiteDescription,
                 }, newWebsiteGroup);
                 if (result) {
-                    renderDashboardWithData();
+                    // renderDashboardWithData();
+                    //更新ui
+                    domaddWebsiteItem(result);
                 }
             },
         });
@@ -106,7 +109,9 @@ export async function deleteWebsite(groupId, websiteId) {
         if (!deleteOption) return;
         const websiteSaveService = new WebsiteSaveService();
         await websiteSaveService.deleteWebsite(websiteId, deleteOption);
-        renderDashboardWithData();
+        //更新ui
+        domremoveWebsiteItem(websiteId);
+        // renderDashboardWithData();
     } catch (error) {
         console.error('Failed to delete website:', error);
         showNotification(NOTIFICATION_DELETE_WEBSITE_FAIL, 'error');

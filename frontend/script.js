@@ -9,13 +9,14 @@ import {
 } from './modules/eventHandlers.js';
 import { debounce, throttle, safeExecute, logEvent } from './modules/utils.js';
 import { showTooltip, hideTooltip } from './modules/utils.js';
-import { toggleRandomColors, loadColorPreference } from './modules/colorThemeService.js';
+import { toggleRandomColors, loadColorPreference } from './modules/h2colorThemeService.js';
 import { initThemeToggle, applySavedTheme } from './modules/themeService.js';
 import { initLayoutToggle, applySavedLayout } from './modules/layoutService.js';
 import { renderDashboardWithData } from './modules/mainDashboardService.js';
 import { dockerUpdateInfoAll } from './modules/dockerIfonUpdate.js';
 import { SearchService } from './modules/searchService.js';
 
+import { isRandomColorsEnabled,setRandomGroupColors,resetGroupColors } from './modules/h2colorThemeService.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
     // 初始化 DOM 元素
@@ -28,7 +29,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     ]);
 
     // 实时刷新容器信息
-    setInterval(dockerUpdateInfoAll, 300000);
+    setInterval(dockerUpdateInfoAll, 10000);
     // 功能按钮显示总开关
     elements.actionsToggleButton.addEventListener('click', toggleActionButtons);
     // 初始化搜索功能
@@ -44,7 +45,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     elements.groupColorToggleButton.addEventListener('click', async () => {
         const enabled = toggleRandomColors();
         elements.groupColorToggleButton.classList.toggle('active', enabled);
-        await renderDashboardWithData(); // 重新渲染以应用新的颜色设置
+        if (isRandomColorsEnabled()) {
+            setRandomGroupColors();
+        } else {
+            resetGroupColors();
+        }
     });
 
     // 初始化主题和布局切换功能
@@ -66,7 +71,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     // 防抖处理鼠标移出事件
-    document.addEventListener('mouseout', debounce(hideTooltip, 100));
+    document.addEventListener('mouseout', debounce(hideTooltip, 1000));
 
     // 动态加载模块：数据导入导出
     elements.importConfigButton.addEventListener('click', async () => {

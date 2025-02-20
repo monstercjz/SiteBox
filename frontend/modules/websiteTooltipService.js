@@ -3,10 +3,11 @@ import { generateTooltipContent } from './utils.js';
 import { TooltipDomService } from './tooltipDomService.js';
 import { TooltipCacheService } from './tooltipCacheService.js';
 import { TooltipErrorService } from './tooltipErrorService.js'; // 引入 TooltipErrorService
+import { CONTEXT_MENU_ID, EVENT_CONTEXTMENU} from '../config.js' ;
 
 // 配置对象
 const config = {
-  hoverDelay: 30, // 悬停延迟显示工具提示的时间 (毫秒)
+  hoverDelay: 250, // 悬停延迟显示工具提示的时间 (毫秒)
   autoCloseDelay: 5000, // 工具提示自动关闭的延迟时间 (毫秒)
   debounceDelay: 500, // 处理鼠标悬停事件的防抖延迟 (毫秒)
   fadeOutDuration: 150, // 工具提示淡出动画持续时间 (毫秒) // 移至 tooltipDomService 中
@@ -34,6 +35,7 @@ export class WebsiteTooltipService {
     this.requestQueue = []; // 请求队列
     this.abortControllerMap = new Map(); // 用于存储 AbortController 实例
     this.recentRequests = new Map(); // 用于存储最近完成的请求及其时间戳，实现请求合并
+    this.cachedContextMenu = null;
 
     // 使用事件委托处理鼠标移出事件，避免为每个 tooltip 元素绑定事件监听器
     document.body.addEventListener('mouseout', (e) => {
@@ -45,6 +47,14 @@ export class WebsiteTooltipService {
           this._cleanupTooltip(this.currentTooltip);
         }
       }
+    });
+    document.addEventListener(EVENT_CONTEXTMENU, () => {
+        this.cachedContextMenu = document.getElementById(CONTEXT_MENU_ID);
+    });
+
+    // 监听点击事件以隐藏 contextMenu
+    document.addEventListener('click', () => {
+        this.cachedContextMenu = null;
     });
   }
 
@@ -235,6 +245,10 @@ export class WebsiteTooltipService {
    * @private
    */
   _showTooltip(target, website) {
+    if (this._checkContextMenuPresence()) {
+      console.log('ContextMenu is present, skipping tooltip display.');
+      return;
+  }
     const itemId = target.dataset.itemId;
     // 如果当前 tooltip 正在显示且网站 ID 相同，则不重复显示
     if (this.currentitemId === itemId) return;
@@ -271,12 +285,12 @@ export class WebsiteTooltipService {
       document.body.appendChild(tooltip); // 将 tooltip 添加到 DOM 中
       this.domService.showTooltip(tooltip); // 显示 tooltip
       requestAnimationFrame(() => { // 使用 requestAnimationFrame 批量更新 DOM
-      this.domService.positionTooltip(tooltip, tooltip.targetElement); // 定位 tooltip
-      this.domService.setCurrentTooltip(tooltip); // 设置 domService 的 currentTooltip
-      this.currentTooltip = tooltip; // 更新 websiteTooltipService 的 currentTooltip
-      this.currentitemId = itemId; // 更新当前悬停的网站 ID
+        this.domService.positionTooltip(tooltip, tooltip.targetElement); // 定位 tooltip
+        this.domService.setCurrentTooltip(tooltip); // 设置 domService 的 currentTooltip
+        this.currentTooltip = tooltip; // 更新 websiteTooltipService 的 currentTooltip
+        this.currentitemId = itemId; // 更新当前悬停的网站 ID
 
-      this._setupAutoClose(tooltip, target); // 设置自动关闭 tooltip
+        this._setupAutoClose(tooltip, target); // 设置自动关闭 tooltip
     });
   }
 
@@ -290,7 +304,15 @@ export class WebsiteTooltipService {
   _showErrorTooltip(target, error) {
     this.errorService.handleWebsiteDataError(target, error); // 使用 errorService 显示错误提示
   }
+  _checkContextMenuPresence() {
+    // 如果缓存中不存在 contextMenu，则直接返回 false
+    if (!this.cachedContextMenu) {
+        return false;
+    }
 
+    // 如果缓存中存在 contextMenu，则进行一次实时判断
+    return !!document.getElementById(CONTEXT_MENU_ID);
+}
 
   /**
    * @method _setupAutoClose

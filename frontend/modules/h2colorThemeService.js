@@ -1,5 +1,6 @@
 // 控制分组标题颜色方案的服务模块
-
+import { RANDOM_COLORS } from "../config.js";
+import { showNotification } from "./notificationService.js";
 let useRandomColors = false;
 
 /**
@@ -48,3 +49,29 @@ export function toggleRandomColors() {
     saveColorPreference(useRandomColors);
     return useRandomColors;
 }
+/**
+ * @function setRandomGroupColors
+ * @description 为每个分组标题设置随机颜色
+ */
+export function setRandomGroupColors() {
+  
+    //从config.js导入RANDOM_COLORS
+    const groupTitles = document.querySelectorAll('.website-group h2,.docker-group h2');
+    groupTitles.forEach(title => {
+      const color = RANDOM_COLORS[Math.floor(Math.random() * RANDOM_COLORS.length)];
+      title.style.setProperty('--group-title-random-color', color);
+    });
+    showNotification('设置随机分组标题颜色成功', 'success');
+  }
+  
+  /**
+   * @function resetGroupColors
+   * @description 重置所有分组标题的颜色为默认值
+   */
+export  function resetGroupColors() {
+    const groupTitles = document.querySelectorAll('.website-group h2');
+    groupTitles.forEach(title => {
+      title.style.removeProperty('--group-title-random-color');
+    });
+    showNotification('已重置所有分组标题的颜色为默认值', 'success');
+  }

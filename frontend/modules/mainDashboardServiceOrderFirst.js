@@ -1,8 +1,10 @@
 import { showNotification } from './notificationService.js';
 import { getWebsiteGroups, getWebsites, getAllDockers, getDockerGroups } from './api.js';
-import { setRandomGroupColors, resetGroupColors } from './utils.js';
-import { isRandomColorsEnabled } from './colorThemeService.js';
+import { setRandomGroupColors, resetGroupColors } from './h2colorThemeService.js';
+import { isRandomColorsEnabled } from './h2colorThemeService.js';
 import { backendUrl } from '../config.js';
+import { createAndRunWorker } from './workerService.js';
+import { initializeDockerItemCache,updateDockerItemCache,removeDockerItemFromCache } from './dockerCache.js';
 import {
     WEBSITE_DASHBOARD_ID,
     DOCKER_DASHBOARD_ID,
@@ -31,39 +33,39 @@ import {
  * 获取主仪表盘数据，包括网站和 Docker 数据
  * @returns {Promise<object|null>} - 返回包含网站和 Docker 数据的对象，如果获取失败则返回 null
  */
-async function fetchMainDashboardData() {
-    try {
-        const websiteGroups = await getWebsiteGroups();
-        const websites = await getWebsites();
-        const dockerGroups = await getDockerGroups();
-        const dockers = await getAllDockers();
+// async function fetchMainDashboardData() {
+//     try {
+//         const websiteGroups = await getWebsiteGroups();
+//         const websites = await getWebsites();
+//         const dockerGroups = await getDockerGroups();
+//         const dockers = await getAllDockers();
 
-        // 验证数据是否为数组
-        if (!Array.isArray(websiteGroups)) {
-            console.error('Website Groups data is not an array:', websiteGroups);
-        }
-        if (!Array.isArray(websites)) {
-            console.error('Websites data is not an array:', websites);
-        }
-        if (!Array.isArray(dockerGroups)) {
-            console.error('Docker Groups data is not an array:', dockerGroups);
-        }
-        if (!Array.isArray(dockers)) {
-            console.error('Docker containers data is not an array:', dockers);
-        }
+//         // 验证数据是否为数组
+//         if (!Array.isArray(websiteGroups)) {
+//             console.error('Website Groups data is not an array:', websiteGroups);
+//         }
+//         if (!Array.isArray(websites)) {
+//             console.error('Websites data is not an array:', websites);
+//         }
+//         if (!Array.isArray(dockerGroups)) {
+//             console.error('Docker Groups data is not an array:', dockerGroups);
+//         }
+//         if (!Array.isArray(dockers)) {
+//             console.error('Docker containers data is not an array:', dockers);
+//         }
 
-        return {
-            websiteGroups: Array.isArray(websiteGroups) ? websiteGroups : [],
-            websites: Array.isArray(websites) ? websites : [],
-            dockerGroups: Array.isArray(dockerGroups) ? dockerGroups : [],
-            dockers: Array.isArray(dockers) ? dockers : [],
-        };
-    } catch (error) {
-        console.error('Failed to fetch main dashboard data:', error);
-        showNotification('数据加载失败，请重试', NOTIFICATION_ERROR);
-        return null;
-    }
-}
+//         return {
+//             websiteGroups: Array.isArray(websiteGroups) ? websiteGroups : [],
+//             websites: Array.isArray(websites) ? websites : [],
+//             dockerGroups: Array.isArray(dockerGroups) ? dockerGroups : [],
+//             dockers: Array.isArray(dockers) ? dockers : [],
+//         };
+//     } catch (error) {
+//         console.error('Failed to fetch main dashboard data:', error);
+//         showNotification('数据加载失败，请重试', NOTIFICATION_ERROR);
+//         return null;
+//     }
+// }
 
 /**
  * 渲染主仪表盘，同时渲染网站和 Docker 仪表盘
@@ -79,14 +81,15 @@ function renderMainDashboard(data) {
     clearDashboard([WEBSITE_DASHBOARD, DOCKER_DASHBOARD, MAIN_CONTAINER]);
 
     // 合并所有分组，并按全局顺序排序
-    const allGroups = [...data.websiteGroups, ...data.dockerGroups].sort((a, b) => a.order - b.order);
+    // const allGroups = [...data.websiteGroups, ...data.dockerGroups].sort((a, b) => a.order - b.order);
 
     // 创建文档片段以优化 DOM 操作
     const fragmentWebsite = document.createDocumentFragment();
     const fragmentDocker = document.createDocumentFragment();
 
     // 根据 group.dashboardType 和 group.groupType 渲染分组
-    allGroups.forEach(group => {
+    data.allGroups.forEach(group => {
+        //每个分组，添加list,再添加item
         const groupFragment = renderGroup(group, data.websites, data.dockers);
 
         // 根据 dashboardType 决定将分组添加到哪个仪表盘
@@ -156,17 +159,35 @@ function renderWebsiteGroup(group, websites) {
     const listId = `website-list-${group.id}`;
     const listContainer = createListContainer(listId);
 
-    groupDiv.appendChild(listContainer);
-
+    // 使用文档片段批量渲染子项
+    const itemFragment = document.createDocumentFragment();
     websites
         ?.filter(website => website.groupId === group.id)
         .forEach(website => {
-            const websiteItem = createWebsiteItem(website);
-            listContainer.appendChild(websiteItem);
+            itemFragment.appendChild(createWebsiteItem(website));
         });
 
+    listContainer.appendChild(itemFragment);
+    groupDiv.appendChild(listContainer);
     return groupDiv;
 }
+// function renderWebsiteGroup(group, websites) {
+//     const groupDiv = createGroupElement(group, CLASS_WEBSITE_GROUP);
+//     const listId = `website-list-${group.id}`;
+//     const listContainer = createListContainer(listId);
+
+//     groupDiv.appendChild(listContainer);
+
+//     websites
+//         ?.filter(website => website.groupId === group.id)
+//         .forEach(website => {
+//             const websiteItem = createWebsiteItem(website);
+//             listContainer.appendChild(websiteItem);
+//         });
+
+//     return groupDiv;
+// }
+
 
 /**
  * 渲染 Docker 分组
@@ -174,20 +195,26 @@ function renderWebsiteGroup(group, websites) {
  * @param {Array} dockers - Docker 容器列表
  * @returns {HTMLDivElement} - Docker 分组的 DOM 元素
  */
+
 function renderDockerGroup(group, dockers) {
     const groupDiv = createGroupElement(group, CLASS_DOCKER_GROUP);
     const listId = `docker-list-${group.id}`;
     const listContainer = createListContainer(listId);
-
-    groupDiv.appendChild(listContainer);
-
+    
+    // 使用文档片段批量渲染子项
+    const itemFragment = document.createDocumentFragment();
+    // const dockerItems = []; // 临时存储创建的 Docker 项由于在dockercache里添加了是否已经真实加到了dom验证，此处添加都会失败，因为这个时候都只是添加到临时页面文档，其实还在内存里
     dockers
         ?.filter(docker => docker.groupId === group.id)
         .forEach(docker => {
             const dockerItem = createDockerItem(docker);
-            listContainer.appendChild(dockerItem);
+            itemFragment.appendChild(dockerItem);
+            // dockerItems.push(dockerItem); // 暂存 Docker 项
         });
-
+    listContainer.appendChild(itemFragment);   
+    groupDiv.appendChild(listContainer);
+    // 统一更新缓存
+    // dockerItems.forEach(dockerItem => updateDockerItemCache(dockerItem));
     return groupDiv;
 }
 
@@ -286,10 +313,126 @@ function createDockerItem(docker) {
             </div>
         </div>
     `;
-
+    // 缓存子元素引用
+    dockerItem._cpuValue = dockerItem.querySelector('.docker-item-cpu .docker-item-stats-value');
+    dockerItem._networkReceiveValue = dockerItem.querySelector('.docker-item-networkIo-receive .docker-item-stats-value');
+    dockerItem._networkSendValue = dockerItem.querySelector('.docker-item-networkIo-send .docker-item-stats-value');
+    dockerItem._statusIndicator = dockerItem.querySelector('.docker-status-indicator');
+    // 更新缓存,停止此处的更新，直接入口统一更新
+    // updateDockerItemCache(dockerItem);
     return dockerItem;
 }
+/**
+ * 动态添加 Docker 项
+ * @param {object} docker - 新增的 Docker 数据对象
+ */
+export function domaddDockerItem(docker) {
+    const listContainer = document.getElementById(`docker-list-${docker.groupId}`);
+    if (!listContainer) {
+        console.error(`Failed to find the container for group ID: ${docker.groupId}`);
+        return;
+    }
 
+    // 创建新的 Docker 项
+    const dockerItem = createDockerItem(docker);
+    listContainer.appendChild(dockerItem);
+
+    // 更新缓存
+    updateDockerItemCache(dockerItem);
+}
+
+/**
+ * 动态删除 Docker 项
+ * @param {string} dockerId - 要删除的 Docker ID
+ */
+export function domremoveDockerItem(dockerId) {
+    const dockerItem = document.querySelector(`[${DATA_ITEM_ID}="${dockerId}"]`);
+    if (!dockerItem) {
+        console.error(`Failed to find Docker item with ID: ${dockerId}`);
+        return;
+    }
+
+    // 从 DOM 中移除
+    dockerItem.remove();
+
+    // 从缓存中移除
+    removeDockerItemFromCache(dockerId);
+    
+}
+
+/**
+ * 动态添加分组
+ * @param {object} group - 新增的分组数据对象
+ */
+export function domaddGroup(group) {
+    const dashboardType = group.dashboardType;
+    const dashboard = document.getElementById(
+        dashboardType === DASHBOARD_TYPE_WEBSITE ? WEBSITE_DASHBOARD_ID : DOCKER_DASHBOARD_ID
+    );
+    if (!dashboard) {
+        console.error(`Failed to find dashboard for type: ${dashboardType}`);
+        return;
+    }
+
+    // 创建新的分组
+    const groupDiv = createGroupElement(group, group.groupType === GROUP_TYPE_WEBSITE ? CLASS_WEBSITE_GROUP : CLASS_DOCKER_GROUP);
+    const listId = `${group.groupType}-list-${group.id}`;
+    const listContainer = createListContainer(listId);
+    groupDiv.appendChild(listContainer);
+
+    // 插入到仪表盘中
+    dashboard.appendChild(groupDiv);
+}
+
+/**
+ * 动态删除分组
+ * @param {string} groupId - 要删除的分组 ID
+ */
+export function domremoveGroup(groupId) {
+    const groupDiv = document.getElementById(`${groupId}`);
+    if (!groupDiv) {
+        console.error(`Failed to find group with ID: ${groupId}`);
+        return;
+    }
+
+    // 从 DOM 中移除
+    groupDiv.remove();
+}
+
+/**
+ * 动态添加网站项
+ * @param {object} website - 新增的网站数据对象
+ */
+export function domaddWebsiteItem(website) {
+    const listContainer = document.getElementById(`website-list-${website.groupId}`);
+    if (!listContainer) {
+        console.error(`Failed to find the container for group ID: ${website.groupId}`);
+        return;
+    }
+
+    // 创建新的网站项
+    const websiteItem = createWebsiteItem(website);
+    listContainer.appendChild(websiteItem);
+
+    // 如果需要缓存网站项，可以在这里扩展逻辑
+}
+
+/**
+ * 动态删除网站项
+ * @param {string} websiteId - 要删除的网站 ID
+ */
+export function domremoveWebsiteItem(websiteId) {
+    const websiteItem = document.querySelector(`[${DATA_ITEM_ID}="${websiteId}"]`);
+    if (!websiteItem) {
+        console.error(`Failed to find website item with ID: ${websiteId}`);
+        return;
+    }
+
+    // 从 DOM 中移除
+    websiteItem.remove();
+
+    // 如果有缓存逻辑，可以在这里扩展
+}
 /**
  * 获取完整的 URL
  * @param {string} url - 原始 URL
@@ -300,6 +443,21 @@ function getFullUrl(url) {
 }
 
 /**
+ * 使用 Web Worker 获取主仪表盘数据
+ * @returns {Promise} - 返回包含网站和 Docker 数据的对象，如果获取失败则返回 null
+ */
+async function fetchMainDashboardDataWithWorker() {
+    try {
+        const workerPath = './dashboardWorker.js';
+        const message = 'fetchData';
+        return await createAndRunWorker(workerPath, message);
+    } catch (error) {
+        console.error('Failed to fetch data with worker:', error);
+        throw error; // 重新抛出错误以便进一步处理
+    }
+}
+
+/**
  * 使用数据渲染主仪表盘（包括网站和 Docker）
  */
 export async function renderMainDashboardWithData() {
@@ -307,9 +465,14 @@ export async function renderMainDashboardWithData() {
     WEBSITE_DASHBOARD.classList.add(LOADING_CLASS);
 
     try {
-        const data = await fetchMainDashboardData();
+        // 使用 Web Worker 获取数据
+        const data = await fetchMainDashboardDataWithWorker();
+        console.log('Data from worker:', data);
         if (data) {
+            console.time('renderMainDashboard');
             renderMainDashboard(data);
+            console.timeEnd('renderMainDashboard');
+
             showNotification('数据加载成功', NOTIFICATION_SUCCESS);
         }
     } finally {
@@ -320,5 +483,15 @@ export async function renderMainDashboardWithData() {
         } else {
             resetGroupColors();
         }
+            console.time('querySelectorAll');
+            // 延迟更新缓存
+            requestIdleCallback(() => {
+                const dockerItems = document.querySelectorAll('.docker-item');
+                initializeDockerItemCache(dockerItems);
+            });
+            console.timeEnd('querySelectorAll');
+            // initializeDockerItemCache();
     }
 }
+
+

@@ -35,7 +35,7 @@ export class TooltipDomService {
   positionTooltip(tooltip, target) {
     const rect = target.getBoundingClientRect(); // 获取目标元素 Rect
     const tooltipRect = tooltip.getBoundingClientRect(); // 获取工具提示 Rect
-    console.log(tooltipRect);
+    // console.log(tooltipRect);
     const windowHeight = window.innerHeight; // 获取窗口高度
     const windowWidth = window.innerWidth; // 获取窗口宽度
 

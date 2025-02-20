@@ -11,8 +11,8 @@ import {
 import { dockerUpdateInfoAll } from './dockerIfonUpdate.js';
 
 import { backendUrl } from '../config.js';
-import { setRandomGroupColors, resetGroupColors } from './utils.js';
-import { isRandomColorsEnabled } from './colorThemeService.js';
+import { setRandomGroupColors, resetGroupColors } from './h2colorThemeService.js';
+import { isRandomColorsEnabled } from './h2colorThemeService.js';
 
 /**
  * Render Docker dockerdashboard

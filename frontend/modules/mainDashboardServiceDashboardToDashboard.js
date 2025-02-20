@@ -4,7 +4,7 @@
 import { showNotification } from './notificationService.js';
 import { getWebsiteGroups, getWebsites, getAllDockers,getDockerGroups } from './api.js';
 import { setRandomGroupColors, resetGroupColors } from './utils.js';
-import { isRandomColorsEnabled } from './colorThemeService.js';
+import { isRandomColorsEnabled } from './h2colorThemeService.js';
 
 import { backendUrl } from '../config.js';
 /**

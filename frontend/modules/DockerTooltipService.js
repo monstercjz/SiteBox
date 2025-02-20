@@ -12,6 +12,8 @@ import {
     CONFIG_HOVER_DELAY,
     CONFIG_AUTO_CLOSE_DELAY,
     CONFIG_DEBOUNCE_DELAY,
+    CONTEXT_MENU_ID, 
+    EVENT_CONTEXTMENU,
 } from '../config.js';
 
 // 配置对象 (可以根据需要调整)
@@ -47,6 +49,14 @@ export class DockerTooltipService {
                     this._cleanupTooltip(this.currentTooltip);
                 }
             }
+        });
+        document.addEventListener(EVENT_CONTEXTMENU, () => {
+            this.cachedContextMenu = document.getElementById(CONTEXT_MENU_ID);
+        });
+    
+        // 监听点击事件以隐藏 contextMenu
+        document.addEventListener('click', () => {
+            this.cachedContextMenu = null;
         });
     }
 
@@ -92,12 +102,24 @@ export class DockerTooltipService {
     }
 
     _showTooltip(target, docker) {
+        if (this._checkContextMenuPresence()) {
+            console.log('ContextMenu is present, skipping tooltip display.');
+            return;
+        }
         const itemId = target.dataset.itemId;
         if (this.currentitemId === itemId) return;
         this._removeCurrentTooltip();
         this._createTooltip(target, docker, itemId);
     }
-
+    _checkContextMenuPresence() {
+        // 如果缓存中不存在 contextMenu，则直接返回 false
+        if (!this.cachedContextMenu) {
+            return false;
+        }
+    
+        // 如果缓存中存在 contextMenu，则进行一次实时判断
+        return !!document.getElementById(CONTEXT_MENU_ID);
+    }
     _removeCurrentTooltip() {
         this.domService.removeCurrentTooltip();
         this.currentTooltip = this.domService.getCurrentTooltip();
@@ -110,6 +132,7 @@ export class DockerTooltipService {
         const tooltip = this.domService.createTooltipElement();
         tooltip.innerHTML = this.generateTooltipContentForDocker(target); // 使用新的内容生成方法
         tooltip.targetElement = target; // 保存目标元素引用
+        // console.log("tooltip", tooltip.targetElement);
         document.body.appendChild(tooltip);
         this.domService.showTooltip(tooltip);
 

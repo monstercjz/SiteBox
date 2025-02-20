@@ -1,5 +1,6 @@
 import { showNotification } from './notificationService.js';
 import { renderDashboardWithData } from './mainDashboardService.js';
+import { domaddDockerItem, domremoveDockerItem } from './mainDashboardServiceOrderFirst.js';
 import { DockerSaveService } from './dockerDataService.js';
 import { hideContextMenu } from './contextMenu.js';
 import { backendUrl } from '../config.js';
@@ -40,7 +41,9 @@ export async function addDocker(groupId) {
                 };
                 const result = await dockerSaveService.saveDocker(null, dockerData, groupSelect);
                 if (result) {
-                    renderDashboardWithData();
+                    //renderDashboardWithData();
+                    //更新ui
+                    domaddDockerItem(result);
                 }
             },
         });
@@ -95,7 +98,10 @@ export async function deleteDocker(groupId, dockerId) {
 
         const dockerSaveService = new DockerSaveService();
         await dockerSaveService.deleteDocker(dockerId, deleteOption);
-        renderDashboardWithData();
+        //动态删除dom中的dockerItem，避免全局刷新
+         domremoveDockerItem(dockerId)
+         //全局刷新
+        // renderDashboardWithData();
     } catch (error) {
         console.error('Failed to delete Docker:', error);
         showNotification(NOTIFICATION_DELETE_DOCKER_FAIL, NOTIFICATION_TYPE_ERROR);

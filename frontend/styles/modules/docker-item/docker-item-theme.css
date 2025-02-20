@@ -36,7 +36,7 @@
 
 .docker-status-indicator {
     /* You can add theme-specific styles for the status indicator here */
-    background-color: var(--color-running); /* Default to success color */
+    background-color: var(--color-stop); /* Default to success color */
 }
 
 .docker-item-stats-value {
