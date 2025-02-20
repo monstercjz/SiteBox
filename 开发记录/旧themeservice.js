@@ -1,3 +1,4 @@
+//不使用动态加载的方式，直接导入全部css
 import { showNotification } from './notificationService.js';
 import {
     NOTIFICATION_THEME_CHANGED,
@@ -24,48 +25,29 @@ const THEMES = {
     EYE_CARE: 'eye-care',
 };
 
-// 动态加载 CSS 文件
-function loadCSS(url) {
-    return new Promise((resolve, reject) => {
-        const link = document.createElement('link');
-        link.rel = 'stylesheet';
-        link.href = url;
-        link.onload = resolve;
-        link.onerror = reject;
-        document.head.appendChild(link);
-    });
+// 获取当前主题
+function getCurrentTheme() {
+    return body.getAttribute(DATA_ATTRIBUTE_THEME) || THEMES.LIGHT;
 }
-
 
 // 设置主题
 function setTheme(theme) {
-    const themeCSSURL = `styles/theme/${theme}-theme-colors.css`; // 构建主题 CSS 文件 URL
+    body.setAttribute(DATA_ATTRIBUTE_THEME, theme);
 
-    // 移除旧的主题 CSS link 元素
-    const oldThemeLinks = document.querySelectorAll('link[href*="styles/theme/"]');
-    oldThemeLinks.forEach(link => link.remove());
+    // 更新主题选项的激活状态
+    document.querySelectorAll(`.${CLASS_THEME_SWITCHER_OPTION}`).forEach(option => {
+        option.classList.toggle(CLASS_ACTIVE, option.dataset[DATA_ATTRIBUTE_THEME_OPTION] === theme);
+        showNotification(`${NOTIFICATION_THEME_CHANGED}${theme}`, 'success');
+    });
 
-    loadCSS(themeCSSURL)
-        .then(() => {
-            body.setAttribute(DATA_ATTRIBUTE_THEME, theme); // CSS 加载完成后设置 data-theme 属性 (可选)
-
-            // 更新主题选项的激活状态
-            document.querySelectorAll(`.${CLASS_THEME_SWITCHER_OPTION}`).forEach(option => {
-                option.classList.toggle(CLASS_ACTIVE, option.dataset[DATA_ATTRIBUTE_THEME_OPTION] === theme);
-            });
-            showNotification(`${NOTIFICATION_THEME_CHANGED}${theme}`, 'success');
-
-            try {
-                localStorage.setItem(LOCAL_STORAGE_KEY_THEME, theme);
-            } catch (error) {
-                console.warn(ERROR_SAVE_THEME_TO_LOCAL_STORAGE, error);
-            }
-        })
-        .catch(error => {
-            console.error(`加载主题 CSS失败: ${theme}`, error);
-            showNotification(`主题 ${theme} 加载失败`, 'error'); // 显示加载失败的通知
-        });
+    try {
+        localStorage.setItem(LOCAL_STORAGE_KEY_THEME, theme);
+    } catch (error) {
+        console.warn(ERROR_SAVE_THEME_TO_LOCAL_STORAGE, error);
+    }
 }
+
+
 
 // 已使用主题列表
 let usedThemes = localStorage.getItem(LOCAL_STORAGE_KEY_USED_THEMES)
@@ -149,5 +131,3 @@ export function applySavedTheme() {
         setTheme(savedTheme);
     }
 }
-
-export { THEMES };

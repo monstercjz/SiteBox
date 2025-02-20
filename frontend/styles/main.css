@@ -34,25 +34,6 @@
 
 @import 'base/typography.css';
 @import './theme/variables.css';
-@import './theme/eye-parchment-theme-colors.css';
-@import './theme/orange-theme-colors.css';
-@import './theme/light-theme-colors.css';
-@import './theme/dark-theme-colors.css';
-@import './theme/eye-green-theme-colors.css';
-@import './theme/flat-theme-colors.css';
-@import './theme/glow-theme-colors.css';
-@import './theme/light-purple-theme-colors.css';
-@import './theme/almond-yellow-theme-colors.css';
-@import './theme/autumn-leaf-brown-theme-colors.css';
-@import './theme/computer-manager-theme-colors.css';
-@import './theme/galaxy-white-theme-colors.css';
-@import './theme/grass-green-theme-colors.css';
-@import './theme/green-bean-theme-colors.css';
-@import './theme/lotus-purple-theme-colors.css';
-@import './theme/rouge-red-theme-colors.css';
-@import './theme/aurora-gray-theme-colors.css';
-@import './theme/sea-sky-blue-theme-colors.css';
-@import './theme/wps-eye-care-theme-colors.css';
 
 
 /* Import Layout styles - 引入布局模块样式 */
