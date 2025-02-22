@@ -1,0 +1,94 @@
+/* ===================================
+   SiteBox 企业级颜色系统 (v3.0)
+   =================================== */
+/* ========================
+   极光灰主题
+   ======================== */
+[data-theme='aurora-gray']{
+    /* === Core Brand Colors (State-driven Naming) - 核心品牌色系（状态驱动命名） === */
+    /* 品牌色 */
+    --color-brand-primary-base: #71717A;     /* 极光灰-主品牌基准色 - 深灰色 */
+    --color-brand-primary-hover: #A1A1AA;   /* 悬停状态 - 灰色 */
+    --color-brand-primary-active: #52525B;  /* 激活/按压状态 - 更深灰色 */
+  
+    /* === Auxiliary Color System (Function-oriented Naming) - 辅助色系（功能导向命名） === */
+    --color-functional-secondary-base: #9CA3AF;  /* 辅助主色 - 灰色 */
+    --color-functional-secondary-hover: #BDBDBD; /* 悬停亮色 - 浅灰色 */
+    --color-functional-secondary-active: #777777;/* 激活暗色 - 深灰色 */
+  
+    /* === Functional Color System (Semantic Translation) - 功能色系（语义直译） === */
+    --color-running:#48BB78;
+    --color-stop:red;
+    --color-status-success: #A3E78A;    /* 成功状态 - 亮绿色 */
+    --color-status-warning: #FACC15;    /* 警告状态 - 黄色 */
+    --color-status-error: #F87171;      /* 错误状态 - 红色 */
+    --color-interaction-accent: #F472B6;/* 强调交互色 - 粉色 */
+  
+    /* === Neutral Color System (Usage Naming) - 中性色系（用途命名） === */
+    --color-neutral-background: #EAEAEF;    /* 页面背景 - 极光灰 */
+    --color-neutral-surface: #F5F5F7;       /* 表面色 - 极浅极光灰 */
+    --color-neutral-surface-hover: #E1E1E5; /* 表面色悬停 - 稍深极光灰 */ 
+    --color-neutral-divider: #D4D4D8;       /* 分割线/边框 - 浅极光灰 */
+    --color-neutral-border-disabled: #D1D5DB; /* 禁用状态边框 */
+    --color-neutral-text-primary: #333333;  /* 主文本 - 深灰色 */
+    --color-neutral-text-secondary: #777777;/* 次级文本 - 灰色 */
+  
+    /* === Semantic Variables (Maintain Original Mapping) - 语义化变量（保持原有映射关系） === */
+    /* Text System - 文本系统 */
+    --text-primary: var(--color-neutral-text-primary);
+    --text-secondary: var(--color-neutral-text-secondary);
+    --text-disabled: var(--color-neutral-border-disabled);
+    --text-inverse: #FFFFFF; /* 反色文本 - 白色 */
+  
+    /* Background System - 背景系统 */
+    --background-body: var(--color-neutral-background);
+    --background-surface: var(--color-neutral-surface);
+    --background-surface-hover: var(--color-neutral-surface-hover);
+    --background-card: #F5F5F7; /* 卡片背景 - 极浅极光灰 */
+    --background-card-hover: #E1E1E5; /* 卡片悬停背景 - 稍深极光灰 */
+    --background-header: var(--color-brand-primary-base);
+    --background-subheader: var(--color-functional-secondary-base);
+    
+    /* Interaction System - 交互系统 */
+    --action-primary: var(--color-brand-primary-base);
+    --action-primary-hover: var(--color-brand-primary-hover);
+    --action-primary-active: var(--color-brand-primary-active);
+    --action-secondary: var(--color-functional-secondary-base);
+    
+    /* Status System - 状态系统 */
+    --status-success: var(--color-status-success);
+    --status-warning: var(--color-status-warning);
+    --status-error: var(--color-status-error);
+    --status-accent: var(--color-interaction-accent);
+    --status-info: var(--color-brand-primary-active);
+    
+    /* Special Elements - 特殊元素 */
+    --border-normal: var(--color-neutral-divider);
+    --url-identifier: #2563EB;       /* 网址标识 - 蓝色 */
+    --timestamp-label: #777777;      /* 时间戳文本 - 灰色 */
+  
+    /* 阴影效果 */
+    --shadow-color-base: 240deg 5% 50%; /* 极光灰阴影基色 - 灰色 */
+    --shadow-intensity: 0.03;
+    --shadow-sm: 0 1px 2px hsl(var(--shadow-color-base) / 0.05);
+    --shadow-md: 0 2px 4px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+    --shadow-lg: 0 4px 8px rgba(0, 0, 0, 0.06), 0 2px 4px rgba(0, 0, 0, 0.04);
+    --shadow-button: 0 2px 4px rgba(234, 234, 239, 0.2); /* 极光灰按钮阴影 - 浅极光灰 */
+    --shadow-button-hover: 0 3px 6px rgba(234, 234, 239, 0.3); /* 极光灰按钮悬停阴影 - 浅极光灰 */
+    --shadow-website-item-hover: 0 6px 12px rgba(234, 234, 239, 0.1); /* 极光灰网站项悬停阴影 - 浅极光灰 */
+    --shadow-website-item-active: 0 3px 8px rgba(0, 0, 0, 0.03);
+  
+    /* 其他效果 */
+    --overlay-color: rgba(234, 234, 239, 0.4); /* 极光灰遮罩颜色 - 半透明极光灰 */
+    --gradient: linear-gradient(135deg, var(--action-primary) 0%, var(--action-secondary) 100%);
+    --glass-effect: rgba(234, 234, 239, 0.6); /* 极光灰玻璃效果 - 浅极光灰 */
+    --glass-border: 1px solid rgba(0, 0, 0, 0.02);
+    --glass-shadow: 0 4px 12px 0 rgba(234, 234, 239, 0.08); /* 极光灰玻璃阴影 - 浅极光灰 */
+    --glass-blur: blur(5px);
+    --color-glass-border: 1px solid rgba(224, 224, 229, 0.1); /* 极光灰玻璃边框颜色 - 浅极光灰 */
+    --color-glass-shadow: 0 4px 12px 0 rgba(214, 214, 219, 0.05); /* 更深的极光灰玻璃阴影 - 稍深极光灰 */
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-fast: 150ms ease;
+    --transition-normal: 250ms ease;
+    --color-delete-hover: hsl(9, 58%, 40%);
+}

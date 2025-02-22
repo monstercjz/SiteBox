@@ -1,0 +1,94 @@
+/* ===================================
+   SiteBox 企业级颜色系统 (v3.0)
+   =================================== */
+/* ========================
+   青草绿主题
+   ======================== */
+[data-theme='grass-green']{
+    /* === Core Brand Colors (State-driven Naming) - 核心品牌色系（状态驱动命名） === */
+    /* 品牌色 */
+    --color-brand-primary-base: #84CC16;     /* 青草绿-主品牌基准色 - 亮绿色 */
+    --color-brand-primary-hover: #A3E635;   /* 悬停状态 - 浅绿色 */
+    --color-brand-primary-active: #65A30D;  /* 激活/按压状态 - 深绿色 */
+  
+    /* === Auxiliary Color System (Function-oriented Naming) - 辅助色系（功能导向命名） === */
+    --color-functional-secondary-base: #A7F3D0;  /* 辅助主色 - 浅绿色 */
+    --color-functional-secondary-hover: #B2F5EA; /* 悬停亮色 - 更浅绿色 */
+    --color-functional-secondary-active: #86EFAC;/* 激活暗色 - 深绿色 */
+  
+    /* === Functional Color System (Semantic Translation) - 功能色系（语义直译） === */
+    --color-running:#48BB78;
+    --color-stop:red;
+    --color-status-success: #A3E78A;    /* 成功状态 - 亮绿色 */
+    --color-status-warning: #FACC15;    /* 警告状态 - 黄色 */
+    --color-status-error: #F87171;      /* 错误状态 - 红色 */
+    --color-interaction-accent: #F472B6;/* 强调交互色 - 粉色 */
+  
+    /* === Neutral Color System (Usage Naming) - 中性色系（用途命名） === */
+    --color-neutral-background: #E3EDCD;    /* 页面背景 - 青草绿 */
+    --color-neutral-surface: #ECF5E1;       /* 表面色 - 极浅青草绿 */
+    --color-neutral-surface-hover: #D9E5C5; /* 表面色悬停 - 稍深青草绿 */ 
+    --color-neutral-divider: #C4D9B3;       /* 分割线/边框 - 浅青草绿 */
+    --color-neutral-border-disabled: #D1D5DB; /* 禁用状态边框 */
+    --color-neutral-text-primary: #334155;  /* 主文本 - 深灰色 */
+    --color-neutral-text-secondary: #6B7280;/* 次级文本 - 灰色 */
+  
+    /* === Semantic Variables (Maintain Original Mapping) - 语义化变量（保持原有映射关系） === */
+    /* Text System - 文本系统 */
+    --text-primary: var(--color-neutral-text-primary);
+    --text-secondary: var(--color-neutral-text-secondary);
+    --text-disabled: var(--color-neutral-border-disabled);
+    --text-inverse: #FFFFFF; /* 反色文本 - 白色 */
+  
+    /* Background System - 背景系统 */
+    --background-body: var(--color-neutral-background);
+    --background-surface: var(--color-neutral-surface);
+    --background-surface-hover: var(--color-neutral-surface-hover);
+    --background-card: #ECF5E1; /* 卡片背景 - 极浅青草绿 */
+    --background-card-hover: #D9E5C5; /* 卡片悬停背景 - 稍深青草绿 */
+    --background-header: var(--color-brand-primary-base);
+    --background-subheader: var(--color-functional-secondary-base);
+    
+    /* Interaction System - 交互系统 */
+    --action-primary: var(--color-brand-primary-base);
+    --action-primary-hover: var(--color-brand-primary-hover);
+    --action-primary-active: var(--color-brand-primary-active);
+    --action-secondary: var(--color-functional-secondary-base);
+    
+    /* Status System - 状态系统 */
+    --status-success: var(--color-status-success);
+    --status-warning: var(--color-status-warning);
+    --status-error: var(--color-status-error);
+    --status-accent: var(--color-interaction-accent);
+    --status-info: var(--color-brand-primary-active);
+    
+    /* Special Elements - 特殊元素 */
+    --border-normal: var(--color-neutral-divider);
+    --url-identifier: #14B8A6;       /* 网址标识 - 青色 */
+    --timestamp-label: #6B7280;      /* 时间戳文本 - 灰色 */
+  
+    /* 阴影效果 */
+    --shadow-color-base: 95deg 60% 65%; /* 青草绿阴影基色 - 浅绿色 */
+    --shadow-intensity: 0.04;
+    --shadow-sm: 0 1px 2px hsl(var(--shadow-color-base) / 0.06);
+    --shadow-md: 0 2px 4px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 4px 8px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.06);
+    --shadow-button: 0 2px 4px rgba(227, 237, 205, 0.3); /* 青草绿按钮阴影 - 浅青草绿 */
+    --shadow-button-hover: 0 3px 6px rgba(227, 237, 205, 0.4); /* 青草绿按钮悬停阴影 - 浅青草绿 */
+    --shadow-website-item-hover: 0 6px 12px rgba(227, 237, 205, 0.15); /* 青草绿网站项悬停阴影 - 浅青草绿 */
+    --shadow-website-item-active: 0 3px 8px rgba(0, 0, 0, 0.05);
+  
+    /* 其他效果 */
+    --overlay-color: rgba(227, 237, 205, 0.5); /* 青草绿遮罩颜色 - 半透明青草绿 */
+    --gradient: linear-gradient(135deg, var(--action-primary) 0%, var(--action-secondary) 100%);
+    --glass-effect: rgba(227, 237, 205, 0.7); /* 青草绿玻璃效果 - 浅青草绿 */
+    --glass-border: 1px solid rgba(0, 0, 0, 0.03);
+    --glass-shadow: 0 4px 12px 0 rgba(227, 237, 205, 0.1); /* 青草绿玻璃阴影 - 浅青草绿 */
+    --glass-blur: blur(6px);
+    --color-glass-border: 1px solid rgba(217, 227, 195, 0.15); /* 青草绿玻璃边框颜色 - 浅青草绿 */
+    --color-glass-shadow: 0 4px 12px 0 rgba(207, 217, 185, 0.08); /* 更深的青草绿玻璃阴影 - 稍深青草绿 */
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-fast: 150ms ease;
+    --transition-normal: 250ms ease;
+    --color-delete-hover: hsl(9, 58%, 40%);
+}

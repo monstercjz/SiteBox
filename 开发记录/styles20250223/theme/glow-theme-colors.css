@@ -1,0 +1,94 @@
+/* ===================================
+   SiteBox 企业级颜色系统 (v3.0)
+   =================================== */
+/* ========================
+   流光溢彩主题 - 炫彩霓虹
+   ======================== */
+[data-theme='glow'] {
+    /* === Core Brand Colors (State-driven Naming) - 核心品牌色系（状态驱动命名） === */
+    /* 品牌色 */
+    --color-brand-primary-base: #8A2BE2;     /* 霓虹紫-主品牌基准色 */
+    --color-brand-primary-hover: #9B30FF;   /* 悬停状态 */
+    --color-brand-primary-active: #7B1FA2;  /* 激活/按压状态 */
+  
+    /* === Auxiliary Color System (Function-oriented Naming) - 辅助色系（功能导向命名） === */
+    --color-functional-secondary-base: #00CED1;  /* 辅助主色 */
+    --color-functional-secondary-hover: #20B2AA; /* 悬停亮色 */
+    --color-functional-secondary-active: #008B8B;/* 激活暗色 */
+  
+    /* === Functional Color System (Semantic Translation) - 功能色系（语义直译） === */
+    --color-running:#48BB78;
+    --color-stop:red;
+    --color-status-success: #00FF7F;    /* 成功状态 */
+    --color-status-warning: #FFD700;    /* 警告状态 */
+    --color-status-error: #FF4500;      /* 错误状态 */
+    --color-interaction-accent: #FF69B4;/* 强调交互色 */
+  
+    /* === Neutral Color System (Usage Naming) - 中性色系（用途命名） === */
+    --color-neutral-background: #0F0C29;    /* 页面背景 */
+    --color-neutral-surface: #1E1A40;       /* 表面色 */
+    --color-neutral-surface-hover: #2E2859; /* 表面色悬停 */ 
+    --color-neutral-divider: #3D3769;       /* 分割线/边框 */
+    --color-neutral-border-disabled: #4C4679; /* 禁用状态边框 */
+    --color-neutral-text-primary: #F8F9FF;  /* 主文本 */
+    --color-neutral-text-secondary: #D3D3D3;/* 次级文本 */
+
+    /* === Semantic Variables (Maintain Original Mapping) - 语义化变量（保持原有映射关系） === */
+    /* Text System - 文本系统 */
+    --text-primary: var(--color-neutral-text-primary);
+    --text-secondary: var(--color-neutral-text-secondary);
+    --text-disabled: var(--color-neutral-border-disabled);
+    --text-inverse: #0F0C29;
+  
+    /* Background System - 背景系统 */
+    --background-body: var(--color-neutral-background);
+    --background-surface: var(--color-neutral-surface);
+    --background-surface-hover: var(--color-neutral-surface-hover);
+    --background-card: #1E1A40;
+    --background-card-hover: #2E2859;
+    --background-header: var(--color-brand-primary-base);
+    --background-subheader: var(--color-functional-secondary-base);
+    
+    /* Interaction System - 交互系统 */
+    --action-primary: var(--color-brand-primary-base);
+    --action-primary-hover: var(--color-brand-primary-hover);
+    --action-primary-active: var(--color-brand-primary-active);
+    --action-secondary: var(--color-functional-secondary-base);
+    
+    /* Status System - 状态系统 */
+    --status-success: var(--color-status-success);
+    --status-warning: var(--color-status-warning);
+    --status-error: var(--color-status-error);
+    --status-accent: var(--color-interaction-accent);
+    --status-info: var(--color-brand-primary-active);
+    
+    /* Special Elements - 特殊元素 */
+    --border-normal: var(--color-neutral-divider);
+    --url-identifier: #00BFFF;       /* 网址标识 */
+    --timestamp-label: #D3D3D3;      /* 时间戳文本 */
+
+    /* 流光溢彩阴影效果 */
+    --shadow-color-base: 271deg 76% 53%;
+    --shadow-intensity: 0.15;
+    --shadow-sm: 0 0 8px rgba(138, 43, 226, 0.5);
+    --shadow-md: 0 0 16px rgba(138, 43, 226, 0.5), 0 0 32px rgba(0, 206, 209, 0.5);
+    --shadow-lg: 0 0 24px rgba(138, 43, 226, 0.5), 0 0 48px rgba(0, 206, 209, 0.5);
+    --shadow-button: 0 0 12px rgba(138, 43, 226, 0.7);
+    --shadow-button-hover: 0 0 16px rgba(138, 43, 226, 0.8);
+    --shadow-website-item-hover: 0 0 32px rgba(138, 43, 226, 0.5);
+    --shadow-website-item-active: 0 0 24px rgba(0, 206, 209, 0.5);
+
+    /* 流光溢彩其他效果 */
+    --overlay-color: rgba(15, 12, 41, 0.8);
+    --gradient: linear-gradient(135deg, var(--action-primary) 0%, var(--action-secondary) 100%);
+    --glass-effect: rgba(15, 12, 41, 0.9);
+    --glass-border: 1px solid rgba(138, 43, 226, 0.3);
+    --glass-shadow: 0 0 32px rgba(138, 43, 226, 0.5);
+    --glass-blur: blur(16px);
+    --color-glass-border: 1px solid rgba(138, 43, 226, 0.4);
+    --color-glass-shadow: 0 0 48px rgba(138, 43, 226, 0.6);
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-fast: 150ms ease;
+    --transition-normal: 250ms ease;
+    --color-delete-hover: hsl(9, 58%, 40%);
+}

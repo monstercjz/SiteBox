@@ -1,0 +1,94 @@
+/* ===================================
+   SiteBox 企业级颜色系统 (v3.0)
+   =================================== */
+/* ========================
+   绿豆沙主题
+   ======================== */
+[data-theme='green-bean']{
+    /* === Core Brand Colors (State-driven Naming) - 核心品牌色系（状态驱动命名） === */
+    /* 品牌色 */
+    --color-brand-primary-base: #86EFAC;     /* 绿豆沙-主品牌基准色 */
+    --color-brand-primary-hover: #A7F3D0;   /* 悬停状态 */
+    --color-brand-primary-active: #6EE7B7;  /* 激活/按压状态 */
+  
+    /* === Auxiliary Color System (Function-oriented Naming) - 辅助色系（功能导向命名） === */
+    --color-functional-secondary-base: #34D399;  /* 辅助主色 */
+    --color-functional-secondary-hover: #6EE7B7; /* 悬停亮色 */
+    --color-functional-secondary-active: #22C55E;/* 激活暗色 */
+  
+    /* === Functional Color System (Semantic Translation) - 功能色系（语义直译） === */
+    --color-running:#48BB78;
+    --color-stop:red;
+    --color-status-success: #A3E78A;    /* 成功状态 */
+    --color-status-warning: #FACC15;    /* 警告状态 */
+    --color-status-error: #F87171;      /* 错误状态 */
+    --color-interaction-accent: #F472B6;/* 强调交互色 */
+  
+    /* === Neutral Color System (Usage Naming) - 中性色系（用途命名） === */
+    --color-neutral-background: #C7EDCC;    /* 页面背景 - 绿豆沙 */
+    --color-neutral-surface: #E0F2E6;       /* 表面色 - 浅绿豆沙 */
+    --color-neutral-surface-hover: #C7EDCC; /* 表面色悬停 - 绿豆沙 */ 
+    --color-neutral-divider: #A3E7B7;       /* 分割线/边框 - 深绿豆沙 */
+    --color-neutral-border-disabled: #D1D5DB; /* 禁用状态边框 */
+    --color-neutral-text-primary: #374151;  /* 主文本 - 深灰 */
+    --color-neutral-text-secondary: #6B7280;/* 次级文本 - 灰色 */
+  
+    /* === Semantic Variables (Maintain Original Mapping) - 语义化变量（保持原有映射关系） === */
+    /* Text System - 文本系统 */
+    --text-primary: var(--color-neutral-text-primary);
+    --text-secondary: var(--color-neutral-text-secondary);
+    --text-disabled: var(--color-neutral-border-disabled);
+    --text-inverse: #FFFFFF; /* 反色文本 - 白色 */
+  
+    /* Background System - 背景系统 */
+    --background-body: var(--color-neutral-background);
+    --background-surface: var(--color-neutral-surface);
+    --background-surface-hover: var(--color-neutral-surface-hover);
+    --background-card: #E0F2E6; /* 卡片背景 - 浅绿豆沙 */
+    --background-card-hover: #C7EDCC; /* 卡片悬停背景 - 绿豆沙 */
+    --background-header: var(--color-brand-primary-base);
+    --background-subheader: var(--color-functional-secondary-base);
+    
+    /* Interaction System - 交互系统 */
+    --action-primary: var(--color-brand-primary-base);
+    --action-primary-hover: var(--color-brand-primary-hover);
+    --action-primary-active: var(--color-brand-primary-active);
+    --action-secondary: var(--color-functional-secondary-base);
+    
+    /* Status System - 状态系统 */
+    --status-success: var(--color-status-success);
+    --status-warning: var(--color-status-warning);
+    --status-error: var(--color-status-error);
+    --status-accent: var(--color-interaction-accent);
+    --status-info: var(--color-brand-primary-active);
+    
+    /* Special Elements - 特殊元素 */
+    --border-normal: var(--color-neutral-divider);
+    --url-identifier: #0EA5E9;       /* 网址标识 - 浅蓝色 */
+    --timestamp-label: #9CA3AF;      /* 时间戳文本 */
+  
+    /* 阴影效果 */
+    --shadow-color-base: 145deg 58% 68%; /* 绿豆沙阴影基色 */
+    --shadow-intensity: 0.08;
+    --shadow-sm: 0 1px 3px hsl(var(--shadow-color-base) / 0.12);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.25), 0 2px 4px rgba(0, 0, 0, 0.2);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.25), 0 4px 6px rgba(0, 0, 0, 0.2);
+    --shadow-button: 0 4px 12px rgba(167, 243, 208, 0.5); /* 绿豆沙按钮阴影 */
+    --shadow-button-hover: 0 6px 16px rgba(167, 243, 208, 0.6); /* 绿豆沙按钮悬停阴影 */
+    --shadow-website-item-hover: 0 16px 32px rgba(167, 243, 208, 0.3); /* 绿豆沙网站项悬停阴影 */
+    --shadow-website-item-active: 0 8px 24px rgba(0, 0, 0, 0.2);
+  
+    /* 其他效果 */
+    --overlay-color: rgba(199, 237, 204, 0.7); /* 绿豆沙遮罩颜色 */
+    --gradient: linear-gradient(135deg, var(--action-primary) 0%, var(--action-secondary) 100%);
+    --glass-effect: rgba(199, 237, 204, 0.9); /* 绿豆沙玻璃效果 */
+    --glass-border: 1px solid rgba(255, 255, 255, 0.5);
+    --glass-shadow: 0 8px 32px 0 rgba(167, 243, 208, 0.2); /* 绿豆沙玻璃阴影 */
+    --glass-blur: blur(12px);
+    --color-glass-border: 1px solid rgba(145, 230, 172, 0.3); /* 绿豆沙玻璃边框颜色 */
+    --color-glass-shadow: 0 8px 32px 0 rgba(107, 230, 183, 0.2); /* 更深的绿豆沙玻璃阴影 */
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-fast: 150ms ease;
+    --transition-normal: 250ms ease;
+    --color-delete-hover: hsl(9, 58%, 40%);
+}

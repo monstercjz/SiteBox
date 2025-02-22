@@ -1,0 +1,10 @@
+/* === Modal Styles - 模态框样式 === */
+/* 作用：组织和导入模态框相关的子模块样式。 */
+/* 依赖： modal 子模块 */
+/* Modal Styles - Main module - imports sub-modules */
+@import './modal/modal-base.css';
+@import './modal/modal-theme.css';
+@import './modal/modal-variants.css';
+@import './modal/modal-states.css';
+@import './modal/modal-animations.css';
+@import './modal/modal-responsive.css';

@@ -1,0 +1,94 @@
+/* ===================================
+   SiteBox 企业级颜色系统 (v3.0)
+   =================================== */
+/* ========================
+   海天蓝主题
+   ======================== */
+[data-theme='sea-sky-blue']{
+    /* === Core Brand Colors (State-driven Naming) - 核心品牌色系（状态驱动命名） === */
+    /* 品牌色 */
+    --color-brand-primary-base: #3B82F6;     /* 海天蓝-主品牌基准色 - 蓝色 */
+    --color-brand-primary-hover: #60A5FA;   /* 悬停状态 - 浅蓝色 */
+    --color-brand-primary-active: #2563EB;  /* 激活/按压状态 - 深蓝色 */
+  
+    /* === Auxiliary Color System (Function-oriented Naming) - 辅助色系（功能导向命名） === */
+    --color-functional-secondary-base: #63B3ED;  /* 辅助主色 - 浅蓝色 */
+    --color-functional-secondary-hover: #82CAFA; /* 悬停亮色 - 更浅蓝色 */
+    --color-functional-secondary-active: #4299E1;/* 激活暗色 - 深蓝色 */
+  
+    /* === Functional Color System (Semantic Translation) - 功能色系（语义直译） === */
+    --color-running:#48BB78;
+    --color-stop:red;
+    --color-status-success: #6EE7B7;    /* 成功状态 - 绿色 */
+    --color-status-warning: #FBBF24;    /* 警告状态 - 黄色 */
+    --color-status-error: #F87171;      /* 错误状态 - 红色 */
+    --color-interaction-accent: #F472B6;/* 强调交互色 - 粉色 */
+  
+    /* === Neutral Color System (Usage Naming) - 中性色系（用途命名） === */
+    --color-neutral-background: #DCE2F1;    /* 页面背景 - 海天蓝 */
+    --color-neutral-surface: #E8EEFA;       /* 表面色 - 极浅海天蓝 */
+    --color-neutral-surface-hover: #D5DEF0; /* 表面色悬停 - 稍深海天蓝 */ 
+    --color-neutral-divider: #C2D1E8;       /* 分割线/边框 - 浅海天蓝 */
+    --color-neutral-border-disabled: #E5E7EB; /* 禁用状态边框 */
+    --color-neutral-text-primary: #334155;  /* 主文本 - 深灰色 */
+    --color-neutral-text-secondary: #6B7280;/* 次级文本 - 灰色 */
+  
+    /* === Semantic Variables (Maintain Original Mapping) - 语义化变量（保持原有映射关系） === */
+    /* Text System - 文本系统 */
+    --text-primary: var(--color-neutral-text-primary);
+    --text-secondary: var(--color-neutral-text-secondary);
+    --text-disabled: var(--color-neutral-border-disabled);
+    --text-inverse: #FFFFFF; /* 反色文本 - 白色 */
+  
+    /* Background System - 背景系统 */
+    --background-body: var(--color-neutral-background);
+    --background-surface: var(--color-neutral-surface);
+    --background-surface-hover: var(--color-neutral-surface-hover);
+    --background-card: #E8EEFA; /* 卡片背景 - 极浅海天蓝 */
+    --background-card-hover: #D5DEF0; /* 卡片悬停背景 - 稍深海天蓝 */
+    --background-header: var(--color-brand-primary-base);
+    --background-subheader: var(--color-functional-secondary-base);
+    
+    /* Interaction System - 交互系统 */
+    --action-primary: var(--color-brand-primary-base);
+    --action-primary-hover: var(--color-brand-primary-hover);
+    --action-primary-active: var(--color-brand-primary-active);
+    --action-secondary: var(--color-functional-secondary-base);
+    
+    /* Status System - 状态系统 */
+    --status-success: var(--color-status-success);
+    --status-warning: var(--color-status-warning);
+    --status-error: var(--color-status-error);
+    --status-accent: var(--color-interaction-accent);
+    --status-info: var(--color-brand-primary-active);
+    
+    /* Special Elements - 特殊元素 */
+    --border-normal: var(--color-neutral-divider);
+    --url-identifier: #06B6D4;       /* 网址标识 - 青色 */
+    --timestamp-label: #6B7280;      /* 时间戳文本 - 灰色 */
+  
+    /* 阴影效果 */
+    --shadow-color-base: 215deg 70% 78%; /* 海天蓝阴影基色 - 浅蓝色 */
+    --shadow-intensity: 0.04;
+    --shadow-sm: 0 1px 2px hsl(var(--shadow-color-base) / 0.06);
+    --shadow-md: 0 2px 4px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 4px 8px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.06);
+    --shadow-button: 0 2px 4px rgba(220, 226, 241, 0.3); /* 海天蓝按钮阴影 - 浅海天蓝 */
+    --shadow-button-hover: 0 3px 6px rgba(220, 226, 241, 0.4); /* 海天蓝按钮悬停阴影 - 浅海天蓝 */
+    --shadow-website-item-hover: 0 6px 12px rgba(220, 226, 241, 0.15); /* 海天蓝网站项悬停阴影 - 浅海天蓝 */
+    --shadow-website-item-active: 0 3px 8px rgba(0, 0, 0, 0.05);
+  
+    /* 其他效果 */
+    --overlay-color: rgba(220, 226, 241, 0.5); /* 海天蓝遮罩颜色 - 半透明海天蓝 */
+    --gradient: linear-gradient(135deg, var(--action-primary) 0%, var(--action-secondary) 100%);
+    --glass-effect: rgba(220, 226, 241, 0.7); /* 海天蓝玻璃效果 - 浅海天蓝 */
+    --glass-border: 1px solid rgba(0, 0, 0, 0.03);
+    --glass-shadow: 0 4px 12px 0 rgba(220, 226, 241, 0.1); /* 海天蓝玻璃阴影 - 浅海天蓝 */
+    --glass-blur: blur(6px);
+    --color-glass-border: 1px solid rgba(210, 218, 235, 0.15); /* 海天蓝玻璃边框颜色 - 浅海天蓝 */
+    --color-glass-shadow: 0 4px 12px 0 rgba(200, 208, 225, 0.08); /* 更深的海天蓝玻璃阴影 - 稍深海天蓝 */
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-fast: 150ms ease;
+    --transition-normal: 250ms ease;
+    --color-delete-hover: hsl(9, 58%, 40%);
+}

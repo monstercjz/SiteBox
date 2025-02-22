@@ -1,0 +1,45 @@
+/* === State Animations Styles - 状态动画样式 === */
+/* 作用：定义全局状态动画 (animations) 样式，例如 slideIn, spin 等关键帧动画。 */
+/* 依赖： 无 */
+/* State Animations Styles - 状态动画样式 */
+/*
+  定义全局状态动画 (animations) 样式，例如 slideIn, spin 等关键帧动画。
+  用于组件在不同状态切换时应用的动画效果。
+*/
+/* Slide In Animation - 滑入动画 */
+@keyframes slideIn {
+  from {
+    transform: translateX(100%); /* 初始位置在右侧 100% 宽度，元素从右侧滑入 */
+    opacity: 0; /* 初始状态透明度为 0，元素初始时完全透明 */
+  }
+  to {
+    transform: translateX(0); /* 最终位置在水平 0 位置，元素最终停留在正常位置 */
+    opacity: 1; /* 最终状态透明度为 1，元素完全不透明 */
+  }
+}
+
+/* Spin Animation - 旋转动画 */
+@keyframes spin {
+  to {
+    transform: rotate(360deg); /* 最终状态旋转 360 度，实现完整的旋转动画 */
+  }
+}
+/* Fade In Animation - 淡入动画 */
+@keyframes fadeIn {
+  from {
+    opacity: 0; /* 初始状态透明度为 0，元素初始时完全透明 */
+  }
+  to {
+    opacity: 1; /* 最终状态透明度为 1，元素完全不透明 */
+  }
+}
+
+/* Fade Out Animation - 淡出动画 */
+@keyframes fadeOut {
+  from {
+    opacity: 1; /* 初始状态透明度为 1，元素初始时完全不透明 */
+  }
+  to {
+    opacity: 0; /* 最终状态透明度为 0，元素最终完全透明 */
+  }
+}

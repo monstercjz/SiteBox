@@ -1,0 +1,68 @@
+/* === CSS Reset - 基础样式重置 === */
+/* Purpose: Apply global CSS Reset styles to normalize browser default styles, unify element rendering across different browsers, and maintain style consistency. */
+/* 作用：应用全局 CSS Reset 样式，Normalize 浏览器默认样式，统一不同浏览器下的元素渲染，保持样式一致性。 */
+/* Dependencies: None */
+/* 依赖：无 */
+
+/* Clear margin, padding, and border for all elements */
+/* 清除所有元素的内外边距和边框 */
+*, *::before, *::after {
+  box-sizing: border-box; /* Set box-sizing to border-box for all elements, making padding and border not affect the total width and height of elements */
+  /* 统一 box-sizing 模式为 border-box，使元素的边框和内边距不影响元素的总宽度和高度 */
+  margin: 0; /* Clear margin, remove default browser margins */
+  /* 清除外边距，移除浏览器默认的外边距 */
+  padding: 0; /* Clear padding, remove default browser paddings */
+  /* 清除内边距，移除浏览器默认的内边距 */
+}
+
+/* Set base styles for body */
+/* 设置 body 基础样式 */
+body {
+  min-height: 100vh; /* Minimum height 100vh to ensure body occupies at least the viewport height */
+  /* 最小高度为 100vh，确保 body 至少占据视口高度 */
+  text-rendering: optimizeSpeed; /* Optimize text rendering speed for better performance */
+  /* 优化文本渲染速度，提升性能 */
+  line-height: 1.5; /* Set default line height to 1.5 for better text readability */
+  /* 设置默认行高为 1.5，提高文本可读性 */
+  
+}
+
+/* Styles for embedded elements like images and videos */
+/* 针对图片和视频等嵌入元素 */
+img, picture, svg, video {
+  display: block; /* Set to block element to remove default inline behavior and prevent bottom whitespace */
+  /* 设置为 block 元素，移除默认 inline 行为，防止底部留白 */
+  max-width: 100%; /* Maximum width 100% to prevent images/videos from exceeding the parent element */
+  /* 最大宽度 100% ，防止图片/视频超出父元素 */
+}
+
+/* Remove default text decoration for <a> tags */
+/* 移除 a 标签默认文字装饰 */
+a {
+  text-decoration: none; /* Remove underline to make link styles cleaner */
+  /* 移除下划线，使链接样式更简洁 */
+}
+
+/* Inherit font settings */
+/* 继承字体设置 */
+input, button, textarea, select {
+  font: inherit; /* Inherit font settings from parent elements to maintain font consistency for form elements */
+  /* 继承父元素字体设置，保持表单元素字体一致性 */
+}
+
+/* Optimize scrolling behavior for users who prefer reduced motion */
+/* 优化滚动行为，针对 prefers-reduced-motion 用户设置 */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important; /* Disable animations by setting an extremely short animation duration */
+    /* 禁用动画，设置极短的动画持续时间 */
+    animation-iteration-count: 1 !important; /* Disable animation iteration, play only once */
+    /* 禁用动画迭代，仅播放一次 */
+    transition-duration: 0.01ms !important; /* Disable transitions by setting an extremely short transition duration */
+    /* 禁用过渡效果，设置极短的过渡持续时间 */
+    scroll-behavior: auto !important; /* Disable smooth scrolling, switch to instant scrolling */
+    /* 禁用平滑滚动，改为即时滚动 */
+  }
+}

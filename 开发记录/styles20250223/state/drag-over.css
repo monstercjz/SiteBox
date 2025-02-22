@@ -1,0 +1,16 @@
+/* === Drag and Drop States Styles - 拖拽状态样式 === */
+/* 作用：定义拖拽 (drag-over) 状态下的样式，用于视觉反馈，例如拖拽元素经过可放置区域时的样式变化。 */
+/* 依赖： theme/variables.css (颜色和过渡效果变量) */
+/* Drag and Drop States Styles - 拖拽状态样式 */
+/*
+  定义拖拽 (drag-over) 状态下的样式，用于视觉反馈，
+  例如拖拽元素经过可放置区域时的样式变化。
+*/
+/* Drag Over 状态 - 拖拽经过状态 */
+.drag-over {
+  border: 2px dashed var(--action-primary); /* 虚线边框，2px 虚线，颜色为 primary color CSS 变量，表示可放置区域 */
+  background: var(--background-card-hover); /* 背景色为 surface hover color CSS 变量，提供hover 状态的视觉反馈 */
+  opacity: 0.8; /* 透明度 0.8，使背景略微透明 */
+  transform: scale(1.02); /* 放大 1.02 倍，轻微放大元素，增强视觉提示 */
+  transition: all var(--transition-normal); /* 添加过渡效果，使状态变化平滑 */
+}

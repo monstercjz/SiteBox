@@ -1,0 +1,65 @@
+/* Context Menu Base Styles - 右键菜单基础样式 */
+/*
+  定义右键菜单 (context-menu) 组件的基础布局和结构样式。
+  包括菜单容器和菜单项的基本 padding、min-width 等，不包含主题、颜色或状态相关的样式。
+*/
+
+/* 右键菜单容器 */
+#contextMenu {
+  padding: var(--spacing-inset-xxs) 0;
+  /* 设置垂直方向内边距 */
+  min-width: 160px;
+  /* 设置最小宽度 */
+}
+
+/* 右键菜单项 */
+#contextMenu div {
+  padding: var(--spacing-inset-xs) var(--spacing-inset-md);
+  /* 设置菜单项内边距 */
+  cursor: pointer;
+  user-select: none;
+  font-size: var(--font-size-sm);
+}
+
+/* 删除网站条目菜单项样式 */
+#contextMenu .delete-website-item {
+  color: #ef4444; /* 设置删除网站条目菜单项文字颜色为红色 */
+}
+
+/* 删除分组菜单项样式 */
+/* Group context menu items */
+#contextMenu .delete-group-item {
+  color: #ef4444; /* 设置删除分组菜单项文字颜色为红色 */
+}
+/* 删除分组菜单项样式 */
+/* Group context menu items */
+#contextMenu .delete-docker-item {
+  color: #ef4444; /* 设置删除分组菜单项文字颜色为红色 */
+}
+
+[data-layout="alternative"] #contextMenu {
+  position: fixed;
+  z-index: 9999;
+  min-width: var(--size-contextmenu-min-width);
+  overflow: hidden;
+  display: block !important;
+}
+[data-layout="alternative"] #contextMenu div {
+  padding: var(--spacing-inset-sm) var(--spacing-inset-md);
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+  overflow: hidden;
+}
+[data-layout="alternative"] #contextMenu .delete-website-item {
+  color: #ef4444; /* 设置删除网站条目菜单项文字颜色为红色 */
+}
+[data-layout="alternative"] #contextMenu .delete-docker-item {
+  color: #ef4444; /* 设置删除网站条目菜单项文字颜色为红色 */
+}
+[data-layout="alternative"] #contextMenu .delete-group-item {
+  color: #ef4444; /* 设置删除分组菜单项文字颜色为红色 */
+}

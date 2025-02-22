@@ -1,0 +1,37 @@
+/* Group States Styles - 分组组件状态样式 */
+/*
+  定义分组 (group) 组件在不同状态下的样式，
+   依赖：state/variables.css
+  例如 hover, active 等交互状态。目前暂无状态样式。
+*/
+[data-layout="alternative"] .docker-group::before {
+  /* 此before导致右键分组无效，待调整 */
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--border-width-xs);/* 待调整 */
+  background: var(--gradient);
+  opacity: 0;
+  transition: var(--transition);
+}
+
+[data-layout="alternative"] .docker-group:hover {
+  transform: translateY(-6px) scale(1.03);
+  box-shadow: 0 var(--shadow-blur-md) var(--shadow-blur-lg) rgba(0, 0, 0, 0.15);
+  animation: groupHover 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  backdrop-filter: blur(12px);
+}
+
+
+[data-layout="alternative"] .docker-group:hover::before {
+  opacity: 1;
+  width: 100%;
+  height: var(--border-width-xs);/* 待调整 */
+  background: linear-gradient(
+      90deg,
+      var(--action-primary) 0%,
+      var(--action-secondary) 100%
+  );
+}

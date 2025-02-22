@@ -1,0 +1,29 @@
+/* === Loading State Styles - 加载状态样式 === */
+/* 作用：定义全局加载 (loading) 状态样式，用于指示元素或组件的加载状态。 */
+/* 依赖： loading 子模块, state/animations.css (spin 动画) */
+/* Loading State Styles - 加载状态样式 - 主模块 - 引入子模块 */
+/*
+  定义全局加载 (loading) 状态样式，用于指示元素或组件的加载状态。
+  通过 @import 引入 theme, animations 等子模块，并定义 loading 状态下的基本样式和动画。
+*/
+@import './loading/loading-theme.css'; /* 引入 loading 主题样式模块，定义 loading 状态下的主题相关样式 */
+@import './loading/loading-animations.css'; /* 引入 loading 动画样式模块，定义 loading 状态下的动画效果 */
+
+/* Loading 状态通用样式 - 应用于 loading 状态的元素 */
+.loading {
+  position: relative; /* 设置定位为 relative，为 loading 动画伪元素提供定位上下文 */
+  pointer-events: none; /* 禁用 pointer 事件，防止用户在 loading 状态下进行交互，避免误操作 */
+  opacity: 0.7; /* 设置透明度为 0.7，弱化 loading 状态下的元素视觉效果，表明正在加载 */
+}
+
+/* Loading 动画 - loading 状态下的伪元素动画 */
+.loading::after {
+  content: ""; /* 伪元素内容为空，动画效果通过背景或边框实现 */
+  position: absolute; /* 使用 absolute 定位，使伪元素脱离文档流，相对于 .loading 元素进行定位 */
+  top: 50%; /* 垂直居中，定位到父元素垂直中心线 */
+  left: 50%; /* 水平居中，定位到父元素水平中心线 */
+  width: 30px; /* 设置 loading 动画宽度为 30px */
+  height: 30px; /* 设置 loading 动画高度为 30px，使其呈现正方形 */
+  margin: -15px 0 0 -15px; /* 调整 margin 实现精确居中， compensating for width/height */
+  animation: spin 1s linear infinite; /* 应用 spin 关键帧动画，1s 线性匀速无限循环，实现持续旋转的 loading 效果 */
+}

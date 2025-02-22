@@ -1,0 +1,51 @@
+/* Website Item Base Styles */
+.website-item {
+  display: flex;
+  align-items: center;/* 垂直居中 */
+  flex-direction: row;/* 修改这里的值让内部元素以列row 方式排列 */
+  align-content: space-around;/* 如果需要垂直方向上的分布 */
+  justify-content: center;/* 修改这里的值让内部元素居中 */
+  /*padding: var(--spacing-inset-md); /* 减小水平方向的内边距 */
+  padding-right: var(--spacing-inset-md);
+  gap: var(--spacing-inline-md);/* 可以改变a和img的距离 */
+  width: var(--size-website-item-min-width); /* 使用 CSS 变量设置 item 宽度 */
+  min-height: 65px; /* 设置一个最小高度 */
+}
+
+.website-item img {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+}
+
+.website-item a {
+  text-decoration: none;
+  font-size: var(--font-size-sm);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+[data-layout="alternative"] .website-item {   
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-inline-xxs); 
+  padding: var(--spacing-inset-xs); 
+  margin: var(--spacing-stack-xxs);  
+  position: relative;
+  overflow: hidden;
+  min-height: 60px;
+  min-width: 60px;
+  width: auto;
+  height: auto;
+  backdrop-filter: none;
+  cursor: pointer;
+}
+[data-layout="alternative"] .website-item a {
+  text-decoration: none;  
+  font-weight: var(--font-weight-medium);
+  position: relative;
+  display: inline-block;
+  padding-bottom: var(--spacing-inset-xs);/* 待调整 */
+}

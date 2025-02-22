@@ -1,0 +1,10 @@
+/* === Group Styles - 分组样式 === */
+/* 作用：组织和导入分组相关的子模块样式。 */
+/* 依赖： group 子模块 */
+/* Group Styles - Main module - imports sub-modules */
+@import './group/group-base.css';
+@import './group/group-theme.css';
+@import './group/group-variants.css';
+@import './group/group-states.css';
+@import './group/group-animations.css';
+@import './group/group-responsive.css';

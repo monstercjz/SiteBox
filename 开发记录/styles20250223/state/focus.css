@@ -1,0 +1,24 @@
+/* === Focus States Styles - 焦点状态样式 === */
+/* 作用：定义全局 focus 状态样式，用于增强键盘用户的可访问性。 */
+/* 依赖： theme/variables.css (颜色变量) */
+/* Focus States Styles - 焦点状态样式 */
+/*
+  定义全局 focus 状态样式，用于增强键盘用户的可访问性。
+  包括默认 focus 样式和 :focus-visible 伪类样式，使用 primary color CSS 变量进行主题化配置。
+*/
+/* Default Focus Style - 默认 Focus 样式 */
+:focus {
+  outline: 2px solid var(--action-primary); /* 设置 outline 样式，2px 实线边框，颜色为 primary color CSS 变量，突出显示焦点 */
+  outline-offset: 2px; /* 设置 outline-offset，使 outline 与元素之间留有 2px 间隙，避免遮挡元素边框 */
+}
+
+/* 非 focus-visible 状态下的 Focus 样式 -  移除非 focus-visible 状态下的 outline 样式， 避免鼠标用户看到 focus 效果 */
+:focus:not(:focus-visible) {
+  outline: none; /* 移除 outline，当 focus 不是通过键盘 focus-visible 触发时，不显示 outline */
+}
+
+/* Focus-visible 状态下的 Focus 样式 -  focus-visible 状态下，显示 outline 样式，增强键盘可访问性 */
+:focus-visible {
+  outline: 2px solid var(--action-primary); /* 设置 outline 样式，2px 实线边框，颜色为 primary color CSS 变量，突出显示键盘焦点 */
+  outline-offset: 2px; /* 设置 outline-offset 为 2px，与元素之间留有间隙 */
+}

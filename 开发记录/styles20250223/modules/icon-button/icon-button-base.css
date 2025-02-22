@@ -1,0 +1,30 @@
+/* Icon Button Base Styles - 图标按钮基础样式 */
+/*
+  定义图标按钮 (icon-button) 组件的基础布局和结构样式。
+   依赖：base/variables.css
+  包括尺寸、display 属性、图标 SVG 的基本样式等，不包含主题、颜色或状态相关的样式。
+*/
+
+
+
+.icon-button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--size-button-sm);
+  height: var(--size-button-sm);
+  border-radius: var(--radius-circle);
+  overflow: hidden;
+  border: none;
+  padding: var(--spacing-inset-xxs);
+  cursor: pointer;
+}
+
+.icon-button svg {
+  width: var(--size-icon-md);
+  height: var(--size-icon-md);
+  transform-origin: center;
+}
+
+

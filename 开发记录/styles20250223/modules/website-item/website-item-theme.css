@@ -1,0 +1,26 @@
+/* Website Item Theme */
+/*
+  This module is for defining the visual theme of the Website Item component.
+  It should include CSS variables, color schemes, font stacks, and other theme-related styles.
+*/
+.website-item {
+  border-radius: var(--radius-lg);
+  background: var(--background-surface);
+  border: 1px solid var(--border-normal);
+  box-shadow: var(--shadow-sm);
+}
+
+.website-item a {
+  color: var(--text-primary);
+}
+[data-layout="alternative"] .website-item {
+  background: var(--glass-effect);
+  border: var(--glass-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--glass-shadow);
+}
+[data-layout="alternative"] .website-item a {
+
+  color: var(--text-primary);
+
+}

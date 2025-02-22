@@ -1,0 +1,34 @@
+/* Theme Switcher Base Styles - 主题切换器基础样式 */
+/*
+  定义主题切换器 (theme-switcher) 组件的基础布局和结构样式。
+  包括选项容器、选项按钮的基础样式，不包含主题、颜色或状态相关的样式。
+*/
+/* 主题切换器选项容器 */
+.theme-switcher__options {
+  position: absolute; /* 使用 absolute 定位，使其脱离文档流 */
+  right: 100%;  /* 定位在按钮的左侧 */
+  top: 0; /* 顶部对齐 */
+  display: flex; /* 使用 flex 布局 */
+  align-items: center; /* 垂直居中 */
+  height: var(--size-button-sm);  /* 与按钮高度一致 */
+  gap: var(--spacing-inline-xxs); /* 设置选项之间的间距 */
+  padding: var(--spacing-inset-xxs); /* 设置内边距 */
+  margin-right: var(--spacing-stack-xs); /* 设置右外边距 */
+}
+
+/* Theme switcher container - 主题切换器容器 */
+.theme-switcher {
+  position: relative;  /* 为绝对定位的子元素提供参考 */
+}
+
+/* Theme switcher option - 主题切换器选项按钮 */
+.theme-switcher__option {
+  display: flex; /* 使用 flex 布局 */
+  align-items: center; /* 垂直居中 */
+  justify-content: center; /* 水平居中 */
+  width: var(--size-button-sm);
+  height: var(--size-button-sm);
+  padding: var(--spacing-inset-xxs); /* 设置内边距 */
+  border-radius: var(--radius-xl); /* 设置圆形边框 */
+  /* box-shadow: var(--shadow-sm); 设置阴影效果 */
+}

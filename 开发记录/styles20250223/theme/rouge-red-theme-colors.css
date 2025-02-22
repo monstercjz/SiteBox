@@ -1,0 +1,94 @@
+/* ===================================
+   SiteBox 企业级颜色系统 (v3.0)
+   =================================== */
+/* ========================
+   胭脂红主题
+   ======================== */
+[data-theme='rouge-red']{
+    /* === Core Brand Colors (State-driven Naming) - 核心品牌色系（状态驱动命名） === */
+    /* 品牌色 */
+    --color-brand-primary-base: #F43F5E;     /* 胭脂红-主品牌基准色 - 粉红色 */
+    --color-brand-primary-hover: #F7597A;   /* 悬停状态 - 浅粉红色 */
+    --color-brand-primary-active: #E11D48;  /* 激活/按压状态 - 深粉红色 */
+  
+    /* === Auxiliary Color System (Function-oriented Naming) - 辅助色系（功能导向命名） === */
+    --color-functional-secondary-base: #EC4899;  /* 辅助主色 - 粉色 */
+    --color-functional-secondary-hover: #F062B4; /* 悬停亮色 - 浅粉色 */
+    --color-functional-secondary-active: #D8398A;/* 激活暗色 - 深粉色 */
+  
+    /* === Functional Color System (Semantic Translation) - 功能色系（语义直译） === */
+    --color-running:#48BB78;
+    --color-stop:red;
+    --color-status-success: #6EE7B7;    /* 成功状态 - 绿色 */
+    --color-status-warning: #FBBF24;    /* 警告状态 - 黄色 */
+    --color-status-error: #F87171;      /* 错误状态 - 红色 */
+    --color-interaction-accent: #FDE0E0;/* 强调交互色 - 胭脂红 */
+  
+    /* === Neutral Color System (Usage Naming) - 中性色系（用途命名） === */
+    --color-neutral-background: #FDE6E0;    /* 页面背景 - 胭脂红 */
+    --color-neutral-surface: #FEF0EC;       /* 表面色 - 极浅胭脂红 */
+    --color-neutral-surface-hover: #FCE8E4; /* 表面色悬停 - 稍深胭脂红 */ 
+    --color-neutral-divider: #FCD5CE;       /* 分割线/边框 - 浅胭脂红 */
+    --color-neutral-border-disabled: #E5E7EB; /* 禁用状态边框 */
+    --color-neutral-text-primary: #555555;  /* 主文本 - 深灰色 */
+    --color-neutral-text-secondary: #777777;/* 次级文本 - 灰色 */
+  
+    /* === Semantic Variables (Maintain Original Mapping) - 语义化变量（保持原有映射关系） === */
+    /* Text System - 文本系统 */
+    --text-primary: var(--color-neutral-text-primary);
+    --text-secondary: var(--color-neutral-text-secondary);
+    --text-disabled: var(--color-neutral-border-disabled);
+    --text-inverse: #333333; /* 反色文本 - 深灰色 */
+  
+    /* Background System - 背景系统 */
+    --background-body: var(--color-neutral-background);
+    --background-surface: var(--color-neutral-surface);
+    --background-surface-hover: var(--color-neutral-surface-hover);
+    --background-card: #FEF0EC; /* 卡片背景 - 极浅胭脂红 */
+    --background-card-hover: #FCE8E4; /* 卡片悬停背景 - 稍深胭脂红 */
+    --background-header: var(--color-brand-primary-base);
+    --background-subheader: var(--color-functional-secondary-base);
+    
+    /* Interaction System - 交互系统 */
+    --action-primary: var(--color-brand-primary-base);
+    --action-primary-hover: var(--color-brand-primary-hover);
+    --action-primary-active: var(--color-brand-primary-active);
+    --action-secondary: var(--color-functional-secondary-base);
+    
+    /* Status System - 状态系统 */
+    --status-success: var(--color-status-success);
+    --status-warning: var(--color-status-warning);
+    --status-error: var(--color-status-error);
+    --status-accent: var(--color-interaction-accent);
+    --status-info: var(--color-brand-primary-active);
+    
+    /* Special Elements - 特殊元素 */
+    --border-normal: var(--color-neutral-divider);
+    --url-identifier: #06B6D4;       /* 网址标识 - 青色 */
+    --timestamp-label: #777777;      /* 时间戳文本 - 灰色 */
+  
+    /* 阴影效果 */
+    --shadow-color-base: 350deg 85% 78%; /* 胭脂红阴影基色 - 浅粉色 */
+    --shadow-intensity: 0.04;
+    --shadow-sm: 0 1px 2px hsl(var(--shadow-color-base) / 0.06);
+    --shadow-md: 0 2px 4px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 4px 8px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.06);
+    --shadow-button: 0 2px 4px rgba(253, 230, 224, 0.3); /* 胭脂红按钮阴影 - 浅胭脂红 */
+    --shadow-button-hover: 0 3px 6px rgba(253, 230, 224, 0.4); /* 胭脂红按钮悬停阴影 - 浅胭脂红 */
+    --shadow-website-item-hover: 0 6px 12px rgba(253, 230, 224, 0.15); /* 胭脂红网站项悬停阴影 - 浅胭脂红 */
+    --shadow-website-item-active: 0 3px 8px rgba(0, 0, 0, 0.05);
+  
+    /* 其他效果 */
+    --overlay-color: rgba(253, 230, 224, 0.5); /* 胭脂红遮罩颜色 - 半透明胭脂红 */
+    --gradient: linear-gradient(135deg, var(--action-primary) 0%, var(--action-secondary) 100%);
+    --glass-effect: rgba(253, 230, 224, 0.7); /* 胭脂红玻璃效果 - 浅胭脂红 */
+    --glass-border: 1px solid rgba(0, 0, 0, 0.03);
+    --glass-shadow: 0 4px 12px 0 rgba(253, 230, 224, 0.1); /* 胭脂红玻璃阴影 - 浅胭脂红 */
+    --glass-blur: blur(6px);
+    --color-glass-border: 1px solid rgba(248, 220, 215, 0.15); /* 胭脂红玻璃边框颜色 - 浅胭脂红 */
+    --color-glass-shadow: 0 4px 12px 0 rgba(243, 215, 210, 0.08); /* 更深的胭脂红玻璃阴影 - 稍深胭脂红 */
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-fast: 150ms ease;
+    --transition-normal: 250ms ease;
+    --color-delete-hover: hsl(9, 58%, 40%);
+}

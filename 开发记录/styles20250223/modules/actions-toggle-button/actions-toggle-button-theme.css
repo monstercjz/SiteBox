@@ -1,0 +1,13 @@
+/* Actions Toggle Button Theme Styles - 切换按钮主题样式 */
+/*
+  定义切换按钮 (actions-toggle-button) 组件的视觉主题样式。
+  包括背景色、文字颜色、边框、阴影等，使用 CSS 变量进行主题化配置。
+*/
+
+#actions-toggle-button {
+  background: var(--action-primary);
+  color: white;
+  border: none;
+  box-shadow: var(--shadow-button);
+  background: radial-gradient(circle at center, var(--action-primary) 0%, var(--action-secondary) 100%);
+}

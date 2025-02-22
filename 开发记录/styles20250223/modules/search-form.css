@@ -1,0 +1,10 @@
+/* === Search Form Styles - 搜索表单样式 === */
+/* 作用：组织和导入搜索表单相关的子模块样式。 */
+/* 依赖： search-form 子模块 */
+/* Search Form Styles - Main module - imports sub-modules */
+@import './search-form/search-form-base.css';
+@import './search-form/search-form-theme.css';
+@import './search-form/search-form-variants.css';
+@import './search-form/search-form-states.css';
+@import './search-form/search-form-animations.css';
+@import './search-form/search-form-responsive.css';

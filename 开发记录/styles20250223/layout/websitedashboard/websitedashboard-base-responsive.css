@@ -1,0 +1,42 @@
+
+@media (max-width: 575.98px) {
+  [data-layout="alternative"] #websitedashboard {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
+}
+
+/* Small devices - 小屏幕 (576px 及以上) */
+@media (min-width: 576px) {
+  [data-layout="alternative"] #websitedashboard {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
+}
+
+/* Medium devices - 中等屏幕 (768px 及以上) */
+@media (min-width: 768px) {
+  [data-layout="alternative"] #websitedashboard {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
+}
+
+/* Large devices - 大屏幕 (992px 及以上) */
+@media (min-width: 992px) {
+  [data-layout="alternative"] #websitedashboard {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
+}
+
+/* Extra large devices - 超大屏幕 (1200px 及以上) */
+@media (min-width: 1200px) {
+  [data-layout="alternative"] #websitedashboard {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
+}
+
+/* XX-Large devices - 超超大屏幕 (1400px 及以上) */
+@media (min-width: 1400px) {
+  [data-layout="alternative"] #websitedashboard {
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    
+  }
+}

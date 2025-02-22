@@ -1,0 +1,166 @@
+/* === Alternative Layout Keyframes - 备选布局关键帧动画 === */
+/* 作用：定义备选布局 (alternative layout) 专用的关键帧动画。 */
+/* 依赖： 无 */
+@keyframes fadeInGroup {
+    /* Fade In Group Animation - 分组淡入动画 */
+    /* 作用：控制分组 (group) 元素淡入效果，包含缩放、位移和模糊 */
+    from {
+        opacity: 0; /* 初始状态完全透明 */
+        transform: scale(0.98) translateY(10px); /* 初始状态缩小 2%，向下位移 10px */
+        filter: blur(4px); /* 初始状态应用 4px 模糊 */
+        backdrop-filter: blur(8px); /* 初始状态应用背景模糊 8px */
+    }
+    50% {
+        transform: scale(1.02) translateY(-5px); /* 中间状态放大 2%，向上位移 5px */
+        filter: blur(2px); /* 中间状态应用 2px 模糊 */
+        backdrop-filter: blur(4px); /* 中间状态应用背景模糊 4px */
+    }
+    to {
+        opacity: 1; /* 最终状态完全不透明 */
+        transform: scale(1) translateY(0); /* 最终状态无缩放和位移 */
+        filter: blur(0); /* 最终状态无模糊 */
+        backdrop-filter: blur(0); /* 最终状态无背景模糊 */
+    }
+}
+
+@keyframes groupHover {
+    /* Group Hover Animation - 分组悬停动画 */
+    /* 作用：控制分组 (group) 元素悬停效果，包含位移、缩放和背景模糊 */
+    0% {
+        transform: translateY(0) scale(1); /* 初始状态无位移和缩放 */
+        backdrop-filter: blur(10px); /* 初始状态应用背景模糊 10px */
+    }
+    50% {
+        transform: translateY(-8px) scale(1.05); /* 中间状态向上位移 8px，放大 5% */
+        backdrop-filter: blur(16px); /* 中间状态应用背景模糊 16px */
+    }
+    100% {
+        transform: translateY(-6px) scale(1.03); /* 最终状态向上位移 6px，放大 3% */
+        backdrop-filter: blur(12px); /* 最终状态应用背景模糊 12px */
+    }
+}
+
+@keyframes cardHover {
+    /* Card Hover Animation - 卡片悬停动画 */
+    /* 作用：控制卡片 (card) 元素悬停效果，包含位移、缩放和阴影变化 */
+    0% {
+        transform: translateY(0) scale(1); /* 初始状态无位移和缩放 */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 初始状态应用小阴影 */
+    }
+    50% {
+        transform: translateY(-10px) scale(1.08); /* 中间状态向上位移 10px，放大 8% */
+        box-shadow: 0 20px 40px rgba(99, 102, 241, 0.25); /* 中间状态应用大阴影 */
+    }
+    100% {
+        transform: translateY(-8px) scale(1.05); /* 最终状态向上位移 8px，放大 5% */
+        box-shadow: 0 16px 32px rgba(99, 102, 241, 0.2); /* 最终状态应用中等阴影 */
+    }
+}
+
+@keyframes glow {
+    /* Glow Animation - 发光动画 */
+    /* 作用：控制发光 (glow) 效果，通过 box-shadow 实现光晕 */
+    from {
+        box-shadow: 0 0 4px var(--primary-color),
+                    0 0 8px var(--secondary-color); /* 初始状态较小光晕 */
+    }
+    to {
+        box-shadow: 0 0 8px var(--primary-color),
+                    0 0 16px var(--secondary-color); /* 最终状态较大光晕 */
+    }
+}
+
+@keyframes fadeInItem {
+    /* Fade In Item Animation - 条目淡入动画 */
+    /* 作用：控制条目 (item) 元素淡入效果，包含缩放和位移 */
+    from {
+        opacity: 0; /* 初始状态完全透明 */
+        transform: scale(0.95) translateY(8px); /* 初始状态缩小 5%，向下位移 8px */
+    }
+    50% {
+        transform: scale(1.02) translateY(-3px); /* 中间状态放大 2%，向上位移 3px */
+    }
+    to {
+        opacity: 1; /* 最终状态完全不透明 */
+        transform: scale(1) translateY(0); /* 最终状态无缩放和位移 */
+    }
+}
+
+@keyframes itemHover {
+    /* Item Hover Animation - 条目悬停动画 */
+    /* 作用：控制条目 (item) 元素悬停效果，包含位移和缩放 */
+    0% {
+        transform: translateY(0) scale(1); /* 初始状态无位移和缩放 */
+    }
+    50% {
+        transform: translateY(-6px) scale(1.05); /* 中间状态向上位移 6px，放大 5% */
+    }
+    100% {
+        transform: translateY(-4px) scale(1.03); /* 最终状态向上位移 4px，放大 3% */
+    }
+}
+
+@keyframes modalIn {
+    /* Modal In Animation - 模态框进入动画 */
+    /* 作用：控制模态框 (modal) 进入效果，包含位移、缩放、透明度和模糊 */
+    from {
+        transform: translateY(20px) scale(0.95); /* 初始状态向下位移 20px，缩小 5% */
+        opacity: 0; /* 初始状态完全透明 */
+        filter: blur(4px); /* 初始状态应用 4px 模糊 */
+        backdrop-filter: blur(16px); /* 初始状态应用背景模糊 16px */
+    }
+    50% {
+        transform: translateY(-10px) scale(1.02); /* 中间状态向上位移 10px，放大 2% */
+        filter: blur(2px); /* 中间状态应用 2px 模糊 */
+        backdrop-filter: blur(20px); /* 中间状态应用背景模糊 20px */
+    }
+    to {
+        opacity: 1; /* 最终状态完全不透明 */
+        transform: translateY(0) scale(1); /* 最终状态无位移和缩放 */
+        opacity: 1; /* 最终状态完全不透明 */
+        filter: blur(0); /* 最终状态无模糊 */
+        backdrop-filter: blur(12px); /* 最终状态应用背景模糊 12px */
+    }
+}
+
+@keyframes rotate {
+    /* Rotate Animation - 旋转动画 */
+    /* 作用：控制旋转 (rotate) 效果，用于加载等场景 */
+    from {
+        transform: rotate(0deg); /* 初始角度 0 度 */
+    }
+    to {
+        transform: rotate(360deg); /* 最终角度 360 度，完整旋转 */
+    }
+}
+
+@keyframes ripple {
+    /* Ripple Animation - 波纹动画 */
+    /* 作用：控制波纹 (ripple) 效果，用于按钮点击反馈 */
+    to {
+        width: 200%; /* 最终状态宽度放大到 200% */
+        height: 200%; /* 最终状态高度放大到 200% */
+        opacity: 0; /* 最终状态完全透明 */
+    }
+}
+
+@keyframes fadeIn {
+    /* Fade In Animation - 淡入动画 */
+    /* 作用：控制淡入 (fadeIn) 效果，用于元素显示 */
+    from {
+        opacity: 0; /* 初始状态完全透明 */
+        transform: scale(0.98); /* 初始状态缩小 2% */
+    }
+    to {
+        opacity: 1; /* 最终状态完全不透明 */
+        transform: scale(1); /* 最终状态无缩放 */
+    }
+}
+
+@keyframes float {
+    /* Float Animation - 浮动动画 */
+    /* 作用：控制浮动 (float) 效果，用于元素在垂直方向上的轻微漂浮 */
+    0% { transform: translateY(0); } /* 初始位置 */
+    50% { transform: translateY(-10px); } /* 中间位置向上位移 10px */
+    100% { transform: translateY(0); } /* 最终位置回到初始位置 */
+}

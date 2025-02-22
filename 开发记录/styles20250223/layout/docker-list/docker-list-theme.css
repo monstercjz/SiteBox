@@ -1,0 +1,12 @@
+/* Website List Theme Styles - 网站列表主题样式 */
+/* 
+  定义网站列表 (docker-list) 组件的视觉主题样式。 
+  该模块用于设置网站列表容器的主题相关样式，
+  例如背景色、文字颜色、边框颜色、阴影等，使用 CSS 变量进行主题化配置。
+*/
+
+.docker-list {
+  /* background-color: var(--background-body); 设置浅灰色背景，待处理 */
+  border-radius: var(--radius-sm); /* 设置中等圆角 */
+  /* box-shadow: var(--shadow-subtle);  subtle 阴影效果，待处理，其实不加阴影效果更好看 */
+}

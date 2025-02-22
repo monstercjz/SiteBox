@@ -1,0 +1,95 @@
+/* ===================================
+   SiteBox 企业级颜色系统 (v3.0)
+   =================================== */
+/* ========================
+   WPS 护眼色主题
+   ======================== */
+[data-theme='wps-eye-care']{
+    /* === Core Brand Colors (State-driven Naming) - 核心品牌色系（状态驱动命名） === */
+    /* 品牌色 */
+    --color-brand-primary-base: #A7C957;     /* WPS护眼色-主品牌基准色 - 浅绿色 */
+    --color-brand-primary-hover: #BADE6A;   /* 悬停状态 - 更浅绿色 */
+    --color-brand-primary-active: #96B34D;  /* 激活/按压状态 - 深绿色 */
+  
+    /* === Auxiliary Color System (Function-oriented Naming) - 辅助色系（功能导向命名） === */
+    --color-functional-secondary-base: #6A994E;  /* 辅助主色 - 绿色 */
+    --color-functional-secondary-hover: #86A873; /* 悬停亮色 - 浅绿色 */
+    --color-functional-secondary-active: #5A8045;/* 激活暗色 - 深绿色 */
+  
+    /* === Functional Color System (Semantic Translation) - 功能色系（语义直译） === */
+    --color-running:#48BB78;
+    --color-stop:red;
+    --color-status-success: #A3E78A;    /* 成功状态 - 亮绿色 */
+    --color-status-warning: #FACC15;    /* 警告状态 - 黄色 */
+    --color-status-error: #F87171;      /* 错误状态 - 红色 */
+    --color-interaction-accent: #F472B6;/* 强调交互色 - 粉色 */
+
+  
+    /* === Neutral Color System (Usage Naming) - 中性色系（用途命名） === */
+    --color-neutral-background: #6E7B6C;    /* 页面背景 - WPS护眼色 */
+    --color-neutral-surface: #8A9688;       /* 表面色 - 浅WPS护眼色 */
+    --color-neutral-surface-hover: #7B877A; /* 表面色悬停 - 稍深WPS护眼色 */ 
+    --color-neutral-divider: #70806E;       /* 分割线/边框 - 深WPS护眼色 */
+    --color-neutral-border-disabled: #9CA3AF; /* 禁用状态边框 */
+    --color-neutral-text-primary: #F3F4F6;  /* 主文本 - 浅灰色 */
+    --color-neutral-text-secondary: #D1D5DB;/* 次级文本 - 更浅灰色 */
+  
+    /* === Semantic Variables (Maintain Original Mapping) - 语义化变量（保持原有映射关系） === */
+    /* Text System - 文本系统 */
+    --text-primary: var(--color-neutral-text-primary);
+    --text-secondary: var(--color-neutral-text-secondary);
+    --text-disabled: var(--color-neutral-border-disabled);
+    --text-inverse: #FFFFFF; /* 反色文本 - 白色 */
+  
+    /* Background System - 背景系统 */
+    --background-body: var(--color-neutral-background);
+    --background-surface: var(--color-neutral-surface);
+    --background-surface-hover: var(--color-neutral-surface-hover);
+    --background-card: #8A9688; /* 卡片背景 - 浅WPS护眼色 */
+    --background-card-hover: #7B877A; /* 卡片悬停背景 - 稍深WPS护眼色 */
+    --background-header: var(--color-brand-primary-base);
+    --background-subheader: var(--color-functional-secondary-base);
+    
+    /* Interaction System - 交互系统 */
+    --action-primary: var(--color-brand-primary-base);
+    --action-primary-hover: var(--color-brand-primary-hover);
+    --action-primary-active: var(--color-brand-primary-active);
+    --action-secondary: var(--color-functional-secondary-base);
+    
+    /* Status System - 状态系统 */
+    --status-success: var(--color-status-success);
+    --status-warning: var(--color-status-warning);
+    --status-error: var(--color-status-error);
+    --status-accent: var(--color-interaction-accent);
+    --status-info: var(--color-brand-primary-active);
+    
+    /* Special Elements - 特殊元素 */
+    --border-normal: var(--color-neutral-divider);
+    --url-identifier: #5EEAD4;       /* 网址标识 - 青色 */
+    --timestamp-label: #D1D5DB;      /* 时间戳文本 - 更浅灰色 */
+  
+    /* 阴影效果 */
+    --shadow-color-base: 130deg 30% 30%; /* WPS护眼色阴影基色 - 深绿色 */
+    --shadow-intensity: 0.1;
+    --shadow-sm: 0 1px 3px hsl(var(--shadow-color-base) / 0.15);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.5), 0 2px 4px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.5), 0 4px 6px rgba(0, 0, 0, 0.4);
+    --shadow-button: 0 4px 12px rgba(167, 201, 87, 0.5); /* WPS护眼色按钮阴影 - 浅绿色 */
+    --shadow-button-hover: 0 6px 16px rgba(167, 201, 87, 0.6); /* WPS护眼色按钮悬停阴影 - 浅绿色 */
+    --shadow-website-item-hover: 0 16px 32px rgba(167, 201, 87, 0.3); /* WPS护眼色网站项悬停阴影 - 浅绿色 */
+    --shadow-website-item-active: 0 8px 24px rgba(0, 0, 0, 0.4);
+  
+    /* 其他效果 */
+    --overlay-color: rgba(110, 123, 108, 0.7); /* WPS护眼色遮罩颜色 - 半透明WPS护眼色 */
+    --gradient: linear-gradient(135deg, var(--action-primary) 0%, var(--action-secondary) 100%);
+    --glass-effect: rgba(110, 123, 108, 0.9); /* WPS护眼色玻璃效果 - 浅WPS护眼色 */
+    --glass-border: 1px solid rgba(255, 255, 255, 0.1);
+    --glass-shadow: 0 8px 32px 0 rgba(167, 201, 87, 0.2); /* WPS护眼色玻璃阴影 - 浅绿色 */
+    --glass-blur: blur(12px);
+    --color-glass-border: 1px solid rgba(90, 128, 69, 0.3); /* WPS护眼色玻璃边框颜色 - 深绿色 */
+    --color-glass-shadow: 0 8px 32px 0 rgba(140, 168, 115, 0.2); /* 更深的WPS护眼色玻璃阴影 - 绿色 */
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-fast: 150ms ease;
+    --transition-normal: 250ms ease;
+    --color-delete-hover: hsl(9, 58%, 40%);
+}

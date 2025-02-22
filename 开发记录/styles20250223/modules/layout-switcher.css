@@ -1,0 +1,11 @@
+/* === Layout Switcher Styles - 布局切换器样式 === */
+/* 作用：组织和导入布局切换器相关的子模块样式。 */
+/* 依赖： layout-switcher 子模块 */
+/* frontend/styles/modules/layout-switcher.css */
+/* Imports sub-modules for layout-switcher */
+@import './layout-switcher/layout-switcher-base.css';
+@import './layout-switcher/layout-switcher-theme.css';
+@import './layout-switcher/layout-switcher-variants.css';
+@import './layout-switcher/layout-switcher-states.css';
+@import './layout-switcher/layout-switcher-animations.css';
+@import './layout-switcher/layout-switcher-responsive.css'; /* Even though it's empty */

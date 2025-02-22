@@ -1,0 +1,28 @@
+/* Search Form Theme Styles - 搜索框主题样式 */
+/*
+  定义搜索框 (search-form) 组件的视觉主题样式。
+  包括图标颜色、输入框背景色、文字颜色、边框颜色等，使用 CSS 变量进行主题化配置。
+*/
+/* 深色主题下的搜索框图标 SVG 样式 */
+[data-theme="dark"] .search-form__icon svg circle,
+[data-theme="dark"] .search-form__icon svg line {
+  stroke: #333; /* 深色主题下 SVG 描边颜色 */
+}
+
+/* 深色主题下的搜索框图标 Hover 状态 SVG 样式 */
+[data-theme="dark"] .search-form__icon:hover svg circle,
+[data-theme="dark"] .search-form__icon:hover svg line {
+  stroke: #555; /* 深色主题下 Hover 状态 SVG 描边颜色 */
+}
+
+/* 搜索框图标主题 */
+.search-form__icon {
+  background-color: var(--background-body); /* 设置背景色为 surface color CSS 变量 */
+}
+
+/* 搜索框输入框主题 */
+.search-form__input {
+  background-color: var(--background-card); /* 设置背景色为 surface color CSS 变量 */
+  color: var(--text-primary); /* 设置文字颜色为 primary text color CSS 变量 */
+  border-color: var(--border-normal); /* 设置边框颜色为 border color CSS 变量 */
+}

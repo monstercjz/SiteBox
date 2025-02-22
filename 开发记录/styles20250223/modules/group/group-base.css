@@ -1,0 +1,44 @@
+/* Group Base Styles - 分组组件基础样式 */
+/*
+  定义分组 (group) 组件的基础布局和结构样式。
+   依赖：base/variables.css
+  包括分组容器和分组标题的 margin, padding 等，不包含主题、颜色或状态相关的样式。
+*/
+
+/* 分组容器 */
+.website-group {
+  /* margin-bottom: var(--spacing-stack-xl); 设置下外边距 */
+}
+
+/* 分组标题 */
+.website-group h2 {
+  margin-bottom: var(--spacing-stack-md); /* 设置下外边距 */
+  padding-bottom: var(--spacing-stack-xxs); /* 设置下内边距 */
+}
+[data-layout="alternative"] .website-group {
+  padding: var(--spacing-inset-md);
+  position: relative;
+  overflow: hidden;
+  margin: var(--spacing-stack-xxs);
+  /* will-change: transform, opacity; */
+  /* text-rendering: optimizeLegibility; */
+}
+[data-layout="alternative"] .website-group h2 {
+  margin: 0 0 var(--spacing-stack-md) 0;
+  
+}
+
+.quickly-item-add-button {
+  position: relative;
+  padding: 0.5rem;
+  /* font-size: var(  --font-size-heading-xs); 加号图标的大小 */
+  /*color: var(--text-primary); /* 加号图标的颜色 */
+  cursor: pointer; /* 鼠标悬停时显示 pointer */
+  display: none; /* 初始状态隐藏 */
+}
+
+.website-group__title:hover .quickly-item-add-button,
+.quickly-item-add-button:hover {
+  display: inline; /* 悬停时显示 */
+}
+

@@ -1,0 +1,23 @@
+/* === Theme Transition States Styles - 主题过渡状态样式 === */
+/* 作用：定义主题切换时的过渡效果，平滑主题切换过程，提升用户体验。 */
+/* 依赖： theme/variables.css (颜色变量) */
+/* Theme Transition States Styles - 主题过渡状态样式 */
+/*
+  定义主题切换时的过渡效果，平滑主题切换过程。
+  包括 body 背景色和文字颜色、主题切换按钮等元素的过渡效果。
+*/
+/* Body Theme Transition - Body 主题过渡 */
+body {
+  transition: background-color 0.3s ease, /* 背景色过渡效果，duration 0.3s, ease 缓动函数 */
+              color 0.3s ease; /* 文字颜色过渡效果，duration 0.3s, ease 缓动函数 */
+}
+
+
+
+/* Theme Transition for all elements with data-theme attribute -  为带有 data-theme 属性的所有元素添加主题过渡效果 */
+[data-theme] * {
+  transition: background-color 0.3s ease, /* 背景色过渡效果，duration 0.3s, ease 缓动函数 */
+              color 1.3s ease, /* 文字颜色过渡效果，duration 0.3s, ease 缓动函数 */
+              border-color 0.3s ease, /* 边框颜色过渡效果，duration 0.3s, ease 缓动函数 */
+              box-shadow 0.3s ease; /* 阴影过渡效果，duration 0.3s, ease 缓动函数 */
+}
