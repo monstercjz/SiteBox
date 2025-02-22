@@ -1,7 +1,7 @@
 import modalInteractionService from './modalInteractionService.js';
 import { fetchAndRenderGroupSelect } from './groupSelectDataService.js';
 import { getWebsiteGroups, createWebsiteGroup } from './api.js';
-import { showNotification } from './notificationService.js';
+import { showNotification } from './utils.js';
 import { validateAndCompleteUrl } from './utils.js';
 import {
     DOCKER_MODAL_ID,

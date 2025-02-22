@@ -6,17 +6,7 @@
  * @param {number} wait - The delay in milliseconds.
  * @returns {Function} - Debounced function.
  */
-// function debounce(func, wait) {
-//   let timeout;
-//   return function executedFunction(...args) {
-//     const later = () => {
-//       clearTimeout(timeout);
-//       func(...args);
-//     };
-//     clearTimeout(timeout);
-//     timeout = setTimeout(later, wait);
-//   };
-// }
+
 function debounce(func, delay) {
   let timer;
   return function (...args) {
@@ -66,16 +56,70 @@ function validateAndCompleteUrl(url) {
     }
     return url; // URL 校验通过，返回原始 URL 或补全协议头后的 URL
 }
-
+/**
+ * @function escapeHtml
+ * @description HTML 字符转义函数，防止 XSS 攻击 
+ * @param {string} unsafe 包含 HTML 字符的字符串
+ * @returns {string} 转义后的 HTML 字符串
+ */
+function escapeHtml(unsafe) {
+    return unsafe ?
+      unsafe
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;")
+      : '';
+  }
+ 
+/**
+ * 显示通知消息 (仅发送消息给主线程)
+ * @param {HTMLElement} notification - 通知元素
+ * @param {string} message - 通知消息内容
+ * @param {string} [type='info'] - 通知类型，可选值为 'info', 'success', 'error'
+ */
+// export function showNotification(notification, message, type = 'info') {
+//     postMessage({ type: 'notification', notificationElement: notification, message, notificationType: type });
+// }
+const notification = document.createElement('div');
 let currentTooltip = null; // 当前显示的 tooltip 元素
 let tooltipTimeout = null; // tooltip 消失定时器
-
+/**
+ * 显示通知消息
+ * @param {string} message - 通知消息内容
+ * @param {string} [type='info'] - 通知类型，可选值为 'info', 'success', 'error'
+ */
+export function showNotification(message, type = 'info') {
+    notification.className = `notification ${type}`;
+    notification.textContent = message;
+    notification.style.position = 'fixed';
+    notification.style.top = '20px';
+    notification.style.right = '20px';
+    notification.style.transform = 'translateX(0)';
+    notification.style.zIndex = '1000';
+    document.body.appendChild(notification);
+    
+    // Animate in
+    notification.style.transform = 'translateY(-20px)';
+    notification.style.opacity = '0';
+    setTimeout(() => {
+        notification.style.transform = 'translateY(0)';
+        notification.style.opacity = '1';
+    }, 10);
+    
+    // Remove after 3 seconds
+    setTimeout(() => {
+        notification.style.opacity = '0';
+        setTimeout(() => notification.remove(), 300);
+    }, 3000);
+}
 /**
  * @function showTooltip
  * @description 显示 tooltip
  * @param {Event} e 鼠标事件对象
  */
-function showTooltip(e) {
+export function showTooltip(e) {
     const target = e.target.closest('[data-tooltip]'); // 获取最近的 data-tooltip 元素
     if (target) {
         if (!currentTooltip) {
@@ -107,7 +151,7 @@ function showTooltip(e) {
  * @description 隐藏 tooltip
  * @param {Event} e 鼠标事件对象
  */
-function hideTooltip(e) {
+export function hideTooltip(e) {
     const target = e.target.closest('[data-tooltip]'); // 获取最近的 data-tooltip 元素
     
     if (target && currentTooltip) {
@@ -119,47 +163,39 @@ function hideTooltip(e) {
 }
 
 /**
- * @function escapeHtml
- * @description HTML 字符转义函数，防止 XSS 攻击 
- * @param {string} unsafe 包含 HTML 字符的字符串
- * @returns {string} 转义后的 HTML 字符串
+ * 创建并运行 Web Worker
+ * @param {string} workerPath - Worker 文件的路径
+ * @param {string} message - 发送到 Worker 的消息
+ * @returns {Promise} - 返回一个 Promise，解析为 Worker 返回的数据
  */
-function escapeHtml(unsafe) {
-    return unsafe ?
-      unsafe
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;")
-      : '';
-  }
+export function createAndRunWorker(workerPath, message) {
+    return new Promise((resolve, reject) => {
+        // 创建 Web Worker
+        // const workerPath = './dashboardWorker.js';
+        const timestamp = new Date().getTime();
+        const workerUrl = new URL(`${workerPath}?v=${timestamp}`, import.meta.url);
+        const worker = new Worker(workerUrl, { type: 'module' });
+        // const worker = new Worker(new URL(workerPath, import.meta.url), { type: 'module' });
 
-/**
- * @function generateTooltipContent
- * @description 生成 tooltip 内容 HTML 字符串
- * @param {Website} website 网站数据对象
- * @returns {string} tooltip 内容 HTML 字符串
- */
-function generateTooltipContent(website) {
-    if (!website || !website.lastAccessTime) {
-      return '<div class="tooltip-content error">数据无效</div>'; // 数据无效时显示错误提示
-    }
-    const lastAccessTime = new Date(website.lastAccessTime).toLocaleString('zh-CN', {
-      timeZone: 'Asia/Shanghai', // 设置时区为上海
-      hour12: false // 24 小时制
+        // 监听来自 Worker 的消息
+        worker.onmessage = (event) => {
+            const data = event.data;
+            worker.terminate(); // 关闭 Worker
+            console.log('Worker stop:');
+            resolve(data); // 返回数据
+        };
+
+        // 监听 Worker 错误
+        worker.onerror = (error) => {
+            console.error('Worker error:', error);
+            
+            worker.terminate(); // 关闭 Worker
+            reject(error); // 返回错误
+        };
+
+        // 向 Worker 发送消息以触发数据获取
+        worker.postMessage(message);
     });
+}
 
-    let content = '<div class="tooltip-content">';
-    content += '<div class="tooltip-row"><strong>网址:</strong> ' + escapeHtml(website.url) + '</div>';
-    content += '<div class="tooltip-row"><strong>最后访问:</strong> ' + lastAccessTime + '</div>';
-    if (website.description) {
-      content += '<div class="tooltip-row"><strong>描述:</strong> ' + escapeHtml(website.description) + '</div>';
-    }
-    content += '</div>';
-    return content;
-  }
-
-
-
-export { validateAndCompleteUrl, showTooltip, hideTooltip, escapeHtml, generateTooltipContent,debounce,throttle,safeExecute,logEvent};
+export { validateAndCompleteUrl, escapeHtml,debounce,throttle,safeExecute,logEvent};

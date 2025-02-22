@@ -1,7 +1,6 @@
-// import { editGroup, deleteGroup } from './groupInteractionService.js';
-// import { editWebsite, deleteWebsite } from './websiteInteractionService.js';
-// import { editDocker, deleteDocker } from './dockerInteractionService.js';
-import { loadModule, getCacheMemoryUsage } from "./loadModule.js";
+import { editGroup, deleteGroup } from './groupInteractionService.js';
+import { editWebsite, deleteWebsite } from './websiteInteractionService.js';
+import { editDocker, deleteDocker } from './dockerInteractionService.js';
 import {
     CONTEXT_MENU_ID,
     EDIT_GROUP_ITEM_CLASS,
@@ -41,10 +40,7 @@ function hideContextMenu() {
         clearTimeout(contextMenuTimeout);
         contextMenuTimeout = null;
     }
-    document.removeEventListener('click', hideContextMenu); // 新增
 }
-
-  
 
 // 创建右键菜单
 function createContextMenu(e, menuItems) {
@@ -99,13 +95,12 @@ function createContextMenu(e, menuItems) {
 }
 
 // 显示分组右键菜单
-async function showGroupContextMenu(e, groupId, groupType) {
+function showGroupContextMenu(e, groupId, groupType) {
     const menuItems = [
         `<div class="${EDIT_GROUP_ITEM_CLASS}" ${DATA_GROUP_ID}="${groupId}" ${DATA_GROUP_TYPE}="${groupType}">${MENU_TEXT_EDIT_GROUP}</div>`,
         `<div class="${DELETE_GROUP_ITEM_CLASS}" ${DATA_GROUP_ID}="${groupId}" ${DATA_GROUP_TYPE}="${groupType}">${MENU_TEXT_DELETE_GROUP}</div>`,
     ];
     const menu = createContextMenu(e, menuItems);
-    const { editGroup, deleteGroup } = await loadModule('./groupInteractionService.js');
     menu.querySelector(`.${EDIT_GROUP_ITEM_CLASS}`).addEventListener('click', () => {
         editGroup(groupId, groupType);
     });
@@ -115,13 +110,12 @@ async function showGroupContextMenu(e, groupId, groupType) {
 }
 
 // 显示网站右键菜单
-async function showWebsiteContextMenu(e, groupId, websiteId) {
+function showWebsiteContextMenu(e, groupId, websiteId) {
     const menuItems = [
         `<div class="${EDIT_WEBSITE_ITEM_CLASS}" ${DATA_GROUP_ID}="${groupId}" ${DATA_ITEM_ID}="${websiteId}">${MENU_TEXT_EDIT_WEBSITE}</div>`,
         `<div class="${DELETE_WEBSITE_ITEM_CLASS}" ${DATA_GROUP_ID}="${groupId}" ${DATA_ITEM_ID}="${websiteId}">${MENU_TEXT_DELETE_WEBSITE}</div>`,
     ];
     const menu = createContextMenu(e, menuItems);
-    const { editWebsite, deleteWebsite } = await loadModule('./websiteInteractionService.js');
     menu.querySelector(`.${EDIT_WEBSITE_ITEM_CLASS}`).addEventListener('click', () => {
         editWebsite(groupId, websiteId);
     });
@@ -131,13 +125,12 @@ async function showWebsiteContextMenu(e, groupId, websiteId) {
 }
 
 // 显示 Docker 分组右键菜单
-async function showDockerGroupContextMenu(e, groupId, groupType) {
+function showDockerGroupContextMenu(e, groupId, groupType) {
     const menuItems = [
         `<div class="${EDIT_GROUP_ITEM_CLASS}" ${DATA_GROUP_ID}="${groupId}" ${DATA_GROUP_TYPE}="${groupType}">${MENU_TEXT_EDIT_GROUP}</div>`,
         `<div class="${DELETE_GROUP_ITEM_CLASS}" ${DATA_GROUP_ID}="${groupId}" ${DATA_GROUP_TYPE}="${groupType}">${MENU_TEXT_DELETE_GROUP}</div>`,
     ];
     const menu = createContextMenu(e, menuItems);
-    const { editGroup, deleteGroup } = await loadModule('./groupInteractionService.js');
     menu.querySelector(`.${EDIT_GROUP_ITEM_CLASS}`).addEventListener('click', () => {
         editGroup(groupId, groupType);
     });
@@ -147,14 +140,12 @@ async function showDockerGroupContextMenu(e, groupId, groupType) {
 }
 
 // 显示 Docker Item 右键菜单
-async function showDockerItemContextMenu(e, groupId, dockerId) {
+function showDockerItemContextMenu(e, groupId, dockerId) {
     const menuItems = [
         `<div class="${EDIT_DOCKER_ITEM_CLASS}" ${DATA_GROUP_ID}="${groupId}" ${DATA_ITEM_ID}="${dockerId}">${MENU_TEXT_EDIT_DOCKER}</div>`,
         `<div class="${DELETE_DOCKER_ITEM_CLASS}" ${DATA_GROUP_ID}="${groupId}" ${DATA_ITEM_ID}="${dockerId}">${MENU_TEXT_DELETE_DOCKER}</div>`,
     ];
     const menu = createContextMenu(e, menuItems);
-    const { editDocker, deleteDocker } = await loadModule('./dockerInteractionService.js');
-    getCacheMemoryUsage();
     menu.querySelector(`.${EDIT_DOCKER_ITEM_CLASS}`).addEventListener('click', () => {
         editDocker(groupId, dockerId);
     });
@@ -163,58 +154,48 @@ async function showDockerItemContextMenu(e, groupId, dockerId) {
     });
 }
 
-/* 事件处理器配置（策略模式） */
-const RIGHT_CLICK_HANDLERS = [
-    {
-        selector: `.${CLASS_WEBSITE_GROUP} h2`,
-        handler: (e, matchedElement) => {
-            const groupDiv = matchedElement.closest(`.${CLASS_WEBSITE_GROUP}`);
-            const groupId = getGroupId(groupDiv);
-            if (groupId) showGroupContextMenu(e, groupId, GROUP_TYPE_WEBSITE);
-        }
-    },
-    {
-        selector: `.${CLASS_WEBSITE_ITEM}`,
-        handler: (e, websiteItem) => {
-            const groupDiv = websiteItem.closest(`.${CLASS_WEBSITE_GROUP}`);
-            const groupId = getGroupId(groupDiv);
-            const websiteId = websiteItem.getAttribute(DATA_ITEM_ID);
-            if (groupId && websiteId) showWebsiteContextMenu(e, groupId, websiteId);
-        }
-    },
-    {
-        selector: `.${CLASS_DOCKER_GROUP} h2`,
-        handler: (e, matchedElement) => {
-            const groupDiv = matchedElement.closest(`.${CLASS_DOCKER_GROUP}`);
-            const groupId = getDockerGroupId(groupDiv);
-            if (groupId) showDockerGroupContextMenu(e, groupId, GROUP_TYPE_DOCKER);
-        }
-    },
-    {
-        selector: `.${CLASS_DOCKER_ITEM}`,
-        handler: (e, dockerItem) => {
-            const groupDiv = dockerItem.closest(`.${CLASS_DOCKER_GROUP}`);
-            const groupId = getDockerGroupId(groupDiv);
-            const dockerId = dockerItem.getAttribute(DATA_ITEM_ID);
-            if (groupId && dockerId) showDockerItemContextMenu(e, groupId, dockerId);
-        }
-    }
-];
-
-/* 事件委托路由 */
-function handleContextMenu(e) {
-    e.preventDefault();
+const dashboard = document.body;
+dashboard.addEventListener(EVENT_CONTEXTMENU, function (e) {
+    const target = e.target;
     hideContextMenu();
-
-    // 遍历所有处理器，匹配首个符合条件的目标元素
-    for (const { selector, handler } of RIGHT_CLICK_HANDLERS) {
-        const matchedElement = e.target.closest(selector);
-        if (matchedElement) {
-            handler(e, matchedElement); // 传递实际匹配的元素
-            break; // 匹配成功后终止循环
+    if (target.closest(`.${CLASS_WEBSITE_GROUP} h2`)) {
+        e.preventDefault();
+        const groupDiv = target.closest(`.${CLASS_WEBSITE_GROUP}`);
+        const groupId = getGroupId(groupDiv);
+        // console.log('右键监听到的groupId:', groupId);
+        if (groupId) {
+            showGroupContextMenu(e, groupId, GROUP_TYPE_WEBSITE);
+        }
+    } else if (target.closest(`.${CLASS_WEBSITE_ITEM}`)) {
+        e.preventDefault();
+        const websiteItem = target.closest(`.${CLASS_WEBSITE_ITEM}`);
+        const groupDiv = websiteItem.closest(`.${CLASS_WEBSITE_GROUP}`);
+        const groupId = getGroupId(groupDiv);
+        const websiteId = websiteItem.getAttribute(DATA_ITEM_ID);
+        // console.log('右键监听到的groupId:', groupId, '网站ID:', websiteId);
+        if (groupId && websiteId) {
+            showWebsiteContextMenu(e, groupId, websiteId);
+        }
+    } else if (target.closest(`.${CLASS_DOCKER_GROUP} h2`)) {
+        e.preventDefault();
+        const groupDiv = target.closest(`.${CLASS_DOCKER_GROUP}`);
+        const groupId = getDockerGroupId(groupDiv);
+        // console.log('右键监听到的dockerGroupId:', groupId);
+        if (groupId) {
+            showDockerGroupContextMenu(e, groupId, GROUP_TYPE_DOCKER);
+        }
+    } else if (target.closest(`.${CLASS_DOCKER_ITEM}`)) {
+        e.preventDefault();
+        const dockerItem = target.closest(`.${CLASS_DOCKER_ITEM}`);
+        const groupDiv = dockerItem.closest(`.${CLASS_DOCKER_GROUP}`);
+        const groupId = getDockerGroupId(groupDiv);
+        const dockerId = dockerItem.getAttribute(DATA_ITEM_ID);
+        // console.log('右键监听到的dockerGroupId:', groupId, 'dockerId:', dockerId);
+        if (groupId && dockerId) {
+            showDockerItemContextMenu(e, groupId, dockerId);
         }
     }
-}
+});
 
 // 辅助函数：从 groupDiv 中提取 groupId
 function getGroupId(groupDiv) {
@@ -243,5 +224,4 @@ export {
     showWebsiteContextMenu,
     showDockerGroupContextMenu,
     showDockerItemContextMenu,
-    handleContextMenu,
 };

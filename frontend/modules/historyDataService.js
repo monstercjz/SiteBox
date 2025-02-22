@@ -1,4 +1,4 @@
-import { showNotification } from './notificationService.js';
+import { showNotification } from './utils.js';
 import { renderDashboardWithData} from './mainDashboardService.js';
 import { backendUrl } from '../config.js';
 

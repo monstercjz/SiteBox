@@ -1,4 +1,4 @@
-import { showNotification } from './notificationService.js';
+import { showNotification } from './utils.js';
 import {
     NOTIFICATION_THEME_CHANGED,
     DATA_ATTRIBUTE_THEME,
@@ -38,7 +38,7 @@ function loadCSS(url) {
 
 
 // 设置主题
-function setTheme(theme) {
+export function setTheme(theme) {
     const themeCSSURL = `styles/theme/${theme}-theme-colors.css`; // 构建主题 CSS 文件 URL
 
     // 移除旧的主题 CSS link 元素
@@ -73,7 +73,7 @@ let usedThemes = localStorage.getItem(LOCAL_STORAGE_KEY_USED_THEMES)
     : [];
 
 // 随机设置主题
-function setRandomTheme() {
+export function setRandomTheme() {
     let availableThemes = THEME_LIST.filter(theme => !usedThemes.includes(theme));
     if (availableThemes.length === 0) {
         // 所有主题都已使用过，重置已使用主题列表
@@ -142,6 +142,84 @@ export function initThemeToggle() {
     };
 }
 
+
+// 全局变量：用于存储事件监听器的引用
+let globalClickListener = null;
+
+export function toggleThemeButtonShow() {
+    // 获取主题选项元素
+    const themeSwitcherOptions = document.querySelector(SELECTOR_THEME_SWITCHER_OPTIONS);
+
+    // 切换显示/隐藏状态
+    themeSwitcherOptions.classList.toggle(CLASS_SHOW);
+
+    // 判断当前状态
+    const isShowing = themeSwitcherOptions.classList.contains(CLASS_SHOW);
+
+    if (isShowing) {
+        // 如果显示，添加全局点击监听器
+        addGlobalClickListener();
+    } else {
+        // 如果隐藏，移除全局点击监听器
+        removeGlobalClickListener();
+    }
+}
+
+// 添加全局点击监听器
+function addGlobalClickListener() {
+    if (!globalClickListener) {
+        console.log('添加全局点击监听器');
+        globalClickListener = (e) => handleGlobalClick(e);
+        document.body.addEventListener('click', globalClickListener);
+    }
+}
+
+// 移除全局点击监听器
+function removeGlobalClickListener() {
+    if (globalClickListener) {
+        console.log('移除全局点击监听器');
+        document.body.removeEventListener('click', globalClickListener);
+        globalClickListener = null;
+    }
+}
+
+// 处理全局点击事件
+function handleGlobalClick(e) {
+    const themeSwitcherToggle = document.querySelector(SELECTOR_THEME_SWITCHER_TOGGLE);
+    const themeSwitcherOptions = document.querySelector(SELECTOR_THEME_SWITCHER_OPTIONS);
+    console.log('全局点击事件处理');
+    // 判断点击是否在主题选项或触发按钮之外
+    if (
+        !themeSwitcherOptions.contains(e.target) &&
+                !themeSwitcherToggle.contains(e.target)
+    ) {
+        // 隐藏主题选项
+        hideThemeSwitcherOptions();
+    }
+}
+
+// 隐藏主题选项
+function hideThemeSwitcherOptions() {
+    const themeSwitcherOptions = document.querySelector(SELECTOR_THEME_SWITCHER_OPTIONS);
+    if (themeSwitcherOptions) {
+        themeSwitcherOptions.classList.remove(CLASS_SHOW);
+        console.log('隐藏主题选项');
+        removeGlobalClickListener(); // 确保移除监听器
+    }
+}
+//批量事件委托响应事件
+export function toggleTheme(event) {
+    const button = event.target.closest('.theme-switcher__option');
+    if (!button) return;
+
+    const theme = button.dataset.theme;
+    console.log(`切换到主题: ${theme}`);
+    try {
+        setTheme(theme); // 应用主题
+    } catch (error) {
+        console.error(`Failed to load theme module:`, error);
+    }
+}
 // 应用保存的主题
 export function applySavedTheme() {
     const savedTheme = localStorage.getItem(LOCAL_STORAGE_KEY_THEME);

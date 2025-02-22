@@ -1,9 +1,9 @@
 import { getWebsiteById } from './api.js';
-import { generateTooltipContent } from './utils.js';
 import { TooltipDomService } from './tooltipDomService.js';
 import { TooltipCacheService } from './tooltipCacheService.js';
 import { TooltipErrorService } from './tooltipErrorService.js'; // 引入 TooltipErrorService
-import { CONTEXT_MENU_ID, EVENT_CONTEXTMENU} from '../config.js' ;
+import { CONTEXT_MENU_ID, EVENT_CONTEXTMENU } from '../config.js';
+import {  escapeHtml } from "./utils.js";
 
 // 配置对象
 const config = {
@@ -49,13 +49,15 @@ export class WebsiteTooltipService {
       }
     });
     document.addEventListener(EVENT_CONTEXTMENU, () => {
-        this.cachedContextMenu = document.getElementById(CONTEXT_MENU_ID);
+      this.cachedContextMenu = document.getElementById(CONTEXT_MENU_ID);
     });
 
     // 监听点击事件以隐藏 contextMenu
     document.addEventListener('click', () => {
-        this.cachedContextMenu = null;
+      this.cachedContextMenu = null;
     });
+    //卸载时主动销毁
+    window.addEventListener('beforeunload', () => this.domService.destroy());
   }
 
   /**
@@ -68,7 +70,7 @@ export class WebsiteTooltipService {
     if (!target?.dataset?.itemId) return;
 
     const itemId = target.dataset.itemId;
-    
+
     this._clearTimeouts(); // 清除所有 timeout 定时器和未完成请求
     this._preloadAdjacentData(target); // 预加载相邻网站数据
 
@@ -137,7 +139,7 @@ export class WebsiteTooltipService {
     if (this.recentRequests.has(itemId)) {
       const recentRequest = this.recentRequests.get(itemId);
       if (Date.now() - recentRequest.timestamp < config.requestMergeThreshold) {
-        
+
         return recentRequest.promise; // 直接返回最近请求的 Promise
       }
     }
@@ -172,7 +174,7 @@ export class WebsiteTooltipService {
         // 错误处理移至 tooltipErrorService
         if (error.name === 'AbortError') {
           // 请求被取消，不处理错误，返回 null
-          
+
           return null; // 返回 null，避免影响后续处理
         }
         throw error; // 其他错误继续抛出，由 _handleHoverDebounced 统一处理
@@ -248,7 +250,7 @@ export class WebsiteTooltipService {
     if (this._checkContextMenuPresence()) {
       console.log('ContextMenu is present, skipping tooltip display.');
       return;
-  }
+    }
     const itemId = target.dataset.itemId;
     // 如果当前 tooltip 正在显示且网站 ID 相同，则不重复显示
     if (this.currentitemId === itemId) return;
@@ -278,19 +280,20 @@ export class WebsiteTooltipService {
    * @param {string} itemId 网站 ID
    * @private
    */
-  _createTooltip(target, website, itemId) {    
-      const tooltip = this.domService.createTooltipElement(); // 创建 tooltip 元素 (复用)
-      tooltip.innerHTML = generateTooltipContent(website); // 生成 tooltip 内容
-      tooltip.targetElement = target; // 保存目标元素引用
-      document.body.appendChild(tooltip); // 将 tooltip 添加到 DOM 中
-      this.domService.showTooltip(tooltip); // 显示 tooltip
-      requestAnimationFrame(() => { // 使用 requestAnimationFrame 批量更新 DOM
-        this.domService.positionTooltip(tooltip, tooltip.targetElement); // 定位 tooltip
-        this.domService.setCurrentTooltip(tooltip); // 设置 domService 的 currentTooltip
-        this.currentTooltip = tooltip; // 更新 websiteTooltipService 的 currentTooltip
-        this.currentitemId = itemId; // 更新当前悬停的网站 ID
+  _createTooltip(target, website, itemId) {
+    
+    const tooltip = this.domService.createTooltipElement(); // 创建 tooltip 元素 (复用)
+    tooltip.innerHTML = this.generateTooltipContent(website); // 生成 tooltip 内容
+    tooltip.targetElement = target; // 保存目标元素引用
+    document.body.appendChild(tooltip); // 将 tooltip 添加到 DOM 中
+    this.domService.showTooltip(tooltip); // 显示 tooltip
+    requestAnimationFrame(() => { // 使用 requestAnimationFrame 批量更新 DOM
+      this.domService.positionTooltip(tooltip, tooltip.targetElement); // 定位 tooltip
+      this.domService.setCurrentTooltip(tooltip); // 设置 domService 的 currentTooltip
+      this.currentTooltip = tooltip; // 更新 websiteTooltipService 的 currentTooltip
+      this.currentitemId = itemId; // 更新当前悬停的网站 ID
 
-        this._setupAutoClose(tooltip, target); // 设置自动关闭 tooltip
+      this._setupAutoClose(tooltip, target); // 设置自动关闭 tooltip
     });
   }
 
@@ -307,12 +310,12 @@ export class WebsiteTooltipService {
   _checkContextMenuPresence() {
     // 如果缓存中不存在 contextMenu，则直接返回 false
     if (!this.cachedContextMenu) {
-        return false;
+      return false;
     }
 
     // 如果缓存中存在 contextMenu，则进行一次实时判断
     return !!document.getElementById(CONTEXT_MENU_ID);
-}
+  }
 
   /**
    * @method _setupAutoClose
@@ -341,4 +344,29 @@ export class WebsiteTooltipService {
       this.currentitemId = null;
     }
   }
+  /**
+   * @function generateTooltipContent
+   * @description 生成 tooltip 内容 HTML 字符串
+   * @param {Website} website 网站数据对象
+   * @returns {string} tooltip 内容 HTML 字符串
+   */
+  generateTooltipContent(website) {
+    if (!website || !website.lastAccessTime) {
+      return '<div class="tooltip-content error">数据无效</div>'; // 数据无效时显示错误提示
+    }
+    const lastAccessTime = new Date(website.lastAccessTime).toLocaleString('zh-CN', {
+      timeZone: 'Asia/Shanghai', // 设置时区为上海
+      hour12: false // 24 小时制
+    });
+    let content = '<div class="tooltip-content">';
+    content += '<div class="tooltip-row"><strong>网址:</strong> ' + escapeHtml(website.url) + '</div>';
+    content += '<div class="tooltip-row"><strong>最后访问:</strong> ' + lastAccessTime + '</div>';
+    if (website.description) {
+      content += '<div class="tooltip-row"><strong>描述:</strong> ' + escapeHtml(website.description) + '</div>';
+    }
+    content += '</div>';
+    return content;
+  }
+
 }
+

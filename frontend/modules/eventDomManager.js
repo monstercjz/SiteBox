@@ -1,18 +1,27 @@
 // domManager.js
 export const SELECTORS = {
     groupSelect: '#groupSelect',
-    websitedashboard: '#websitedashboard',
     main: 'main',
+    websitedashboard: '#websitedashboard',
     dockerdashboard: '#dockerdashboard',
+
     importConfigButton: '#import-config-button',
     exportConfigButton: '#export-config-button',
     importWebsitesBatchButton: '#import-websites-batch-button',
-    actionsToggleButton: '#actions-toggle-button',
-    actionButtons: '.action-buttons',
     addGroupButton: '#add-group-button',
     addWebsiteButton: '#add-website-button',
     addDockerButton: '#add-docker-button',
-    groupColorToggleButton: '#group-color-toggle'
+    searchFormIcon: '.search-form__icon',
+
+    actionsToggleButton: '#actions-toggle-button',
+    actionButtons: '.action-buttons',
+    iconButton: '.icon-button',
+    groupColorToggleButton: '#group-color-toggle',
+    themeSwitcherToggleButton:'#theme-switcher-toggle',
+    themeSwitcherOptionsButtonContainer:'.theme-switcher__options',
+    layoutSwitcherOptionsButtonContainer:'.layout-switcher__options',
+    randomThemeButton:'#random-theme-button'
+
 };
 
 export const elements = {};

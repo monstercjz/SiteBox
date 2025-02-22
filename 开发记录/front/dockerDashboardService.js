@@ -1,18 +1,18 @@
 /* === dockerdashboard Main Styles - 仪表盘主样式 === */
 /* 作用: 组织和导入仪表盘主样式，当前存档，功能代码已经转移到newdashboard.js */
 /* 依赖： websitedashboard 子模块 */
-import { showNotification } from './notificationService.js';
+import { showNotification } from '../../frontend/modules/notificationService.js';
 import {
     
     getAllDockers,
     getDockerGroups,
     getRealdockerinfobyId,
-} from './api.js';
-import { dockerUpdateInfoAll } from './dockerIfonUpdate.js';
+} from '../../frontend/modules/api.js';
+import { dockerUpdateInfoAll } from '../../frontend/modules/dockerIfonUpdate.js';
 
-import { backendUrl } from '../config.js';
-import { setRandomGroupColors, resetGroupColors } from './h2colorThemeService.js';
-import { isRandomColorsEnabled } from './h2colorThemeService.js';
+import { backendUrl } from '../../frontend/config.js';
+import { setRandomGroupColors, resetGroupColors } from '../../frontend/modules/h2colorThemeService.js';
+import { isRandomColorsEnabled } from '../../frontend/modules/h2colorThemeService.js';
 
 /**
  * Render Docker dockerdashboard

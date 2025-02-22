@@ -1,4 +1,4 @@
-import { showNotification } from './notificationService.js';
+import { showNotification } from './utils.js';
 import { renderDashboardWithData } from './mainDashboardService.js';
 import { domaddDockerItem, domremoveDockerItem } from './mainDashboardServiceOrderFirst.js';
 import { DockerSaveService } from './dockerDataService.js';

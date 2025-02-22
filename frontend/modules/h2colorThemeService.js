@@ -1,6 +1,6 @@
 // 控制分组标题颜色方案的服务模块
 import { RANDOM_COLORS } from "../config.js";
-import { showNotification } from "./notificationService.js";
+import { showNotification } from "./utils.js";
 let useRandomColors = false;
 
 /**
@@ -69,9 +69,20 @@ export function setRandomGroupColors() {
    * @description 重置所有分组标题的颜色为默认值
    */
 export  function resetGroupColors() {
-    const groupTitles = document.querySelectorAll('.website-group h2');
+    const groupTitles = document.querySelectorAll('.website-group h2,.docker-group h2');
     groupTitles.forEach(title => {
       title.style.removeProperty('--group-title-random-color');
     });
     showNotification('已重置所有分组标题的颜色为默认值', 'success');
   }
+export function RandomColors() {
+    const enabled = toggleRandomColors();
+    const groupColorToggleButton= document.querySelector('#group-color-toggle');
+            groupColorToggleButton.classList.toggle('active', enabled);
+            if (isRandomColorsEnabled()) {
+                setRandomGroupColors();
+            } else {
+                resetGroupColors();
+            }
+    
+}

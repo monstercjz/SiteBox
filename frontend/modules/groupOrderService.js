@@ -1,4 +1,4 @@
-import { showNotification } from './notificationService.js';
+import { showNotification } from './utils.js';
 import { renderDashboardWithData} from './mainDashboardService.js';
 import { reorderWebsiteGroups,reorderDockerGroups, updateWebsiteGroup, updateDockerGroup } from './api.js';
 

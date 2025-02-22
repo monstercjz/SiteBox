@@ -1,35 +1,12 @@
 import {
-    
-    getAllDockers,
-    getDockerGroups,
     getRealdockerinfobyId,
     getRealdockerinfo
 } from './api.js';
 import {
-    WEBSITE_DASHBOARD_ID,
-    DOCKER_DASHBOARD_ID,
-    MAIN_CONTAINER_SELECTOR,
-    DASHBOARD_TYPE_WEBSITE,
-    DASHBOARD_TYPE_DOCKER,
-    GROUP_TYPE_WEBSITE,
-    GROUP_TYPE_DOCKER,
-    CLASS_WEBSITE_GROUP,
-    CLASS_DOCKER_GROUP,
-    CLASS_WEBSITE_ITEM,
-    CLASS_DOCKER_ITEM,
-    DATA_DESCRIPTION,
-    DATA_ITEM_ID,
-    DATA_GROUP_ID,
-    DATA_DOCKER_SERVER_IP,
-    DATA_DOCKER_SERVER_PORT,
-    DATA_DOCKER_URLPORT,
-    LOADING_CLASS,
-    NOTIFICATION_SUCCESS,
     NOTIFICATION_ERROR,
-    GROUP_NAME,
 } from '../config.js';
-import { initializeDockerItemCache, updateDockerItemCache, getDockerItemFromCache } from './dockerCache.js';
-import { showNotification } from './notificationService.js';
+import { getDockerItemFromCache } from './dockerCache.js';
+import { showNotification } from './utils.js';
 // Function to update docker item stats单个docker的实时信息
 const updateDockerStats = async () => {
     
@@ -94,7 +71,7 @@ const UPDATE_INTERVAL = 1 * 60 * 1000; // 5 分钟的时间间隔（单位：毫
 
 export async function dockerUpdateInfoAll() {
     const currentTime = Date.now();
-
+    console.log('currentTime', currentTime);
     // 检查是否已经超过 5 分钟
     if (currentTime - lastUpdateTime < UPDATE_INTERVAL) {
         console.warn('Function call is too frequent. Please wait for the cooldown period.');

@@ -137,4 +137,10 @@ export class TooltipDomService {
   hideTooltip(tooltip) {
     tooltip.style.display = 'none'; // 设置 display: none 隐藏 tooltip
   }
+  destroy() {
+    this.hide();
+    if (this.tooltipInstance) {
+      this.tooltipInstance.remove();
+    }
+  }
 }

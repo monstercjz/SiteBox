@@ -34,6 +34,7 @@
 
 @import 'base/typography.css';
 @import './theme/variables.css';
+@import './theme/light-theme-colors.css';
 
 
 /* Import Layout styles - 引入布局模块样式 */

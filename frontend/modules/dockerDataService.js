@@ -1,5 +1,5 @@
 import { createDocker, updateDocker, deleteDocker, batchMoveWebsites, moveToTrash, recordWebsiteClick } from './api.js';
-import { showNotification } from './notificationService.js';
+import { showNotification } from './utils.js';
 import { validateAndCompleteUrl } from './utils.js';
 import {
     NOTIFICATION_CREATE_DEFAULT_GROUP_FAIL,

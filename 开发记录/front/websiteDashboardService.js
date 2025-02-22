@@ -17,10 +17,10 @@ import {
     batchDeleteWebsites,
     batchMoveWebsites,
     reorderWebsiteGroups,
-  } from './api.js';
-import { backendUrl } from '../config.js';
-import { setRandomGroupColors, resetGroupColors } from './h2colorThemeService.js';
-import { isRandomColorsEnabled } from './h2colorThemeService.js';
+  } from '../../frontend/modules/api.js';
+import { backendUrl } from '../../frontend/config.js';
+import { setRandomGroupColors, resetGroupColors } from '../../frontend/modules/h2colorThemeService.js';
+import { isRandomColorsEnabled } from '../../frontend/modules/h2colorThemeService.js';
 
 
 /**

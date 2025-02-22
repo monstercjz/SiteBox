@@ -1,10 +1,9 @@
-import { showNotification } from './notificationService.js';
-import { getWebsiteGroups, getWebsites, getAllDockers, getDockerGroups } from './api.js';
-import { setRandomGroupColors, resetGroupColors } from './h2colorThemeService.js';
-import { isRandomColorsEnabled } from './h2colorThemeService.js';
+import { showNotification } from './utils.js';
+// import { SELECTORS, elements, initializeDOMElements } from './eventDomManager.js';
+import { loadModule,getCacheMemoryUsage } from "./loadModule.js";
 import { backendUrl } from '../config.js';
-import { createAndRunWorker } from './workerService.js';
-import { initializeDockerItemCache,updateDockerItemCache,removeDockerItemFromCache } from './dockerCache.js';
+import { createAndRunWorker } from './utils.js';
+import { initializeDockerItemCache, updateDockerItemCache, removeDockerItemFromCache } from './dockerCache.js';
 import { dockerUpdateInfoAll } from './dockerIfonUpdate.js';
 import {
     WEBSITE_DASHBOARD_ID,
@@ -201,7 +200,7 @@ function renderDockerGroup(group, dockers) {
     const groupDiv = createGroupElement(group, CLASS_DOCKER_GROUP);
     const listId = `docker-list-${group.id}`;
     const listContainer = createListContainer(listId);
-    
+
     // 使用文档片段批量渲染子项
     const itemFragment = document.createDocumentFragment();
     // const dockerItems = []; // 临时存储创建的 Docker 项由于在dockercache里添加了是否已经真实加到了dom验证，此处添加都会失败，因为这个时候都只是添加到临时页面文档，其实还在内存里
@@ -212,7 +211,7 @@ function renderDockerGroup(group, dockers) {
             itemFragment.appendChild(dockerItem);
             // dockerItems.push(dockerItem); // 暂存 Docker 项
         });
-    listContainer.appendChild(itemFragment);   
+    listContainer.appendChild(itemFragment);
     groupDiv.appendChild(listContainer);
     // 统一更新缓存
     // dockerItems.forEach(dockerItem => updateDockerItemCache(dockerItem));
@@ -358,7 +357,7 @@ export function domremoveDockerItem(dockerId) {
 
     // 从缓存中移除
     removeDockerItemFromCache(dockerId);
-    
+
 }
 
 /**
@@ -457,7 +456,23 @@ async function fetchMainDashboardDataWithWorker() {
         throw error; // 重新抛出错误以便进一步处理
     }
 }
+export async function setTheme() {
+    const { setRandomGroupColors, resetGroupColors, isRandomColorsEnabled, loadColorPreference } = await loadModule('./h2colorThemeService.js');
+    // h2如果使用随机色，按钮标记为actve.
+    const groupColorToggleButton = document.querySelector('#group-color-toggle');
+    groupColorToggleButton.classList.toggle('active', loadColorPreference());
+    //根据是否使用随即色，设置标题颜色
+    if (isRandomColorsEnabled()) {
+        setRandomGroupColors();
+    } else {
+        resetGroupColors();
+    }
+    const { applySavedTheme} = await loadModule('./themeService.js');
+    applySavedTheme();
+    const { applySavedLayout} = await loadModule('./layoutService.js');
+    applySavedLayout();
 
+}
 /**
  * 使用数据渲染主仪表盘（包括网站和 Docker）
  */
@@ -479,24 +494,19 @@ export async function renderMainDashboardWithData() {
         }
     } finally {
         WEBSITE_DASHBOARD.classList.remove(LOADING_CLASS);
+        setTheme();
+        console.time('querySelectorAll');
+        // 延迟更新缓存
+        requestIdleCallback(() => {
+            const dockerItems = document.querySelectorAll('.docker-item');
+            initializeDockerItemCache(dockerItems);
+        });
+        requestIdleCallback(() => {
+            dockerUpdateInfoAll();
+        });
 
-        if (isRandomColorsEnabled()) {
-            setRandomGroupColors();
-        } else {
-            resetGroupColors();
-        }
-            console.time('querySelectorAll');
-            // 延迟更新缓存
-            requestIdleCallback(() => {
-                const dockerItems = document.querySelectorAll('.docker-item');
-                initializeDockerItemCache(dockerItems);
-            });
-            requestIdleCallback(() => {
-                dockerUpdateInfoAll();
-            });
-            
-            console.timeEnd('querySelectorAll');
-            // initializeDockerItemCache();
+        console.timeEnd('querySelectorAll');
+        // initializeDockerItemCache();
     }
 }
 

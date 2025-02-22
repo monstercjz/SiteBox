@@ -1,12 +1,12 @@
 /* === 根据dashboard结构，一个个dashboard进行渲染 === */
 /* 作用: 组织和导入仪表盘主样式，当前存档，原名newdashboard.js */
 /* 依赖： websitedashboard 子模块 */
-import { showNotification } from './notificationService.js';
-import { getWebsiteGroups, getWebsites, getAllDockers,getDockerGroups } from './api.js';
-import { setRandomGroupColors, resetGroupColors } from './utils.js';
-import { isRandomColorsEnabled } from './h2colorThemeService.js';
+import { showNotification } from '../../frontend/modules/notificationService.js';
+import { getWebsiteGroups, getWebsites, getAllDockers,getDockerGroups } from '../../frontend/modules/api.js';
+import { setRandomGroupColors, resetGroupColors } from '../../frontend/modules/utils.js';
+import { isRandomColorsEnabled } from '../../frontend/modules/h2colorThemeService.js';
 
-import { backendUrl } from '../config.js';
+import { backendUrl } from '../../frontend/config.js';
 /**
  * 获取主仪表盘数据，包括网站和 Docker 数据
  * @returns {Promise<object|null>} - 返回包含网站和 Docker 数据的对象，如果获取失败则返回 null
