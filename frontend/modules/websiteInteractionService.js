@@ -4,7 +4,7 @@ import { WebsiteSaveService } from './websiteDataService.js';
 import { hideContextMenu } from './contextMenu.js';
 import { backendUrl } from '../config.js';
 import { WebsiteOperationService } from './websiteOperationService.js';
-import { WebsiteTooltipService } from './websiteTooltipService.js';
+
 import { confirmWebsiteDelete } from './websiteDeleteService.js';
 import websiteImportModalHandler from './websiteImportModalHandler.js';
 import {
@@ -29,7 +29,7 @@ import { domaddWebsiteItem, domremoveWebsiteItem } from './mainDashboardServiceO
 let currentEditWebsiteGroupId = null;
 let currentEditWebsiteId = null;
 const websiteOperationService = new WebsiteOperationService();
-const websiteTooltipService = new WebsiteTooltipService();
+
 
 // 获取图标函数
 export async function fetchIcon(url) {
@@ -152,11 +152,7 @@ export async function openImportWebsitesModal() {
     }
 }
 
-// 处理网站悬停事件
-export async function handleWebsiteHover(target) {
-    
-    await websiteTooltipService.handleWebsiteHover(target);
-}
+
 
 export function handleWebsiteClick(target) {
     if (!target) {

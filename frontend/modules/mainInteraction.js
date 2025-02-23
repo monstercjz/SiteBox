@@ -106,22 +106,22 @@ const HOVER_EVENT_HANDLERS = [
     {
         selector: '.website-item',
         handler: async (e, target) => {
-            const { handleWebsiteHover } = await import('./websiteInteractionService.js');
-            handleWebsiteHover(target);
+            // const { handleWebsiteHover } = await import('./websiteInteractionService.js');
+            // handleWebsiteHover(target);
         }
     },
     {
         selector: '.docker-item',
         handler: async (e, target) => {
-            const { handleDockerHover } = await import('./dockerInteractionService.js');
-            handleDockerHover(target);
+            // const { handleDockerHover } = await import('./dockerInteractionService.js');
+            // handleDockerHover(target);
         }
     }
 ];
 /**
  * 统一处理鼠标悬停事件
  */
-export async function handleHoverEvents(e) {
+export async function handleHoverEventssss(e) {
     for (const { selector, handler } of HOVER_EVENT_HANDLERS) {
         const matchedElement = e.target.closest(selector);
         if (matchedElement) {
@@ -129,4 +129,9 @@ export async function handleHoverEvents(e) {
             break; // 匹配成功后终止循环
         }
     }
+}
+export async function handleHoverEvents(e) {
+    
+    const { handleElementEnter } = await import('./tooltipService.js');
+        handleElementEnter(e);
 }

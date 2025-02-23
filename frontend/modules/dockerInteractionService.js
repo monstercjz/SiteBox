@@ -6,7 +6,7 @@ import { hideContextMenu } from './contextMenu.js';
 import { backendUrl } from '../config.js';
 import { DockerOperationService } from './dockerOperationService.js';
 import { confirmWebsiteDelete } from './websiteDeleteService.js';
-import { DockerTooltipService } from './DockerTooltipService.js'; // 导入 DockerTooltipService
+
 import {
     NOTIFICATION_ADD_DOCKER_FAIL,
     NOTIFICATION_DELETE_DOCKER_FAIL,
@@ -23,7 +23,7 @@ import { dockerUpdateInfoAll } from './dockerIfonUpdate.js';
 let currentEditDockerGroupId = null;
 let currentEditDockerId = null;
 const dockerOperationService = new DockerOperationService();
-const dockerTooltipService = new DockerTooltipService(); // 创建 DockerTooltipService 实例
+
 
 
 
@@ -112,11 +112,7 @@ export async function deleteDocker(groupId, dockerId) {
     }
 }
 
-// 处理 Docker 悬停事件
-export async function handleDockerHover(target) {
-    
-    await dockerTooltipService.handleDockerHover(target); // 调用 dockerTooltipService 的 handleDockerHover 方法
-}
+
 
 // 启动 Docker 容器
 export async function startDocker(dockerItemId) {

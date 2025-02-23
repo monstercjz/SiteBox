@@ -1,6 +1,6 @@
-import { TooltipDomService } from './tooltipDomService.js';
-import { TooltipCacheService } from './tooltipCacheService.js';
-import { TooltipErrorService } from './tooltipErrorService.js';
+import { TooltipDomService } from '../../frontend/modules/tooltipDomService.js';
+import { TooltipCacheService } from '../../frontend/modules/tooltipCacheService.js';
+import { TooltipErrorService } from '../../frontend/modules/tooltipErrorService.js';
 import {
     CLASS_DOCKER_TOOLTIP,
     DATA_DOCKER_SERVER_PORT,
@@ -14,7 +14,7 @@ import {
     CONFIG_DEBOUNCE_DELAY,
     CONTEXT_MENU_ID, 
     EVENT_CONTEXTMENU,
-} from '../config.js';
+} from '../../frontend/config.js';
 
 // 配置对象 (可以根据需要调整)
 const config = {
