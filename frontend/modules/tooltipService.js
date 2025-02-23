@@ -99,7 +99,7 @@ export class UnifiedTooltipService {
     try {
       let data;
       if (this.isDockerItem(target)) {
-        data = await this._getDockerData(itemId, target);
+        data = await this._getDockerData( target);
       } else {
         data = await this._getWebsiteData(itemId);
       }
@@ -286,7 +286,7 @@ export class UnifiedTooltipService {
         const adjacentId = adjacent.dataset.itemId;
         if (!this.cacheService.getCachedData(adjacentId) && !this.pendingRequests.has(adjacentId)) {
           if (this.isDockerItem(adjacent)) {
-            this._getDockerData(adjacentId, adjacent);
+            this._getDockerData(adjacent);
           } else {
             this._getWebsiteData(adjacentId);
           }
@@ -309,6 +309,17 @@ export class UnifiedTooltipService {
     if (this.requestQueue.length > 0 && this.concurrentRequestCount < config.maxConcurrentRequests) {
       const { itemId, resolve } = this.requestQueue.shift();
       resolve(this._getWebsiteData(itemId));
+    }
+  }
+  _processRequestQueue() {
+    if (this.requestQueue.length > 0 && this.concurrentRequestCount < config.maxConcurrentRequests) {
+      const { itemId, resolve } = this.requestQueue.shift();
+      this._getWebsiteData(itemId)
+        .then(resolve)
+        .catch(error => {
+          console.error(`Error processing request for itemId ${itemId}:`, error);
+          resolve(null); // 确保 Promise 被解决
+        });
     }
   }
 
@@ -340,8 +351,8 @@ export class UnifiedTooltipService {
 export function handleElementEnter(event) {
   const tooltipService = UnifiedTooltipService.getInstance(); // 获取单例实例
   const target = event.target.closest('[data-item-id]');
-  if (!target || !target.dataset.itemId) return;
-
+  // if (!target || !target.dataset.itemId) return;
+  if (!target) return;
   tooltipService.currentHoverTarget = target;
   tooltipService.clearElementTimers(target);
   tooltipService.handleItemHover(target);
