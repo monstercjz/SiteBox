@@ -8,7 +8,7 @@
       content="网站小黑盒，用于组织和访问您常用的网站和资源"
     />
     <title>SiteBox</title>
-    <link rel="stylesheet" href="styles/main.css" />
+    <link rel="stylesheet" href="styles/main.css" data-layout-style="true" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" as="style">
@@ -266,28 +266,6 @@
               class="layout-switcher__option"
               type="button"
               data-layout="default"
-              aria-label="默认布局"
-              data-tooltip="默认布局"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                version="1.1"
-              >
-                <path
-                  d="M1.248 12L1.248 22.752 12 22.752L22.752 22.752 22.752 12L22.752 1.248 12 1.248L1.248 1.248 1.248 12M2.7600000000000002 5.256L2.7600000000000002 7.752 12 7.752L21.240000000000002 7.752 21.240000000000002 5.256L21.240000000000002 2.7600000000000002 12 2.7600000000000002L2.7600000000000002 2.7600000000000002 2.7600000000000002 5.256M2.7600000000000002 12L2.7600000000000002 14.736 12 14.736L21.240000000000002 14.736 21.240000000000002 12L21.240000000000002 9.264 12 9.264L2.7600000000000002 9.264 2.7600000000000002 12M2.7600000000000002 18.744L2.7600000000000002 21.240000000000002 12 21.240000000000002L21.240000000000002 21.240000000000002 21.240000000000002 18.744L21.240000000000002 16.248 12 16.248L2.7600000000000002 16.248 2.7600000000000002 18.744"
-                  stroke="none"
-                  fill="currentColor"
-                  fill-rule="evenodd"
-                  stroke-width="0.024"
-                ></path>
-              </svg>
-            </button>
-            <button
-
-              class="layout-switcher__option"
-              type="button"
-              data-layout="alternative"
               aria-label="多列布局"
               data-tooltip="多列布局"
             >
@@ -307,6 +285,28 @@
                 ></path>
               </svg>
             </button>
+            <button
+              class="layout-switcher__option"
+              type="button"
+              data-layout="alternative"alternative
+              aria-label="多排布局"
+              data-tooltip="多排布局"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                version="1.1"
+              >
+                <path
+                  d="M1.248 12L1.248 22.752 12 22.752L22.752 22.752 22.752 12L22.752 1.248 12 1.248L1.248 1.248 1.248 12M2.7600000000000002 5.256L2.7600000000000002 7.752 12 7.752L21.240000000000002 7.752 21.240000000000002 5.256L21.240000000000002 2.7600000000000002 12 2.7600000000000002L2.7600000000000002 2.7600000000000002 2.7600000000000002 5.256M2.7600000000000002 12L2.7600000000000002 14.736 12 14.736L21.240000000000002 14.736 21.240000000000002 12L21.240000000000002 9.264 12 9.264L2.7600000000000002 9.264 2.7600000000000002 12M2.7600000000000002 18.744L2.7600000000000002 21.240000000000002 12 21.240000000000002L21.240000000000002 21.240000000000002 21.240000000000002 18.744L21.240000000000002 16.248 12 16.248L2.7600000000000002 16.248 2.7600000000000002 18.744"
+                  stroke="none"
+                  fill="currentColor"
+                  fill-rule="evenodd"
+                  stroke-width="0.024"
+                ></path>
+              </svg>
+            </button>
+            
           </div>
           <button
             id="layout-switcher-toggle"

@@ -7,5 +7,62 @@
   通过 @import 引入 base, header, sidebar, content, footer, responsive 等子模块，
   实现仪表盘组件的模块化样式管理。
 */
-@import './dockerdashboard/dockerdashboard-base.css'; /* 引入仪表盘基础布局模块 */
-@import './dockerdashboard/dockerdashboard-base-responsive.css'; /* 引入仪表盘基础布局模块 */
+/* websitedashboard Base Layout Styles - 仪表盘基础布局样式 */
+/*
+  定义仪表盘 (websitedashboard) 组件的基础布局结构。
+  包括模态框容器、内容区域、按钮容器、关闭按钮、表单元素等的基础样式，不包含主题、颜色或状态相关的样式。
+*/
+/* websitedashboard Container - 仪表盘容器 */
+
+#dockerdashboard {
+  display: grid;
+  /* grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); */
+  gap: var(--spacing-inline-xl);
+  max-width: var(--size-websitedashboard-max-width);
+  margin: 0 auto;
+  padding: var(--spacing-inset-xl);
+  position: relative;
+}
+
+
+@media (max-width: 575.98px) {
+  #dockerdashboard {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
+}
+
+/* Small devices - 小屏幕 (576px 及以上) */
+@media (min-width: 576px) {
+  #dockerdashboard {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
+}
+
+/* Medium devices - 中等屏幕 (768px 及以上) */
+@media (min-width: 768px) {
+  #dockerdashboard {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
+}
+
+/* Large devices - 大屏幕 (992px 及以上) */
+@media (min-width: 992px) {
+  #dockerdashboard {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
+}
+
+/* Extra large devices - 超大屏幕 (1200px 及以上) */
+@media (min-width: 1200px) {
+  #dockerdashboard {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
+}
+
+/* XX-Large devices - 超超大屏幕 (1400px 及以上) */
+@media (min-width: 1400px) {
+  #dockerdashboard {
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    
+  }
+}

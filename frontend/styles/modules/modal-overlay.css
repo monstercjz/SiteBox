@@ -6,7 +6,31 @@
   模态框遮罩层 (modal-overlay) 组件的布局样式主模块，负责引入 modal-overlay 目录下各个子模块的样式文件。
   通过 @import 引入 base, theme 等子模块，实现模态框遮罩层组件的模块化样式管理。
 */
-@import './modal-overlay/modal-overlay-base.css'; /* 引入模态框遮罩层基础布局模块 */
+/* Modal Overlay Base Styles - 模态框遮罩层基础样式 */
+/*
+  定义模态框遮罩层 (modal-overlay) 组件的基础布局和结构样式。
+  主要设置遮罩层的定位和 z-index，不包含主题、颜色或状态相关的样式。
+*/
+/* Modal Overlay - 模态框遮罩层 */
+.modal::before {
+  position: fixed; /* 使用 fixed 定位，使其覆盖整个视口 */
+  top: 0; /* 顶部对齐 */
+  left: 0; /* 左侧对齐 */
+  right: 0; /* 右侧对齐 */
+  bottom: 0; /* 底部对齐 */
+  content: ''; /* 伪元素内容为空 */
+  z-index: -1; /* 设置 z-index 为 -1，使其位于模态框下方 */
+}
 /* @import './modal-overlay/modal-overlay-states.css'; // 如果需要状态样式 */
 /* @import './modal-overlay/modal-overlay-elements.css'; // 如果需要元素样式 */
-@import './modal-overlay/modal-overlay-theme.css'; /* 引入模态框遮罩层主题样式模块 */
+/* Modal Overlay Theme Styles - 模态框遮罩层主题样式 */
+/*
+  定义模态框遮罩层 (modal-overlay) 组件的视觉主题样式。
+  主要设置遮罩层的背景色和 backdrop-filter，使用 CSS 变量进行主题化配置。
+*/
+
+:root {
+  /* Modal overlay background color - 模态框遮罩层背景色 */
+  --modal-overlay-background-color: rgba(0, 0, 0, 0.5); /* 半透明黑色 */
+}
+

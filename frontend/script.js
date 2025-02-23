@@ -4,6 +4,7 @@ import { SELECTORS, elements, initializeDOMElements } from './modules/eventDomMa
 import { debounce, throttle, safeExecute, logEvent, showTooltip, hideTooltip } from './modules/utils.js';
 import { renderDashboardWithData } from './modules/mainDashboardService.js';
 import { dockerUpdateInfoAll } from './modules/dockerIfonUpdate.js';
+import { initGroupOrderService } from './modules/groupOrderService.js';
 
 
 document.addEventListener('DOMContentLoaded', async () => {

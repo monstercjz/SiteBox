@@ -7,8 +7,9 @@ let saveTimeout;
 // let dashboardTypeUpdates = []; // Array to store dashboardType updates
 
 // 初始化拖拽排序功能
-function initGroupOrderService() {
+export function initGroupOrderService() {
     // 获取main元素作为拖拽容器
+    console.log('Initializing group order service...');
     const mainDashboard = document.querySelector('main');
     if (!mainDashboard) {
         console.error('Main dashboard element not found');

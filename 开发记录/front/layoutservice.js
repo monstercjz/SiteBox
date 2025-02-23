@@ -15,19 +15,6 @@ function getCurrentLayout() {
 // 设置布局
 function setLayout(layout) {
     body.setAttribute('data-layout', layout);
-    // 动态加载 alternative-main.css
-    if (layout === LAYOUTS.ALTERNATIVE) {
-        const alternativeCSS = document.createElement('link');
-        alternativeCSS.rel = 'stylesheet';
-        alternativeCSS.href = 'styles/alternative-main.css';
-        document.head.appendChild(alternativeCSS);
-    } else if (layout === LAYOUTS.DEFAULT) {
-        // 移除 alternative-main.css (如果存在)
-        const existingAlternativeCSS = document.querySelector('link[href="styles/alternative-main.css"]');
-        if (existingAlternativeCSS) {
-            existingAlternativeCSS.remove();
-        }
-    }
     // 更新布局选项的激活状态 (if needed, implement UI for layout switching later)
     document.querySelectorAll('.layout-switcher__option').forEach(option => {
         option.classList.toggle('active', option.dataset.layout === layout);

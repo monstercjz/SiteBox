@@ -1,9 +1,9 @@
 /* === Website List Layout Styles - 网站列表布局样式 === */
 /* 作用：组织和导入网站列表布局相关的子模块样式。 */
-/* 依赖： website-list 子模块 */
+/* 依赖： docker-list 子模块 */
 /* Website List Layout - Main module - 网站列表布局样式 - 主模块 - 引入子模块 */
 /*
-  网站列表 (website-list) 组件的布局样式主模块，负责引入 website-list 目录下各个子模块的样式文件。
+  网站列表 (docker-list) 组件的布局样式主模块，负责引入 docker-list 目录下各个子模块的样式文件。
   通过 @import 引入 base, theme 等子模块，实现网站列表组件的模块化样式管理。
 */
 /* Website List Layout Base Styles - 网站列表基础布局样式 */
@@ -13,30 +13,36 @@
 */
 /* Website List Container - 网站列表容器 */
 
-.website-list {
+[data-layout="alternative"] .docker-list {
   display: grid;
-  grid-template-columns: repeat(4, minmax(10px, 1fr));
+  /* 使用 grid 布局 */
+  grid-template-columns: repeat(auto-fill, minmax(var(--size-website-item-min-width), 1fr));
+  /* 设置网格列，响应式 auto-fill 和 minmax */
   padding: var(--spacing-inset-xxs);
-  gap: var(--spacing-inline-lg);  
-  /* width: 100%; */
-  box-sizing: border-box;
+  /* 设置内边距 */
+  gap: var(--spacing-inline-xl);
+  /* 设置网格项之间的间距 */
+  margin-top: var(--spacing-stack-md);
+  /* 设置上外边距 */
 }
 
 
-/* @import './website-list/website-states.css'; // 如果需要状态样式 */
-/* @import './website-list/website-elements.css'; // 如果需要元素样式 */
+/* @import './docker-list/website-states.css'; // 如果需要状态样式 */
+/* @import './docker-list/website-elements.css'; // 如果需要元素样式 */
 /* Website List Theme Styles - 网站列表主题样式 */
 /* 
-  定义网站列表 (website-list) 组件的视觉主题样式。 
+  定义网站列表 (docker-list) 组件的视觉主题样式。 
   该模块用于设置网站列表容器的主题相关样式，
   例如背景色、文字颜色、边框颜色、阴影等，使用 CSS 变量进行主题化配置。
 */
 
-.website-list {
+.docker-list {
   /* background-color: var(--background-body); 设置浅灰色背景，待处理 */
-  border-radius: var(--radius-sm); /* 设置中等圆角 */
+  border-radius: var(--radius-sm);
+  /* 设置中等圆角 */
   /* box-shadow: var(--shadow-subtle);  subtle 阴影效果，待处理，其实不加阴影效果更好看 */
 }
+
 /* Modal Responsive Styles - 模态框响应式样式 */
 /*
   定义模态框 (modal) 组件的响应式样式，
@@ -52,48 +58,54 @@
 
 /* Extra small devices - 超小屏幕 (小于 576px) */
 @media (max-width: 575.98px) {
-  .website-list {
-    grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+  [data-layout="alternative"] .docker-list {
+    grid-template-columns: repeat(auto-fill, minmax(var(--size-website-item-min-width), 1fr));
+    gap: var(--spacing-inline-xs);
   }
 }
 
 /* Small devices - 小屏幕 (576px 及以上) */
 @media (min-width: 576px) {
-  .website-list {
-    grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+  [data-layout="alternative"] .docker-list {
+    grid-template-columns: repeat(auto-fill, minmax(var(--size-website-item-min-width), 1fr));
+    gap: var(--spacing-inline-md);
   }
 }
 
 /* Medium devices - 中等屏幕 (768px 及以上) */
 @media (min-width: 768px) {
-  .website-list {
-    grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+  [data-layout="alternative"] .docker-list {
+    grid-template-columns: repeat(auto-fill, minmax(var(--size-website-item-min-width), 1fr));
   }
 }
 
 /* Large devices - 大屏幕 (992px 及以上) */
 @media (min-width: 992px) {
-  .website-list {
-    grid-template-columns: repeat(auto-fill, minmax(65px, 1fr));
+  [data-layout="alternative"] .docker-list {
+    grid-template-columns: repeat(auto-fill, minmax(var(--size-website-item-min-width), 1fr));
+    gap: var(--spacing-inline-lg);
   }
 }
 
 /* Extra large devices - 超大屏幕 (1200px 及以上) */
 @media (min-width: 1200px) {
-  .website-list {
-    grid-template-columns: repeat(auto-fill, minmax(65px, 1fr));
+  [data-layout="alternative"] .docker-list {
+    grid-template-columns: repeat(auto-fill, minmax(var(--size-website-item-min-width), 1fr));
   }
 }
 
 /* XX-Large devices - 超超大屏幕 (1400px 及以上) */
 @media (min-width: 1400px) {
-  .website-list {
-    grid-template-columns: repeat(auto-fill, minmax(65px, 1fr));
+  [data-layout="alternative"] .docker-list {
+    grid-template-columns: repeat(auto-fill, minmax(var(--size-website-item-min-width), 1fr));
+    max-width: var(--size-websitelist-max-width);
+    margin: 0 auto;
   }
 }
 
 /* Print styles - 打印样式 */
 @media print {
+
   .toggle-actions,
   .action-buttons {
     display: none;
@@ -103,7 +115,7 @@
     padding: 0;
   }
 
-  .website-list {
+  .docker-list {
     gap: var(--spacing-inline-md);
   }
 }

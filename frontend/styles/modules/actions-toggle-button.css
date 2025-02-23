@@ -2,9 +2,100 @@
 /* 作用：组织和导入操作切换按钮相关的子模块样式。 */
 /* 依赖： actions-toggle-button 子模块 */
 /* Actions Toggle Button Styles - Main module - imports sub-modules */
-@import './actions-toggle-button/actions-toggle-button-base.css';
-@import './actions-toggle-button/actions-toggle-button-theme.css';
-@import './actions-toggle-button/actions-toggle-button-variants.css';
-@import './actions-toggle-button/actions-toggle-button-states.css';
-@import './actions-toggle-button/actions-toggle-button-animations.css';
-@import './actions-toggle-button/actions-toggle-button-responsive.css';
+/* Actions Toggle Button Base Styles - 切换按钮基础样式 */
+/*
+  定义切换按钮 (actions-toggle-button) 组件的基础布局和结构样式。
+  包括尺寸、定位、display 属性等，不包含主题、颜色或状态相关的样式。
+*/
+
+/* 切换按钮容器 */
+
+
+#actions-toggle-button {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--size-button-sm);
+    height: var(--size-button-sm);
+    border-radius: var(--radius-circle);
+    padding: var(--spacing-inset-xs);
+    cursor: pointer;
+    overflow: hidden;
+  }
+  
+  
+/* Actions Toggle Button Theme Styles - 切换按钮主题样式 */
+/*
+  定义切换按钮 (actions-toggle-button) 组件的视觉主题样式。
+  包括背景色、文字颜色、边框、阴影等，使用 CSS 变量进行主题化配置。
+*/
+
+#actions-toggle-button {
+    background: var(--action-primary);
+    color: white;
+    border: none;
+    box-shadow: var(--shadow-button);
+    background: radial-gradient(circle at center, var(--action-primary) 0%, var(--action-secondary) 100%);
+  }
+/* Actions Toggle Button State Styles - 切换按钮状态样式 */
+/*
+  定义切换按钮 (actions-toggle-button) 组件在不同状态下的样式，
+  例如 hover, active 等交互状态。
+*/
+/* 切换按钮容器 */
+#actions-toggle-button {
+    cursor: pointer; /* 设置鼠标指针为 pointer */
+  }
+  
+  /* Hover 状态 */
+  #actions-toggle-button:hover {
+    background: var(--action-primary-hover); /* Hover 状态背景色 */
+    box-shadow: var(--shadow-lg); /* Hover 状态阴影 */
+    transform: translateY(-2px) rotate(45deg);  /* Hover 状态位移和旋转45度，显示为“x” */
+  }
+  
+  /* Active 状态 */
+  #actions-toggle-button:active {
+    background-color: var(--action-primary-active); /* Active 状态背景色 */
+    box-shadow: var(--shadow-md); /* Active 状态阴影 */
+    /*transform: translateY(0) rotate(45deg);  Active 状态位移和旋转45度，显示为“x” */
+  }
+  /* [data-layout="alternative"] .toggle-actions button:hover {
+    transform: scale(var(--transform-scale-hover));
+    box-shadow: var(--shadow-button-hover);
+  }
+  
+  [data-layout="alternative"] .toggle-actions button:hover svg {
+    transform: rotate(90deg);
+  }
+  
+  [data-layout="alternative"] .toggle-actions button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: var(--radius-xl);
+    transform: translate(-50%, -50%);
+    animation: ripple var(--animation-duration-ripple) ease-out;
+  } */
+  
+/* Actions Toggle Button Animations Styles - 切换按钮动画样式 */
+/*
+  定义切换按钮 (actions-toggle-button) 组件的动画和过渡效果。
+  例如点击、hover 等状态切换时的动画效果。
+*/
+
+#actions-toggle-button {
+    transition: all var(--transition-normal); /* 添加过渡效果 */
+  }
+  #actions-toggle-button {
+    transition: var(--transition);
+  
+  }
+  #actions-toggle-button svg {
+    transition: transform 0.2s ease;
+  }

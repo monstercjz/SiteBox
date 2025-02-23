@@ -2,9 +2,108 @@
 /* 作用：组织和导入工具提示相关的子模块样式。 */
 /* 依赖： tooltip 子模块 */
 /* Tooltip Styles - Main module - imports sub-modules */
-@import './tooltip/tooltip-base.css';
-@import './tooltip/tooltip-theme.css'; /* 主题样式 */
-@import './tooltip/tooltip-variants.css';
-@import './tooltip/tooltip-states.css'; /* 状态样式 */
-@import './tooltip/tooltip-animations.css'; /* 动画样式 */
-@import './tooltip/tooltip-responsive.css'; /* 响应式样式 */
+/* Tooltip Base Styles - 工具提示基础样式 */
+/*
+  定义工具提示 (tooltip) 组件的基础布局和结构样式。
+  包括 tooltip 容器的基础 padding、border-radius、max-width 等，不包含主题、颜色或状态相关的样式。
+*/
+/* Tooltip 容器 */
+/* .tooltip, .website-tooltip {
+  padding: var(--spacing-inset-xs) var(--spacing-inset-md); 
+  border-radius: var(--radius-sm); 
+  max-width: 300px; 
+  
+} */
+#tooltip {
+  color: var(--text-primary);
+  padding: var(--spacing-inset-xs) var(--spacing-inset-md);
+  position: absolute;
+  z-index: -1;
+  white-space: nowrap;
+}
+
+/* Website tooltip styles */
+.website-tooltip {
+  padding: var(--spacing-inset-md);
+  border-radius: var(--radius-sm);
+  backdrop-filter: var(--glass-blur);
+  word-wrap: break-word;
+  /* 允许单词断行 */
+  z-index: 1000;
+  min-width: var(--size-websitetooltip-min-width);
+  opacity: 0;
+}
+
+.fade-in {
+  opacity: 1;
+}
+
+.fade-out {
+  opacity: 0;
+}
+
+.tooltip-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-inline-xs);
+}
+
+.tooltip-row {
+  display: flex;
+  gap: var(--spacing-inline-xs);
+  align-items: center;
+  font-size: var(--font-size-xs);
+  color: var(--text-primary);
+}
+
+.tooltip-row strong {
+  color: var(--action-primary);
+  /* min-width: var(--size-website-item-min-height); */
+}
+
+/* Tooltip Theme Styles - 工具提示主题样式 */
+/* 
+  定义工具提示 (tooltip) 组件的视觉主题样式。 
+  It should include CSS variables, color schemes, font stacks, and other theme-related styles.
+*/
+
+/* Tooltip 容器 - 工具提示容器 */
+.website-tooltip {
+  background: var(--background-card);
+  /* 设置背景色为 surface color CSS 变量 */
+  border: 1px solid var(--border-normal);
+  /* 设置边框 */
+  font-size: var(--font-size-xs);
+  /* 设置字体大小 */
+  box-shadow: var(--shadow-lg);
+  /* 设置阴影效果，使用 shadow-lg CSS 变量 */
+  color: var(--text-primary);
+  /* 设置文字颜色为 primary text color CSS 变量 */
+}
+
+/* Tooltip States Styles - 工具提示状态样式 */
+/*
+  定义工具提示 (tooltip) 组件在不同状态下的样式，
+  例如 show 状态 (显示时) 的样式。
+*/
+/* Tooltip 初始状态 - 隐藏 */
+
+/* Tooltip Show State - 工具提示显示状态 */
+/* Tooltip Show State - 工具提示显示状态 */
+.tooltip.show {
+  opacity: 1;
+  /* 显示状态透明度为 1，显示 tooltip */
+  visibility: visible;
+  /* 显示状态显示 tooltip */
+}
+
+/* Tooltip Animations Styles - 工具提示动画样式 */
+/*
+  定义工具提示 (tooltip) 组件的动画和过渡效果。
+  例如 tooltip 显示/隐藏时的动画效果。
+*/
+/* Tooltip 容器过渡效果 */
+.website-tooltip {
+  animation: fadeIn var(--animation-duration-short) ease-out;
+  transition: opacity var(--transition-fast) ease-in-out;
+}

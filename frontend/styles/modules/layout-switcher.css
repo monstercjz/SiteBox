@@ -3,9 +3,173 @@
 /* 依赖： layout-switcher 子模块 */
 /* frontend/styles/modules/layout-switcher.css */
 /* Imports sub-modules for layout-switcher */
-@import './layout-switcher/layout-switcher-base.css';
-@import './layout-switcher/layout-switcher-theme.css';
-@import './layout-switcher/layout-switcher-variants.css';
-@import './layout-switcher/layout-switcher-states.css';
-@import './layout-switcher/layout-switcher-animations.css';
-@import './layout-switcher/layout-switcher-responsive.css'; /* Even though it's empty */
+/* Layout Switcher Base Styles - 布局切换器基础样式 */
+/*
+  定义布局切换器 (layout-switcher) 组件的基础布局和结构样式。
+  包括选项容器、选项按钮的基础样式，不包含主题、颜色或状态相关的样式。
+*/
+/* 布局切换器选项容器 */
+.layout-switcher__options {
+  position: absolute;
+  /* 使用 absolute 定位，使其脱离文档流 */
+  right: 100%;
+  /* 定位在按钮的左侧 */
+  top: 0;
+  /* 顶部对齐 */
+  display: flex;
+  /* 使用 flex 布局 */
+  align-items: center;
+  /* 垂直居中 */
+  height: var(--size-button-sm);
+  /* 与按钮高度一致 */
+  gap: var(--spacing-inline-xxs);
+  /* 设置选项之间的间距 */
+  padding: var(--spacing-inset-xxs);
+  /* 设置内边距 */
+  margin-right: var(--spacing-stack-xs);
+  /* 设置右外边距 */
+}
+
+/* Layout switcher container - 布局切换器容器 */
+.layout-switcher {
+  position: relative;
+  /* 为绝对定位的子元素提供参考 */
+}
+
+/* Layout switcher option - 布局切换器选项按钮 */
+.layout-switcher__option {
+  display: flex;
+  /* 使用 flex 布局 */
+  align-items: center;
+  /* 垂直居中 */
+  justify-content: center;
+  /* 水平居中 */
+  width: var(--size-button-sm);
+  /* 设置宽度 */
+  height: var(--size-button-sm);
+  /* 设置高度 */
+  padding: var(--spacing-inset-xxs);
+  /* 设置内边距 */
+  border-radius: var(--radius-xl);
+  /* 设置圆形边框 */
+  /* box-shadow: var(--shadow-sm); 设置阴影效果 */
+}
+
+/* Layout Switcher Theme Styles - 布局切换器主题样式 */
+/*
+  This module is for defining the visual theme of the Layout Switcher component.
+  It should include CSS variables, color schemes, font stacks, and other theme-related styles.
+*/
+/* Layout Switcher Options Container - 布局切换器选项容器 */
+.layout-switcher__options {
+  background: var(--background-card);
+  /* 设置背景色为 surface color CSS 变量 */
+  /*border: 1px solid var(--border-normal);  设置边框 */
+  /*box-shadow: var(--shadow-md);  设置阴影效果，使用 shadow-md CSS 变量 */
+}
+
+/* Default layout option - 默认布局选项 */
+/* .layout-switcher__option[data-layout="default"] {
+    background: #ffffff; 
+  } */
+
+/* Multi-column layout option - 多列布局选项 */
+/* .layout-switcher__option[data-layout="alternative"] {
+    background: #f0f0f0; 
+  } */
+
+/* Layout switcher option - 布局切换器选项按钮 */
+.layout-switcher__option {
+  background: var(--background-card);
+  /* 设置背景色为 surface color CSS 变量 */
+  color: var(--text-primary);
+  /* 设置文字颜色为 primary text color CSS 变量 */
+  border: 1px solid var(--border-normal);
+  /* 设置边框 */
+}
+
+.layout-switcher__option {
+  box-shadow: var(--shadow-sm);
+  /* 设置阴影效果 */
+}
+
+/* Layout Switcher Variants Styles - 布局切换器变体样式 */
+/*
+  定义布局切换器 (layout-switcher) 组件的变体样式和功能扩展。
+  例如不同尺寸、不同风格的主题切换器样式。
+*/
+
+/* 布局切换器选项容器初始状态 - 隐藏 */
+.layout-switcher__options {
+  opacity: 0;
+  /* 初始状态透明度为 0 */
+}
+
+.layout-switcher__option svg {
+  width: 20px;
+  /* 调整图标宽度 */
+  height: 20px;
+  /* 调整图标高度 */
+}
+
+/* Layout Switcher States Styles - 布局切换器状态样式 */
+/*
+  定义布局切换器 (layout-switcher) 组件在不同状态下的样式，
+  例如 show 状态 (选项列表显示时) 的样式。
+*/
+/* Layout switcher option - 布局切换器选项按钮 */
+.layout-switcher__option {
+  cursor: pointer;
+  /* 设置鼠标指针为 pointer */
+}
+
+/* Layout Switcher Options - 布局切换器选项容器 */
+.layout-switcher__options {
+  pointer-events: none;
+  /* 初始状态禁止 pointer 事件 */
+}
+
+/* Layout Switcher Options Show State - 布局切换器选项显示状态 */
+.layout-switcher__options.show {
+  background-color: var(--background-body);
+  opacity: 1;
+  /* 显示状态透明度为 1 */
+  pointer-events: auto;
+  /* 显示状态允许 pointer 事件 */
+}
+
+.layout-switcher__option.active {
+
+  color: var(--action-primary);
+  /* 激活的颜色 */
+  transform: scale(1.1);
+  /* 激活 图标放大 */
+}
+
+.layout-switcher__option:hover {
+  box-shadow: var(--shadow-md);
+  /* Hover 状态阴影 */
+  transform: translateY(-2px);
+  /* Hover 状态向上位移 */
+}
+
+/* Layout Switcher Animations Styles - 布局切换器动画样式 */
+/*
+  定义布局切换器 (layout-switcher) 组件的动画和过渡效果。
+  例如选项列表显示/隐藏时的动画效果。
+*/
+
+/* 布局切换器选项容器过渡效果 */
+.layout-switcher__options {
+  transition: all var(--transition-normal);
+  /* 添加通用过渡效果 */
+}
+
+/* 布局切换器选项按钮过渡效果 */
+.layout-switcher__option {
+  transition: all var(--transition-fast);
+  /* 添加通用过渡效果 */
+}
+
+
+/* Even though it's empty */

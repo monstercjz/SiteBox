@@ -2,9 +2,172 @@
 /* 作用：组织和导入上下文菜单相关的子模块样式。 */
 /* 依赖： context-menu 子模块 */
 /* Context Menu Styles - Main module - imports sub-modules */
-@import './context-menu/context-menu-base.css';
-@import './context-menu/context-menu-theme.css';
-@import './context-menu/context-menu-variants.css';
-@import './context-menu/context-menu-states.css';
-@import './context-menu/context-menu-animations.css';
-@import './context-menu/context-menu-responsive.css';
+/* Context Menu Base Styles - 右键菜单基础样式 */
+/*
+  定义右键菜单 (context-menu) 组件的基础布局和结构样式。
+  包括菜单容器和菜单项的基本 padding、min-width 等，不包含主题、颜色或状态相关的样式。
+*/
+
+/* 右键菜单容器 */
+
+
+#contextMenu {
+  position: fixed;
+  z-index: 9999;
+  min-width: var(--size-contextmenu-min-width);
+  overflow: hidden;
+  display: block !important;
+}
+
+#contextMenu div {
+  padding: var(--spacing-inset-sm) var(--spacing-inset-md);
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+#contextMenu .delete-website-item {
+  color: #ef4444;
+  /* 设置删除网站条目菜单项文字颜色为红色 */
+}
+
+#contextMenu .delete-docker-item {
+  color: #ef4444;
+  /* 设置删除网站条目菜单项文字颜色为红色 */
+}
+
+#contextMenu .delete-group-item {
+  color: #ef4444;
+  /* 设置删除分组菜单项文字颜色为红色 */
+}
+
+/* Context Menu Theme Styles - 右键菜单主题样式 */
+/*
+  定义右键菜单 (context-menu) 组件的视觉主题样式。
+  包括背景色、边框颜色、阴影、文字颜色等，使用 CSS 变量进行主题化配置。
+*/
+
+#contextMenu {
+  /* background: linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.95) 0%,
+      rgba(245, 243, 255, 0.95) 100%
+    ); */
+  border-radius: var(--radius-sm);
+  box-shadow: 0 8px 32px rgba(99, 102, 241, 0.2);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(124, 58, 237, 0.1);
+}
+
+#contextMenu div {
+  color: var(--text-primary);
+}
+
+/* Context Menu States Styles - 右键菜单状态样式 */
+/*
+  定义右键菜单 (context-menu) 组件在不同状态下的样式，
+  例如 hover, active 等交互状态。
+*/
+
+/* 右键菜单项 */
+#contextMenu div {
+  cursor: pointer;
+  /* 设置鼠标指针为 pointer */
+}
+
+/* Context Menu Item State Styles */
+
+
+/* 删除网站条目菜单项 hover 状态样式 */
+#contextMenu .delete-website-item:hover {
+  background-color: #fee2e2;
+  /* 设置删除网站条目菜单项 hover 背景色为浅红色 */
+}
+
+/* 删除分组菜单项 hover 状态样式 */
+#contextMenu .delete-group-item:hover {
+  background-color: #fee2e2;
+  /* 设置删除分组菜单项 hover 背景色为浅红色 */
+}
+
+/* 深色主题下的删除菜单项 hover 样式 */
+[data-theme="dark"] #contextMenu div.delete-website-item:hover,
+[data-theme="dark"] #contextMenu div.delete-group-item:hover {
+  background-color: var(--color-delete-hover);
+  /* 深色主题下删除菜单项 hover 背景色 */
+}
+
+
+#contextMenu::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(145deg, rgba(124, 58, 237, 0.05) 0%, rgba(147, 51, 234, 0.05) 100%);
+  z-index: -1;
+}
+
+#contextMenu::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(from 180deg at 50% 50%,
+      rgba(124, 58, 237, 0.1) 0deg,
+      rgba(147, 51, 234, 0.1) 180deg,
+      rgba(124, 58, 237, 0.1) 360deg);
+  animation: rotate var(--animation-duration-rotate) linear infinite;
+  z-index: -2;
+}
+
+#contextMenu div::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, rgba(124, 58, 237, 0.1) 0%, rgba(147, 51, 234, 0.1) 100%);
+  transform: translateX(-100%);
+  transition: transform var(--animation-duration-medium) ease;
+  z-index: -1;
+}
+
+#contextMenu div:hover {
+  color: var(--color-interaction-accent);
+}
+
+#contextMenu div:hover::before {
+  transform: translateX(0);
+}
+
+#contextMenu div:active {
+  transform: scale(0.98);
+  background: rgba(124, 58, 237, 0.05);
+}
+
+/* Context Menu Animations Styles - 右键菜单动画样式 */
+/*
+  定义右键菜单 (context-menu) 组件的动画和过渡效果。
+  例如菜单项 hover 时的过渡效果。
+*/
+
+/* 右键菜单项 */
+
+
+#contextMenu {
+  transform-origin: top left;
+  animation: fadeIn var(--animation-duration-short) ease-out;
+}
+
+#contextMenu div {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}

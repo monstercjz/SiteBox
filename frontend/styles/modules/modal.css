@@ -2,9 +2,335 @@
 /* 作用：组织和导入模态框相关的子模块样式。 */
 /* 依赖： modal 子模块 */
 /* Modal Styles - Main module - imports sub-modules */
-@import './modal/modal-base.css';
-@import './modal/modal-theme.css';
-@import './modal/modal-variants.css';
-@import './modal/modal-states.css';
-@import './modal/modal-animations.css';
-@import './modal/modal-responsive.css';
+/* Modal Styles - 模态框基础样式 */
+/*
+  定义模态框 (modal) 组件的基础布局和结构样式。
+   依赖：base/variables.css, theme/light.css
+  包括模态框容器、内容区域、按钮容器、关闭按钮、表单元素等的基础样式，不包含主题、颜色或状态相关的样式。
+*/
+
+/* 模态框容器 */
+.modal {
+  position: fixed;
+  /* 使用 fixed 定位，使其脱离文档流 */
+  top: 50%;
+  /* 垂直居中 */
+  left: 50%;
+  /* 水平居中 */
+  padding: var(--spacing-inset-xl);
+  /* 设置内边距 */
+  width: 90%;
+  /* 设置宽度为 90% 视口宽度 */
+  max-width: var(--size-modal-width-md);
+  /* 设置最大宽度 */
+  transform: translate(-50%, -50%);
+  /* 使用 transform 进一步精确居中 */
+  z-index: 1001;
+  /* 设置 z-index，确保在其他元素之上 */
+}
+
+/* 模态框内容区域 */
+.modal-content {
+  width: 100%;
+  /* 确保内容区域宽度撑满 */
+  position: relative;
+  /* 设置定位为 relative，方便内部元素定位 */
+  display: flex;
+  /* 使用 flexbox 布局 */
+  flex-direction: column;
+  /* 垂直方向排列 */
+}
+
+/* 模态框表单元素通用样式 */
+.modal input,
+.modal textarea,
+.modal select {
+  flex-grow: 1;
+  /* 撑满剩余空间，可以让长度一致 */
+  padding: var(--spacing-inset-md);
+  /* 设置内边距 */
+  padding-right: var(--spacing-inset-xl);
+  /* 增加右侧内边距，留出箭头空间 */
+  margin-bottom: var(--spacing-stack-lg);
+  /* 设置下外边距 */
+  appearance: none;
+  /* 移除默认 appearance 样式 */
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  /* 下拉箭头 SVG */
+  background-repeat: no-repeat;
+  /* 禁止背景图片重复 */
+  background-position: right var(--spacing-inset-xs) center;
+  /* 设置背景图片位置 */
+  background-size: 16px;
+  /* 设置背景图片大小 */
+}
+
+/* 模态框标题 */
+.modal-content h2 {
+  margin-bottom: var(--spacing-stack-xl);
+  /* 设置下外边距 */
+  padding-right: var(--spacing-inset-xl);
+  /* 设置右内边距 */
+  font-size: var(--font-size-heading-sm);
+  /* 设置字体大小 */
+  font-weight: var(--font-weight-semibold);
+  /* 设置字体粗细 */
+}
+
+/* 模态框按钮容器 */
+.modal-buttons-container {
+  display: flex;
+  /* 使用 flex 布局 */
+  justify-content: flex-end;
+  /* 水平方向靠右对齐 */
+  gap: var(--spacing-inline-md);
+  /* 设置按钮之间的间距 */
+  margin-top: var(--spacing-stack-xl);
+  /* 设置上外边距 */
+}
+
+/* 模态框按钮通用样式 */
+.modal-buttons-container button {
+  padding: var(--spacing-inset-xs) var(--spacing-inset-xl);
+  /* 设置按钮内边距 */
+  border-radius: var(--radius-sm);
+  /* 设置按钮圆角 */
+  font-size: var(--font-size-sm);
+  /* 设置字体大小 */
+  font-weight: var(--font-weight-medium);
+  /* 设置字体粗细 */
+}
+
+/* 模态框关闭按钮 */
+.close-modal-button {
+  position: absolute;
+  /* 使用 absolute 定位，相对于 .modal-content 定位 */
+  right: 0;
+  /* 靠右对齐 */
+  top: 0;
+  /* 靠顶部对齐 */
+  display: flex;
+  /* 使用 flex 布局 */
+  align-items: center;
+  /* 垂直居中 */
+  justify-content: center;
+  /* 水平居中 */
+  width: var(--size-button-sm);
+  /* 设置宽度 */
+  height: var(--size-button-sm);
+  /* 设置高度 */
+  border-radius: var(--radius-xl);
+  /* 设置圆形边框 */
+  background: transparent;
+  /* 设置背景色为透明 */
+  border: none;
+  /* 移除边框 */
+}
+
+/* Modal Theme Styles - 模态框主题样式 */
+/*
+  定义模态框 (modal) 组件的视觉主题样式。
+   依赖：theme/variables.css, theme/light.css
+  包括背景色、边框、阴影、文字颜色等，使用 CSS 变量和颜色混合实现主题效果。
+*/
+/* 模态框容器 */
+.modal {
+  border-radius: var(--radius-md);
+  /* 设置圆角，使用 radius-lg CSS 变量 */
+  background: linear-gradient(to bottom right,
+      /* 设置背景渐变 */
+      var(--background-card) 0%,
+      /* 起始颜色为 surface color CSS 变量 */
+      color-mix(in srgb, var(--background-card) 98%, var(--action-primary)) 100%
+      /* 混合 surface color 和 primary color */
+    );
+  box-shadow: var(--shadow-lg),
+    /* 设置阴影效果，使用 shadow-lg CSS 变量 */
+    0 0 0 1px rgba(0, 0, 0, 0.05),
+    0 0 40px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  /* 设置边框 */
+}
+
+/* 深色主题下的模态框容器 */
+[data-theme="dark"] .modal {
+  background: linear-gradient(to bottom right,
+      /* 深色主题下设置背景渐变 */
+      var(--background-card) 0%,
+      /* 起始颜色为 surface color CSS 变量 */
+      color-mix(in srgb, var(--background-card) 95%, var(--action-primary)) 100%
+      /* 混合 surface color 和 primary color */
+    );
+  box-shadow: var(--shadow-lg),
+    /* 深色主题下设置阴影效果，使用 shadow-lg CSS 变量 */
+    0 0 0 1px rgba(255, 255, 255, 0.05),
+    0 0 40px rgba(0, 0, 0, 0.3);
+}
+
+/* 模态框表单元素主题 */
+.modal input,
+.modal textarea,
+.modal select {
+  background: var(--background-card);
+  /* 设置背景色为 surface color CSS 变量 */
+  color: var(--text-primary);
+  /* 设置文字颜色为 primary text color CSS 变量 */
+  border-radius: var(--radius-sm);
+  /* 设置圆角 */
+  border: 1px solid var(--border-normal);
+  /* 设置边框 */
+}
+
+/* 模态框表单元素 placeholder 文本颜色 */
+.modal input::placeholder,
+.modal textarea::placeholder {
+  color: var(--text-secondary);
+  /* 设置 placeholder 文本颜色为 secondary text color CSS 变量 */
+}
+
+/* 模态框标题主题 */
+.modal-content h2 {
+  color: var(--text-primary);
+  /* 设置文字颜色为 primary text color CSS 变量 */
+}
+
+/* 保存按钮主题 */
+.save-modal-button {
+  background: var(--action-primary);
+  /* 设置背景色为 primary color CSS 变量 */
+  color: white;
+  /* 设置文字颜色为白色 */
+  border: none;
+  /* 移除边框 */
+}
+
+/* 取消按钮主题 */
+.cancel-modal-button {
+  background: transparent;
+  /* 设置背景色为透明 */
+  color: var(--text-primary);
+  /* 设置文字颜色为 primary text color CSS 变量 */
+  border: 1px solid var(--border-normal);
+  /* 设置边框 */
+}
+
+/* 关闭按钮主题 */
+.close-modal-button {
+  color: var(--text-secondary);
+  /* 设置文字颜色为 secondary text color CSS 变量 */
+}
+
+/* Modal Variants Styles - 模态框变体样式 */
+/*
+  定义模态框 (modal) 组件的变体样式和功能扩展。
+   依赖：无
+  例如不同尺寸、不同布局的模态框样式。
+*/
+
+/* 模态框初始状态 - 隐藏 */
+.modal {
+  opacity: 0;
+  /* 初始状态透明度为 0 */
+}
+
+/* Modal States Styles - 模态框状态样式 */
+/*
+  定义模态框 (modal) 组件在不同状态下的样式，
+   依赖：state/variables.css, theme/light.css
+  例如 hover, active, focus, show-modal, closing 等交互和状态样式。
+*/
+/* 模态框按钮通用样式 */
+.modal-buttons-container button {
+  cursor: pointer;
+  /* 设置鼠标指针为 pointer */
+}
+
+/* 关闭按钮 */
+.close-modal-button {
+  cursor: pointer;
+  /* 设置鼠标指针为 pointer */
+}
+
+/* 保存按钮 Hover 状态 */
+.save-modal-button:hover {
+  background: var(--action-primary-hover);
+  /* Hover 状态背景色 */
+  transform: translateY(-1px);
+  /* Hover 状态向上位移 */
+}
+
+/* 取消按钮 Hover 状态 */
+.cancel-modal-button:hover {
+  background: var(--background-card-hover);
+  /* Hover 状态背景色 */
+  transform: translateY(-1px);
+  /* Hover 状态向上位移 */
+}
+
+/* 关闭按钮 Hover 状态 */
+.close-modal-button:hover {
+  background: var(--background-card-hover);
+  /* Hover 状态背景色 */
+  color: var(--text-primary);
+  /* Hover 状态文字颜色 */
+}
+
+/* 表单元素 Hover 状态 */
+.modal input:hover,
+.modal textarea:hover,
+.modal select:hover {
+  border-color: var(--text-secondary);
+  /* Hover 状态边框颜色 */
+}
+
+/* 表单元素 Focus 状态 */
+.modal input:focus,
+.modal textarea:focus,
+.modal select:focus {
+  outline: none;
+  /* 移除默认 outline */
+  border-color: var(--action-primary);
+  /* Focus 状态边框颜色 */
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+  /* Focus 状态阴影 */
+}
+
+/* 显示 Modal 状态 */
+.modal.show-modal {
+  opacity: 1;
+  /* 显示状态透明度为 1 */
+}
+
+/* 关闭 Modal 状态 */
+.modal.closing {
+  opacity: 0;
+  /* 关闭状态透明度为 0 */
+}
+
+/* Modal Animations Styles - 模态框动画样式 */
+/*
+  定义模态框 (modal) 组件的动画和过渡效果。
+   依赖：state/animations.css, base/variables.css
+  包括模态框显示/隐藏、关闭按钮、表单元素等过渡效果。
+*/
+/* 模态框容器过渡效果 */
+.modal {
+  transition: opacity var(--transition-normal),
+    /* 透明度过渡 */
+    transform var(--transition-normal);
+  /* 位移过渡 */
+}
+
+/* 关闭按钮过渡效果 */
+.close-modal-button {
+  transition: all var(--transition-fast);
+  /* 添加通用过渡效果 */
+}
+
+/* 表单元素过渡效果 */
+.modal input,
+.modal textarea,
+.modal select {
+  transition: all var(--transition-fast);
+  /* 添加通用过渡效果 */
+}

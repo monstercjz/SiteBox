@@ -2,9 +2,136 @@
 /* 作用：组织和导入网站条目相关的子模块样式。 */
 /* 依赖： website-item 子模块 */
 /* Website Item Styles - Main module - imports sub-modules */
-@import './website-item/website-item-base.css';
-@import './website-item/website-item-theme.css';
-@import './website-item/website-item-variants.css';
-@import './website-item/website-item-states.css';
-@import './website-item/website-item-animations.css';
-@import './website-item/website-item-responsive.css';
+/* Website Item Base Styles */
+
+
+.website-item img {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+}
+
+.website-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-inline-xxs);
+  padding: var(--spacing-inset-xs);
+  margin: var(--spacing-stack-xxs);
+  position: relative;
+  overflow: hidden;
+  min-height: 60px;
+  min-width: 60px;
+  width: auto;
+  height: auto;
+  backdrop-filter: none;
+  cursor: pointer;
+}
+
+.website-item a {
+  text-decoration: none;
+  font-weight: var(--font-weight-medium);
+  position: relative;
+  display: inline-block;
+  padding-bottom: var(--spacing-inset-xs);
+  /* 待调整 */
+}
+
+/* Website Item Theme */
+/*
+  This module is for defining the visual theme of the Website Item component.
+  It should include CSS variables, color schemes, font stacks, and other theme-related styles.
+*/
+
+
+.website-item {
+  background: var(--glass-effect);
+  border: var(--glass-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--glass-shadow);
+  border: 1px solid var(--border-normal);
+}
+
+.website-item a {
+
+  color: var(--text-primary);
+
+}
+
+/* Website Item States Styles */
+.website-item {
+  cursor: pointer;
+}
+
+
+.website-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(135deg, var(--action-primary) 0%, var(--action-secondary) 100%);
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.website-item:hover::before {
+  opacity: 1;
+}
+
+.website-item:hover {
+  transform: translateY(-8px) scale(1.05);
+  box-shadow: var(--shadow-website-item-hover);
+  animation: cardHover 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.website-item:hover {
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: var(--shadow-website-item-active);
+  animation: itemHover 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.website-item:hover::before {
+  opacity: 1;
+  height: var(--border-width-xs);
+  /* 待调整 */
+  background: linear-gradient(90deg,
+      var(--action-primary) 0%,
+      var(--action-secondary) 100%);
+  animation: glow 1.5s ease-in-out infinite alternate;
+}
+
+.website-item a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: var(--border-width-xxs);
+  /* 待调整 */
+  background: var(--gradient);
+  transition: var(--transition);
+}
+
+.website-item:hover a {
+  color: var(--action-primary);
+}
+
+.website-item:hover a::after {
+  width: 100%;
+}
+
+/* Website Item Animations */
+
+
+.website-item {
+  transition: var(--transition);
+  transform-origin: center;
+  animation: fadeInItem 0.3s ease-out;
+}
+
+.website-item a {
+  transition: var(--transition);
+}

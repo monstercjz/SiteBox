@@ -3,7 +3,7 @@
 /* 依赖： docker-item 子模块 */
 /* Website Item Styles - Main module - imports sub-modules */
 /* Website Item Base Styles */
-.docker-item {
+[data-layout="alternative"] .docker-item {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -14,14 +14,15 @@
   position: relative;
   overflow: hidden;
   min-height: 100px;
-  min-width: 60px;
-  width: auto;
+  /* min-width: 120px; */
+  width: var(--size-website-item-min-width);
+  /* 使用 CSS 变量设置 item 宽度 */
   height: auto;
   backdrop-filter: none;
   cursor: pointer;
 }
 
-.docker-item-header {
+[data-layout="alternative"] .docker-item-header {
   display: grid;
   grid-auto-flow: column;
   grid-template-columns: repeat(2, 1fr);
@@ -34,50 +35,56 @@
   justify-items: end;
 }
 
-.docker-item-title {
+[data-layout="alternative"] .docker-item-title {
   display: flex;
   flex-direction: row;
   align-items: center;
 
 }
 
-.docker-item-title img {
+[data-layout="alternative"] .docker-item-title img {
   display: flex;
   align-items: center;
   /* gap: var(--spacing-inline-xs);
-    margin-bottom: var(--spacing-stack-xs); */
+  margin-bottom: var(--spacing-stack-xs); */
   width: 32px;
   height: 32px;
   margin-right: var(--spacing-stack-xs);
   margin-left: var(--spacing-stack-sm);
 }
 
-.docker-item-title a {
+[data-layout="alternative"] .docker-item-title a {
   text-decoration: none;
   font-weight: var(--font-weight-medium);
   position: relative;
   display: inline-block;
   max-width: fit-content;
   font-size: var(--font-size-md);
+
   /* padding-bottom: var(--spacing-inset-xs); */
 }
 
-.docker-status-indicator {
+
+
+[data-layout="alternative"] .docker-status-indicator {
   position: relative;
   width: 8px;
   height: 8px;
   border-radius: 50%;
+
   /* margin-left: var(--spacing-inline-lg); */
   margin-right: var(--spacing-inline-xs);
+
 }
 
-.docker-item-body {
+[data-layout="alternative"] .docker-item-body {
   display: flex;
   justify-content: space-around;
   width: 100%;
 }
 
-.docker-item-stats {
+
+[data-layout="alternative"] .docker-item-stats {
   display: grid;
   grid-auto-flow: column;
   grid-template-columns: repeat(3, 1fr);
@@ -88,127 +95,82 @@
   align-content: space-between;
 }
 
-.docker-item-cpu,
-.docker-item-networkIo-receive,
-.docker-item-networkIo-send {
+[data-layout="alternative"] .docker-item-cpu,
+[data-layout="alternative"] .docker-item-networkIo-receive,
+[data-layout="alternative"] .docker-item-networkIo-send {
   display: flex;
   flex-direction: column-reverse;
   justify-content: space-around;
 
 }
 
-.docker-item-stats-value {
+[data-layout="alternative"] .docker-item-stats-value {
   font-size: var(--font-size-xxs);
   font-weight: var(--font-weight-bold);
 }
 
-.docker-item-stats-label {
+[data-layout="alternative"] .docker-item-stats-label {
   font-size: var(--font-size-xs);
 
 }
+
+
 
 /* Website Item Theme */
 /*
   This module is for defining the visual theme of the Website Item component.
   It should include CSS variables, color schemes, font stacks, and other theme-related styles.
 */
-.docker-item {
-  background: var(--glass-effect);
-  border: var(--glass-border);
+[data-layout="alternative"] .docker-item {
   border-radius: var(--radius-lg);
-  box-shadow: var(--glass-shadow);
+  background: var(--background-surface);
+  border: 1px solid var(--border-normal);
+  box-shadow: var(--shadow-sm);
 }
 
-.docker-item a {
+[data-layout="alternative"] .docker-item a {
+  color: var(--text-primary);
+}
+
+[data-layout="alternative"] .docker-item-header {
+  color: var(--text-primary);
+}
+
+[data-layout="alternative"] .docker-item-title a {
   color: var(--text-primary);
 }
 
 
 
-.docker-item-header {
-  color: var(--text-primary);
-}
-
-.docker-item-title a {
-  color: var(--text-primary);
-}
-
-
-
-.docker-status-indicator {
+[data-layout="alternative"] .docker-status-indicator {
   /* You can add theme-specific styles for the status indicator here */
   background-color: var(--color-stop);
   /* Default to success color */
 }
 
-.docker-item-stats-value {
+[data-layout="alternative"] .docker-item-stats-value {
   color: var(--text-primary);
 }
 
-.docker-item::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 4px;
-  background: linear-gradient(135deg, var(--action-primary) 0%, var(--action-secondary) 100%);
-  opacity: 0;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+[data-layout="alternative"] .docker-item-stats-label {
+  color: var(--text-primary);
 }
 
-.docker-item:hover::before {
-  opacity: 1;
+/* Website Item States Styles */
+[data-layout="alternative"] .docker-item {
+  cursor: pointer;
+}
+[data-layout="alternative"] .docker-item:hover {
+  /* background: var(--background-surface-hover); */
+  border-color: var(--action-primary-hover);
+}
+[data-layout="alternative"] .docker-item:hover {
+
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
 }
 
-.docker-item:hover {
-  transform: translateY(-8px) scale(1.05);
-  box-shadow: var(--shadow-website-item-hover);
-  animation: cardHover 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.docker-item:hover {
-  transform: translateY(-4px) scale(1.03);
-  box-shadow: var(--shadow-website-item-active);
-  animation: itemHover 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.docker-item:hover::before {
-  opacity: 1;
-  height: var(--border-width-xs);
-  /* 待调整 */
-  background: linear-gradient(90deg,
-      var(--action-primary) 0%,
-      var(--action-secondary) 100%);
-  animation: glow 1.5s ease-in-out infinite alternate;
-}
-
-.docker-item a::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 0;
-  height: var(--border-width-xxs);
-  /* 待调整 */
-  background: var(--gradient);
-  transition: var(--transition);
-}
-
-.docker-item:hover a {
-  color: var(--action-primary);
-}
-
-.docker-item:hover a::after {
-  width: 100%;
-}
-
-.docker-item {
-  transition: var(--transition);
-  transform-origin: center;
-  animation: fadeInItem 0.3s ease-out;
-}
-
-.docker-item a {
-  transition: var(--transition);
+/* Website Item Animations */
+[data-layout="alternative"] .docker-item {
+  transition: all var(--transition-normal);
 }

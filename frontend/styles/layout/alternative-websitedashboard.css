@@ -1,0 +1,23 @@
+/* === websitedashboard Layout Styles - 仪表盘布局样式 === */
+/* 作用：组织和导入仪表盘布局相关的子模块样式。 */
+/* 依赖： websitedashboard 子模块 */
+/* websitedashboard Styles - Main module - 仪表盘布局样式 - 主模块 - 引入子模块 */
+/*
+  仪表盘 (websitedashboard) 组件的布局样式主模块，负责引入 websitedashboard 目录下各个子模块的样式文件。
+  通过 @import 引入 base, header, sidebar, content, footer, responsive 等子模块，
+  实现仪表盘组件的模块化样式管理。
+*/
+/* websitedashboard Base Layout Styles - 仪表盘基础布局样式 */
+/*
+  定义仪表盘 (websitedashboard) 组件的基础布局结构。
+  包括模态框容器、内容区域、按钮容器、关闭按钮、表单元素等的基础样式，不包含主题、颜色或状态相关的样式。
+*/
+/* websitedashboard Container - 仪表盘容器 */
+[data-layout="alternative"] #websitedashboard {
+  display: flex; /* 使用 flex 布局 */
+  flex-direction: column; /* 垂直方向布局 */
+  max-width: var(--size-websitedashboard-max-width); /* 设置最大宽度 */
+  margin: 0 auto; /* 水平居中 */
+  gap: var(--spacing-inline-xl); /* 设置子元素间距为 xl 尺寸 CSS 变量 */
+}
+

@@ -6,7 +6,72 @@
   通知 (notification) 组件的布局样式主模块，负责引入 notification 目录下各个子模块的样式文件。
   通过 @import 引入 base, states, theme 等子模块，实现通知组件的模块化样式管理。
 */
-@import './notification/notification-base.css'; /* 引入通知基础布局模块 */
-@import './notification/notification-states.css'; /* 引入通知状态样式模块 (如果需要状态样式)*/
+/* Notification Base Layout Styles - 通知组件基础布局样式 */
+/*
+  定义通知 (notification) 组件的基础布局和结构样式。
+  主要设置通知容器的定位和 z-index，不包含主题、颜色或状态相关的样式。
+*/
+/* Notification Container - 通知容器 */
+
+.notification {
+  background: var(--background-card);
+  color: var(--text-primary);
+  padding: var(--spacing-inset-md) var(--spacing-inset-lg);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sm);
+  white-space: nowrap;
+  border: 1px solid var(--border-normal);
+  transition: all 0.3s ease;
+  opacity: 1;
+  position: fixed;
+  top: var(--spacing-inset-lg);
+  right: var(--spacing-inset-lg);
+  display: inline-block;
+  width: fit-content;
+  z-index: 1000;
+}
+
+
+/* Notification States Styles - 通知组件状态样式 */
+/*
+  定义通知 (notification) 组件在不同状态下的样式，
+  例如 info, error, success 等不同类型的通知样式。
+*/
+/* Info Notification State - 信息通知状态 */
+
+.notification.success {
+  background: var(--status-success);
+  color: white;
+  border-left: 4px solid var(--notification-border-color-success); /* 成功通知左侧边框颜色，使用 CSS 变量 */
+}
+
+.notification.error {
+  background: var(--status-error);
+  color: white;
+  border-left: 4px solid var(--notification-border-color-error); /* 错误通知左侧边框颜色，使用 CSS 变量 */
+}
+
+.notification.info {
+  background: var(--status-info);
+  color: white;
+  border-left: 4px solid var(--notification-border-color-info); /* 信息通知左侧边框颜色，使用 CSS 变量 */
+}
+
+.notification.warning {
+  background: var(--status-warning);
+  color: white;
+}
 /* @import './notification/notification-elements.css'; // 如果需要元素样式 */
-@import './notification/notification-theme.css'; /* 引入通知主题样式模块 */
+/* Notification Theme Styles - 通知组件主题样式 */
+/* 
+  定义通知 (notification) 组件的视觉主题样式。 
+  该模块用于设置通知组件的背景色、文字颜色、边框颜色等主题相关的样式，
+  使用 CSS 变量进行主题化配置，以便切换不同主题风格。
+*/
+
+:root {
+  /* Notification border colors - 通知边框颜色 */
+  --notification-border-color-info: var(--action-primary); /* 信息通知边框颜色 */
+  --notification-border-color-error: #dc2626; /* 错误通知边框颜色 */
+  --notification-border-color-success: #059669; /* 成功通知边框颜色 */
+}

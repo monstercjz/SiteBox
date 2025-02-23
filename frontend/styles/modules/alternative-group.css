@@ -1,0 +1,75 @@
+/* === Group Styles - 分组样式 === */
+/* 作用：组织和导入分组相关的子模块样式。 */
+/* 依赖： group 子模块 */
+/* Group Styles - Main module - imports sub-modules */
+/* Group Base Styles - 分组组件基础样式 */
+/*
+  定义分组 (group) 组件的基础布局和结构样式。
+   依赖：base/variables.css
+  包括分组容器和分组标题的 margin, padding 等，不包含主题、颜色或状态相关的样式。
+*/
+
+
+
+/* 分组标题 */
+[data-layout="alternative"] .website-group h2 {
+  margin-bottom: var(--spacing-stack-md);
+  /* 设置下外边距 */
+  padding-bottom: var(--spacing-stack-xxs);
+  /* 设置下内边距 */
+}
+
+
+.quickly-item-add-button {
+  position: relative;
+  padding: 0.5rem;
+  /* font-size: var(  --font-size-heading-xs); 加号图标的大小 */
+  /*color: var(--text-primary); /* 加号图标的颜色 */
+  cursor: pointer;
+  /* 鼠标悬停时显示 pointer */
+  display: none;
+  /* 初始状态隐藏 */
+}
+
+.website-group__title:hover .quickly-item-add-button,
+.quickly-item-add-button:hover {
+  display: inline;
+  /* 悬停时显示 */
+}
+
+
+/* Group Theme Styles - 分组组件主题样式 */
+/*
+  定义分组 (group) 组件的视觉主题样式。
+   依赖：theme/variables.css
+  包括分组标题的字体大小、字体粗细、文字颜色、边框颜色等，使用 CSS 变量进行主题化配置。
+*/
+/* 分组标题 */
+[data-layout="alternative"] .website-group {
+  background: var(--background-body);
+  /* 设置背景色 */
+
+}
+
+[data-layout="alternative"] .website-group h2 {
+  color: var(--group-title-random-color, var(--text-primary));
+  /* 设置文字颜色，优先使用 --group-title-random-color 变量， fallback 到 --text-primary */
+  border-bottom: var(--border-width-xxs) solid var(--border-normal);
+  /* 设置底部边框 */
+  font-size: var(--font-size-heading-xs);
+  /* 设置字体大小 */
+  font-weight: var(--font-weight-semibold);
+  /* 设置字体粗细 */
+  /* border-bottom-color: var(--border-normal);  仅添加颜色部分 */
+}
+
+
+
+/* Group States Styles - 分组组件状态样式 */
+/*
+  定义分组 (group) 组件在不同状态下的样式，
+   依赖：state/variables.css
+  例如 hover, active 等交互状态。目前暂无状态样式。
+*/
+
+
