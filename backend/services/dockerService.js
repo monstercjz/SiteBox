@@ -437,10 +437,86 @@ const deleteDocker = async (dockerId) => {
   }
 };
 
+/**
+ * 启动 Docker 容器 
+ */
+const startDocker = async (dockerItemId) => {
+  try {
+    const dockerRecord = await getdockerById(dockerItemId);
+    if (!dockerRecord) {
+      throw new Error('Docker 记录未找到');
+    }
+
+    const dockerClient = new Docker({ host: dockerRecord.server, port: dockerRecord.serverPort, protocol: 'http', });
+    const containers = await dockerClient.listContainers({ all: true });
+    const containerInfo = containers.find(c => c.Names.includes(`/${dockerRecord.name}`));
+    if (!containerInfo) {
+      throw new Error(`Docker 容器 ${dockerRecord.name} 未找到`);
+    }
+
+    const container = dockerClient.getContainer(containerInfo.Id);
+    await container.start();
+    return { message: `Docker 容器 ${dockerRecord.name} 已启动` };
+  } catch (error) {
+    handleDockerError(error, '启动 Docker 容器失败');
+  }
+};
+
+/**
+ * 停止 Docker 容器
+ */
+const stopDocker = async (dockerItemId) => {
+  try {
+    const dockerRecord = await getdockerById(dockerItemId);
+    if (!dockerRecord) {
+      throw new Error('Docker 记录未找到');
+    }
+
+    const dockerClient = new Docker({ host: dockerRecord.server, port: dockerRecord.serverPort, protocol: 'http', });
+    const containers = await dockerClient.listContainers({ all: true });
+    const containerInfo = containers.find(c => c.Names.includes(`/${dockerRecord.name}`));
+    if (!containerInfo) {
+      throw new Error(`Docker 容器 ${dockerRecord.name} 未找到`);
+    }
+
+    const container = dockerClient.getContainer(containerInfo.Id);
+    await container.stop();
+    return { message: `Docker 容器 ${dockerRecord.name} 已停止` };
+  } catch (error) {
+    handleDockerError(error, '停止 Docker 容器失败');
+  }
+};
+
+/**
+ * 重启 Docker 容器
+ */
+const restartDocker = async (dockerItemId) => {
+  try {
+    const dockerRecord = await getdockerById(dockerItemId);
+    if (!dockerRecord) {
+      throw new Error('Docker 记录未找到');
+    }
+
+    const dockerClient = new Docker({ host: dockerRecord.server, port: dockerRecord.serverPort, protocol: 'http', });
+    const containers = await dockerClient.listContainers({ all: true });
+    const containerInfo = containers.find(c => c.Names.includes(`/${dockerRecord.name}`));
+    if (!containerInfo) {
+      throw new Error(`Docker 容器 ${dockerRecord.name} 未找到`);
+    }
+
+    const container = dockerClient.getContainer(containerInfo.Id);
+    await container.restart();
+    return { message: `Docker 容器 ${dockerRecord.name} 已重启` };
+  } catch (error) {
+    handleDockerError(error, '重启 Docker 容器失败');
+  }
+};
+
 
 module.exports = {
   getAllServerRealdockerinfo,
   getRealdockerinfo,
+  getRecordRealdockerinfo,
   createDocker,
   getRealdockerinfobyId,
   updateDocker,
@@ -448,4 +524,7 @@ module.exports = {
   deleteDocker,
   getdockerById,
   getdockersByGroupId,
+  startDocker,
+  stopDocker,
+  restartDocker,
 };

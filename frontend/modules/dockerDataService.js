@@ -1,4 +1,4 @@
-import { createDocker, updateDocker, deleteDocker, batchMoveWebsites, moveToTrash, recordWebsiteClick } from './api.js';
+import { createDocker, updateDocker, deleteDocker, batchMoveWebsites, moveToTrash, recordWebsiteClick, startDockerContainer, stopDockerContainer, restartDockerContainer } from './api.js';
 import { showNotification } from './utils.js';
 import { validateAndCompleteUrl } from './utils.js';
 import {
@@ -81,6 +81,42 @@ export class DockerSaveService {
         } catch (error) {
             console.error('Failed to delete docker:', error);
             showNotification(NOTIFICATION_DELETE_DOCKER_FAIL, 'error');
+            throw error;
+        }
+    }
+
+    async startDockerContainer(dockerId) {
+        try {
+            const response = await startDockerContainer(dockerId); // 调用 api.js 中的函数
+            showNotification(response.message, 'success');
+            return response;
+        } catch (error) {
+            console.error('Failed to start docker container:', error);
+            showNotification('启动 Docker 容器失败', 'error');
+            throw error;
+        }
+    }
+
+    async stopDockerContainer(dockerId) {
+        try {
+            const response = await stopDockerContainer(dockerId); // 调用 api.js 中的函数
+            showNotification(response.message, 'success');
+            return response;
+        } catch (error) {
+            console.error('Failed to stop docker container:', error);
+            showNotification('停止 Docker 容器失败', 'error');
+            throw error;
+        }
+    }
+
+    async restartDockerContainer(dockerId) {
+        try {
+            const response = await restartDockerContainer(dockerId); // 调用 api.js 中的函数
+            showNotification(response.message, 'success');
+            return response;
+        } catch (error) {
+            console.error('Failed to restart docker container:', error);
+            showNotification('重启 Docker 容器失败', 'error');
             throw error;
         }
     }

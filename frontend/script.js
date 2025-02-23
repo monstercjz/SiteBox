@@ -5,7 +5,7 @@ import { debounce, throttle, safeExecute, logEvent, showTooltip, hideTooltip } f
 import { renderDashboardWithData } from './modules/mainDashboardService.js';
 import { dockerUpdateInfoAll } from './modules/dockerIfonUpdate.js';
 import { initGroupOrderService } from './modules/groupOrderService.js';
-
+// import { restartDocker } from './modules/dockerInteractionService.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
     // 初始化 DOM 元素

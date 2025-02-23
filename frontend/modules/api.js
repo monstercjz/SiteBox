@@ -310,7 +310,32 @@ async function getRealdockerinfo() {
 async function getRealdockerinfobyId(dockerId) {
   return fetchDataFromApi(`/dockers/realdockerinfobyId/${dockerId}`);
 }
+/**
+ * 启动 Docker 容器
+ * @param {string} dockerId - Docker 容器 ID
+ * @returns {Promise<any>}
+ */
+async function startDockerContainer(dockerId) {
+  return fetchDataFromApi(`/dockers/${dockerId}/start`, 'POST');
+}
 
+/**
+ * 停止 Docker 容器
+ * @param {string} dockerId - Docker 容器 ID
+ * @returns {Promise<any>}
+ */
+async function stopDockerContainer(dockerId) {
+  return fetchDataFromApi(`/dockers/${dockerId}/stop`, 'POST');
+}
+
+/**
+ * 重启 Docker 容器
+ * @param {string} dockerId - Docker 容器 ID
+ * @returns {Promise<any>}
+ */
+async function restartDockerContainer(dockerId) {
+  return fetchDataFromApi(`/dockers/${dockerId}/restart`, 'POST');
+}
 export {
   fetchDataFromApi,
   getWebsites,
@@ -344,5 +369,9 @@ export {
   deleteDocker,
   getRealdockerinfo,
   getRealdockerinfobyId,
-
+  startDockerContainer,
+  stopDockerContainer,
+  restartDockerContainer,
 };
+
+

@@ -72,6 +72,19 @@
       "faviconUrl": "/data/icons/Docker.png.ico",
       "createdAt": "2025-02-13T22:39:43.917Z",
       "updatedAt": "2025-02-15T23:15:55.333Z"
+    },
+    {
+      "id": "502afbff-5469-41b5-a74d-b83b00a10aae",
+      "groupId": "a9962f72-4460-4504-b1b9-c50b5e050aad",
+      "name": "aria2-pro",
+      "url": "https://192.168.3.244",
+      "urlPort": "6888",
+      "server": "192.168.3.244",
+      "serverPort": "2375",
+      "description": "aria2",
+      "faviconUrl": "/data/icons/Docker.png.ico",
+      "createdAt": "2025-02-23T08:09:54.490Z",
+      "updatedAt": "2025-02-23T08:10:34.524Z"
     }
   ],
   "nextGroupId": 13,

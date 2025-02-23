@@ -30,6 +30,8 @@ import {
     REGEX_DOCKER_GROUP_ID,
 } from '../config.js';
 
+import { startDocker, stopDocker, restartDocker } from './dockerInteractionService.js';
+
 // 定义全局变量存储定时器 ID
 let contextMenuTimeout;
 
@@ -44,7 +46,6 @@ function hideContextMenu() {
     document.removeEventListener('click', hideContextMenu); // 新增
 }
 
-  
 
 // 创建右键菜单
 function createContextMenu(e, menuItems) {
@@ -151,9 +152,12 @@ async function showDockerItemContextMenu(e, groupId, dockerId) {
     const menuItems = [
         `<div class="${EDIT_DOCKER_ITEM_CLASS}" ${DATA_GROUP_ID}="${groupId}" ${DATA_ITEM_ID}="${dockerId}">${MENU_TEXT_EDIT_DOCKER}</div>`,
         `<div class="${DELETE_DOCKER_ITEM_CLASS}" ${DATA_GROUP_ID}="${groupId}" ${DATA_ITEM_ID}="${dockerId}">${MENU_TEXT_DELETE_DOCKER}</div>`,
+        `<div class="docker-start-item" data-docker-id="${dockerId}">启动</div>`,
+        `<div class="docker-restart-item" data-docker-id="${dockerId}">重启</div>`,
+        `<div class="docker-stop-item" data-docker-id="${dockerId}">停止</div>`,
     ];
     const menu = createContextMenu(e, menuItems);
-    const { editDocker, deleteDocker } = await loadModule('./dockerInteractionService.js');
+    const { editDocker, deleteDocker, startDocker, stopDocker, restartDocker } = await loadModule('./dockerInteractionService.js');
     getCacheMemoryUsage();
     menu.querySelector(`.${EDIT_DOCKER_ITEM_CLASS}`).addEventListener('click', () => {
         editDocker(groupId, dockerId);
@@ -161,6 +165,16 @@ async function showDockerItemContextMenu(e, groupId, dockerId) {
     menu.querySelector(`.${DELETE_DOCKER_ITEM_CLASS}`).addEventListener('click', () => {
         deleteDocker(groupId, dockerId);
     });
+    menu.querySelector(`.docker-start-item`).addEventListener('click', () => {
+        startDocker(dockerId);
+    });
+    menu.querySelector(`.docker-restart-item`).addEventListener('click', () => {
+        restartDocker(dockerId);
+    });
+    menu.querySelector(`.docker-stop-item`).addEventListener('click', () => {
+        stopDocker(dockerId);
+    });
+    
 }
 
 /* 事件处理器配置（策略模式） */

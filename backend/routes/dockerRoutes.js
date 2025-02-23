@@ -46,6 +46,10 @@ router.put('/:dockerId', dockerController.updateDocker);
  */
 router.delete('/:dockerId', dockerController.deleteDocker);
 
+// 添加 启动、停止、重启 容器的路由
+router.post('/:dockerId/start', dockerController.startDockerController);
+router.post('/:dockerId/stop', dockerController.stopDockerController);
+router.post('/:dockerId/restart', dockerController.restartDockerController);
 
 
 module.exports = router;

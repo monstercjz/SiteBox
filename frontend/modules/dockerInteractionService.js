@@ -18,10 +18,14 @@ import {
     NOTIFICATION_TYPE_ERROR,
 } from '../config.js';
 
+import { dockerUpdateInfoAll } from './dockerIfonUpdate.js';
+
 let currentEditDockerGroupId = null;
 let currentEditDockerId = null;
 const dockerOperationService = new DockerOperationService();
 const dockerTooltipService = new DockerTooltipService(); // 创建 DockerTooltipService 实例
+
+
 
 // 添加 Docker
 export async function addDocker(groupId) {
@@ -113,3 +117,54 @@ export async function handleDockerHover(target) {
     
     await dockerTooltipService.handleDockerHover(target); // 调用 dockerTooltipService 的 handleDockerHover 方法
 }
+
+// 启动 Docker 容器
+export async function startDocker(dockerItemId) {
+    try {
+        const dockerSaveService = new DockerSaveService(); // 创建 DockerSaveService 实例
+        const response = await dockerSaveService.startDockerContainer(dockerItemId); // 使用 dockerDataService
+        if (response) {
+            dockerUpdateInfoAll();
+        }
+    } catch (error) {
+        console.error('Failed to start Docker container:', error);
+        showNotification('启动 Docker 容器失败', 'error');
+    } finally {
+        hideContextMenu();
+    }
+}
+
+// 停止 Docker 容器
+export async function stopDocker(dockerItemId) {
+    try {
+        const dockerSaveService = new DockerSaveService(); // 创建 DockerSaveService 实例
+        const response = await dockerSaveService.stopDockerContainer(dockerItemId); // 使用 dockerDataService
+        if (response) {
+            dockerUpdateInfoAll();
+        }
+    } catch (error) {
+        console.error('Failed to stop Docker container:', error);
+        showNotification('停止 Docker 容器失败', 'error');
+    } finally {
+        hideContextMenu();
+    }
+}
+
+// 重启 Docker 容器
+export async function restartDocker(dockerItemId) {
+    try {
+        const dockerSaveService = new DockerSaveService(); // 创建 DockerSaveService 实例
+        const response = await dockerSaveService.restartDockerContainer(dockerItemId); // 使用 dockerDataService
+        
+        if (response) {
+            dockerUpdateInfoAll();
+        }
+    } catch (error) {
+        console.error('Failed to restart Docker container:', error);
+        showNotification('重启 Docker 容器失败', 'error');
+    } finally {
+        hideContextMenu();
+    }
+}
+
+

@@ -122,6 +122,48 @@ const getRealdockerinfobyId = async (req, res) => {
   }
 };
 
+/**
+ * @route POST /dockers/:dockerId/start
+ * @description 启动 Docker 容器 
+ */
+const startDockerController = async (req, res) => {
+  try {
+    const { dockerId } = req.params;
+    const result = await dockerService.startDocker(dockerId);
+    apiResponse.success(res, result, 200, `Docker 容器 ${dockerId} 启动成功`);
+  } catch (error) {
+    apiResponse.error(res, error.message, 400);
+  }
+};
+
+/**
+ * @route POST /dockers/:dockerId/stop
+ * @description 停止 Docker 容器 
+ */
+const stopDockerController = async (req, res) => {
+  try {
+    const { dockerId } = req.params;
+    const result = await dockerService.stopDocker(dockerId);
+    apiResponse.success(res, result, 200, `Docker 容器 ${dockerId} 停止成功`);
+  } catch (error) {
+    apiResponse.error(res, error.message, 400);
+  }
+};
+
+/**
+ * @route POST /dockers/:dockerId/restart
+ * @description 重启 Docker 容器 
+ */
+const restartDockerController = async (req, res) => {
+  try {
+    const { dockerId } = req.params;
+    const result = await dockerService.restartDocker(dockerId);
+    apiResponse.success(res, result, 200, `Docker 容器 ${dockerId} 重启成功`);
+  } catch (error) {
+    apiResponse.error(res, error.message, 400);
+  }
+};
+
 
 module.exports = {
   getAlldockers,
@@ -132,4 +174,7 @@ module.exports = {
   deleteDocker,
   getRealdockerinfo,
   getRealdockerinfobyId,
+  startDockerController,
+  stopDockerController,
+  restartDockerController,
 };
