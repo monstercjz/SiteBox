@@ -83,8 +83,7 @@ function escapeHtml(unsafe) {
 //     postMessage({ type: 'notification', notificationElement: notification, message, notificationType: type });
 // }
 const notification = document.createElement('div');
-let currentTooltip = null; // 当前显示的 tooltip 元素
-let tooltipTimeout = null; // tooltip 消失定时器
+
 /**
  * 显示通知消息
  * @param {string} message - 通知消息内容
@@ -114,54 +113,6 @@ export function showNotification(message, type = 'info') {
         setTimeout(() => notification.remove(), 300);
     }, 3000);
 }
-/**
- * @function showTooltip
- * @description 显示 tooltip
- * @param {Event} e 鼠标事件对象
- */
-export function showTooltip(e) {
-    const target = e.target.closest('[data-tooltip]'); // 获取最近的 data-tooltip 元素
-    if (target) {
-        if (!currentTooltip) {
-            // 如果 currentTooltip 不存在，则创建 tooltip 元素
-            currentTooltip = document.createElement('div');
-            currentTooltip.style.position = 'absolute'; // 设置 position: absolute;
-            currentTooltip.id = 'tooltip'; // 设置 tooltip ID
-            document.body.appendChild(currentTooltip); // 将 tooltip 添加到 body 中
-        }
-        const tooltipText = target.getAttribute('data-tooltip'); // 获取 data-tooltip 属性值
-        currentTooltip.textContent = tooltipText; // 设置 tooltip 文本内容
-        currentTooltip.style.display = 'block'; // 显示 tooltip
-        const rect = target.getBoundingClientRect(); // 获取目标元素 Rect
-        
-                currentTooltip.style.left = `${rect.left - currentTooltip.offsetWidth - 10}px`; //  按钮左侧，留出间距
-                currentTooltip.style.top = `${rect.top + rect.height / 2 - 15}px`; // 与按钮垂直中心对齐，并向上偏移
-
-        // 清除之前的定时器，防止重复触发
-        clearTimeout(tooltipTimeout);
-        // 设置 5 秒后自动隐藏 tooltip
-        tooltipTimeout = setTimeout(() => {
-            hideTooltip(e); // 调用 hideTooltip 函数隐藏 tooltip
-        }, 1500); // 5 秒后自动隐藏 tooltip
-    }
-}
-
-/**
- * @function hideTooltip
- * @description 隐藏 tooltip
- * @param {Event} e 鼠标事件对象
- */
-export function hideTooltip(e) {
-    const target = e.target.closest('[data-tooltip]'); // 获取最近的 data-tooltip 元素
-    
-    if (target && currentTooltip) {
-      
-        currentTooltip.style.display = 'none'; // 隐藏 tooltip
-        currentTooltip.remove(); // 从 DOM 中移除 tooltip
-        currentTooltip = null; // 清空 currentTooltip 引用
-    }
-}
-
 /**
  * 创建并运行 Web Worker
  * @param {string} workerPath - Worker 文件的路径

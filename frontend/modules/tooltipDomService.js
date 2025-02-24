@@ -17,11 +17,16 @@ export class TooltipDomService {
    * @description 创建 tooltip 元素，如果 tooltip 元素实例已存在则复用，否则创建新的元素
    * @returns {HTMLElement} tooltip 元素
    */
-  createTooltipElement() {
+  createTooltipElement(targetType) {
     if (!this.tooltipInstance) {
       // 如果 tooltip 元素实例不存在，则创建新的元素
       this.tooltipInstance = document.createElement('div');
-      this.tooltipInstance.className = 'website-tooltip fade-in'; // 添加 fade-in 动画类
+      if (targetType === 'icon-button') {
+        this.tooltipInstance.className = 'button-tooltip fade-in'; // 添加 fade-in 动画类
+      } else {
+        this.tooltipInstance.className = 'item-tooltip fade-in'; // 添加 fade-in 动画类
+      }
+      
     }
     return this.tooltipInstance; // 返回 tooltip 元素实例
   }
@@ -32,7 +37,17 @@ export class TooltipDomService {
    * @param {HTMLElement} tooltip tooltip 元素
    * @param {HTMLElement} target 目标元素
    */
-  positionTooltip(tooltip, target) {
+  positionTooltip(tooltip, target,targetType) {
+    
+  
+    if (targetType === 'icon-button') {
+      this.positionButtonTooltip(tooltip, target); // 调用按钮专用的位置处理函数
+    } else {
+      this.positionDefaultTooltip(tooltip, target); // 调用默认的位置处理函数
+    }
+  }
+  positionDefaultTooltip(tooltip, target) {
+    console.log(target);
     const rect = target.getBoundingClientRect(); // 获取目标元素 Rect
     const tooltipRect = tooltip.getBoundingClientRect(); // 获取工具提示 Rect
     // console.log(tooltipRect);
@@ -62,7 +77,40 @@ export class TooltipDomService {
     tooltip.style.left = `${left}px`;
     tooltip.style.top = `${top}px`;
   }
-
+  positionButtonTooltip(tooltip, target) {
+    console.log(target);
+    const rect = target.getBoundingClientRect(); // 获取目标元素 Rect
+    const tooltipRect = tooltip.getBoundingClientRect(); // 获取工具提示 Rect
+  
+    const windowHeight = window.innerHeight; // 获取窗口高度
+    const windowWidth = window.innerWidth; // 获取窗口宽度
+  
+    // 设置绝对定位
+    tooltip.style.position = 'absolute';
+  
+    // 默认位置：工具提示显示在按钮的左侧
+    let left = rect.left - tooltipRect.width - 10; // 左侧留出 10px 的间距
+    let top = rect.top + (rect.height - tooltipRect.height) / 2 + window.scrollY; // 垂直居中对齐
+  
+    // 检查工具提示是否超出页面左侧
+    if (left < 0) {
+      // 如果超出左侧，则改为显示在右侧
+      left = rect.right + 10; // 右侧留出 10px 的间距
+    }
+  
+    // 检查工具提示是否超出页面顶部或底部
+    if (top < 0) {
+      // 如果超出顶部，则向下调整
+      top = rect.top + window.scrollY;
+    } else if (top + tooltipRect.height > windowHeight) {
+      // 如果超出底部，则向上调整
+      top = rect.bottom - tooltipRect.height + window.scrollY - 10; // 留出 10px 的间距
+    }
+  
+    // 设置工具提示的位置
+    tooltip.style.left = `${left}px`;
+    tooltip.style.top = `${top}px`;
+  }
   /**
    * @method removeCurrentTooltip
    * @description 移除当前显示的 tooltip 元素，使用 fade-out 动画效果

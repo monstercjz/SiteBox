@@ -1,7 +1,6 @@
 'use strict';
 
 import { SELECTORS, elements, initializeDOMElements } from './modules/eventDomManager.js';
-import { debounce, throttle, safeExecute, logEvent, showTooltip, hideTooltip } from './modules/utils.js';
 import { renderDashboardWithData } from './modules/mainDashboardService.js';
 import { dockerUpdateInfoAll } from './modules/dockerIfonUpdate.js';
 import { initGroupOrderService } from './modules/groupOrderService.js';
@@ -25,7 +24,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         handleMainElementsClick(event);
     });
     // 绑定悬停事件监听器websiteitem,dockeritem悬停菜单显示
-    elements.main.addEventListener('mouseover', async (event) => {
+    document.addEventListener('mouseover', async (event) => {
         const { handleHoverEvents } = await import('/modules/mainInteraction.js'); // 动态加载模块
         handleHoverEvents(event);
     });
@@ -40,26 +39,22 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
     // 功能按钮显示总开关
     elements.actionsToggleButton.addEventListener('click', toggleActionButtons);
-    elements.actionsToggleButton.addEventListener('mouseover', async (event) => {
-        const { showTooltip } = await import('/modules/utils.js'); // 动态加载模块
-        showTooltip(event);
-    });
 
     // 绑定icon-buttons事件委托在父容器action-buttons
     elements.actionButtons.addEventListener('click', async (event) => {
         const { handleButtonClick } = await import('./modules/mainInteraction.js');
         handleButtonClick(event);
     });
-    // 绑定 icon-buttons事件委托在父容器action-buttons
-    elements.actionButtons.addEventListener('mouseover', async (event) => {
-        const debouncedShowTooltip = debounce(showTooltip, 500);
-        debouncedShowTooltip(event);
-    });
-    // 绑定 icon-buttons事件委托在父容器action-buttons
-    elements.actionButtons.addEventListener('mouseout', async (event) => {
-        const debouncedHideTooltip = debounce(hideTooltip, 500);
-        debouncedHideTooltip(event);
-    });
+    // // 绑定 icon-buttons事件委托在父容器action-buttons
+    // elements.actionButtons.addEventListener('mouseover', async (event) => {
+    //     const debouncedShowTooltip = debounce(showTooltip, 500);
+    //     debouncedShowTooltip(event);
+    // });
+    // // 绑定 icon-buttons事件委托在父容器action-buttons
+    // elements.actionButtons.addEventListener('mouseout', async (event) => {
+    //     const debouncedHideTooltip = debounce(hideTooltip, 500);
+    //     debouncedHideTooltip(event);
+    // });
     // 绑定 theme-switcher__options 的事件委托
     elements.themeSwitcherOptionsButtonContainer.addEventListener('click', async (event) => {
         const { toggleTheme } = await import('/modules/themeService.js'); // 动态加载模块

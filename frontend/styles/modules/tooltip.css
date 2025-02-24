@@ -8,22 +8,33 @@
   包括 tooltip 容器的基础 padding、border-radius、max-width 等，不包含主题、颜色或状态相关的样式。
 */
 /* Tooltip 容器 */
-/* .tooltip, .website-tooltip {
+/* .tooltip, .item-tooltip {
   padding: var(--spacing-inset-xs) var(--spacing-inset-md); 
   border-radius: var(--radius-sm); 
   max-width: 300px; 
   
 } */
-#tooltip {
-  color: var(--text-primary);
+.button-tooltip {
+  
   padding: var(--spacing-inset-xs) var(--spacing-inset-md);
-  position: absolute;
-  z-index: -1;
+  
+  z-index: 1000;
   white-space: nowrap;
+
+
+  background: var(--background-card);
+  /* 设置背景色为 surface color CSS 变量 */
+  border: 1px solid var(--border-normal);
+  /* 设置边框 */
+  font-size: var(--font-size-xs);
+  /* 设置字体大小 */
+  box-shadow: var(--shadow-lg);
+  /* 设置阴影效果，使用 shadow-lg CSS 变量 */
+  color: var(--text-primary);
 }
 
 /* Website tooltip styles */
-.website-tooltip {
+.item-tooltip {
   padding: var(--spacing-inset-md);
   border-radius: var(--radius-sm);
   backdrop-filter: var(--glass-blur);
@@ -68,7 +79,7 @@
 */
 
 /* Tooltip 容器 - 工具提示容器 */
-.website-tooltip {
+.item-tooltip {
   background: var(--background-card);
   /* 设置背景色为 surface color CSS 变量 */
   border: 1px solid var(--border-normal);
@@ -103,7 +114,7 @@
   例如 tooltip 显示/隐藏时的动画效果。
 */
 /* Tooltip 容器过渡效果 */
-.website-tooltip {
+.item-tooltip {
   animation: fadeIn var(--animation-duration-short) ease-out;
   transition: opacity var(--transition-fast) ease-in-out;
 }

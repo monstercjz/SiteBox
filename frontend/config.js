@@ -44,6 +44,7 @@ export const CLASS_DOCKER_GROUP = 'docker-group';
 export const CLASS_WEBSITE_ITEM = 'website-item';
 export const CLASS_DOCKER_ITEM = 'docker-item';
 export const GROUP_NAME = 'group-name';
+export const ICON_BUTTON = 'icon-button';
 
 // 数据属性相关常量
 export const DATA_DESCRIPTION = 'data-description';

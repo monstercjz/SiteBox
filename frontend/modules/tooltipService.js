@@ -12,6 +12,9 @@ import {
   DATA_ITEM_ID,
   TOOLTIP_CONTENT_TEMPLATE,
   DEFAULT_PLACEHOLDER,
+  CLASS_WEBSITE_ITEM,
+  CLASS_DOCKER_ITEM,
+  ICON_BUTTON,
 } from '../config.js';
 import { escapeHtml } from "./utils.js";
 
@@ -35,6 +38,7 @@ export class UnifiedTooltipService {
 
     this.currentHoverTarget = null;
     this.currentitemId = null;
+    this.targetType = null;
     this.activeTimers = new Map();
     this.pendingRequests = new Map();
     this.domService = new TooltipDomService();
@@ -71,7 +75,7 @@ export class UnifiedTooltipService {
 
   // 元素离开处理
   handleElementLeave(event) {
-    const target = event.target.closest('[data-item-id]');
+    const target = event.target.closest('[data-item-id], [data-tooltip]');
     if (!target) return;
 
     this.clearElementTimers(target);
@@ -82,31 +86,66 @@ export class UnifiedTooltipService {
   }
 
   // 处理悬停逻辑
-  handleItemHover(target) {
+  handleItemHover(target,targetType) {
+    console.log('handleItemHover', targetType);
     const itemId = target.dataset.itemId;
-    this._preloadAdjacentData(target);
+    this._preloadAdjacentData(target,targetType);
 
     const debounceTimer = setTimeout(() => {
-      this._processHoverAction(target, itemId);
+      this._processHoverAction(target, itemId,targetType);
     }, config.debounceDelay);
 
     this.storeTimer(target, debounceTimer);
   }
 
-  async _processHoverAction(target, itemId) {
+  //不同类型获取不同数据，然后数据提交给显示函数_showTooltip
+  async _processHoverAction(target, itemId,targetType) {
+    console.log('_processHoverAction', targetType);
     if (!this.isElementValid(target)) return;
-
+     // 如果是 Docker 项
+    //  if (this.isDockerItem(target)) {
+    //   data = await this._getDockerData(target);
+    // } 
+    // // 如果是普通网站项
+    // else if (itemId) {
+    //   data = await this._getWebsiteData(itemId);
+    // } 
+    // // 如果是按钮或其他带有 data-tooltip 的元素
+    // else if (target.hasAttribute('data-tooltip')) {
+    //   data = { tooltipContent: target.getAttribute('data-tooltip') };
+    // } 
+    // // 如果没有任何匹配条件，则直接返回
+    // else {
+    //   return;
+    // }
     try {
-      let data;
-      if (this.isDockerItem(target)) {
-        data = await this._getDockerData( target);
-      } else {
-        data = await this._getWebsiteData(itemId);
-      }
-
+      // 定义处理逻辑数组
+      const handlers = [
+        {
+          condition: () => targetType === CLASS_DOCKER_ITEM,
+          action: async () => await this._getDockerData(target)
+        },
+        {
+          condition: () => targetType === CLASS_WEBSITE_ITEM,
+          action: async () => await this._getWebsiteData(itemId)
+        },
+        {
+          condition: () => targetType === ICON_BUTTON,
+          action: () => ({ tooltipContent: target.getAttribute('data-tooltip') })
+        }
+      ];
+  
+      // 查找第一个满足条件的处理器
+      const handler = handlers.find(h => h.condition());
+      if (!handler) return;
+  
+      // 执行对应的处理逻辑
+      const data = await handler.action();
+      console.log('data', data);
+  
       if (!this.isElementValid(target)) return;
-
-      this._showTooltip(target, data);
+  
+      this._showTooltip(target, data,targetType);
     } catch (error) {
       if (error.name !== 'AbortError') {
         this.errorService.handleWebsiteDataError(target, error);
@@ -115,7 +154,27 @@ export class UnifiedTooltipService {
   }
 
   isDockerItem(target) {
-    return target.classList.contains('docker-item');
+    return target.classList.contains(CLASS_DOCKER_ITEM);
+  }
+  isWebsiteItem(target) {
+    return target.classList.contains(CLASS_WEBSITE_ITEM);
+  }
+  isIconButton(target) {
+    return (
+      target.tagName === 'BUTTON' &&
+      (target.classList.contains('icon-button') || target.classList.contains('theme-switcher__option')) &&
+      target.hasAttribute('data-tooltip')
+    );
+  }
+  getElementType(target) {
+    if (this.isIconButton(target)) {
+      return ICON_BUTTON; // 判断是否为按钮
+    } else if (this.isDockerItem(target)) {
+      return CLASS_DOCKER_ITEM; // 判断是否为 Docker 元素
+    } else if (this.isWebsiteItem(target)) {
+      return CLASS_WEBSITE_ITEM; // 判断是否为网站元素
+    }
+    return null; // 如果都不匹配，返回 null
   }
 
   async _getWebsiteData(itemId) {
@@ -188,20 +247,21 @@ export class UnifiedTooltipService {
     };
   }
 
-  _showTooltip(target, data) {
+  _showTooltip(target, data,targetType) {
     if (!this.isElementValid(target)) return;
     if (this._checkContextMenuPresence()) return;
 
     this._removeCurrentTooltip();
 
-    const tooltip = this.domService.createTooltipElement();
-    tooltip.innerHTML = this.generateTooltipContent(target, data);
+    const tooltip = this.domService.createTooltipElement(targetType);
+    tooltip.innerHTML = this.generateTooltipContent(target, data,targetType);//把data传给generateTooltipContent
+    console.log('tooltip', tooltip.innerHTML);
     tooltip.targetElement = target;
 
     document.body.appendChild(tooltip);
     this.domService.showTooltip(tooltip);
     requestAnimationFrame(() => {
-      this.domService.positionTooltip(tooltip, target);
+      this.domService.positionTooltip(tooltip, target,targetType);
       this.currentTooltip = tooltip;
       this.currentitemId = target.dataset.itemId;
   });
@@ -213,13 +273,39 @@ export class UnifiedTooltipService {
     
   }
 
-  generateTooltipContent(target, data) {
-    if (this.isDockerItem(target)) {
-      return this.generateTooltipContentForDocker(data);
-    } else {
-      return this.generateTooltipContentForWebsite(data);
+//各自把data数据生成页面内容和样式
+generateTooltipContent(target, data,targetType) {
+  // 定义内容生成器数组
+  const contentGenerators = [
+    // 生成器 1: 处理 Docker 提示
+    {
+      condition: () => targetType === CLASS_DOCKER_ITEM,
+      generator: () => this.generateTooltipContentForDocker(data)
+    },
+
+    // 生成器 2: 处理按钮的 data-tooltip 提示
+    {
+      condition: () => targetType === ICON_BUTTON,
+      generator: () => escapeHtml(data.tooltipContent)
+    },
+
+    // 生成器 3: 处理网站数据提示
+    {
+      condition: () => targetType === CLASS_WEBSITE_ITEM,
+      generator: () => this.generateTooltipContentForWebsite(data)
+    }
+  ];
+
+  // 遍历生成器数组，找到第一个匹配的内容
+  for (const { condition, generator } of contentGenerators) {
+    if (condition()) {
+      return generator(); // 返回匹配的内容
     }
   }
+
+  // 如果没有匹配到任何内容，返回默认值
+  return '无可用提示内容';
+}
 
   generateTooltipContentForWebsite(website) {
     if (website?.error) {
@@ -274,6 +360,7 @@ export class UnifiedTooltipService {
   }
 
   _preloadAdjacentData(target) {
+    console.log('_preloadAdjacentData');
     const allTargets = Array.from(document.querySelectorAll('[data-item-id]'));
     const currentIndex = allTargets.indexOf(target);
     if (currentIndex === -1) return;
@@ -305,12 +392,6 @@ export class UnifiedTooltipService {
     );
   }
 
-  _processRequestQueue() {
-    if (this.requestQueue.length > 0 && this.concurrentRequestCount < config.maxConcurrentRequests) {
-      const { itemId, resolve } = this.requestQueue.shift();
-      resolve(this._getWebsiteData(itemId));
-    }
-  }
   _processRequestQueue() {
     if (this.requestQueue.length > 0 && this.concurrentRequestCount < config.maxConcurrentRequests) {
       const { itemId, resolve } = this.requestQueue.shift();
@@ -350,10 +431,21 @@ export class UnifiedTooltipService {
 // 独立的 handleElementEnter 函数
 export function handleElementEnter(event) {
   const tooltipService = UnifiedTooltipService.getInstance(); // 获取单例实例
-  const target = event.target.closest('[data-item-id]');
-  // if (!target || !target.dataset.itemId) return;
+  const target = event.target.closest('[data-item-id], [data-tooltip]');
   if (!target) return;
+
+  // 获取目标元素的类型
+  const targetType = tooltipService.getElementType(target);
+
+  // 如果类型无效，直接返回
+  if (!targetType) return;
+
+  // 设置当前悬停的目标元素
   tooltipService.currentHoverTarget = target;
+
+  // 清除与目标元素相关的计时器
   tooltipService.clearElementTimers(target);
-  tooltipService.handleItemHover(target);
+
+  // 调用 handleItemHover 方法，并传递目标元素和类型
+  tooltipService.handleItemHover(target, targetType);
 }
