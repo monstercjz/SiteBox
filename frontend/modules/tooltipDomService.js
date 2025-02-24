@@ -10,6 +10,7 @@ export class TooltipDomService {
   constructor() {
     this.currentTooltip = null; // 当前显示的 tooltip 元素
     this.tooltipInstance = null; // 用于复用 tooltip 元素实例
+    this.buttontooltipInstance = null; // 用于复用 tooltip 元素实例
   }
 
   /**
@@ -18,17 +19,27 @@ export class TooltipDomService {
    * @returns {HTMLElement} tooltip 元素
    */
   createTooltipElement(targetType) {
-    if (!this.tooltipInstance) {
-      // 如果 tooltip 元素实例不存在，则创建新的元素
-      this.tooltipInstance = document.createElement('div');
-      if (targetType === 'icon-button') {
-        this.tooltipInstance.className = 'button-tooltip fade-in'; // 添加 fade-in 动画类
-      } else {
-        this.tooltipInstance.className = 'item-tooltip fade-in'; // 添加 fade-in 动画类
+    if (targetType === 'icon-button') {
+      if (!this.buttontooltipInstance) {
+        // 如果 tooltip 元素实例不存在，则创建新的元素
+        this.buttontooltipInstance = document.createElement('div');
+        
+          this.buttontooltipInstance.className = 'button-tooltip fade-in'; // 添加 fade-in 动画类
+        
+        
       }
-      
-    }
-    return this.tooltipInstance; // 返回 tooltip 元素实例
+      return this.buttontooltipInstance; // 返回 tooltip 元素实例
+    }else {
+      if (!this.tooltipInstance) {
+        // 如果 tooltip 元素实例不存在，则创建新的元素
+        this.tooltipInstance = document.createElement('div');
+          this.tooltipInstance.className = 'item-tooltip fade-in'; // 添加 fade-in 动画类
+        
+        
+      }
+      return this.tooltipInstance; // 返回 tooltip 元素实例
+
+      }
   }
 
   /**
@@ -189,6 +200,9 @@ export class TooltipDomService {
     this.hide();
     if (this.tooltipInstance) {
       this.tooltipInstance.remove();
+    }
+    if (this.buttontooltipInstance) {
+      this.buttontooltipInstance.remove();
     }
   }
 }
