@@ -51,7 +51,7 @@ export class UnifiedTooltipService {
     this.cachedContextMenu = null;
 
     // 绑定 mouseout 事件监听器
-    document.addEventListener('mouseleave', this.handleElementLeave.bind(this), true);
+    document.addEventListener('mouseout', this.handleElementLeave.bind(this), true);
 
     // 绑定 contextmenu 和 click 事件
     document.addEventListener(EVENT_CONTEXTMENU, () => {
@@ -60,7 +60,7 @@ export class UnifiedTooltipService {
     document.addEventListener('click', () => {
       this.cachedContextMenu = null;
     });
-    window.addEventListener('beforeunload', () => this.destroy());
+    window.addEventListener('beforeunload', () => this.domService.destroy());
 
     UnifiedTooltipService.instance = this; // 保存实例
   }
@@ -75,15 +75,8 @@ export class UnifiedTooltipService {
 
   // 元素离开处理
   handleElementLeave(event) {
-    const target = event.target instanceof HTMLElement ? event.target.closest('[data-item-id], [data-tooltip]') : null;
+    const target = event.target.closest('[data-item-id], [data-tooltip]');
     if (!target) return;
-
-    const relatedTarget = event.relatedTarget;
-
-    if (relatedTarget && target.contains(relatedTarget)) {
-
-      return;
-    }
 
     this.clearElementTimers(target);
     if (this.currentTooltip?.targetElement === target) {
@@ -93,24 +86,24 @@ export class UnifiedTooltipService {
   }
 
   // 处理悬停逻辑
-  handleItemHover(target, targetType) {
-
+  handleItemHover(target,targetType) {
+    
     const itemId = target.dataset.itemId;
-
+    this._preloadAdjacentData(target,targetType);
 
     const debounceTimer = setTimeout(() => {
-      this._processHoverAction(target, itemId, targetType);
+      this._processHoverAction(target, itemId,targetType);
     }, config.debounceDelay);
 
     this.storeTimer(target, debounceTimer);
-    // console.log('计时器', this.activeTimers);
+    console.log('计时器', this.activeTimers);
   }
 
   //不同类型获取不同数据，然后数据提交给显示函数_showTooltip
-  async _processHoverAction(target, itemId, targetType) {
-
+  async _processHoverAction(target, itemId,targetType) {
+    
     if (!this.isElementValid(target)) return;
-    // 如果是 Docker 项
+     // 如果是 Docker 项
     //  if (this.isDockerItem(target)) {
     //   data = await this._getDockerData(target);
     // } 
@@ -126,7 +119,6 @@ export class UnifiedTooltipService {
     // else {
     //   return;
     // }
-    this._preloadAdjacentData(target, targetType);
     try {
       // 定义处理逻辑数组
       const handlers = [
@@ -143,18 +135,18 @@ export class UnifiedTooltipService {
           action: () => ({ tooltipContent: target.getAttribute('data-tooltip') })
         }
       ];
-
+  
       // 查找第一个满足条件的处理器
       const handler = handlers.find(h => h.condition());
       if (!handler) return;
-
+  
       // 执行对应的处理逻辑
       const data = await handler.action();
-
-
+      
+  
       if (!this.isElementValid(target)) return;
-
-      this._showTooltip(target, data, targetType);
+  
+      this._showTooltip(target, data,targetType);
     } catch (error) {
       if (error.name !== 'AbortError') {
         this.errorService.handleWebsiteDataError(target, error);
@@ -190,6 +182,7 @@ export class UnifiedTooltipService {
     if (this.pendingRequests.has(itemId)) {
       return this.pendingRequests.get(itemId);
     }
+
     const cachedData = this.cacheService.getCachedData(itemId);
     if (cachedData) {
       return cachedData;
@@ -246,6 +239,7 @@ export class UnifiedTooltipService {
     const server = target.getAttribute(DATA_DOCKER_SERVER_IP) || DEFAULT_PLACEHOLDER;
     const serverPort = target.getAttribute(DATA_DOCKER_SERVER_PORT) || DEFAULT_PLACEHOLDER;
     const description = target.getAttribute(DATA_DESCRIPTION) || DEFAULT_PLACEHOLDER;
+
     return {
       urlPort,
       server,
@@ -254,60 +248,66 @@ export class UnifiedTooltipService {
     };
   }
 
-  _showTooltip(target, data, targetType) {
-    if (!this.isElementValid(target)) return
+  _showTooltip(target, data,targetType) {
+    if (!this.isElementValid(target)) return;
     if (this._checkContextMenuPresence()) return;
+
+    this._removeCurrentTooltip();
+
     const tooltip = this.domService.createTooltipElement(targetType);
-    if (tooltip.style.display === 'block' && tooltip.targetElement === target) return; // 避免重复显示
-    this._removeCurrentTooltip(targetType);
-    tooltip.innerHTML = this.generateTooltipContent(target, data, targetType);//把data传给generateTooltipContent
+    tooltip.innerHTML = this.generateTooltipContent(target, data,targetType);//把data传给generateTooltipContent
+    
     tooltip.targetElement = target;
+
     // document.body.appendChild(tooltip);
     this.domService.showTooltip(tooltip);
     requestAnimationFrame(() => {
-      this.domService.positionTooltip(tooltip, target, targetType);
+      this.domService.positionTooltip(tooltip, target,targetType);
+      // this.domService.setCurrentTooltip(tooltip);
       this.currentTooltip = tooltip;
       this.currentitemId = target.dataset.itemId;
-    });
+  });
     const autoCloseTimer = setTimeout(() => {
       this._cleanupTooltip(tooltip);
     }, config.autoCloseDelay);
+
     this.storeTimer(target, autoCloseTimer);
+    
   }
 
-  //各自把data数据生成页面内容和样式
-  generateTooltipContent(target, data, targetType) {
-    // 定义内容生成器数组
-    const contentGenerators = [
-      // 生成器 1: 处理 Docker 提示
-      {
-        condition: () => targetType === CLASS_DOCKER_ITEM,
-        generator: () => this.generateTooltipContentForDocker(data)
-      },
+//各自把data数据生成页面内容和样式
+generateTooltipContent(target, data,targetType) {
+  // 定义内容生成器数组
+  const contentGenerators = [
+    // 生成器 1: 处理 Docker 提示
+    {
+      condition: () => targetType === CLASS_DOCKER_ITEM,
+      generator: () => this.generateTooltipContentForDocker(data)
+    },
 
-      // 生成器 2: 处理按钮的 data-tooltip 提示
-      {
-        condition: () => targetType === ICON_BUTTON,
-        generator: () => escapeHtml(data.tooltipContent)
-      },
+    // 生成器 2: 处理按钮的 data-tooltip 提示
+    {
+      condition: () => targetType === ICON_BUTTON,
+      generator: () => escapeHtml(data.tooltipContent)
+    },
 
-      // 生成器 3: 处理网站数据提示
-      {
-        condition: () => targetType === CLASS_WEBSITE_ITEM,
-        generator: () => this.generateTooltipContentForWebsite(data)
-      }
-    ];
-
-    // 遍历生成器数组，找到第一个匹配的内容
-    for (const { condition, generator } of contentGenerators) {
-      if (condition()) {
-        return generator(); // 返回匹配的内容
-      }
+    // 生成器 3: 处理网站数据提示
+    {
+      condition: () => targetType === CLASS_WEBSITE_ITEM,
+      generator: () => this.generateTooltipContentForWebsite(data)
     }
+  ];
 
-    // 如果没有匹配到任何内容，返回默认值
-    return '无可用提示内容';
+  // 遍历生成器数组，找到第一个匹配的内容
+  for (const { condition, generator } of contentGenerators) {
+    if (condition()) {
+      return generator(); // 返回匹配的内容
+    }
   }
+
+  // 如果没有匹配到任何内容，返回默认值
+  return '无可用提示内容';
+}
 
   generateTooltipContentForWebsite(website) {
     if (website?.error) {
@@ -345,24 +345,24 @@ export class UnifiedTooltipService {
     return this.cachedContextMenu && document.getElementById(CONTEXT_MENU_ID);
   }
 
-  _removeCurrentTooltip(targetType) {
+  _removeCurrentTooltip() {
     if (this.currentTooltip) {
-      this.domService.removeCurrentTooltip(targetType);
+      this.domService.removeCurrentTooltip();
       this.currentTooltip = null;
       this.currentitemId = null;
     }
   }
 
   _cleanupTooltip(tooltip) {
-    this.domService.cleanupTooltip(tooltip); // 清理 tooltip DOM 元素引用
-    this.currentTooltip = null; // 更新 currentTooltip
-    if (!this.currentTooltip) { // 确保 currentTooltip 为 null
-      this.currentitemId = null;
+    if (tooltip && document.body.contains(tooltip)) {
+      this.domService.hideTooltip(tooltip, () => {
+        document.body.removeChild(tooltip);
+      });
     }
   }
 
   _preloadAdjacentData(target) {
-
+    
     const allTargets = Array.from(document.querySelectorAll('[data-item-id]'));
     const currentIndex = allTargets.indexOf(target);
     if (currentIndex === -1) return;
@@ -409,8 +409,8 @@ export class UnifiedTooltipService {
   // 状态验证方法
   isElementValid(target) {
     return this.currentHoverTarget === target &&
-      target.isConnected &&
-      target.matches(':hover');
+           target.isConnected &&
+           target.matches(':hover');
   }
 
   // 计时器管理
@@ -428,36 +428,6 @@ export class UnifiedTooltipService {
       this.activeTimers.delete(target);
     }
   }
-  destroy() {
-    // 移除事件监听器
-    document.removeEventListener('mouseleave', this.handleElementLeave.bind(this), true);
-    document.removeEventListener(EVENT_CONTEXTMENU, () => {
-      this.cachedContextMenu = document.getElementById(CONTEXT_MENU_ID);
-    });
-    document.removeEventListener('click', () => {
-      this.cachedContextMenu = null;
-    });
-    window.removeEventListener('beforeunload', () => this.destroy());
-  
-    // 清除定时器
-    this.activeTimers.forEach((timers) => timers.forEach(clearTimeout));
-    this.activeTimers.clear();
-  
-    // 取消异步请求
-    this.abortControllerMap.forEach((controller) => controller.abort());
-    this.abortControllerMap.clear();
-    this.pendingRequests.clear();
-    this.recentRequests.clear();
-  
-    // 清理 DOM
-    this.domService.destroy();
-  
-    // 重置状态
-    this.currentHoverTarget = null;
-    this.currentitemId = null;
-    this.targetType = null;
-    this.cachedContextMenu = null;
-  }
 }
 
 // 独立的 handleElementEnter 函数
@@ -474,9 +444,9 @@ export function handleElementEnter(event) {
 
   // 设置当前悬停的目标元素
   tooltipService.currentHoverTarget = target;
+
   // 清除与目标元素相关的计时器
   tooltipService.clearElementTimers(target);
-
 
   // 调用 handleItemHover 方法，并传递目标元素和类型
   tooltipService.handleItemHover(target, targetType);

@@ -121,7 +121,7 @@ const HOVER_EVENT_HANDLERS = [
 /**
  * 统一处理鼠标悬停事件
  */
-export async function handleHoverEventssss(e) {
+export async function handleHoverEventss(e) {
     for (const { selector, handler } of HOVER_EVENT_HANDLERS) {
         const matchedElement = e.target.closest(selector);
         if (matchedElement) {

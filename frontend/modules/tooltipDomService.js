@@ -8,7 +8,7 @@
  */
 export class TooltipDomService {
   constructor() {
-    this.currentTooltip = null; // 当前显示的 tooltip 元素
+    
     this.tooltipInstance = null; // 用于复用 tooltip 元素实例
     this.buttontooltipInstance = null; // 用于复用 tooltip 元素实例
   }
@@ -23,7 +23,7 @@ export class TooltipDomService {
       if (!this.buttontooltipInstance) {
         // 如果 tooltip 元素实例不存在，则创建新的元素
         this.buttontooltipInstance = document.createElement('div');
-        
+        document.body.appendChild(this.buttontooltipInstance);
           this.buttontooltipInstance.className = 'button-tooltip fade-in'; // 添加 fade-in 动画类
         
         
@@ -33,6 +33,7 @@ export class TooltipDomService {
       if (!this.tooltipInstance) {
         // 如果 tooltip 元素实例不存在，则创建新的元素
         this.tooltipInstance = document.createElement('div');
+        document.body.appendChild(this.tooltipInstance);
           this.tooltipInstance.className = 'item-tooltip fade-in'; // 添加 fade-in 动画类
         
         
@@ -58,7 +59,7 @@ export class TooltipDomService {
     }
   }
   positionDefaultTooltip(tooltip, target) {
-    console.log(target);
+    
     const rect = target.getBoundingClientRect(); // 获取目标元素 Rect
     const tooltipRect = tooltip.getBoundingClientRect(); // 获取工具提示 Rect
     // console.log(tooltipRect);
@@ -89,7 +90,7 @@ export class TooltipDomService {
     tooltip.style.top = `${top}px`;
   }
   positionButtonTooltip(tooltip, target) {
-    console.log(target);
+    
     const rect = target.getBoundingClientRect(); // 获取目标元素 Rect
     const tooltipRect = tooltip.getBoundingClientRect(); // 获取工具提示 Rect
   
@@ -126,24 +127,27 @@ export class TooltipDomService {
    * @method removeCurrentTooltip
    * @description 移除当前显示的 tooltip 元素，使用 fade-out 动画效果
    */
-  removeCurrentTooltip() {
-    if (this.currentTooltip) {
-      this.currentTooltip.classList.add('fade-out'); // 添加 fade-out 动画类
-      this.hideTooltip(this.currentTooltip); // 隐藏 tooltip，而不是立即移除，等待 fade-out 动画结束
-      this.currentTooltip = null; // 清空 currentTooltip 引用
+  // 移除当前 tooltip 的淡出效果，基于 targetType 操作对应的实例
+  removeCurrentTooltip(targetType) {
+    const tooltip = targetType === 'icon-button' ? this.buttontooltipInstance : this.tooltipInstance;
+    if (tooltip && tooltip.style.display === 'block') {
+      tooltip.classList.add('fade-out');
+      setTimeout(() => {
+        this.hideTooltip(tooltip);
+        tooltip.classList.remove('fade-out'); // 清理动画类以便下次使用
+      }, 150); // 与 fade-out 动画时长一致
     }
   }
-
   /**
    * @method cleanupTooltip
    * @description 清理 tooltip 元素，隐藏 tooltip
    * @param {HTMLElement} tooltip tooltip 元素
    */
+  // 清理 tooltip，仅隐藏
   cleanupTooltip(tooltip) {
-    if (tooltip) {
-      this.hideTooltip(tooltip); // 隐藏 tooltip
+    if (tooltip && tooltip.style.display === 'block') {
+      this.hideTooltip(tooltip);
     }
-    this.currentTooltip = null; // 清空 currentTooltip 引用
   }
 
   /**
@@ -161,23 +165,9 @@ export class TooltipDomService {
     setTimeout(() => this.hideTooltip(errorTooltip), 2000); // 错误提示显示一段时间后自动隐藏
   }
 
-  /**
-   * @method setCurrentTooltip
-   * @description 设置当前显示的 tooltip 元素
-   * @param {HTMLElement} tooltip tooltip 元素
-   */
-  setCurrentTooltip(tooltip) {
-    this.currentTooltip = tooltip;
-  }
+  
 
-  /**
-   * @method getCurrentTooltip
-   * @description 获取当前显示的 tooltip 元素
-   * @returns {HTMLElement} 当前显示的 tooltip 元素
-   */
-  getCurrentTooltip() {
-    return this.currentTooltip;
-  }
+  
 
   /**
    * @method showTooltip
