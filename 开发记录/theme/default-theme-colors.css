@@ -1,0 +1,118 @@
+/* ===================================
+   SiteBox 企业级颜色系统 (v3.0)
+   =================================== */
+/* ========================
+   明亮主题1 - 纯白舒适
+   ======================== */
+   :root {
+    /* === Core Brand Colors (State-driven Naming) - 核心品牌色系（状态驱动命名） === */
+    /* 作用：定义品牌核心色及不同状态下的变体色。 */
+    /* 依赖：无 */
+        /* 品牌色 */
+    --color-brand-primary-base: #3182CE;     /* 舒适蓝-主品牌基准色 */
+    --color-brand-primary-hover: #4299E1;   /* 悬停状态 */
+    --color-brand-primary-active: #2B6CB0;  /* 激活/按压状态 */
+  
+    /* === Auxiliary Color System (Function-oriented Naming) - 辅助色系（功能导向命名） === */
+    /* 作用：定义辅助色系及不同交互状态的变体色。 */
+    /* 依赖：无 */
+    --color-functional-secondary-base: #5DA399;  /* 辅助主色 */
+    --color-functional-secondary-hover: #7FBFB5; /* 悬停亮色 */
+    --color-functional-secondary-active: #3B7870;/* 激活暗色 */
+  
+    /* === Functional Color System (Semantic Translation) - 功能色系（语义直译） === */
+    --color-running:#48BB78;
+    --color-stop:red;
+    /* 作用：定义功能状态色，直接表达 Success, Warning, Error 等语义。 */
+    /* 依赖：无 */
+    --color-status-success: #28A745;    /* 成功状态 */
+    --color-status-warning: #FFC107;    /* 警告状态 */
+    --color-status-error: #DC3545;      /* 错误状态 */
+    --color-interaction-accent: #FF7F50;/* 强调交互色 */
+  
+    /* === Neutral Color System (Usage Naming) - 中性色系（用途命名） === */
+    /* 作用：定义中性色系，根据用途命名，如 Background, Divider, Text 等。 */
+    /* 依赖：无 */
+    --color-neutral-background: #FFFFFF;    /* 页面背景 */
+    --color-neutral-surface: #F7FAFC;       /* 表面色 */
+    --color-neutral-surface-hover: #E2E8F0; /* 表面色悬停 */ 
+    --color-neutral-divider: #EDF2F7;       /* 分割线/边框 */
+    --color-neutral-border-disabled: #DEE2E6; /* 禁用状态边框 */
+    --color-neutral-text-primary: #2D3748;  /* 主文本 */
+    --color-neutral-text-secondary: #718096;/* 次级文本 */
+
+  
+    /* === Semantic Variables (Maintain Original Mapping) - 语义化变量（保持原有映射关系） === */
+    /* 作用：定义语义化变量，保持与原有 v2.0 版本的映射关系，以便兼容。 */
+    /* 依赖：中性色系，核心品牌色系 */
+    /* Text System - 文本系统 */
+    --text-primary: var(--color-neutral-text-primary);
+    --text-secondary: var(--color-neutral-text-secondary);
+    --text-disabled: var(--color-neutral-border-disabled);
+    --text-inverse: #FFFFFF;
+  
+    /* Background System - 背景系统 */
+    --background-body: var(--color-neutral-background);
+    --background-surface: var(--color-neutral-surface);
+    --background-surface-hover: var(--color-neutral-surface-hover);
+    --background-card: #FFFFFF;
+    --background-card-hover: #e9e9e2;
+    --background-header: var(--color-brand-primary-base);
+    --background-subheader: var(--color-functional-secondary-base);
+    
+    /* Interaction System - 交互系统 */
+    --action-primary: var(--color-brand-primary-base);
+    --action-primary-hover: var(--color-brand-primary-hover);
+    --action-primary-active: var(--color-brand-primary-active);
+    --action-secondary: var(--color-functional-secondary-base);
+    
+    /* Status System - 状态系统 */
+    --status-success: var(--color-status-success);
+    --status-warning: var(--color-status-warning);
+    --status-error: var(--color-status-error);
+    --status-accent: var(--color-interaction-accent);
+    --status-info: var(--color-brand-primary-active);
+    
+    /* Special Elements - 特殊元素 */
+    --border-normal: var(--color-neutral-divider);
+    --url-identifier: #1E88E5;       /* 网址标识 */
+    --timestamp-label: #95A5A6;      /* 时间戳文本 */
+
+    /* 遗留 */
+    /* 1. 遮罩层颜色 */
+    --overlay-color: rgba(0, 0, 0, 0.5); /* Overlay color - 遮罩层颜色，半透明黑色 */
+    /* 2. 阴影效果 */
+    --shadow-color-base: 214deg 32% 50%;     /* 基于主色的冷调阴影 */
+    --shadow-intensity: 0.08;
+    --shadow-sm: 0 1px 3px hsl(var(--shadow-color-base) / 0.12);/* Small shadow - 小阴影，紫色阴影，有7处使用 */
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.3), 0 2px 4px rgba(0, 0, 0, 0.2); /* Medium shadow - 中阴影，通用阴影,有9处使用 */
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.3), 0 4px 6px rgba(0, 0, 0, 0.2); /* Large shadow - 大阴影，通用阴影,有8处使用 */
+    --shadow-button: 0 4px 12px rgba(124, 58, 237, 0.3);
+    --shadow-button-hover: 0 6px 16px rgba(124, 58, 237, 0.4);
+    --shadow-website-item-hover: 0 16px 32px rgba(99, 102, 241, 0.2); /* Website item hover shadow */
+    --shadow-website-item-active: 0 8px 24px rgba(0, 0, 0, 0.2);    /* Active website item shadow */
+    /* 3. 渐变色 */
+    --gradient: linear-gradient(135deg, var(--action-primary) 0%, var(--action-secondary) 100%); /* Gradient - 渐变色 */
+    /* 4. 玻璃效果 */
+    --glass-effect: rgba(255, 255, 255, 0.9); /* Glass effect color - 玻璃效果颜色，白色 */
+    --glass-border: 1px solid rgba(255, 255, 255, 0.2); /* Glass border color - 玻璃边框颜色，白色 */
+    --glass-shadow: 0 8px 32px 0 rgba(99, 102, 241, 0.15); /* Glass shadow color - 玻璃阴影颜色，紫色阴影 */
+    --glass-blur: blur(12px); /* Glass blur - 玻璃模糊效果 */
+    --color-glass-border: 1px solid rgba(46, 42, 91, 0.2); /* Glass border color - 玻璃边框颜色，深紫色 */
+    --color-glass-shadow: 0 8px 32px 0 rgba(147, 51, 234, 0.15); /* Glass shadow color - 玻璃阴影颜色，紫色阴影 */
+    /* 5. 过渡效果 */
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);/* Transition - 过渡效果 */
+    --transition-fast: 150ms ease; /* Fast transition - 快速过渡效果 */
+    --transition-normal: 250ms ease; /* Normal transition - 通用过渡效果 */
+    /* 6. 其他颜色 */
+    --color-delete-hover: hsl(9, 58%, 30%); /* Delete item hover color for dark theme - 深色主题删除菜单项悬停颜色，使用 HSL 调整 */
+
+    
+    
+
+    /* 阴影 */
+    --shadow-color-base: 214deg 32% 50%;     /* 基于主色的冷调阴影 */
+    --shadow-intensity: 0.08;
+    --shadow-sm: 0 1px 3px hsl(var(--shadow-color-base) / 0.12);
+  }
+
