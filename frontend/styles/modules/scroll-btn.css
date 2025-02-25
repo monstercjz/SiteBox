@@ -1,0 +1,32 @@
+.scroll-buttons {
+    position: fixed;
+    bottom: 20px; /* 距离底部 20px */
+    left: 50%; /* 水平居中 */
+    transform: translateX(-50%); /* 水平居中修正 */
+    display: flex;
+    flex-direction: row; /* 水平排列 */
+    gap: 10px; /* 按钮之间的间距 */
+    opacity: 0; /* 初始状态为隐藏 */
+    transition: opacity 0.3s ease-in-out;
+}
+
+.scroll-buttons.show {
+    opacity: 1; /* 显示按钮 */
+}
+
+.scroll-btn {
+    background-color: var(--color-neutral-background);
+    color: var(--text-primary);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+.scroll-btn:hover {
+    background-color: var(--color-neutral-surface-hover);
+}
