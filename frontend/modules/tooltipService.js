@@ -8,6 +8,7 @@ import {
   EVENT_CONTEXTMENU,
   DATA_DOCKER_SERVER_PORT,
   DATA_DOCKER_SERVER_IP,
+  DATA_DOCKER_NAME,
   DATA_DESCRIPTION,
   DATA_ITEM_ID,
   TOOLTIP_CONTENT_TEMPLATE,
@@ -243,11 +244,13 @@ export class UnifiedTooltipService {
 
   async _getDockerData(target) {
     // Docker 数据不需要异步请求，直接从 DOM 中获取
+    const name = target.getAttribute(DATA_DOCKER_NAME) || DEFAULT_PLACEHOLDER;
     const urlPort = target.getAttribute(DATA_DOCKER_URLPORT) || DEFAULT_PLACEHOLDER;
     const server = target.getAttribute(DATA_DOCKER_SERVER_IP) || DEFAULT_PLACEHOLDER;
     const serverPort = target.getAttribute(DATA_DOCKER_SERVER_PORT) || DEFAULT_PLACEHOLDER;
     const description = target.getAttribute(DATA_DESCRIPTION) || DEFAULT_PLACEHOLDER;
     return {
+      name,
       urlPort,
       server,
       serverPort,
@@ -336,6 +339,7 @@ export class UnifiedTooltipService {
 
   generateTooltipContentForDocker(data) {
     return TOOLTIP_CONTENT_TEMPLATE
+      .replace('{{name}}', data.name)
       .replace('{{urlPort}}', data.urlPort)
       .replace('{{server}}', data.server)
       .replace('{{serverPort}}', data.serverPort)

@@ -170,6 +170,7 @@ export const CLASS_DOCKER_TOOLTIP = 'docker-tooltip';
 // 工具提示内容模板
 export const TOOLTIP_CONTENT_TEMPLATE = `
   <div class="${CLASS_DOCKER_TOOLTIP}">
+    <p>Docker Name: {{name}}</p>
     <p>URL Port: {{urlPort}}</p>
     <p>Server: {{server}}</p>
     <p>Server Port: {{serverPort}}</p>
