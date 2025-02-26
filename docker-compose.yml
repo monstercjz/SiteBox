@@ -46,7 +46,7 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - ./backend/data:/app/backend/data
+      - /mnt/sdb/docker-data/data/my:/app/data
     environment:
       PORT: 3000
       BACKEND_URL: http://localhost

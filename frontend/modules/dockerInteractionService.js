@@ -33,10 +33,11 @@ export async function addDocker(groupId) {
         await dockerOperationService.openDockerModal({
             mode: 'add',
             groupId: groupId,
-            callback: async ({ dockerName, newAccessIp, accessPort, dockerApiAddress, dockerApiPort, dockerDescription, groupSelect }) => {
+            callback: async ({ dockerName, dockerDisplayName,newAccessIp, accessPort, dockerApiAddress, dockerApiPort, dockerDescription, groupSelect }) => {
                 const dockerSaveService = new DockerSaveService();
                 const dockerData = {
                     name: dockerName,
+                    displayName:dockerDisplayName,
                     url: newAccessIp,
                     urlPort: accessPort,
                     server: dockerApiAddress,
@@ -66,12 +67,13 @@ export async function editDocker(groupId, dockerId) {
         mode: 'edit',
         dockerId: dockerId,
         groupId: groupId,
-        callback: async ({ dockerName, newAccessIp, accessPort, dockerApiAddress, dockerApiPort, dockerDescription, groupSelect }) => {
+        callback: async ({ dockerName,dockerDisplayName, newAccessIp, accessPort, dockerApiAddress, dockerApiPort, dockerDescription, groupSelect }) => {
             
             const dockerSaveService = new DockerSaveService();
             const dockerData = {
                 groupId: groupSelect,
                 name: dockerName,
+                displayName:dockerDisplayName,
                 url: newAccessIp,
                 urlPort: accessPort,
                 server: dockerApiAddress,

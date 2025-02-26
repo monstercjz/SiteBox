@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 获取全部分组并填充下拉框
   function fetchGroups(apiAddress) { // 接受 apiAddress 参数
-    fetch(`${apiAddress}/api/groups`) // 使用 apiAddress
+    fetch(`${apiAddress}/api/website-groups`) // 使用 apiAddress
       .then(response => response.json())
       .then(data => {
         if (data.data) {
@@ -85,16 +85,16 @@ document.addEventListener('DOMContentLoaded', () => {
       // 判断是否选择了分组
       if (!groupId) {
         // 检查默认分组是否存在，如果不存在则创建
-        fetch(`${apiAddress}/api/groups/default`) // 检查默认分组的 API 地址
+        fetch(`${apiAddress}/api/website-groups/default`) // 检查默认分组的 API 地址
           .then(response => {
             if (!response.ok) {
               // 默认分组不存在，创建默认分组
-              return fetch(`${apiAddress}/api/groups`, { // 创建分组的 API 地址
+              return fetch(`${apiAddress}/api/website-groups`, { // 创建分组的 API 地址
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ name: 'Default Group',isCollapsible: false }) // 默认分组名称
+                body: JSON.stringify({ name: 'Default Group',isCollapsible: false,groupType: 'website-group' ,dashboardType: 'docker' }) // 默认分组名称
               })
               .then(response => response.json())
               .then(data => {

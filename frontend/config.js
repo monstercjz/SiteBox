@@ -48,6 +48,7 @@ export const ICON_BUTTON = 'icon-button';
 
 // 数据属性相关常量
 export const DATA_DESCRIPTION = 'data-description';
+export const DATA_DOCKER_NAME = 'data-docker-name';
 // export const DATA_WEBSITE_ID = 'data-website-id';
 // export const DATA_DOCKER_ID = 'data-docker-id';
 export const DATA_GROUP_ID = 'data-group-id';
@@ -104,6 +105,7 @@ export const REGEX_DOCKER_GROUP_ID = /docker-group-title-([0-9a-fA-F-]+)/;
 export const DOCKER_MODAL_ID = 'dockerModal';
 
 // 输入框 ID 相关常量
+export const INPUT_ID_DOCKER_DISPLAY_NAME = 'dockerDisplayName';
 export const INPUT_ID_DOCKER_NAME = 'dockerName';
 export const INPUT_ID_ACCESS_IP = 'accessIp';
 export const INPUT_ID_ACCESS_PORT = 'accessPort';
@@ -142,9 +144,9 @@ export const NOTIFICATION_ADD_DOCKER_FAIL = '添加 Docker 失败';
 export const NOTIFICATION_DELETE_DOCKER_FAIL = '删除 Docker 失败';
 
 // 模态框相关常量
-export const MODAL_TITLE_DELETE_DOCKER = '删除 Docker';
-export const MODAL_OPTION_PERMANENT_DELETE = '永久删除 Docker';
-export const MODAL_OPTION_MOVE_TO_TRASH = '将 Docker 移动到回收站';
+export const MODAL_TITLE_DELETE_DOCKER = '删除分组';
+export const MODAL_OPTION_PERMANENT_DELETE = '永久删除网站';
+export const MODAL_OPTION_MOVE_TO_TRASH = '将网站移动到回收站';
 
 // 数据属性相关常量
 export const OPTION_ID_PERMANENT_DELETE = 'permanentDelete';

@@ -25,6 +25,8 @@ import {
     ARIA_LABEL_SAVE,
     ARIA_LABEL_CANCEL,
     CLASS_DOCKER_ITEM,
+    INPUT_ID_DOCKER_DISPLAY_NAME,
+    DATA_DOCKER_NAME,
 } from '../config.js';
 
 export class DockerOperationService {
@@ -109,6 +111,7 @@ export class DockerOperationService {
             onSave: async (modal) => {
                 try {
                     const dockerName = modal.querySelector(`#${INPUT_ID_DOCKER_NAME}`).value;
+                    const dockerDisplayName = modal.querySelector(`#${INPUT_ID_DOCKER_DISPLAY_NAME}`).value;
                     const accessIp = modal.querySelector(`#${INPUT_ID_ACCESS_IP}`).value;
                     const accessPort = modal.querySelector(`#${INPUT_ID_ACCESS_PORT}`).value;
                     const dockerApiAddress = modal.querySelector(`#${INPUT_ID_DOCKER_API_ADDRESS}`).value;
@@ -121,6 +124,7 @@ export class DockerOperationService {
                         
                         await this.callback({
                             dockerName,
+                            dockerDisplayName,
                             newAccessIp,
                             accessPort,
                             dockerApiAddress,
@@ -155,6 +159,7 @@ export class DockerOperationService {
             <div class="modal-content">
                 <span class="close close-modal-button" aria-label="${ARIA_LABEL_CLOSE_MODAL}">&times;</span>
                 <h2>${title}</h2>
+                <input type="text" id="${INPUT_ID_DOCKER_DISPLAY_NAME}" placeholder="容器自定义显示名称">
                 <input type="text" id="${INPUT_ID_DOCKER_NAME}" placeholder="容器名称">
                 <input type="text" id="${INPUT_ID_ACCESS_IP}" placeholder="容器访问地址">
                 <input type="text" id="${INPUT_ID_ACCESS_PORT}" placeholder="容器访问端口">
@@ -182,10 +187,11 @@ export class DockerOperationService {
 
         modal.setAttribute(DATA_ITEM_ID, dockerId);
 
-        const { dockerName, accessIp, accessPort, dockerApiAddress, dockerApiPort, dockerDescription, groupSelect } =
+        const { dockerDisplayName,dockerName, accessIp, accessPort, dockerApiAddress, dockerApiPort, dockerDescription, groupSelect } =
             this.getDockerInfo(dockerId);
 
         modalInteractionService.setModalData(modalId, {
+            dockerDisplayName,
             dockerName,
             accessIp,
             accessPort,
@@ -234,7 +240,8 @@ export class DockerOperationService {
             return {};
         }
 
-        const dockerName = dockerNameElement.textContent;
+        const dockerDisplayName = dockerNameElement.textContent;
+        const dockerName = dockerItem.getAttribute(DATA_DOCKER_NAME);
         const accessUrl = dockerNameElement.getAttribute('href');
         const urlObj = new URL(accessUrl);
         const accessIp = `${urlObj.protocol}//${urlObj.hostname}`; // 提取协议和主机名或 IP 地址
@@ -245,6 +252,7 @@ export class DockerOperationService {
         const groupSelect = dockerItem.getAttribute(DATA_GROUP_ID);
 
         return {
+            dockerDisplayName,
             dockerName,
             accessIp,
             accessPort,

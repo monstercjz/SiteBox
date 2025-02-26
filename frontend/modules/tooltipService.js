@@ -15,6 +15,7 @@ import {
   CLASS_WEBSITE_ITEM,
   CLASS_DOCKER_ITEM,
   ICON_BUTTON,
+  DATA_DOCKER_URLPORT,
 } from '../config.js';
 import { escapeHtml } from "./utils.js";
 
@@ -242,7 +243,7 @@ export class UnifiedTooltipService {
 
   async _getDockerData(target) {
     // Docker 数据不需要异步请求，直接从 DOM 中获取
-    const urlPort = target.getAttribute(DATA_DOCKER_SERVER_PORT) || DEFAULT_PLACEHOLDER;
+    const urlPort = target.getAttribute(DATA_DOCKER_URLPORT) || DEFAULT_PLACEHOLDER;
     const server = target.getAttribute(DATA_DOCKER_SERVER_IP) || DEFAULT_PLACEHOLDER;
     const serverPort = target.getAttribute(DATA_DOCKER_SERVER_PORT) || DEFAULT_PLACEHOLDER;
     const description = target.getAttribute(DATA_DESCRIPTION) || DEFAULT_PLACEHOLDER;

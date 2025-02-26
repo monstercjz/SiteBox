@@ -47,7 +47,7 @@ export class WebsiteSaveService {
 
                     if (!defaultGroup) {
                         const groupName = new Date().toLocaleString();
-                        const newGroup = await createWebsiteGroup({ name: groupName, isCollapsible: false });
+                        const newGroup = await createWebsiteGroup({ name: groupName, isCollapsible: false,groupType: 'website-group' ,dashboardType: 'docker'  });
                         actualGroupId = newGroup.id;
                     } else {
                         actualGroupId = defaultGroup.id;

@@ -34,8 +34,9 @@ const CREATE_DOCKER_SCHEMA = Joi.object({
   groupId: Joi.string().uuid().required(),
   dockerData: Joi.object({
     name: Joi.string().required(),
+    displayName: Joi.string().min(3).max(50).optional().default(Joi.ref('name')), // 展示名字，默认值为 name
     url: Joi.string(),
-    urlPort: Joi.number().port().required(),
+    urlPort: Joi.number().port().allow('').empty('').optional(),
     description: Joi.string().allow(''),
     server: Joi.string().required(),
     serverPort: Joi.number().port().required(),
@@ -48,6 +49,7 @@ const UPDATE_DOCKER_SCHEMA = Joi.object({
   dockerData: Joi.object({
     groupId: Joi.string().uuid(),
     name: Joi.string().required(),
+    displayName: Joi.string().min(3).max(50).optional().default(Joi.ref('name')), // 展示名字，默认值为 name
     url: Joi.string().required(),
     urlPort: Joi.number().port().required(),
     description: Joi.string().allow(''),

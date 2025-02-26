@@ -27,6 +27,7 @@ import {
     NOTIFICATION_SUCCESS,
     NOTIFICATION_ERROR,
     GROUP_NAME,
+    DATA_DOCKER_NAME,
 } from '../config.js';
 
 /**
@@ -281,18 +282,20 @@ function createWebsiteItem(website) {
 function createDockerItem(docker) {
     const dockerItem = document.createElement('div');
     dockerItem.classList.add(CLASS_DOCKER_ITEM);
+    dockerItem.setAttribute(DATA_DOCKER_NAME, docker.name);
     dockerItem.setAttribute(DATA_DESCRIPTION, docker.description);
     dockerItem.setAttribute(DATA_ITEM_ID, docker.id);
     dockerItem.setAttribute(DATA_GROUP_ID, docker.groupId);
     dockerItem.setAttribute(DATA_DOCKER_SERVER_IP, docker.server);
     dockerItem.setAttribute(DATA_DOCKER_SERVER_PORT, docker.serverPort);
     dockerItem.setAttribute(DATA_DOCKER_URLPORT, docker.urlPort);
+    
 
     dockerItem.innerHTML = `
         <div class="docker-item-header">
             <div class="docker-item-title">
                 ${docker.faviconUrl ? `<img src="${getFullUrl(docker.faviconUrl)}" title="${docker.name}" alt="Image" loading="lazy">` : ''}
-                <a href="${docker.url}:${docker.urlPort}" target="_blank" class="docker-item__link">${docker.name}</a>
+                <a href="${docker.url}:${docker.urlPort}" target="_blank" class="docker-item__link">${docker.displayName}</a>
             </div>
             <span class="docker-status-indicator"></span>
         </div>
