@@ -4,8 +4,8 @@ const fileHandler = require('../utils/fileHandler');
 const { v4: uuidv4 } = require('uuid');
 const Joi = require('joi');
 const logger = require('../utils/logger');
-const { fetchFavicon } = require('../utils/faviconUtils');
 
+const { processFavicon } = require('../utils/dockerfavicon.js');
 const { DOCKER_DATA_FILE_PATH } = require('../config/constants');
 
 // 初始化 Docker 客户端 (连接到远程 Docker 主机)
@@ -368,9 +368,10 @@ const createDocker = async (groupId, dockerData) => {
       throw new Error('Docker 记录已存在');
     }
 
-    const faviconUrl = await fetchFavicon(dockerData.url) || 
-      `https://via.placeholder.com/64?text=${dockerData.name[0]}`;
-
+    // const faviconUrl = await fetchFavicon(dockerData.url) || 
+    //   `https://via.placeholder.com/64?text=${dockerData.name[0]}`;
+    const faviconUrl = await processFavicon(dockerData.name, dockerData.displayName);
+    console.log('获取到的faviconUrl', faviconUrl);
     const newDocker = {
       id: uuidv4(),
       groupId,
@@ -396,15 +397,19 @@ const createDocker = async (groupId, dockerData) => {
  */
 const updateDocker = async (dockerId, dockerData) => {
   try {
+    console.log('updateDocker', dockerData);
     await UPDATE_DOCKER_SCHEMA.validateAsync({ dockerId, dockerData });
-    
+    const faviconUrl = await processFavicon(dockerData.name, dockerData.displayName);
+    console.log('修改之后的faviconUrl', faviconUrl);
     const data = await fileHandler.readData(DOCKER_DATA_FILE_PATH);
     const updated = data.dockers.map(d => {
       if (d.id === dockerId) {
         return {
           ...d,
           ...dockerData,
+          faviconUrl,
           updatedAt: new Date()
+          
         };
       }
       return d;
