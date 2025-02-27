@@ -69,7 +69,7 @@ const processFavicon = async (name, displayName) => {
   
     // 检查目录是否存在
     if (!fs.existsSync(iconsDir)) {
-      logger.warn(`图标目录不存在: ${iconsDir}`);
+      console.log(`图标目录不存在: ${iconsDir}`);
     //   return fetchDefaultFavicon(name); // 返回默认图标
     }
   
