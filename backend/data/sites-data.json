@@ -77,6 +77,50 @@
       "lastAccessTime": "2025-02-15T01:14:56.487Z",
       "order": 1,
       "isAccessible": true
+    },
+    {
+      "id": "29b1f31e-a191-4b3d-b5e5-4da975cc9d74",
+      "groupId": "8365b8e9-4e51-434b-a1dc-4632f424389b",
+      "name": "zhihu",
+      "url": "https://zhihu.com",
+      "description": "1",
+      "faviconUrl": "/data/icons/zhihu.com.ico",
+      "lastAccessTime": "2025-02-27T00:21:06.211Z",
+      "order": 1,
+      "isAccessible": true
+    },
+    {
+      "id": "3f86cfad-0c1e-4059-b973-b8e0e3586270",
+      "groupId": "8365b8e9-4e51-434b-a1dc-4632f424389b",
+      "name": "zhihu",
+      "url": "https://zhihu.com/v1",
+      "description": "2",
+      "faviconUrl": "/data/icons/zhihu.com.ico",
+      "lastAccessTime": "2025-02-27T00:23:18.315Z",
+      "order": 3,
+      "isAccessible": true
+    },
+    {
+      "id": "fdf4d67d-b23f-485b-b3d7-269672fa16b4",
+      "groupId": "8365b8e9-4e51-434b-a1dc-4632f424389b",
+      "name": "京东",
+      "url": "https://jd.com",
+      "description": "1",
+      "faviconUrl": "/data/icons/public/images/jd.ico",
+      "lastAccessTime": "2025-02-27T05:20:28.574Z",
+      "order": 3,
+      "isAccessible": true
+    },
+    {
+      "id": "9f9caec9-d85c-47f8-9040-6835fd990df5",
+      "groupId": "8365b8e9-4e51-434b-a1dc-4632f424389b",
+      "name": "百度",
+      "url": "https://baidu.com",
+      "description": "1",
+      "faviconUrl": "/data/icons/baidu.com.ico",
+      "lastAccessTime": "2025-02-27T05:27:06.275Z",
+      "order": 4,
+      "isAccessible": true
     }
   ],
   "nextGroupId": 87,

@@ -35,16 +35,32 @@
 
     /* === Semantic Variables (Maintain Original Mapping) - 语义化变量（保持原有映射关系） === */
     /* Text System - 文本系统 */
-     
+    --text-primary: var(--color-neutral-text-primary);
+    --text-secondary: var(--color-neutral-text-secondary);
+    --text-disabled: var(--color-neutral-border-disabled);
     --text-inverse: #FFFFFF;
   
     /* Background System - 背景系统 */
-     
+    --background-body: var(--color-neutral-background);
+    --background-surface: var(--color-neutral-surface);
+    --background-surface-hover: var(--color-neutral-surface-hover);
     --background-card: #FFFFFF;
     --background-card-hover: #FFEDD5;
-     
+    --background-header: var(--color-brand-primary-base);
+    --background-subheader: var(--color-functional-secondary-base);
     
-     
+    /* Interaction System - 交互系统 */
+    --action-primary: var(--color-brand-primary-base);
+    --action-primary-hover: var(--color-brand-primary-hover);
+    --action-primary-active: var(--color-brand-primary-active);
+    --action-secondary: var(--color-functional-secondary-base);
+    
+    /* Status System - 状态系统 */
+    --status-success: var(--color-status-success);
+    --status-warning: var(--color-status-warning);
+    --status-error: var(--color-status-error);
+    --status-accent: var(--color-interaction-accent);
+    --status-info: var(--color-brand-primary-active);
     
     /* Special Elements - 特殊元素 */
     --border-normal: var(--color-neutral-divider);

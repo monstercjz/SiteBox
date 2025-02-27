@@ -26,6 +26,7 @@
   width: auto;
   height: auto;
   backdrop-filter: none;
+  -webkit-backdrop-filter: none;
   cursor: pointer;
 }
 
