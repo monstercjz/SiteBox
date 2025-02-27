@@ -17,7 +17,7 @@
   justify-content: center;
   align-items: center;
   gap: var(--spacing-inline-xxs);
-  padding: var(--spacing-inset-xs);
+  padding: var(--spacing-inset-xxs);
   margin: var(--spacing-stack-xxs);
   position: relative;
   overflow: hidden;
@@ -34,7 +34,7 @@
   font-weight: var(--font-weight-medium);
   position: relative;
   display: inline-block;
-  padding-bottom: var(--spacing-inset-xs);
+  /* padding-bottom: var(--spacing-inset-xs); */
   /* 待调整 */
 }
 
