@@ -35,7 +35,7 @@ const saveWebsiteUrl = async (url, title, description, groupId) => {
       name: title || 'New Website',
       url: url,
       description: description || '',
-      // faviconUrl: 'https://www.google.com/s2/favicons?sz=64&domain_url=' + new URL(url).hostname, // 使用 Google Favicon API 作为默认值, 使用 hostname
+      faviconUrl: 'https://www.google.com/s2/favicons?sz=64&domain_url=' + new URL(url).hostname, // 使用 Google Favicon API 作为默认值, 使用 hostname
     };
     await websiteService.createWebsite(groupId || 'default-group', websiteData);
   } catch (error) {
