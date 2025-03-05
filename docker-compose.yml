@@ -6,7 +6,7 @@ networks:
 
 services:
   frontend-nginx:
-    container_name: frontend-web-server
+    container_name: SiteBox
     build:
       context: ./frontend # Explicitly set build context to ./frontend
       dockerfile: Dockerfile # Dockerfile path is relative to the context (./frontend)
@@ -18,10 +18,10 @@ services:
       - app-network
     restart: always
     volumes:
-      - ./frontend:/usr/share/nginx/html:ro
+      - /mnt/sdb/docker-data/data/SiteBox/SiteBoxFront:/usr/share/nginx/html:ro
 
   backend-nginx:
-    container_name: backend-nginx-server
+    container_name: Sitebox-backend-nginx-server
     build:
       context: . # Explicitly set build context to project root (.)
       dockerfile: ./backend-nginx/Dockerfile
@@ -39,14 +39,14 @@ services:
       retries: 3
 
   backend-app:
-    container_name: backend-app-server
+    container_name: SiteBox-backend-app-server
     build:
       context: ./backend
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
     volumes:
-      - /mnt/sdb/docker-data/data/my:/app/data
+      - /mnt/sdb/docker-data/data/SiteBox/SiteBoxData:/app/data
     environment:
       PORT: 3000
       BACKEND_URL: http://localhost
