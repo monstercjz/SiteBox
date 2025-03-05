@@ -4,6 +4,9 @@
   "version": "1.0",
   "description": "A browser extension to save website URLs with titles, descriptions, and groups to backend API",
   "action": {
+    "default_icon": {
+      "16": "icon16.png"
+    },
     "default_popup": "popup.html"
   },
   "options_page": "options.html",
@@ -18,10 +21,10 @@
     "http://localhost:3000/*"
   ],
   "icons": {
-    "16": "icon16.png",
-    "32": "icon32.png",
-    "180": "icon180.png",
-    "192": "icon192.png",
-    "512": "icon512.png"
+    "16": "CJ.png"
+    
+  },
+  "chrome_url_overrides": {
+    "newtab": "newtab.html" 
   }
 }
