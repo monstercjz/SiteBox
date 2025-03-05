@@ -124,7 +124,7 @@
 [data-layout="alternative"] .docker-item {
   border-radius: var(--radius-lg);
   background: var(--background-surface);
-  border: 1px solid var(--border-normal);
+  border: 0px solid var(--border-normal);/* 设置为0有待处理 */
   box-shadow: var(--shadow-sm);
 }
 

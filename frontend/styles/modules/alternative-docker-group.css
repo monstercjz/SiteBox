@@ -34,6 +34,8 @@
 /* 分组标题 */
 [data-layout="alternative"] .docker-group {
   background: var(--background-body);
+  border: 0px;
+  box-shadow: var(--text-primary);/* 这个值有待处理 */
   /* 设置背景色 */
 
 }
@@ -41,7 +43,7 @@
 [data-layout="alternative"] .docker-group h2 {
   color: var(--group-title-random-color, var(--text-primary));
   /* 设置文字颜色，优先使用 --group-title-random-color 变量， fallback 到 --text-primary */
-  border-bottom: var(--border-width-xxs) solid var(--border-normal);
+  /* border-bottom: var(--border-width-xxs) solid var(--border-normal); */
   /* 设置底部边框 */
   font-size: var(--font-size-heading-xs);
   /* 设置字体大小 */

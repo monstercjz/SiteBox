@@ -35,6 +35,7 @@
   font-weight: var(--font-weight-medium);
   position: relative;
   display: inline-block;
+  font-size: var(--font-size-xs);
   /* padding-bottom: var(--spacing-inset-xs); */
   /* 待调整 */
 }

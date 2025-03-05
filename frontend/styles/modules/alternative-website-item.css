@@ -17,9 +17,9 @@
   padding-right: var(--spacing-inset-md);
   gap: var(--spacing-inline-md);
   /* 可以改变a和img的距离 */
-  width: var(--size-website-item-min-width);
+  width: var(--size-website-item-alternative-min-width);
   /* 使用 CSS 变量设置 item 宽度 */
-  min-height: 65px;
+  min-height: 45px;
   /* 设置一个最小高度 */
 }
 
@@ -47,7 +47,7 @@
 [data-layout="alternative"] .website-item {
   border-radius: var(--radius-lg);
   background: var(--background-surface);
-  border: 1px solid var(--border-normal);
+  border: 0px solid var(--border-normal);
   box-shadow: var(--shadow-sm);
 }
 
@@ -63,7 +63,7 @@
 }
 [data-layout="alternative"] .website-item:hover {
   /* background: var(--background-surface-hover); */
-  border-color: var(--action-primary-hover);
+  /* border-color: var(--action-primary-hover); */
 }
 [data-layout="alternative"] .website-item:hover {
 

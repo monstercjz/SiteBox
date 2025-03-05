@@ -58,7 +58,7 @@
   position: relative;
   display: inline-block;
   max-width: fit-content;
-  font-size: var(--font-size-md);
+  font-size: var(--font-size-sm);
   /* padding-bottom: var(--spacing-inset-xs); */
 }
 

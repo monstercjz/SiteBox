@@ -70,6 +70,7 @@
   --size-icon-lg: 2rem; /* 32px */
   --size-button-sm: 2.5rem; /* 32px */
   --size-button-md: 3rem; /* 48px */
+  --size-website-item-alternative-min-width: 7rem; /* Website item min height - 网站项最小高度 */
   --size-website-item-min-width: 10rem; /* Website item min height - 网站项最小高度 */
   --size-website-item-min-height: 3.75rem; /* Website item min height - 网站项最小高度 */
 
