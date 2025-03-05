@@ -51,7 +51,7 @@ const UPDATE_DOCKER_SCHEMA = Joi.object({
     name: Joi.string().required(),
     displayName: Joi.string().min(3).max(50).optional().default(Joi.ref('name')), // 展示名字，默认值为 name
     url: Joi.string().required(),
-    urlPort: Joi.number().port().required(),
+    urlPort: Joi.number().port().allow('').empty('').optional(),
     description: Joi.string().allow(''),
     server: Joi.string().required(),
     serverPort: Joi.number().port().required(),
