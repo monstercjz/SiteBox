@@ -24,7 +24,7 @@ SiteBox 是一款个人导航网站，旨在帮助用户更方便地管理和访
 *   **快速访问：**
     *   分组展示网站和 Docker 容器列表
     *   网站和 Docker 容器排序
-    *   一键快速打开网站和 Docker 容器管理页面 (如果有)
+    *   一键快速打开网站和 Docker 容器管理页面 
 *   **搜索功能：**
     *   根据关键词快速搜索网站和 Docker 容器 
 *   **数据同步与备份：**
@@ -75,7 +75,7 @@ SiteBox 是一款个人导航网站，旨在帮助用户更方便地管理和访
     *   详细的后端 Docker 镜像构建和运行教程
     *   详细的前端 Docker 镜像构建和运行教程 (使用 Nginx)
 *   **前后端分离部署：**
-    *   后端 Node.js 应用独立部署 (例如使用 PM2 管理进程)
+    *   后端 Node.js 应用独立部署 
     *   前端静态文件 (HTML, CSS, JavaScript) 使用 Nginx 或其他 Web 服务器部署
     *   前后端部署教程和配置说明
 
@@ -89,13 +89,12 @@ SiteBox 是一款个人导航网站，旨在帮助用户更方便地管理和访
     *   启动后端服务：`npm start` 或 `node server.js`
     *   *(可选) 使用 Docker Compose 或 Dockerfile 构建和运行后端 Docker 镜像：`docker-compose up -d backend-app`*
     *   *访问后端 API 接口 (例如 `http://localhost:3000/api/`) 验证后端服务是否正常运行*
-    *   *访问后端 API 接口 (例如 `http://localhost:3000/api/`) 验证后端服务是否正常运行*
 3.  **前端部署：**
     *   进入 `frontend` 目录：`cd frontend`
     *   *修改前端配置文件 (例如 `frontend/config.js` 或环境变量) 中的后端 API 地址，确保前端可以访问到后端 API*
     *   将 `frontend` 目录下的静态文件部署到 Web 服务器 (例如 Nginx)
     *   *(可选) 使用 Dockerfile 构建和运行前端 Docker 镜像：`docker-compose up -d frontend-nginx`*
-    *   *访问前端网站 URL (例如 `http://localhost`) 验证前端网站是否正常运行*
+    *   *(可选) 直接运行http-server*
     *   *访问前端网站 URL (例如 `http://localhost`) 验证前端网站是否正常运行*
 4.  **访问网站：**  通过浏览器访问部署的前端网站 URL
 
@@ -141,10 +140,12 @@ SiteBox 是一款个人导航网站，旨在帮助用户更方便地管理和访
 
 **贡献指南：**
 
+*   欢迎任何形式的贡献，包括但不限于代码提交、文档更新、问题反馈、建议等
 *   欢迎提交代码贡献，例如 Bug 修复、功能改进、性能优化等
 *   提交代码前请先阅读代码贡献指南，并遵循项目代码风格和规范
 *   欢迎提交 Issue 反馈 Bug 或提出 Feature Request
+*   本项目代码百分之95以上由gemini生成
 
 **License：**
 
-*   **License: 本项目未声明开源许可证信息，请联系项目维护者获取更多信息**
+*   **License: 本项目未声明开源许可证信息**
