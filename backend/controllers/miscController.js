@@ -39,9 +39,21 @@ const updateSiteName = async (req, res) => {
         apiResponse.error(res, error.message);
     }
 };
-
+/**
+ * @description 获取网站名称
+ */
+const getSiteName = async (req, res) => {
+  try {
+      const siteName = await miscService.getSiteName();
+      apiResponse.success(res, siteName);
+  } catch (error) {
+      apiResponse.error(res, error.message);
+  }
+};
 module.exports = {
   getStatus,
   getHelp,
   updateSiteName,
+  getSiteName
 };
+

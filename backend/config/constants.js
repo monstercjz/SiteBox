@@ -8,6 +8,7 @@ const backendUrl = process.env.BACKEND_URL || 'http://localhost';
 const WEBSITE_DATA_FILE_PATH = `${__dirname}/../data/sites-data.json`;
 const DOCKER_DATA_FILE_PATH = `${__dirname}/../data/docker-data.json`;
 const HISTORY_DATA_FILE_PATH = `${__dirname}/../data/sites-history.json`;
+const USER_DATA_FILE_PATH = `${__dirname}/../data/user-data.json`;
 const ICONS_DIR = `${__dirname}/../data/icons`;
 const ICONS_DOCKER_DIR = `${__dirname}/../data/icons/public`;
 
@@ -38,4 +39,5 @@ module.exports = {
   WEBSITE_DASHBOARD_TYPE, // Export WEBSITE_DASHBOARD_TYPE constant
   DOCKER_DASHBOARD_TYPE,  // Export DOCKER_DASHBOARD_TYPE constant
   ICONS_DOCKER_DIR,
+  USER_DATA_FILE_PATH,
 };

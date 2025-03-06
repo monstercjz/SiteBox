@@ -1,3 +1,7 @@
+const { readData, writeData } = require('../utils/fileHandler');
+const { USER_DATA_FILE_PATH } = require('../config/constants');
+
+
 // backend/services/miscService.js
 /**
  * @description 获取系统状态
@@ -50,13 +54,53 @@ const getHelp = async () => {
  * @param {string} newSiteName - 新的网站名称
  */
 const updateSiteName = async (newSiteName) => {
-    // TODO: 实现更新网站名称的逻辑
-    console.log('Updated site name:', newSiteName);
-    return { message: 'Site name updated successfully', newSiteName };
-};
+    const filePath = USER_DATA_FILE_PATH;
 
+    try {
+        // 尝试读取数据，如果文件不存在会自动创建并返回默认数据
+        let userData = await readData(filePath);
+        if (!userData || typeof userData !== 'object') { // 确保userData是对象
+            userData = {};
+        }
+
+        // 更新网站名称
+        userData.siteName = newSiteName;
+
+        // 将更新后的内容写回文件
+        await writeData(filePath, userData);
+
+        console.log('Updated site name:', newSiteName);
+        return { message: 'Site name updated successfully', newSiteName };
+    } catch (error) {
+        console.error('Failed to update site name:', error);
+        throw new Error('Failed to update site name');
+    }
+};
+/**
+ * @description 获取网站名称
+ */
+const getSiteName = async () => {
+    const filePath = USER_DATA_FILE_PATH;
+
+    try {
+        // 尝试读取数据
+        const userData = await readData(filePath);
+        if (!userData || typeof userData !== 'object' || !userData.siteName) {
+            return { siteName: '' }; // 如果文件不存在或siteName不存在，返回空字符串
+        }
+
+        // 返回网站名称
+        return { siteName: userData.siteName };
+    } catch (error) {
+        console.error('Failed to get site name:', error);
+        return { siteName: '' }; // 发生错误时返回空字符串
+    }
+};
 module.exports = {
     getStatus,
     getHelp,
     updateSiteName,
+    getSiteName,
 };
+
+

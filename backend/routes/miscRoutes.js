@@ -13,6 +13,11 @@ router.get('/status', miscController.getStatus);
  * @description 获取帮助文档
  */
 router.get('/help', miscController.getHelp);
+/**
+ * @route GET /gettings/siteName
+ * @description 获取网站名称
+ */
+router.get('/gettings/siteName', miscController.getSiteName);
 
 /**
  * @route POST /misc/siteName

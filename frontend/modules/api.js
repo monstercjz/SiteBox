@@ -339,6 +339,9 @@ async function restartDockerContainer(dockerId) {
 async function updateSiteName(newSiteName) {
   return fetchDataFromApi(`/misc/siteName`, 'POST', { newSiteName });
 }
+async function getSiteName() {
+  return fetchDataFromApi(`/misc/gettings/siteName`, 'GET');
+}
 export {
   fetchDataFromApi,
   getWebsites,
@@ -376,6 +379,7 @@ export {
   stopDockerContainer,
   restartDockerContainer,
   updateSiteName,
+  getSiteName,
 };
 
 
