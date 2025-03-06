@@ -96,7 +96,7 @@
 
 /* 搜索框图标主题 */
 .search-form__icon {
-  background-color: var(--background-body);
+  /* background-color: var(--background-body); */
   /* 设置背景色为 surface color CSS 变量 */
 }
 
