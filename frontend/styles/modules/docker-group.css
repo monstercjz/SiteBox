@@ -46,7 +46,7 @@
 
 .docker-group {
   /* background: var(--glass-effect); */
-  background: var(--background-body);
+  /* background: var(--background-body); */
   border-radius: var(--radius-sm);
   box-shadow: var(--glass-shadow);
   border: var(--glass-border);

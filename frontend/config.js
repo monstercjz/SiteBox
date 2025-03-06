@@ -461,3 +461,20 @@ export const RANDOM_COLORS = [
     '#ea580c', // orange
     '#7e22ce'  // violet
   ];
+  
+  // 背景图片列表
+  export const BACKGROUND_IMAGES = [
+    'url("./background/background1.png")',
+    'url("./background/background2.png")',
+    'url("./background/background3.png")',
+    'url("./background/background4.png")',
+    'url("./background/background5.png")',
+    'url("./background/background6.png")',
+    'url("./background/background7.png")',
+    'url("./background/background8.png")',
+    'url("./background/background9.png")',
+    'url("./background/background10.png")',
+    'url("./background/background11.webm")',
+    'url("./background/background12.png")',
+    // ... 可以添加更多背景图片路径
+  ];

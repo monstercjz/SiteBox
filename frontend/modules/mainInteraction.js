@@ -9,6 +9,7 @@ const actionMap = {
     'export-config-button': { module: '/modules/historyDataService.js', func: 'exportData', log: 'Export Config Button Clicked', error: 'Failed to export data' },
     'random-theme-button': { module: '/modules/themeService.js', func: 'setRandomTheme', log: 'Random Theme Button Clicked', error: 'Failed to toggle theme' },
     'group-color-toggle': { module: '/modules/h2colorThemeService.js', func: 'RandomColors', log: 'Random Group Color Button Clicked', error: 'Failed to toggle random colors' },
+    'background-toggle': { module: '/modules/randomBackGroundService.js', func: 'RandomBackground', log: 'Random Background Button Clicked', error: 'Failed to toggle background' },
     'theme-switcher-toggle': { module: '/modules/themeService.js', func: 'toggleThemeButtonShow', log: 'Theme Switcher Toggle Button Clicked', error: 'Failed to toggle theme' },
     'layout-switcher-toggle': { module: '/modules/layoutService.js', func: 'toggleLayoutButtonShow', log: 'Theme Switcher Toggle Button Clicked', error: 'Failed to toggle theme' },
     'import-websites-batch-button': { module: '/modules/websiteInteractionService.js', func: 'openImportWebsitesModal', log: 'Import Websites Button Clicked', error: 'Failed to open import modal' }

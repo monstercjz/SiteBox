@@ -42,8 +42,47 @@ h1 {
   /* 设置 H1 标题下外边距，使用 CSS 变量 --spacing-stack-xl */
   letter-spacing: -0.025em; /* Set letter-spacing to adjust character spacing, making the title more compact */
   /* 设置 letter-spacing 调整字间距，使标题更紧凑 */
+  margin: 0 0 var(--spacing-stack-md) 0;
+}
+ 
+
+.edit-h1-button {
+  position: relative;
+  padding: 0.2rem 0.4rem; /* 缩小 padding */
+  cursor: pointer;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  color: var(--text-secondary); /* 修改颜色为 secondary text color */
+  font-size: 0.8rem; /* 缩小字体大小 */
 }
 
+.site__title:hover .edit-h1-button,
+.edit-h1-button:hover {
+  visibility: visible;
+  opacity: 1;
+  background-color: var(--background-accent); /* 添加背景色 */
+  color: var(--text-accent); /* 修改颜色为 accent text color */
+  border-radius: var(--radius-sm); /* 添加圆角 */
+}
+.edit-title-input {
+  font-size: var(--font-size-heading-md);
+  font-weight: var(--font-weight-semibold);
+  text-align: center;
+  margin-bottom: var(--spacing-stack-xl);
+  letter-spacing: -0.025em;
+  border: none;
+  background-color: transparent;
+  color: var(--text-primary);
+  width: 100%; /* 宽度设置为 100% 以撑满 header */
+  box-sizing: border-box; /* 包含 padding 和 border 在宽度内 */
+  padding: 0.5rem; /* 添加内边距 */
+}
+
+.edit-title-input:focus {
+  outline: none; /* 移除 focus 时的默认 outline */
+  border-bottom: 2px solid var(--action-primary); /* 添加底部边框 */
+}
 /* Alternative Layout - 备选布局 */
 /* Styles for alternative layout, applied when [data-layout="alternative"] attribute is present */
 /* 备选布局样式，当存在 [data-layout="alternative"] 属性时应用 */

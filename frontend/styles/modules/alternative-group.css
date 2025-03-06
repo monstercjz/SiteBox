@@ -46,7 +46,7 @@
 */
 /* 分组标题 */
 [data-layout="alternative"] .website-group {
-  background: var(--background-body);
+  /* background: var(--background-body); */
   border: 0px;
   box-shadow: var(--text-primary);/* 这个值有待处理 */
   /* 设置背景色 */

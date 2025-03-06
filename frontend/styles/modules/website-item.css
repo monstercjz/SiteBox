@@ -48,11 +48,11 @@
 
 
 .website-item {
-  background: var(--glass-effect);
+  /* background: var(--glass-effect); */
   border: var(--glass-border);
   border-radius: var(--radius-lg);
   box-shadow: var(--glass-shadow);
-  border: 1px solid var(--border-normal);
+  border: 0px solid var(--border-normal);
 }
 
 .website-item a {
