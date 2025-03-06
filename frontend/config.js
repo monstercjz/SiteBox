@@ -9,6 +9,9 @@ export const INPUT_ID_NEW_GROUP_NAME = 'newGroupName';
 export const SELECT_ID_GROUP_TYPE = 'groupTypeSelect';
 export const BUTTON_CLASS_SAVE = 'save-modal-button';
 export const BUTTON_CLASS_CANCEL = 'cancel-modal-button';
+// 以下内容是edittitle.js中引用的常量
+export const MODAL_TITLE_EDIT_SITE_NAME = '编辑网站名称';
+export const INPUT_ID_NEW_SITE_NAME = 'newSiteName';
 
 // 分组类型相关常量
 // export const GROUP_TYPE_WEBSITE = 'website-group';

@@ -45,7 +45,18 @@ const getHelp = async () => {
     };
 };
 
+/**
+ * @description 更新网站名称
+ * @param {string} newSiteName - 新的网站名称
+ */
+const updateSiteName = async (newSiteName) => {
+    // TODO: 实现更新网站名称的逻辑
+    console.log('Updated site name:', newSiteName);
+    return { message: 'Site name updated successfully', newSiteName };
+};
+
 module.exports = {
     getStatus,
     getHelp,
+    updateSiteName,
 };

@@ -348,7 +348,7 @@
       "url": "https://my.jia.360.cn/web/myList",
       "description": "",
       "faviconUrl": "https://www.google.com/s2/favicons?sz=64&domain_url=my.jia.360.cn",
-      "lastAccessTime": "2025-03-04T09:54:10.351Z",
+      "lastAccessTime": "2025-03-06T17:16:40.025Z",
       "order": 6,
       "isAccessible": true
     },
@@ -580,6 +580,17 @@
       "description": "",
       "faviconUrl": "https://www.google.com/s2/favicons?sz=64&domain_url=aistudio.google.com",
       "lastAccessTime": "2025-03-05T19:01:45.156Z",
+      "order": 7,
+      "isAccessible": true
+    },
+    {
+      "id": "686739a8-5803-4028-bccb-02b1e52a15ab",
+      "groupId": "1fd77e26-625e-419e-9940-85b59a14fcea",
+      "name": "百度",
+      "url": "https://baidu.com",
+      "description": "12",
+      "faviconUrl": "/data/icons/baidu.com.ico",
+      "lastAccessTime": "2025-03-06T09:12:33.339Z",
       "order": 7,
       "isAccessible": true
     }

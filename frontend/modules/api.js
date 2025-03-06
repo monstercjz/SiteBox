@@ -336,6 +336,9 @@ async function stopDockerContainer(dockerId) {
 async function restartDockerContainer(dockerId) {
   return fetchDataFromApi(`/dockers/${dockerId}/restart`, 'POST');
 }
+async function updateSiteName(newSiteName) {
+  return fetchDataFromApi(`/misc/siteName`, 'POST', { newSiteName });
+}
 export {
   fetchDataFromApi,
   getWebsites,
@@ -372,6 +375,7 @@ export {
   startDockerContainer,
   stopDockerContainer,
   restartDockerContainer,
+  updateSiteName,
 };
 
 

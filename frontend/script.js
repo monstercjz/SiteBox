@@ -74,36 +74,44 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
     // script.js
 
-// 获取箭头按钮
-const scrollUpBtn = document.getElementById('scrollUp');
-const scrollDownBtn = document.getElementById('scrollDown');
-const scrollButtons = document.querySelector('.scroll-buttons');
+    // 获取箭头按钮
+    const scrollUpBtn = document.getElementById('scrollUp');
+    const scrollDownBtn = document.getElementById('scrollDown');
+    const scrollButtons = document.querySelector('.scroll-buttons');
 
-// 监听页面滚动事件
-window.addEventListener('scroll', () => {
-    // 当页面滚动超过一定距离时显示按钮
-    if (window.scrollY > 200) {
-        scrollButtons.classList.add('show');
-    } else {
-        scrollButtons.classList.remove('show');
+    // 监听页面滚动事件
+    window.addEventListener('scroll', () => {
+        // 当页面滚动超过一定距离时显示按钮
+        if (window.scrollY > 200) {
+            scrollButtons.classList.add('show');
+        } else {
+            scrollButtons.classList.remove('show');
+        }
+    });
+
+    // 回到顶部
+    scrollUpBtn.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+
+    // 滚动到底部
+    scrollDownBtn.addEventListener('click', () => {
+        window.scrollTo({
+            top: document.documentElement.scrollHeight,
+            behavior: 'smooth'
+        });
+    });
+    // 监听 edit-h1-button 点击事件，触发 openSiteNameModal
+    const editH1Button = document.querySelector('.edit-h1-button');
+    if (editH1Button) {
+        editH1Button.addEventListener('click', async () => {
+            const { editSiteName } = await import('./modules/editTitle.js');
+            editSiteName();
+        });
     }
-});
-
-// 回到顶部
-scrollUpBtn.addEventListener('click', () => {
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-    });
-});
-
-// 滚动到底部
-scrollDownBtn.addEventListener('click', () => {
-    window.scrollTo({
-        top: document.documentElement.scrollHeight,
-        behavior: 'smooth'
-    });
-});
 
 });
 
@@ -120,3 +128,4 @@ function toggleActionButtons() {
         buttons.forEach(btn => btn.style.transitionDelay = '');
     }, 300);
 }
+

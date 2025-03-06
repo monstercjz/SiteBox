@@ -26,7 +26,22 @@ const getHelp = async (req, res) => {
   }
 };
 
+/**
+ * @description 更新网站名称
+ */
+const updateSiteName = async (req, res) => {
+    try {
+        const { newSiteName } = req.body;
+        console.log('newSiteName:', newSiteName);
+        const result = await miscService.updateSiteName(newSiteName);
+        apiResponse.success(res, result);
+    } catch (error) {
+        apiResponse.error(res, error.message);
+    }
+};
+
 module.exports = {
   getStatus,
   getHelp,
+  updateSiteName,
 };

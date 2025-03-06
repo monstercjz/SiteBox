@@ -158,7 +158,7 @@ export function handleWebsiteClick(target) {
     if (!target) {
         return Promise.reject(new Error(ERROR_TARGET_ELEMENT_REQUIRED));
     }
-    const websiteId = target.dataset.websiteId;
+    const websiteId = target.dataset.itemId;
     if (!websiteId) {
         return Promise.reject(new Error(ERROR_WEBSITE_ID_REQUIRED));
     }

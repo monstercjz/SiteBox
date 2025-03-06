@@ -1,36 +1,39 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const siteTitleElement = document.querySelector('.site-name');
-  const editButton = document.querySelector('.edit-h1-button');
-  const header = document.querySelector('header');
-
-  editButton.addEventListener('click', () => {
-    const currentTitle = siteTitleElement.textContent;
-    siteTitleElement.style.display = 'none'; // 隐藏原始标题
-    editButton.style.display = 'none'; // 隐藏编辑按钮
-
-    const inputElement = document.createElement('input');
-    inputElement.type = 'text';
-    inputElement.value = currentTitle;
-    inputElement.className = 'edit-title-input'; // 添加 CSS 类名
-    header.insertBefore(inputElement, siteTitleElement.parentNode); // 将输入框插入到 header 中，标题之前
-    inputElement.focus();
-
-    inputElement.addEventListener('blur', () => {
-      const newTitle = inputElement.value.trim();
-      siteTitleElement.textContent = newTitle || 'SiteBox'; // 更新标题，如果为空则使用默认标题
-      siteTitleElement.style.display = 'inline-block'; // 显示标题
-      editButton.style.display = 'inline-block'; // 显示编辑按钮
-      inputElement.remove(); // 移除输入框
-    });
-
-    inputElement.addEventListener('keydown', (event) => {
-      if (event.key === 'Enter') {
-        inputElement.blur(); // Enter 键保存标题
-      } else if (event.key === 'Escape') {
-        siteTitleElement.style.display = 'inline-block'; // 显示标题
-        editButton.style.display = 'inline-block'; // 显示编辑按钮
-        inputElement.remove(); // 移除输入框
-      }
-    });
-  });
-});
+import { backendUrl } from '../config.js';
+import modalInteractionService from './modalInteractionService.js';
+import { updateSiteName } from "./api.js";
+import { EditsiteNameOperationService } from './editTitleService.js';
+import { showNotification } from "./utils.js";
+import {
+    MODAL_ID,
+    MODAL_TITLE_EDIT_SITE_NAME,
+    INPUT_ID_NEW_SITE_NAME,
+    BUTTON_CLASS_SAVE,
+    BUTTON_CLASS_CANCEL,
+    ARIA_LABEL_CLOSE_MODAL,
+    ARIA_LABEL_SAVE,
+    ARIA_LABEL_CANCEL,
+} from '../config.js';
+const editsiteNameOperationService = new EditsiteNameOperationService();
+export async function editSiteName() {
+    try {
+            await editsiteNameOperationService.openGroupModal({
+                
+                callback: async ({ newSiteName }) => {
+                    console.log('newSiteName:', newSiteName);
+                    const result = await updateSiteName( newSiteName); // 传递 groupType
+                    console.log('result:', result);
+                    if (result) {
+                        document.title = newSiteName;
+                        // 更新 header 中的 site name 显示
+                        const siteNameSpan = document.querySelector('.site-name');
+                        if (siteNameSpan) {
+                            siteNameSpan.textContent = newSiteName;
+                        }
+                    }
+                },
+            });
+        } catch (error) {
+            console.error('Failed to edit group:', error);
+            showNotification(NOTIFICATION_EDIT_GROUP_FAIL, 'error');
+        }
+}

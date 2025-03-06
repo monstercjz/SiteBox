@@ -14,4 +14,10 @@ router.get('/status', miscController.getStatus);
  */
 router.get('/help', miscController.getHelp);
 
+/**
+ * @route POST /misc/siteName
+ * @description 更新网站名称
+ */
+router.post('/siteName', miscController.updateSiteName);
+
 module.exports = router;
