@@ -1,4 +1,7 @@
-export const backendUrl = 'http://localhost:3000/api';
+//export const backendUrl = 'http://localhost:3000/api';
+//适配docker打包进行地址修改
+export const backendUrl = '/api';
+// config.js
 // config.js
 //以下内容是groupoperationservice.js中引用的常量
 // 模态框相关常量
