@@ -14,6 +14,8 @@ services:
       - "80:80"
     depends_on:
       - backend-nginx
+    environment:
+      - BACKEND_ADDR=backend-nginx:3001
     networks:
       - app-network
     restart: always
@@ -23,12 +25,14 @@ services:
   backend-nginx:
     container_name: Sitebox-backend-nginx-server
     build:
-      context: . # Explicitly set build context to project root (.)
-      dockerfile: ./backend-nginx/Dockerfile
+      context: ./backend-nginx # 将构建上下文改为当前目录
+      dockerfile: Dockerfile
     ports:
       - "3001:3001"
     depends_on:
       - backend-app
+    environment:
+      - BACKEND_APP_ADDR=backend-app:3000
     networks:
       - app-network
     restart: always
