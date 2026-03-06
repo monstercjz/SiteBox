@@ -1,8 +1,9 @@
 name: Publish Docker Images
 
 on:
-  push:
-    branches: [ "main" ] # 仅在推送到 main 分支时触发
+  workflow_dispatch: # 开启手动触发
+  # push:          # 如果你还想保留推送触发，就留着；不想保留就删掉或注释掉
+  #   branches: [ "main" ]
 
 jobs:
   build-and-push:
