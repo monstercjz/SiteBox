@@ -120,6 +120,24 @@ curl https://<your-worker-domain>/api/
 2. 进入 **Workers & Pages**
 3. 点击 **Create Application** -> **Import a repository**
 4. 授权 GitHub/GitLab，选择仓库
+5. 项目名称：sitebox-backend
+6. 构建命令：留空（Worker 项目一般不需要单独 build）
+7. 部署命令：
+    - 如果“路径”会设成 /backend：npm install && npx wrangler deploy
+    - 如果“路径”是 /：cd backend && npm install && npx wrangler deploy
+8. 非生产分支构建：建议先关掉（主分支稳定后再开）
+9. 非生产分支部署命令（可选）：
+    - 不需要预览版本就留空
+    - 要预览可填：npx wrangler versions upload
+10. 路径：建议填 /backend（这是关键，如果仓库是前后端在一起的情况，避免在仓库根目录执行命令,）
+11. API 令牌：创建一个部署令牌
+12. 令牌名称：sitebox-backend-deploy-token 或者使用现有的token
+13. 变量名称：CLOUDFLARE_API_TOKEN
+14. 变量值：你的 Cloudflare API Token 值,如果让新建，这里就不用填
+    - 令牌权限建议至少包含：
+        - Workers Scripts: Edit
+        - D1: Edit
+        - Account: Read
 5. 配置 Worker 项目：
    - Root directory：`backend`
    - 入口：与项目一致（`server.mjs`）
