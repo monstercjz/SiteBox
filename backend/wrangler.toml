@@ -6,7 +6,7 @@ compatibility_flags = ["nodejs_compat"]
 [[d1_databases]]
 binding = "DB"
 database_name = "sitebox"
-database_id = "placeholder-replace-after-wrangler-d1-create"
+database_id = "148bb43e-fb40-4dc5-94e0-f2e689194b4b"
 
 [vars]
 DEPLOY_MODE = "cloudflare"
