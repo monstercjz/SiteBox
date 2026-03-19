@@ -185,4 +185,7 @@ function openPanel() {
 /**
  * 关闭设置面板
  */
-fun
+function closePanel() {
+  document.getElementById(PANEL_ID)?.remove();
+  document.getElementById(OVERLAY_ID)?.remove();
+}
