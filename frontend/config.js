@@ -1,16 +1,9 @@
 // backendUrl 优先读取 localStorage 中用户设置的服务器地址，自动拼接 /api
 // 用户可在页面侧边栏的「后端地址设置」面板中填写并保存（只填服务器地址，不含 /api）
-// 若未设置：
-// 1) 当部署在 sitebox.nuaa.dpdns.org 时，默认指向 https://sb.nuaa.dpdns.org/api
-// 2) 其他环境默认使用 /api（适用于有反向代理的环境，如 Docker/nginx 部署）
+// 若未设置，默认使用 /api（适用于有反向代理的环境，如 Docker/nginx 部署）
 const _storage = typeof localStorage !== 'undefined' ? localStorage : null;
 const _savedHost = _storage?.getItem('backendUrl');
-const _isSiteboxProd = typeof location !== 'undefined' && location.hostname === 'sitebox.nuaa.dpdns.org';
-const _normalizedSavedHost = (_isSiteboxProd && _savedHost === 'https://sb.nuaa.dpdns.org:3000')
-  ? 'https://sb.nuaa.dpdns.org'
-  : _savedHost;
-const _defaultBackendHost = _isSiteboxProd ? 'https://sb.nuaa.dpdns.org' : '';
-const _backendHost = (_normalizedSavedHost || _defaultBackendHost).replace(/\/api\/?$/, '').replace(/\/$/, '');
+const _backendHost = (_savedHost || '').replace(/\/api\/?$/, '').replace(/\/$/, '');
 export const backendUrl = _backendHost ? `${_backendHost}/api` : '/api';
 // config.js
 // config.js

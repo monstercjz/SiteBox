@@ -39,7 +39,10 @@ function openPanel() {
 
   const currentUrl = localStorage.getItem(STORAGE_KEY) || '';
   const apiBaseUrl = backendUrl;
+  const cachedHost = localStorage.getItem(STORAGE_KEY);
   const sourceLabel = currentUrl ? '手动设置（localStorage）' : '默认配置';
+  const cachedHostLabel = cachedHost || '（未设置）';
+
 
 
   const overlay = document.createElement('div');
@@ -75,17 +78,20 @@ function openPanel() {
         </svg>
       </button>
       <div style="margin-bottom: 0.875rem; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 0.5rem; background: var(--background-tertiary);">
-        <div style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.35rem;">当前生效 API 地址</div>
+        <div style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.2rem;">本地缓存后端地址（localStorage）</div>
+        <div style="font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; word-break: break-all;">${cachedHostLabel}</div>
+        <div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.5rem; margin-bottom: 0.2rem;">当前生效 API 地址</div>
         <div style="font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; word-break: break-all;">${apiBaseUrl}</div>
         <div style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.35rem;">来源：${sourceLabel}</div>
       </div>
+
 
       <p style="margin-bottom: 0.75rem; color: var(--text-secondary); font-size: 0.875rem; line-height: 1.6;">
         只填写「后端主机地址」，不要加 <code>/api</code>，程序会自动拼接。<br>
         示例：
       </p>
       <ul style="margin: 0 0 0.875rem 1.1rem; padding: 0; color: var(--text-secondary); font-size: 0.82rem; line-height: 1.7;">
-        <li>Cloudflare Workers 自定义域名：<code>https://sb.nuaa.dpdns.org</code></li>
+        <li>Cloudflare Workers 自定义域名：<code>https://api.your-domain.com</code></li>
         <li>自有 VPS + 域名（Nginx/Caddy 反代）：<code>https://api.example.com</code></li>
         <li>自有 VPS 直连端口：<code>http://服务器IP:3000</code> 或 <code>https://api.example.com:3000</code></li>
         <li>本地开发：<code>http://localhost:3000</code></li>
@@ -185,7 +191,4 @@ function openPanel() {
 /**
  * 关闭设置面板
  */
-function closePanel() {
-  document.getElementById(PANEL_ID)?.remove();
-  document.getElementById(OVERLAY_ID)?.remove();
-}
+functio
