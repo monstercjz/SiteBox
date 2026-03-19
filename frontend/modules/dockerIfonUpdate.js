@@ -7,9 +7,10 @@ import {
 } from '../config.js';
 import { getDockerItemFromCache } from './dockerCache.js';
 import { showNotification } from './utils.js';
+import { getDockerRealtimeEnabled } from './backendSettingService.js';
 // Function to update docker item stats单个docker的实时信息
 const updateDockerStats = async () => {
-    
+
     try {
         // Pass dockerData to getRealdockerinfobyId
         const realTimeInfo = await getRealdockerinfobyId(dockerid);
@@ -80,6 +81,12 @@ let lastUpdateTime = 0; // 记录上一次更新的时间戳
 const UPDATE_INTERVAL = 1 * 60 * 1000; // 5 分钟的时间间隔（单位：毫秒）
 
 export async function dockerUpdateInfoAll() {
+    // 检查Docker实时信息获取开关是否开启
+    if (!getDockerRealtimeEnabled()) {
+        console.log('Docker realtime info is disabled by user setting');
+        return;
+    }
+
     const currentTime = Date.now();
     console.log('currentTime', currentTime);
     // 检查是否已经超过 5 分钟

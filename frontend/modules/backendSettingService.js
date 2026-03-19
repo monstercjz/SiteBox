@@ -6,8 +6,27 @@ import { showNotification } from './utils.js';
 import { backendUrl } from '../config.js';
 
 const STORAGE_KEY = 'backendUrl';
+const DOCKER_REALTIME_KEY = 'dockerRealtimeEnabled'; // Docker实时信息获取开关
 const PANEL_ID = 'backend-setting-panel';
 const OVERLAY_ID = 'backend-setting-overlay';
+
+/**
+ * 获取Docker实时信息获取开关状态
+ * @returns {boolean} true表示开启，false表示关闭（默认开启）
+ */
+export function getDockerRealtimeEnabled() {
+  const stored = localStorage.getItem(DOCKER_REALTIME_KEY);
+  // 默认返回true（开启），只有明确设置为'false'时才关闭
+  return stored !== 'false';
+}
+
+/**
+ * 设置Docker实时信息获取开关状态
+ * @param {boolean} enabled - true开启，false关闭
+ */
+export function setDockerRealtimeEnabled(enabled) {
+  localStorage.setItem(DOCKER_REALTIME_KEY, enabled ? 'true' : 'false');
+}
 
 /**
  * 获取当前生效的 backendUrl
@@ -68,6 +87,28 @@ function openPanel() {
     opacity: 1;
   `;
 
+  // 添加自定义checkbox样式
+  const style = document.createElement('style');
+  style.textContent = `
+    #docker-realtime-check:checked::after,
+    #backend-url-clear-check:checked::after {
+      content: '✓';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: var(--color-primary, #3b82f6);
+      font-size: 14px;
+      font-weight: bold;
+    }
+    #docker-realtime-check:checked,
+    #backend-url-clear-check:checked {
+      background-color: var(--background-card, #fff) !important;
+      border-color: var(--color-primary, #3b82f6) !important;
+    }
+  `;
+  document.head.appendChild(style);
+
   panel.innerHTML = `
     <div class="modal-content">
       <h2>后端地址设置</h2>
@@ -108,11 +149,42 @@ function openPanel() {
         value="${currentUrl}"
         style="width: 100%; box-sizing: border-box;"
       />
-      <div style="display: flex; align-items: center; gap: 0.5rem; margin-top: 0.75rem; margin-bottom: 1rem;">
-        <input type="checkbox" id="backend-url-clear-check" style="width: auto; margin-bottom: 0;" />
-        <label for="backend-url-clear-check" style="color: var(--text-secondary); font-size: 0.8rem; cursor: pointer;">
-          清除手动设置，恢复默认地址
+      <div style="width: 100%; margin-top: 0.75rem; margin-bottom: 1rem; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 0.5rem; background: var(--background-tertiary); box-sizing: border-box;">
+        <label style="display: flex; align-items: center; cursor: pointer; width: 100%;">
+          <input type="checkbox" id="backend-url-clear-check"
+            style="width: 1.25rem; height: 1.25rem; min-width: 1.25rem; cursor: pointer;
+                   -webkit-appearance: none; appearance: none;
+                   background-color: var(--background-card, #fff);
+                   border: 2px solid var(--border-color, #ccc);
+                   border-radius: 4px;
+                   display: inline-block;
+                   position: relative;
+                   vertical-align: middle;
+                   flex-shrink: 0;
+                   margin: 0;
+                   box-sizing: border-box;" />
+          <span style="color: var(--text-primary); font-size: 0.85rem; margin-left: 0.5rem; flex: 1;">清除手动设置，恢复默认地址</span>
         </label>
+      </div>
+      <div style="width: 100%; margin-bottom: 1rem; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 0.5rem; background: var(--background-tertiary); box-sizing: border-box;">
+        <label style="display: flex; align-items: center; cursor: pointer; width: 100%;">
+          <input type="checkbox" id="docker-realtime-check"
+            style="width: 1.25rem; height: 1.25rem; min-width: 1.25rem; cursor: pointer;
+                   -webkit-appearance: none; appearance: none;
+                   background-color: var(--background-card, #fff);
+                   border: 2px solid var(--border-color, #ccc);
+                   border-radius: 4px;
+                   display: inline-block;
+                   position: relative;
+                   vertical-align: middle;
+                   flex-shrink: 0;
+                   margin: 0;
+                   box-sizing: border-box;" />
+          <span style="color: var(--text-primary); font-size: 0.85rem; margin-left: 0.5rem; flex: 1;">启用 Docker 实时信息获取（CPU、内存、网络等）</span>
+        </label>
+      </div>
+      <div style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 1rem; line-height: 1.5;">
+        关闭后不再自动获取 Docker 容器的实时状态信息，适用于部署在 Cloudflare 等无法访问 Docker API 的环境。
       </div>
       <div class="modal-buttons-container">
         <button class="cancel-modal-button" id="backend-setting-cancel">取消</button>
@@ -130,6 +202,10 @@ function openPanel() {
     if (input) input.focus();
   }, 50);
 
+  // 初始化Docker实时信息开关状态
+  const dockerRealtimeCheck = document.getElementById('docker-realtime-check');
+  dockerRealtimeCheck.checked = getDockerRealtimeEnabled();
+
   // 勾选「清除设置」时禁用输入框
   document.getElementById('backend-url-clear-check').addEventListener('change', (e) => {
     document.getElementById('backend-url-input').disabled = e.target.checked;
@@ -141,6 +217,10 @@ function openPanel() {
 
   document.getElementById('backend-setting-save').addEventListener('click', () => {
     const clearCheck = document.getElementById('backend-url-clear-check').checked;
+    const dockerRealtimeEnabled = document.getElementById('docker-realtime-check').checked;
+
+    // 保存Docker实时信息开关设置
+    setDockerRealtimeEnabled(dockerRealtimeEnabled);
 
     if (clearCheck) {
       localStorage.removeItem(STORAGE_KEY);
