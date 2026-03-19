@@ -1,13 +1,15 @@
-# SiteBox 部署指南
+# SiteBox 部署指南（更新版）
 
-SiteBox 前后端分离架构，支持四种部署场景：
+本文覆盖 SiteBox 的主流部署方式，并总结常见踩坑点。
 
-| 场景 | 适用平台 | 数据库 |
-|------|----------|--------|
-| [Docker Compose](#一docker-compose-部署nas--云容器--vps) | NAS / 云容器 / VPS | SQLite（命名 volume 持久化） |
-| [VPS 裸机](#二vps-裸机部署) | 自有服务器 | SQLite（本地文件） |
-| [Cloudflare](#三cloudflare-workers--d1-部署) | Cloudflare Workers | D1（托管数据库） |
-| [前端独立部署](#四前端独立部署) | 任意静态托管平台 | — |
+## 部署方案总览
+
+| 方案 | 适用场景 | 后端 | 数据库 |
+|---|---|---|---|
+| Docker Compose | NAS / VPS / 本地一键部署 | Node | SQLite |
+| VPS 裸机 | 自有服务器进程化部署 | Node + PM2 | SQLite |
+| Cloudflare Workers | 轻量云端 API | Workers | D1 |
+| 前端独立托管 | Pages / Nginx / Vercel 等 | 静态文件 | - |
 
 ---
 
@@ -132,6 +134,9 @@ npm install --omit=dev
 
 # 3a. 直接启动（测试用）
 node server.node.js
+```
+
+推荐使用 PM2：
 
 # 3b. 使用 PM2 后台运行（推荐生产环境）
 npm install -g pm2
@@ -215,48 +220,103 @@ wrangler dev
 npm run deploy:cf
 ```
 
-### 前端部署到 Cloudflare Pages
+### 初始化 D1（非常关键）
 
 ```bash
-cd SiteBox/frontend
+# 本地 D1 模拟
+npm run db:migrate:local
 
-# 1. 安装依赖并构建
-npm install
-npm run build
-
-# 2. 部署静态资源到 CF Pages
-wrangler pages deploy dist --project-name sitebox-frontend
+# 远程生产 D1（推荐显式 --remote）
+npx wrangler d1 execute sitebox --remote --file=./schema.sql
 ```
 
-> 部署完成后，在 CF Pages 项目设置中配置环境变量，将 API 地址指向 Workers 地址。
+### 访问
+
+- Worker 地址示例：`https://xxx.workers.dev`
+- 健康检查：`GET https://xxx.workers.dev/api/`
 
 ---
 
 ## 四、前端独立部署
 
-前端构建产物为纯静态文件，可部署到任意静态托管平台。
-
-### 构建
+前端是静态资源，可托管在 Cloudflare Pages/Nginx/Vercel/Netlify 等。
 
 ```bash
 cd SiteBox/frontend
 npm install
 npm run build
-# 产物输出在 dist/ 目录
 ```
 
-### 部署方式
-
-| 平台 | 方式 |
-|------|------|
-| Cloudflare Pages | `wrangler pages deploy dist` |
-| Nginx | 将 `dist/` 复制到 `/usr/share/nginx/html/` |
-| 腾讯云 COS / 阿里云 OSS | 上传 `dist/` 并开启静态网站托管 |
-| GitHub Pages / Vercel / Netlify | 配置构建命令 `npm run build`，发布目录 `dist` |
+发布目录：`dist/`
 
 ---
 
-## 五、浏览器插件配置
+## 五、前端后端地址设置（重点）
+
+前端支持在页面右下角「后端地址设置」中配置 API 主机地址。
+
+### 填写规则
+
+- 只填主机地址，不要填 `/api`
+- 正确示例：
+  - `https://api.example.com`
+  - `http://192.168.1.10:3000`
+  - `https://sb.nuaa.dpdns.org`
+- 错误示例：
+  - `https://api.example.com/api`（会重复拼接）
+  - `https://api.example.com/v1`（不支持带业务路径）
+
+系统会自动拼接 `/api`。
+
+### 清空设置后行为
+
+- 清空会移除 localStorage 中的 `backendUrl`
+- 前端回退到默认 `/api`
+
+---
+
+## 六、常见错误与排查
+
+### 1) `ERR_CONNECTION_TIMED_OUT`（常见于误填 `:3000`）
+
+原因：地址/端口不可达或端口未开放。
+
+排查：
+- 检查是否应使用 `https://域名` 而不是 `https://域名:3000`
+- 检查服务器安全组与防火墙
+
+### 2) `Unexpected non-whitespace character after JSON`
+
+原因：接口返回了非 JSON（如网关 HTML/404 文本）。
+
+排查：
+- 直接访问接口确认返回体
+- 确认反向代理路径是否正确指向 `/api`
+
+### 3) Cloudflare D1 迁移后没数据
+
+原因：只执行了本地迁移，未执行远程迁移。
+
+修复：
+```bash
+npx wrangler d1 execute sitebox --remote --file=./schema.sql
+```
+
+### 4) Cloudflare 下 Docker 实时信息 404/不可用
+
+原因：Cloudflare 运行环境不具备本地 Docker daemon 能力。
+
+结论：该能力在 CF 模式下应视为受限功能。
+
+### 5) 前端 HTTPS + 后端 HTTP 被拦截
+
+原因：Mixed Content。
+
+修复：后端也启用 HTTPS，或统一走同域反向代理。
+
+---
+
+## 七、浏览器插件配置
 
 安装 `SiteBox/browser-extension/` 目录下的插件后：
 
@@ -285,10 +345,3 @@ npm run build
 
 ---
 
-## 七、从旧版本迁移
-
-旧版本使用 JSON 文件存储（`data/*.json`），新版本使用 SQLite。如需迁移数据：
-
-1. 启动新版本后端（会自动建表）
-2. 通过旧版 API 导出数据：`GET /api/sync/backup`
-3. 通过新版 API 导入：`POST /api/sync/restore`

@@ -54,19 +54,25 @@ SiteBox 是一款个人导航网站，旨在帮助用户更方便地管理和访
 
 *   **前端：**
     *   HTML
-    *   CSS (可能使用了 CSS 预处理器或框架)
+    *   CSS （模块化）
     *   JavaScript (原生 JavaScript，可能使用了模块化方案)
+    *   Vanilla
 *   **后端：**
     *   Node.js
-    *   Express.js
-    *   CORS 中间件处理跨域请求
-    *   使用 express.json() 中间件处理 JSON 请求体 (相当于 body-parser.json())
+    *   Hono
+    **后端支持两种运行模式：**
+    -   Node 模式：`server.node.js` + SQLite（`better-sqlite3`）
+    -   Cloudflare 模式：`server.mjs`/`server.js` + D1
 *   **数据存储：**
-    *   使用 JSON 文件存储网站、Docker 容器和历史记录数据
+    -   本地/容器：SQLite（`better-sqlite3`）
+    -   Cloudflare：D1
 *   **部署：**
     *   Docker
     *   Docker Compose
     *   Nginx (用于前端静态资源服务和反向代理)
+    *   VPS
+    *   Cloudflare Workers/Pages
+
 
 **部署方式：**
 
@@ -83,20 +89,16 @@ SiteBox 是一款个人导航网站，旨在帮助用户更方便地管理和访
 
 1.  **克隆代码仓库**
 2.  **后端部署：**
-    *   进入 `backend` 目录：`cd backend`
-    *   安装 Node.js 依赖：`npm install`
-    *   **配置环境变量：**  `PORT` (后端服务端口号，默认为 3000), `BACKEND_URL` (后端 URL，默认为 http://localhost)。  具体环境变量配置请参考后端配置文件或 Docker Compose 文件。
-    *   启动后端服务：`npm start` 或 `node server.js`
-    *   *(可选) 使用 Docker Compose 或 Dockerfile 构建和运行后端 Docker 镜像：`docker-compose up -d backend-app`*
+    *   方案一：进入 `backend` 目录：`cd backend`,`npm install`,`npm start` 或 `node server.js`
+    *   方案二：*(可选) 使用 Docker Compose 或 Dockerfile 构建和运行后端 Docker 镜像：`docker-compose up -d backend-app`*
+    *   方案三：部署到cf
     *   *访问后端 API 接口 (例如 `http://localhost:3000/api/`) 验证后端服务是否正常运行*
 3.  **前端部署：**
-    *   进入 `frontend` 目录：`cd frontend`
-    *   *修改前端配置文件 (例如 `frontend/config.js` 或环境变量) 中的后端 API 地址，确保前端可以访问到后端 API*
-    *   将 `frontend` 目录下的静态文件部署到 Web 服务器 (例如 Nginx)
-    *   *(可选) 使用 Dockerfile 构建和运行前端 Docker 镜像：`docker-compose up -d frontend-nginx`*
-    *   *(可选) 直接运行http-server*
+    *   方案一：进入 `frontend` 目录：`cd frontend`，`npm install npx`，`npx http-server  -p 8080`
+    *   方案二：将 `frontend` 目录下的静态文件部署到 Web 服务器 (例如 Nginx)
+    *   方案三：*(可选) 使用 Dockerfile 构建和运行前端 Docker 镜像：`docker-compose up -d frontend-nginx`*
     *   *访问前端网站 URL (例如 `http://localhost`) 验证前端网站是否正常运行*
-4.  **访问网站：**  通过浏览器访问部署的前端网站 URL
+4.  **访问网站：**  通过浏览器访问部署的前端网站 URL，填写后端地址进行访问
 
 **配套浏览器插件**
 
