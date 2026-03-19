@@ -53,11 +53,21 @@ function updateDockerItemInfo(dockerItem, realTimeInfo) {
  * 获取所有 Docker 容器的实时信息
  * @returns {Promise<Array>} - 返回包含所有 Docker 容器实时信息的数组
  */
+let isRealtimeApiUnsupported = false;
+
 async function getAllDockersRealTimeInfo() {
+    if (isRealtimeApiUnsupported) {
+        return [];
+    }
+
     try {
-        return await getRealdockerinfo(); // 假设这是一个异步函数，返回实时信息
+        return await getRealdockerinfo();
     } catch (error) {
         console.error('Error fetching real-time info for all dockers:', error);
+        if ((error?.message || '').includes('HTTP 404')) {
+            isRealtimeApiUnsupported = true;
+            return [];
+        }
         showNotification('无法获取 Docker 实时信息，请检查网络连接', NOTIFICATION_ERROR);
         return [];
     }

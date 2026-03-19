@@ -15,16 +15,28 @@ async function fetchDataFromApi(url, method = 'GET', body = null) {
       'Content-Type': 'application/json',
     },
   };
-  // console.log('fetchDataFromApi', url, method, body);
   if (body) {
     options.body = JSON.stringify(body);
   }
 
   const response = await fetch(`${backendUrl}${url}`, options);
-  const responseData = await response.json();
+  const rawText = await response.text();
 
-  if (!responseData.success) {
-    throw new Error(responseData.error || 'API request failed');
+  let responseData = null;
+  if (rawText) {
+    try {
+      responseData = JSON.parse(rawText);
+    } catch (parseError) {
+      throw new Error(`API 返回非 JSON（${response.status}）: ${rawText.slice(0, 120)}`);
+    }
+  }
+
+  if (!response.ok) {
+    throw new Error(responseData?.error || `HTTP ${response.status}`);
+  }
+
+  if (!responseData?.success) {
+    throw new Error(responseData?.error || 'API request failed');
   }
 
   return responseData.data;
