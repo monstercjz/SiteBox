@@ -1,43 +1,48 @@
 // backend/services/pluginService.js
-const fileHandler = require('../utils/fileHandler');
-
-const { WEBSITE_DATA_FILE_PATH } = require('../config/constants');
+const { queryAll } = require('../utils/fileHandler');
+const websiteService = require('./websiteService');
 
 /**
- * @description 获取浏览器扩展数据
+ * 获取浏览器扩展数据（返回所有分组和网站）
  */
-const getExtensionData = async () => {
+const getExtensionData = async (env) => {
   try {
-    const data = await fileHandler.readData(dataFilePath);
-    return data || {};
+    const groups = await queryAll(
+      env,
+      "SELECT * FROM groups WHERE group_type = 'website-group' ORDER BY order_index ASC"
+    );
+    const websites = await queryAll(
+      env,
+      'SELECT * FROM websites ORDER BY order_index ASC'
+    );
+    return { groups, websites };
   } catch (error) {
-    return {};
+    console.error('Error getting extension data:', error);
+    return { groups: [], websites: [] };
   }
 };
 
 /**
- * @description 同步浏览器书签
+ * 同步浏览器书签（占位实现）
  */
-const syncBookmarks = async (bookmarks) => {
-    // TODO: Implement bookmark sync logic
-    console.log('Bookmarks synced:', bookmarks);
+const syncBookmarks = async (env, bookmarks) => {
+  // TODO: 实现书签同步逻辑
+  console.log('Bookmarks synced:', bookmarks);
+  return { message: 'Bookmarks sync received', count: bookmarks ? bookmarks.length : 0 };
 };
-const sitesDataFilePath = 'data/sites-data.json';
 
 /**
- * @description 保存网站URL到sites-data.json，添加到websites数组, 包含更多网站信息
+ * 从浏览器插件保存网站 URL
  */
-const websiteService = require('./websiteService');
-
-const saveWebsiteUrl = async (url, title, description, groupId) => {
+const saveWebsiteUrl = async (env, url, title, description, groupId) => {
   try {
     const websiteData = {
       name: title || 'New Website',
-      url: url,
+      url,
       description: description || '',
-      faviconUrl: 'https://www.google.com/s2/favicons?sz=64&domain_url=' + new URL(url).hostname, // 使用 Google Favicon API 作为默认值, 使用 hostname
     };
-    await websiteService.createWebsite(groupId || 'default-group', websiteData);
+    const result = await websiteService.createWebsite(env, groupId || 'default-group', websiteData);
+    return result;
   } catch (error) {
     console.error('Error saving website URL:', error);
     throw new Error('Failed to save website URL: ' + error.message);

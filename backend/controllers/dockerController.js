@@ -1,169 +1,147 @@
 // backend/controllers/dockerController.js
 const dockerService = require('../services/dockerService');
+const syncService = require('../services/syncService');
 const apiResponse = require('../utils/apiResponse');
 
-/**
- * @route GET /dockers
- * @description 获取所有 Docker 记录 
- */
-const getAlldockers = async (req, res) => {
+const getAlldockers = async (c) => {
   try {
-    const dockers = await dockerService.getAlldockers();
-    apiResponse.success(res, dockers);
-  } catch (error) {
-    apiResponse.error(res, error.message);
+    const env = c.env;
+    const dockers = await dockerService.getAlldockers(env);
+    return apiResponse.success(c, dockers);
+  } catch (err) {
+    return apiResponse.error(c, err.message);
   }
 };
 
-/**
- * @route GET /groups/:groupId/dockers
- * @description 获取某个分组下的所有 Docker 记录 
- */
-const getdockersByGroupId = async (req, res) => {
+const getdockersByGroupId = async (c) => {
   try {
-    const { groupId } = req.params;
-    const dockers = await dockerService.getdockersByGroupId(groupId); // 调用新的服务函数
-    apiResponse.success(res, dockers);
-  } catch (error) {
-    apiResponse.error(res, error.message);
+    const env = c.env;
+    const { groupId } = c.req.param();
+    const dockers = await dockerService.getdockersByGroupId(env, groupId);
+    return apiResponse.success(c, dockers);
+  } catch (err) {
+    return apiResponse.error(c, err.message);
   }
 };
 
-/**
- * @route POST /groups/:groupId/dockers
- * @description 创建 Docker 记录 
- */
-const createDocker = async (req, res) => {
+const createDocker = async (c) => {
   try {
-    // const { groupId } = req.params;
-    // const { groupId } = req.params;
-    // const { dockerData } = req.body;
-    // console.log('Received groupId:', groupId);
-    // console.log('Received dockerData:', dockerData);
-    // console.log('req.body:', req.body);
-    const newDocker = await dockerService.createDocker(req.params.groupId, req.body.dockerData);
-    apiResponse.success(res, newDocker, 201); // 201 Created
-  } catch (error) {
-    apiResponse.error(res, error.message, 400); // 400 Bad Request
+    const env = c.env;
+    const params = c.req.param();
+    const body = await c.req.json();
+    const groupId = params.groupId || body.groupId;
+    const docker = await dockerService.createDocker(env, groupId, body.dockerData || body);
+    await syncService.backupData(env);
+    return apiResponse.success(c, docker, 201);
+  } catch (err) {
+    return apiResponse.error(c, err.message);
   }
 };
 
-/**
- * @route GET /dockers/:dockerId
- * @description 获取单个 Docker 记录详情 
- */
-const getdockerById = async (req, res) => {
+const getdockerById = async (c) => {
   try {
-    const { dockerId } = req.params;
-    const docker = await dockerService.getdockerById(dockerId); // 调用 getStoredDockerById 获取存储记录详情
-    if (docker) {
-      apiResponse.success(res, docker);
-    } else {
-      apiResponse.error(res, 'Docker 记录未找到', 404); // 404 Not Found
-    }
-  } catch (error) {
-    apiResponse.error(res, error.message);
+    const env = c.env;
+    const { dockerId } = c.req.param();
+    const docker = await dockerService.getdockerById(env, dockerId);
+    if (!docker) return apiResponse.error(c, 'Docker record not found', 404);
+    return apiResponse.success(c, docker);
+  } catch (err) {
+    return apiResponse.error(c, err.message);
   }
 };
 
-/**
- * @route PUT /dockers/:dockerId
- * @description 更新 Docker 记录 
- */
-const updateDocker = async (req, res) => {
+const updateDocker = async (c) => {
   try {
-    const { dockerId } = req.params;
-    const { dockerData } = req.body;
-    const updatedDocker = await dockerService.updateDocker(dockerId, dockerData);
-    apiResponse.success(res, updatedDocker);
-  } catch (error) {
-    apiResponse.error(res, error.message, 400); // 400 Bad Request
+    const env = c.env;
+    const { dockerId } = c.req.param();
+    const body = await c.req.json();
+    const docker = await dockerService.updateDocker(env, dockerId, body.dockerData || body);
+    await syncService.backupData(env);
+    return apiResponse.success(c, docker);
+  } catch (err) {
+    return apiResponse.error(c, err.message);
   }
 };
 
-/**
- * @route DELETE /dockers/:dockerId
- * @description 删除 Docker 记录 
- */
-const deleteDocker = async (req, res) => {
+const deleteDocker = async (c) => {
   try {
-    const { dockerId } = req.params;
-    const result = await dockerService.deleteDocker(dockerId);
-    apiResponse.success(res, result, 200, 'Docker 记录删除成功');
-  } catch (error) {
-    apiResponse.error(res, error.message, 400); // 400 Bad Request
+    const env = c.env;
+    const { dockerId } = c.req.param();
+    const result = await dockerService.deleteDocker(env, dockerId);
+    await syncService.backupData(env);
+    return apiResponse.success(c, result);
+  } catch (err) {
+    return apiResponse.error(c, err.message);
   }
 };
 
-/**
- * @route GET /realdockerinfo
- * @description 获取所有 Docker 容器实时信息 
- */
-const getRealdockerinfo = async (req, res) => {
+const getAllServerRealdockerinfo = async (c) => {
   try {
-    const containers = await dockerService.getRealdockerinfo(); // 调用修改后的服务函数名
-    apiResponse.success(res, containers);
-  } catch (error) {
-    apiResponse.error(res, error.message);
+    const env = c.env;
+    const info = await dockerService.getAllServerRealdockerinfo(env);
+    return apiResponse.success(c, info);
+  } catch (err) {
+    return apiResponse.error(c, err.message, 503);
   }
 };
 
-/**
- * @route GET /realdockerinfo/:dockerId
- * @description 获取单个 Docker 容器实时信息 
- */
-const getRealdockerinfobyId = async (req, res) => {
+const getRecordRealdockerinfo = async (c) => {
   try {
-    const { dockerId } = req.params;
-    const containerInfo = await dockerService.getRealdockerinfobyId(dockerId); // 调用修改后的服务函数名
-    apiResponse.success(res, containerInfo);
-  } catch (error) {
-    apiResponse.error(res, error.message);
+    const env = c.env;
+    const info = await dockerService.getRecordRealdockerinfo(env);
+    return apiResponse.success(c, info);
+  } catch (err) {
+    return apiResponse.error(c, err.message, 503);
   }
 };
 
-/**
- * @route POST /dockers/:dockerId/start
- * @description 启动 Docker 容器 
- */
-const startDockerController = async (req, res) => {
+const getRealdockerinfobyId = async (c) => {
   try {
-    const { dockerId } = req.params;
-    const result = await dockerService.startDocker(dockerId);
-    apiResponse.success(res, result, 200, `Docker 容器 ${dockerId} 启动成功`);
-  } catch (error) {
-    apiResponse.error(res, error.message, 400);
+    const env = c.env;
+    const params = c.req.param();
+    const dockerItemId = params.dockerItemId || params.dockerId;
+    const info = await dockerService.getRealdockerinfobyId(env, dockerItemId);
+    return apiResponse.success(c, info);
+  } catch (err) {
+    return apiResponse.error(c, err.message, 503);
   }
 };
 
-/**
- * @route POST /dockers/:dockerId/stop
- * @description 停止 Docker 容器 
- */
-const stopDockerController = async (req, res) => {
+const startDocker = async (c) => {
   try {
-    const { dockerId } = req.params;
-    const result = await dockerService.stopDocker(dockerId);
-    apiResponse.success(res, result, 200, `Docker 容器 ${dockerId} 停止成功`);
-  } catch (error) {
-    apiResponse.error(res, error.message, 400);
+    const env = c.env;
+    const params = c.req.param();
+    const dockerItemId = params.dockerItemId || params.dockerId;
+    const result = await dockerService.startDocker(env, dockerItemId);
+    return apiResponse.success(c, result);
+  } catch (err) {
+    return apiResponse.error(c, err.message, 503);
   }
 };
 
-/**
- * @route POST /dockers/:dockerId/restart
- * @description 重启 Docker 容器 
- */
-const restartDockerController = async (req, res) => {
+const stopDocker = async (c) => {
   try {
-    const { dockerId } = req.params;
-    const result = await dockerService.restartDocker(dockerId);
-    apiResponse.success(res, result, 200, `Docker 容器 ${dockerId} 重启成功`);
-  } catch (error) {
-    apiResponse.error(res, error.message, 400);
+    const env = c.env;
+    const params = c.req.param();
+    const dockerItemId = params.dockerItemId || params.dockerId;
+    const result = await dockerService.stopDocker(env, dockerItemId);
+    return apiResponse.success(c, result);
+  } catch (err) {
+    return apiResponse.error(c, err.message, 503);
   }
 };
 
+const restartDocker = async (c) => {
+  try {
+    const env = c.env;
+    const params = c.req.param();
+    const dockerItemId = params.dockerItemId || params.dockerId;
+    const result = await dockerService.restartDocker(env, dockerItemId);
+    return apiResponse.success(c, result);
+  } catch (err) {
+    return apiResponse.error(c, err.message, 503);
+  }
+};
 
 module.exports = {
   getAlldockers,
@@ -172,9 +150,10 @@ module.exports = {
   getdockerById,
   updateDocker,
   deleteDocker,
-  getRealdockerinfo,
+  getAllServerRealdockerinfo,
+  getRecordRealdockerinfo,
   getRealdockerinfobyId,
-  startDockerController,
-  stopDockerController,
-  restartDockerController,
+  startDocker,
+  stopDocker,
+  restartDocker,
 };

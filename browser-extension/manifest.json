@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "SiteBox",
-  "version": "1.0",
+  "version": "2.0",
   "description": "A browser extension to save website URLs with titles, descriptions, and groups to backend API",
   "action": {
     "default_icon": {
@@ -15,13 +15,14 @@
     "storage"
   ],
   "host_permissions": [
-    "http://localhost:3000/*"
+    "<all_urls>"
   ],
   "icons": {
-    "16": "CJ.png"
-    
+    "16": "CJ.png",
+    "32": "icon32.png",
+    "128": "icon512.png"
   },
   "chrome_url_overrides": {
-    "newtab": "newtab.html" 
+    "newtab": "newtab.html"
   }
 }

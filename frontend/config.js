@@ -1,6 +1,10 @@
-//export const backendUrl = 'http://localhost:3000/api';
-//适配docker打包进行地址修改
-export const backendUrl = '/api';
+// backendUrl 优先读取 localStorage 中用户设置的服务器地址，自动拼接 /api
+// 用户可在页面侧边栏的「后端地址设置」面板中填写并保存（只填服务器地址，不含 /api）
+// 若未设置，默认使用 /api（适用于有反向代理的环境，如 Docker/nginx 部署）
+// Web Worker 中没有 localStorage，降级使用默认值 /api
+const _storage = typeof localStorage !== 'undefined' ? localStorage : null;
+const _savedHost = _storage?.getItem('backendUrl');
+export const backendUrl = _savedHost ? `${_savedHost}/api` : '/api';
 // config.js
 // config.js
 //以下内容是groupoperationservice.js中引用的常量

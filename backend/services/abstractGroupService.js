@@ -2,49 +2,59 @@
 
 // backend/services/abstractGroupService.js
 const Group = require('../models/Group');
-const fileHandler = require('../utils/fileHandler');
+const { execSQL, queryOne, queryAll, batchExec } = require('../utils/fileHandler');
 const { v4: uuidv4 } = require('uuid');
 const Joi = require('joi');
 const logger = require('../utils/logger');
-const { WEBSITE_GROUP_TYPE, DOCKER_GROUP_TYPE, WEBSITE_DASHBOARD_TYPE, DOCKER_DASHBOARD_TYPE } = require('../config/constants'); // Import all constants
+const { WEBSITE_GROUP_TYPE, DOCKER_GROUP_TYPE, WEBSITE_DASHBOARD_TYPE, DOCKER_DASHBOARD_TYPE } = require('../config/constants');
 
 /**
- * @description 获取所有分组
- * @param {string} dataFilepath - 数据文件路径
- * @returns {Promise<Array<Group>>} 所有分组的数组
+ * 将数据库行转换为 Group 对象
  */
-const getAllGroups = async (dataFilepath) => {
-  const data = await fileHandler.readData(dataFilepath);
-  return (data.groups || [])
-    .filter(group => typeof group.isCollapsible === 'boolean')
-    .map(group => new Group(group.id, group.name, group.order, group.isCollapsible, group.groupType, group.dashboardType)); // Include dashboardType in getAllGroups
+const rowToGroup = (row) => {
+  return new Group(
+    row.id,
+    row.name,
+    row.order_index,
+    !!row.is_collapsible,
+    row.group_type,
+    row.dashboard_type
+  );
 };
 
 /**
- * @description 创建新的分组
- * @param {string} dataFilepath - 数据文件路径
- * @param {Object} groupData - 包含分组信息的对象
- * @param {string} groupData.name - 分组名称
- * @param {boolean} groupData.isCollapsible - 分组是否可折叠.
- * @param {string} groupData.dashboardType - 仪表盘类型 (website 或 docker).
- * @param {string} groupData.groupType - 分组类型 (website-group 或 docker-group).
- * @returns {Promise<Group>} 新创建的分组
+ * 获取所有分组（按 groupType 过滤）
  */
-const createGroup = async (dataFilepath, groupData) => {
+const getAllGroups = async (env, groupType) => {
+  const rows = await queryAll(env, 'SELECT * FROM groups WHERE group_type = ? ORDER BY order_index ASC', [groupType]);
+  return rows.map(rowToGroup);
+};
+
+/**
+ * 创建新分组
+ */
+const createGroup = async (env, groupType, groupData) => {
   const schema = Joi.object({
     name: Joi.string().required(),
     isCollapsible: Joi.boolean().required(),
-    dashboardType: Joi.string().valid(WEBSITE_DASHBOARD_TYPE, DOCKER_DASHBOARD_TYPE).required(), // 使用常量验证 dashboardType
-    groupType: Joi.string().valid(WEBSITE_GROUP_TYPE, DOCKER_GROUP_TYPE).required() // 使用常量验证 groupType
+    dashboardType: Joi.string().valid(WEBSITE_DASHBOARD_TYPE, DOCKER_DASHBOARD_TYPE).required(),
+    groupType: Joi.string().valid(WEBSITE_GROUP_TYPE, DOCKER_GROUP_TYPE).required(),
   });
 
   try {
     await schema.validateAsync(groupData);
-    const data = await fileHandler.readData(dataFilepath);
-    const newGroup = new Group(uuidv4(), groupData.name, data.nextGroupId, groupData.isCollapsible, groupData.groupType, groupData.dashboardType); // 传递 dashboardType and groupType
-    data.groups = [...(data.groups || []), newGroup];
-    data.nextGroupId = data.nextGroupId + 1;
-    await fileHandler.writeData(dataFilepath, data);
+
+    // 计算当前最大 order_index
+    const maxRow = await queryOne(env, 'SELECT MAX(order_index) as max_order FROM groups WHERE group_type = ?', [groupType]);
+    const nextOrder = (maxRow && maxRow.max_order !== null) ? maxRow.max_order + 1 : 1;
+
+    const newGroup = new Group(uuidv4(), groupData.name, nextOrder, groupData.isCollapsible, groupData.groupType, groupData.dashboardType);
+
+    await execSQL(env,
+      'INSERT INTO groups (id, name, order_index, is_collapsible, group_type, dashboard_type) VALUES (?, ?, ?, ?, ?, ?)',
+      [newGroup.id, newGroup.name, newGroup.order, newGroup.isCollapsible ? 1 : 0, newGroup.groupType, newGroup.dashboardType]
+    );
+
     logger.info(`Group created: ${newGroup.id} - ${newGroup.name}`);
     return newGroup;
   } catch (error) {
@@ -54,48 +64,39 @@ const createGroup = async (dataFilepath, groupData) => {
 };
 
 /**
- * @description 获取单个分组详情
- * @param {string} dataFilepath - 数据文件路径
- * @param {string} groupId - 分组ID
- * @returns {Promise<Group|undefined>} 返回指定ID的分组，如果不存在则返回 undefined
+ * 获取单个分组详情
  */
-const getGroupById = async (dataFilepath, groupId) => {
-  const data = await fileHandler.readData(dataFilepath);
-  const groupData = (data.groups || []).find((group) => group.id === groupId);
-  return groupData ? new Group(groupData.id, groupData.name, groupData.order, groupData.isCollapsible, groupData.groupType, groupData.dashboardType) : undefined;
+const getGroupById = async (env, groupId) => {
+  const row = await queryOne(env, 'SELECT * FROM groups WHERE id = ?', [groupId]);
+  return row ? rowToGroup(row) : undefined;
 };
 
 /**
- * @description 更新分组信息
- * @param {string} dataFilepath - 数据文件路径
- * @param {string} groupId - 要更新的分组ID
- * @param {Object} groupData - 包含更新后分组信息的对象
- * @param {string} groupData.name - 分组名称
- * @param {boolean} groupData.isCollapsible - 分组是否可折叠
- * @returns {Promise<Group|undefined>} 返回更新后的分组，如果不存在则返回 undefined
+ * 更新分组信息
  */
-const updateGroup = async (dataFilepath, groupId, groupData) => {
-  console.log("updateGroupiscalled");
+const updateGroup = async (env, groupId, groupData) => {
   const schema = Joi.object({
     name: Joi.string().required(),
     isCollapsible: Joi.boolean().required(),
-    dashboardType: Joi.string().valid(WEBSITE_DASHBOARD_TYPE, DOCKER_DASHBOARD_TYPE), // 使用常量验证 dashboardType (optional)
-    groupType: Joi.string().valid(WEBSITE_GROUP_TYPE, DOCKER_GROUP_TYPE) // 使用常量验证 groupType (optional)
+    dashboardType: Joi.string().valid(WEBSITE_DASHBOARD_TYPE, DOCKER_DASHBOARD_TYPE).optional(),
+    groupType: Joi.string().valid(WEBSITE_GROUP_TYPE, DOCKER_GROUP_TYPE).optional(),
   });
 
   try {
     await schema.validateAsync(groupData);
-    const data = await fileHandler.readData(dataFilepath);
-    const updatedGroups = (data.groups || []).map(group => {
-      if (group.id === groupId) {
-        return new Group(group.id, groupData.name, group.order, groupData.isCollapsible, group.groupType, groupData.dashboardType); // 传递 groupType and dashboardType
-      }
-      return group;
-    });
-    data.groups = updatedGroups;
-    await fileHandler.writeData(dataFilepath, data);
+
+    const existing = await queryOne(env, 'SELECT * FROM groups WHERE id = ?', [groupId]);
+    if (!existing) return undefined;
+
+    const dashboardType = groupData.dashboardType || existing.dashboard_type;
+
+    await execSQL(env,
+      'UPDATE groups SET name = ?, is_collapsible = ?, dashboard_type = ? WHERE id = ?',
+      [groupData.name, groupData.isCollapsible ? 1 : 0, dashboardType, groupId]
+    );
+
     logger.info(`Group updated: ${groupId} - ${groupData.name}`);
-    return updatedGroups.find(group => group.id === groupId);
+    return await getGroupById(env, groupId);
   } catch (error) {
     logger.error(`Error updating group ${groupId}: ${error.message}`);
     throw error;
@@ -103,18 +104,11 @@ const updateGroup = async (dataFilepath, groupId, groupData) => {
 };
 
 /**
- * @description 删除分组
- * @param {string} dataFilepath - 数据文件路径
- * @param {string} groupId - 要删除的分组ID
- * @returns {Promise<{ message: string }>} 返回操作结果消息
+ * 删除分组
  */
-const deleteGroup = async (dataFilepath, groupId) => {
+const deleteGroup = async (env, groupId) => {
   try {
-    const data = await fileHandler.readData(dataFilepath);
-    let groups = (data.groups || []).filter((group) => group.id !== groupId);
-    groups = groups.map((group) => new Group(group.id, group.name, group.order, group.isCollapsible,group.groupType, group.dashboardType));
-    data.groups = groups;
-    await fileHandler.writeData(dataFilepath, data);
+    await execSQL(env, 'DELETE FROM groups WHERE id = ?', [groupId]);
     logger.info(`Group deleted: ${groupId}`);
     return { message: 'Group deleted successfully' };
   } catch (error) {
@@ -124,34 +118,40 @@ const deleteGroup = async (dataFilepath, groupId) => {
 };
 
 /**
- * @description 分组排序
- * @param {string} dataFilepath - 数据文件路径
- * @param {Array<{id: string, order: number}>} reorderData - 包含分组ID和新顺序的数组
- * @returns {Promise<Array<Group|undefined>>} 返回排序后的分组数组
+ * 分组排序（批量更新 order_index）
  */
-const reorderGroups = async (dataFilepath, reorderData) => {
-  console.log("reorderDataiscalled");
-  console.log(reorderData);
+const reorderGroups = async (env, reorderData) => {
   const schema = Joi.array().items(Joi.object({
     id: Joi.string().uuid().required(),
     order: Joi.number().integer().required(),
-    dashboardType: Joi.string().valid(WEBSITE_DASHBOARD_TYPE, DOCKER_DASHBOARD_TYPE) //  dashboardType is now optional
+    dashboardType: Joi.string().valid(WEBSITE_DASHBOARD_TYPE, DOCKER_DASHBOARD_TYPE).optional(),
   })).required();
 
   try {
     await schema.validateAsync(reorderData);
-    const data = await fileHandler.readData(dataFilepath);
-    const groups = data.groups || [];
-    const orderedGroups = reorderData.map(item => {
-      const groupData = groups.find(group => group.id === item.id);
-      // 保留现有的 dashboardType，如果 reorderData 中有新的 dashboardType，则使用新的
-      const dashboardType = item.dashboardType !== undefined ? item.dashboardType : groupData.dashboardType;
-      return groupData ? new Group(groupData.id, groupData.name, item.order, groupData.isCollapsible, groupData.groupType, dashboardType) : undefined;
+
+    const statements = reorderData.map((item) => {
+      if (item.dashboardType) {
+        return {
+          sql: 'UPDATE groups SET order_index = ?, dashboard_type = ? WHERE id = ?',
+          params: [item.order, item.dashboardType, item.id],
+        };
+      }
+      return {
+        sql: 'UPDATE groups SET order_index = ? WHERE id = ?',
+        params: [item.order, item.id],
+      };
     });
-    data.groups = orderedGroups;
-    await fileHandler.writeData(dataFilepath, data);
-    logger.info(`Groups reordered`);
-    return orderedGroups;
+
+    await batchExec(env, statements);
+
+    logger.info('Groups reordered');
+
+    // 返回更新后的分组列表
+    const ids = reorderData.map(item => item.id);
+    const placeholders = ids.map(() => '?').join(',');
+    const rows = await queryAll(env, `SELECT * FROM groups WHERE id IN (${placeholders}) ORDER BY order_index ASC`, ids);
+    return rows.map(rowToGroup);
   } catch (error) {
     logger.error(`Error reordering groups: ${error.message}`);
     throw error;
@@ -164,5 +164,5 @@ module.exports = {
   getGroupById,
   updateGroup,
   deleteGroup,
-  reorderGroups
+  reorderGroups,
 };

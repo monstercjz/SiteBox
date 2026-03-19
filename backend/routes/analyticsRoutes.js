@@ -1,13 +1,10 @@
 // backend/routes/analyticsRoutes.js
-const express = require('express');
-const router = express.Router();
+const { Hono } = require('hono');
 const analyticsController = require('../controllers/analyticsController');
 
-/**
- * @route POST /analytics/click
- * @description 记录网站点击时间
- * @body {websiteId: string}
- */
-router.post('/click', analyticsController.recordClick);
+const app = new Hono();
 
-module.exports = router;
+app.post('/click', (c) => analyticsController.recordClick(c));
+app.get('/',       (c) => analyticsController.getAnalytics(c));
+
+module.exports = app;

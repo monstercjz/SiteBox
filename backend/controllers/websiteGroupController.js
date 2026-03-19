@@ -1,98 +1,78 @@
 // backend/controllers/websiteGroupController.js
-const websiteGroupService = require('../services/websiteGroupService'); // 修改 service 引用
-const apiResponse = require('../utils/apiResponse');
+const websiteGroupService = require('../services/websiteGroupService');
 const syncService = require('../services/syncService');
+const apiResponse = require('../utils/apiResponse');
 
-/**
- * @description 获取所有网站分组
- */
-const getAllGroups = async (req, res) => {
+const getAllGroups = async (c) => {
   try {
-    const groups = await websiteGroupService.getAllGroups(); // 修改 service 调用
-    apiResponse.success(res, groups);
-  } catch (error) {
-    apiResponse.error(res, error.message);
+    const env = c.env;
+    const groups = await websiteGroupService.getAllGroups(env);
+    return apiResponse.success(c, groups);
+  } catch (err) {
+    return apiResponse.error(c, err.message);
   }
 };
 
-/**
- * @description 创建新的网站分组
- */
-const createGroup = async (req, res) => {
+const createGroup = async (c) => {
   try {
-    const group = await websiteGroupService.createGroup(req.body); // 修改 service 调用
-    await syncService.backupData(); // 调用备份函数
-    apiResponse.success(res, group, 201);
-  } catch (error) {
-    apiResponse.error(res, error.message);
+    const env = c.env;
+    const body = await c.req.json();
+    const group = await websiteGroupService.createGroup(env, body);
+    await syncService.backupData(env);
+    return apiResponse.success(c, group, 201);
+  } catch (err) {
+    return apiResponse.error(c, err.message);
   }
 };
 
-/**
- * @description 获取单个网站分组详情
- */
-const getGroupById = async (req, res) => {
+const getGroupById = async (c) => {
   try {
-    const group = await websiteGroupService.getGroupById(req.params.groupId); // 修改 service 调用
-    if (!group) {
-      return apiResponse.error(res, 'Group not found', 404);
-    }
-    apiResponse.success(res, group);
-  } catch (error) {
-    apiResponse.error(res, error.message);
+    const env = c.env;
+    const { groupId } = c.req.param();
+    const group = await websiteGroupService.getGroupById(env, groupId);
+    if (!group) return apiResponse.error(c, 'Group not found', 404);
+    return apiResponse.success(c, group);
+  } catch (err) {
+    return apiResponse.error(c, err.message);
   }
 };
 
-/**
- * @description 更新网站分组信息
- */
-const updateGroup = async (req, res) => {
+const updateGroup = async (c) => {
   try {
-    const group = await websiteGroupService.updateGroup(req.params.groupId, req.body); // 修改 service 调用
-    if (!group) {
-      return apiResponse.error(res, 'Group not found', 404);
-    }
-    await syncService.backupData(); // 调用备份函数
-    apiResponse.success(res, group);
-  } catch (error) {
-     apiResponse.error(res, error.message);
+    const env = c.env;
+    const { groupId } = c.req.param();
+    const body = await c.req.json();
+    const group = await websiteGroupService.updateGroup(env, groupId, body);
+    if (!group) return apiResponse.error(c, 'Group not found', 404);
+    await syncService.backupData(env);
+    return apiResponse.success(c, group);
+  } catch (err) {
+    return apiResponse.error(c, err.message);
   }
 };
 
-/**
- * @description 删除网站分组
- */
-const deleteGroup = async (req, res) => {
+const deleteGroup = async (c) => {
   try {
-    const group = await websiteGroupService.deleteGroup(req.params.groupId); // 修改 service 调用
-    if (!group) {
-      return apiResponse.error(res, 'Group not found', 404);
-    }
-    await syncService.backupData(); // 调用备份函数
-    apiResponse.success(res, { message: 'Group deleted successfully' });
-  } catch (error) {
-    apiResponse.error(res, error.message);
+    const env = c.env;
+    const { groupId } = c.req.param();
+    const result = await websiteGroupService.deleteGroup(env, groupId);
+    if (!result) return apiResponse.error(c, 'Group not found', 404);
+    await syncService.backupData(env);
+    return apiResponse.success(c, { message: 'Group deleted successfully' });
+  } catch (err) {
+    return apiResponse.error(c, err.message);
   }
 };
 
-/**
- * @description 网站分组排序
- */
-const reorderGroups = async (req, res) => {
-    try {
-        const reorderData = req.body; // 获取请求体数据
-        const groups = await websiteGroupService.reorderGroups(reorderData); // 修改 service 调用，传递 reorderData
-        apiResponse.success(res, groups);
-    } catch (error) {
-        apiResponse.error(res, error.message);
-    }
+const reorderGroups = async (c) => {
+  try {
+    const env = c.env;
+    const body = await c.req.json();
+    const groups = await websiteGroupService.reorderGroups(env, body);
+    return apiResponse.success(c, groups);
+  } catch (err) {
+    return apiResponse.error(c, err.message);
+  }
 };
 
-module.exports = {
-  getAllGroups,
-  createGroup,
-  getGroupById,
-  updateGroup,
-  deleteGroup,
-  reorderGroups
-};
+module.exports = { getAllGroups, createGroup, getGroupById, updateGroup, deleteGroup, reorderGroups };

@@ -1,12 +1,9 @@
 // backend/routes/searchRoutes.js
-const express = require('express');
-const router = express.Router();
+const { Hono } = require('hono');
 const searchController = require('../controllers/searchController');
 
-/**
- * @route GET /search
- * @description 根据关键词搜索分组和网站记录
- */
-router.get('/', searchController.search);
+const app = new Hono();
 
-module.exports = router;
+app.get('/', (c) => searchController.search(c));
+
+module.exports = app;

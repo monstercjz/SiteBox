@@ -452,7 +452,7 @@ function getFullUrl(url) {
 async function fetchMainDashboardDataWithWorker() {
     try {
         const workerPath = './dashboardWorker.js';
-        const message = 'fetchData';
+        const message = { type: 'fetchData', backendUrl };
         return await createAndRunWorker(workerPath, message);
     } catch (error) {
         console.error('Failed to fetch data with worker:', error);

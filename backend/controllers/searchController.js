@@ -2,19 +2,15 @@
 const searchService = require('../services/searchService');
 const apiResponse = require('../utils/apiResponse');
 
-/**
- * @description 根据关键词搜索分组和网站记录
- */
-const search = async (req, res) => {
+const search = async (c) => {
   try {
-    const keyword = req.query.keyword;
-    const results = await searchService.search(keyword);
-    apiResponse.success(res, results);
-  } catch (error) {
-    apiResponse.error(res, error.message);
+    const env = c.env;
+    const keyword = c.req.query('keyword') || '';
+    const results = await searchService.search(env, keyword);
+    return apiResponse.success(c, results);
+  } catch (err) {
+    return apiResponse.error(c, err.message);
   }
 };
 
-module.exports = {
-  search,
-};
+module.exports = { search };

@@ -1,15 +1,27 @@
-// 导入必要的 API 函数
-import { getWebsiteGroups, getWebsites, getAllDockers, getDockerGroups } from './api.js';
+// dashboardWorker.js
+// 注意：Worker 线程没有 localStorage/window，不能使用 config.js
+// backendUrl 由主线程通过 postMessage 传入
+
+let _backendUrl = '/api';
+
+async function apiFetch(path) {
+    const response = await fetch(`${_backendUrl}${path}`);
+    const data = await response.json();
+    if (!data.success) throw new Error(data.error || 'API request failed');
+    return data.data;
+}
 
 /**
  * 获取主仪表盘数据，包括网站和 Docker 数据
  */
 async function fetchMainDashboardData() {
     try {
-        const websiteGroups = await getWebsiteGroups();
-        const websites = await getWebsites();
-        const dockerGroups = await getDockerGroups();
-        const dockers = await getAllDockers();
+        const [websiteGroups, websites, dockerGroups, dockers] = await Promise.all([
+            apiFetch('/website-groups'),
+            apiFetch('/websites'),
+            apiFetch('/docker-groups'),
+            apiFetch('/dockers'),
+        ]);
 
         // 验证数据是否为数组
         if (!Array.isArray(websiteGroups)) {
@@ -42,7 +54,7 @@ async function fetchMainDashboardData() {
             websites: Array.isArray(websites) ? websites : [],
             dockerGroups: Array.isArray(dockerGroups) ? dockerGroups : [],
             dockers: Array.isArray(dockers) ? dockers : [],
-            allGroups // 确保返回了 allGroups
+            allGroups
         };
     } catch (error) {
         console.error('Failed to fetch main dashboard data:', error);
@@ -52,10 +64,23 @@ async function fetchMainDashboardData() {
 
 // 监听主线程的消息
 self.addEventListener('message', async (event) => {
-    if (event.data === 'fetchData') {
+    const msg = event.data;
+    // 支持携带 backendUrl 的对象消息：{ type: 'fetchData', backendUrl: '...' }
+    if (msg && typeof msg === 'object' && msg.type === 'fetchData') {
+        if (msg.backendUrl) {
+            _backendUrl = msg.backendUrl;
+        }
         const data = await fetchMainDashboardData();
         if (data) {
-            self.postMessage(data); // 将数据发送回主线程
+            self.postMessage(data);
+        } else {
+            self.postMessage({ type: 'error', message: 'Failed to fetch data' });
+        }
+    } else if (msg === 'fetchData') {
+        // 兼容旧的字符串消息格式
+        const data = await fetchMainDashboardData();
+        if (data) {
+            self.postMessage(data);
         } else {
             self.postMessage({ type: 'error', message: 'Failed to fetch data' });
         }

@@ -1,35 +1,48 @@
 // backend/services/analyticsService.js
-const fileHandler = require('../utils/fileHandler');
-const { WEBSITE_DATA_FILE_PATH } = require('../config/constants');
+const { execSQL, queryOne, queryAll } = require('../utils/fileHandler');
 
 /**
- * @description 更新网站的最后访问时间
- * @param {string} websiteId - 网站ID
+ * 更新网站的最后访问时间
  */
-const updateLastClickTime = async (websiteId) => {
+const updateLastClickTime = async (env, websiteId) => {
   try {
-    // 读取网站数据
-    const data = await fileHandler.readData(WEBSITE_DATA_FILE_PATH);
-    
-    // 查找并更新对应网站的最后访问时间
-    const website = data.websites.find(w => w.id === websiteId);
-    if (website) {
-      // 获取北京时间（UTC+8）
-      const now = new Date();
-      const beijingTime = new Date(now.getTime() + 8 * 60 * 60 * 1000);
-      website.lastAccessTime = beijingTime.toISOString();
-      
-      await fileHandler.writeData(WEBSITE_DATA_FILE_PATH, data);
-      return true;
-    }
-    
-    return false;
+    const now = new Date().toISOString();
+    const { changes } = await execSQL(
+      env,
+      'UPDATE websites SET last_access_time = ? WHERE id = ?',
+      [now, websiteId]
+    );
+    return changes > 0;
   } catch (error) {
     console.error('Error updating website last access time:', error);
     throw error;
   }
 };
 
+/**
+ * 获取访问统计（按最后访问时间倒序，取前 N 条）
+ */
+const getAnalytics = async (env, limit = 20) => {
+  try {
+    const rows = await queryAll(
+      env,
+      'SELECT id, name, url, favicon_url, last_access_time FROM websites WHERE last_access_time IS NOT NULL ORDER BY last_access_time DESC LIMIT ?',
+      [limit]
+    );
+    return rows.map(r => ({
+      id: r.id,
+      name: r.name,
+      url: r.url,
+      faviconUrl: r.favicon_url,
+      lastAccessTime: r.last_access_time,
+    }));
+  } catch (error) {
+    console.error('Error getting analytics:', error);
+    throw error;
+  }
+};
+
 module.exports = {
-  updateLastClickTime
+  updateLastClickTime,
+  getAnalytics,
 };

@@ -4,11 +4,15 @@ import { SELECTORS, elements, initializeDOMElements } from './modules/eventDomMa
 import { renderDashboardWithData } from './modules/mainDashboardService.js';
 import { dockerUpdateInfoAll } from './modules/dockerIfonUpdate.js';
 import { initGroupOrderService } from './modules/groupOrderService.js';
+import { initBackendSettingService } from './modules/backendSettingService.js';
 // import { restartDocker } from './modules/dockerInteractionService.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
     // 初始化 DOM 元素
     initializeDOMElements();
+
+    // 初始化后端地址设置服务
+    initBackendSettingService();
 
     // 初始化仪表盘和 Docker 容器数据渲染
     await Promise.all([

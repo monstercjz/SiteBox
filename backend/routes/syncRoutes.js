@@ -1,31 +1,14 @@
 // backend/routes/syncRoutes.js
-const express = require('express');
-const router = express.Router();
+const { Hono } = require('hono');
 const syncController = require('../controllers/syncController');
-const websiteController = require('../controllers/websiteController');
 
-/**
- * @route GET /export
- * @description 导出数据
- */
-router.get('/export', syncController.exportData);
-/**
- * @route POST /import
- * @description 导入数据
- */
-router.post('/import', syncController.importData);
-/**
- * @route POST /history/restore
- * @description 恢复到指定版本
- */
-router.post('/history/restore', syncController.restoreData);
-/**
- * @route POST /moveToTrash
- * @description 记录网站信息
- * @body {websiteIds: string[]}
- */
-router.post('/moveToTrash', syncController.moveToTrash);
+const app = new Hono();
 
+app.get('/export',              (c) => syncController.exportData(c));
+app.post('/import',             (c) => syncController.importData(c));
+app.get('/backups',             (c) => syncController.listBackups(c));
+app.post('/history/restore',    (c) => syncController.restoreData(c));
+app.post('/moveToTrash',        (c) => syncController.moveToTrash(c));
+app.get('/history',             (c) => syncController.getHistory(c));
 
-
-module.exports = router;
+module.exports = app;

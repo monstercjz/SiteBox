@@ -1,35 +1,46 @@
 // backend/services/searchService.js
-const fileHandler = require('../utils/fileHandler');
-
-const dataFilePath = 'backend/data/sites-data.json';
+const { queryAll } = require('../utils/fileHandler');
 
 /**
- * @description 根据关键词搜索分组和网站记录
+ * 根据关键词搜索分组和网站
  */
-const search = async (keyword) => {
-  const data = await fileHandler.readData(dataFilePath);
-  const groups = data.groups || [];
-  const websites = data.websites || [];
+const search = async (env, keyword) => {
+  if (!keyword || keyword.trim() === '') return [];
 
-  const results = [];
+  const likeKeyword = `%${keyword}%`;
 
-  if (keyword) {
-    const lowerCaseKeyword = keyword.toLowerCase();
-    groups.forEach(group => {
-      if (group.name.toLowerCase().includes(lowerCaseKeyword)) {
-        results.push({ type: 'group', ...group });
-      }
-    });
+  const [groups, websites] = await Promise.all([
+    queryAll(
+      env,
+      "SELECT * FROM groups WHERE name LIKE ? AND group_type = 'website-group'",
+      [likeKeyword]
+    ),
+    queryAll(
+      env,
+      'SELECT * FROM websites WHERE name LIKE ? OR url LIKE ?',
+      [likeKeyword, likeKeyword]
+    ),
+  ]);
 
-    websites.forEach(website => {
-      if (
-        website.name.toLowerCase().includes(lowerCaseKeyword) ||
-        website.url.toLowerCase().includes(lowerCaseKeyword)
-      ) {
-        results.push({ type: 'website', ...website });
-      }
-    });
-  }
+  const results = [
+    ...groups.map(g => ({
+      type: 'group',
+      id: g.id,
+      name: g.name,
+      groupType: g.group_type,
+      dashboardType: g.dashboard_type,
+    })),
+    ...websites.map(w => ({
+      type: 'website',
+      id: w.id,
+      groupId: w.group_id,
+      name: w.name,
+      url: w.url,
+      description: w.description,
+      faviconUrl: w.favicon_url,
+    })),
+  ];
+
   return results;
 };
 

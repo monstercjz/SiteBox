@@ -1,55 +1,28 @@
-
-// backend/routes/dockerRoutes.js (简化后的代码)
-const express = require('express');
-const router = express.Router();
+// backend/routes/dockerRoutes.js
+const { Hono } = require('hono');
 const dockerController = require('../controllers/dockerController');
 
-/**
- * @route GET /dockers
- * @description 获取所有docker记录
- */
-router.get('/', dockerController.getAlldockers);
+const app = new Hono();
 
-/**
- * @route GET /groups/:groupId/dockers
- * @description 获取某个分组下的所有docker记录
- */
-router.get('/groups/:groupId/dockers', dockerController.getdockersByGroupId);
-/**
- * @route POST /groups/:groupId/dockers
- * @description 在某个分组下创建新的docker记录
- */
-router.post('/groups/:groupId/dockers', dockerController.createDocker);
-/**
- * @route get /realdockerinfo
- * @description 渲染全部dockercontainer实时信息
- */
-router.get('/realdockerinfo', dockerController.getRealdockerinfo);
-/**
- * @route get /realdockerinfo/:dockerId
- * @description 渲染单个dockercontainer实时信息
- */
-router.get('/realdockerinfobyId/:dockerId', dockerController.getRealdockerinfobyId);
-/**
- * @route GET /dockers/:dockerId
- * @description 获取单个docker记录详情
- */
-router.get('/:dockerId', dockerController.getdockerById);
-/**
- * @route PUT /dockers/:dockerId
- * @description 更新docker记录信息
- */
-router.put('/:dockerId', dockerController.updateDocker);
-/**
- * @route DELETE /dockers/:dockerId
- * @description 删除docker记录
- */
-router.delete('/:dockerId', dockerController.deleteDocker);
+app.get('/',                               (c) => dockerController.getAlldockers(c));
+app.post('/',                              (c) => dockerController.createDocker(c));
+app.get('/groups/:groupId/dockers',        (c) => dockerController.getdockersByGroupId(c));
+app.post('/groups/:groupId/dockers',       (c) => dockerController.createDocker(c));
 
-// 添加 启动、停止、重启 容器的路由
-router.post('/:dockerId/start', dockerController.startDockerController);
-router.post('/:dockerId/stop', dockerController.stopDockerController);
-router.post('/:dockerId/restart', dockerController.restartDockerController);
+app.get('/real',                           (c) => dockerController.getAllServerRealdockerinfo(c));
+app.get('/realdockerinfo',                 (c) => dockerController.getAllServerRealdockerinfo(c));
+app.get('/real/records',                   (c) => dockerController.getRecordRealdockerinfo(c));
+app.get('/realdockerinfobyId/:dockerId',   (c) => dockerController.getRealdockerinfobyId(c));
 
+app.get('/:dockerId',                      (c) => dockerController.getdockerById(c));
+app.put('/:dockerId',                      (c) => dockerController.updateDocker(c));
+app.delete('/:dockerId',                   (c) => dockerController.deleteDocker(c));
+app.get('/:dockerItemId/real',             (c) => dockerController.getRealdockerinfobyId(c));
+app.post('/:dockerItemId/start',           (c) => dockerController.startDocker(c));
+app.post('/:dockerItemId/stop',            (c) => dockerController.stopDocker(c));
+app.post('/:dockerItemId/restart',         (c) => dockerController.restartDocker(c));
+app.post('/:dockerId/start',               (c) => dockerController.startDocker(c));
+app.post('/:dockerId/stop',                (c) => dockerController.stopDocker(c));
+app.post('/:dockerId/restart',             (c) => dockerController.restartDocker(c));
 
-module.exports = router;
+module.exports = app;

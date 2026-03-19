@@ -2,58 +2,44 @@
 const miscService = require('../services/miscService');
 const apiResponse = require('../utils/apiResponse');
 
-/**
- * @description 获取系统状态
- */
-const getStatus = async (req, res) => {
+const getStatus = async (c) => {
   try {
-    const status = await miscService.getStatus();
-    apiResponse.success(res, status);
-  } catch (error) {
-    apiResponse.error(res, error.message);
+    const result = await miscService.getStatus();
+    return apiResponse.success(c, result);
+  } catch (err) {
+    return apiResponse.error(c, err.message);
   }
 };
 
-/**
- * @description 获取帮助文档
- */
-const getHelp = async (req, res) => {
+const getHelp = async (c) => {
   try {
-    const help = await miscService.getHelp();
-    apiResponse.success(res, help);
-  } catch (error) {
-    apiResponse.error(res, error.message);
+    const result = await miscService.getHelp();
+    return apiResponse.success(c, result);
+  } catch (err) {
+    return apiResponse.error(c, err.message);
   }
 };
 
-/**
- * @description 更新网站名称
- */
-const updateSiteName = async (req, res) => {
-    try {
-        const { newSiteName } = req.body;
-        console.log('newSiteName:', newSiteName);
-        const result = await miscService.updateSiteName(newSiteName);
-        apiResponse.success(res, result);
-    } catch (error) {
-        apiResponse.error(res, error.message);
-    }
-};
-/**
- * @description 获取网站名称
- */
-const getSiteName = async (req, res) => {
+const getSiteName = async (c) => {
   try {
-      const siteName = await miscService.getSiteName();
-      apiResponse.success(res, siteName);
-  } catch (error) {
-      apiResponse.error(res, error.message);
+    const env = c.env;
+    const result = await miscService.getSiteName(env);
+    return apiResponse.success(c, result);
+  } catch (err) {
+    return apiResponse.error(c, err.message);
   }
 };
-module.exports = {
-  getStatus,
-  getHelp,
-  updateSiteName,
-  getSiteName
+
+const updateSiteName = async (c) => {
+  try {
+    const env = c.env;
+    const body = await c.req.json();
+    const siteName = body.siteName ?? body.newSiteName;
+    const result = await miscService.updateSiteName(env, siteName);
+    return apiResponse.success(c, result);
+  } catch (err) {
+    return apiResponse.error(c, err.message);
+  }
 };
 
+module.exports = { getStatus, getHelp, getSiteName, updateSiteName };

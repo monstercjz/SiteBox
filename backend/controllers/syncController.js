@@ -2,57 +2,67 @@
 const syncService = require('../services/syncService');
 const apiResponse = require('../utils/apiResponse');
 
-/**
- * @description 导出数据
- */
-const exportData = async (req, res) => {
+const exportData = async (c) => {
   try {
-    const data = await syncService.exportData();
-    apiResponse.success(res, data);
-  } catch (error) {
-    apiResponse.error(res, error.message);
+    const env = c.env;
+    const data = await syncService.exportData(env);
+    return apiResponse.success(c, data);
+  } catch (err) {
+    return apiResponse.error(c, err.message);
   }
 };
 
-/**
- * @description 导入数据
- */
-const importData = async (req, res) => {
+const importData = async (c) => {
   try {
-    await syncService.importData(req.body);
-    apiResponse.success(res, { message: 'Data imported successfully' });
-  } catch (error) {
-    apiResponse.error(res, error.message);
+    const env = c.env;
+    const body = await c.req.json();
+    await syncService.importData(env, body);
+    return apiResponse.success(c, { message: 'Data imported successfully' });
+  } catch (err) {
+    return apiResponse.error(c, err.message);
   }
 };
 
-/**
- * @description 恢复到指定版本
- */
-const restoreData = async (req, res) => {
-    try {
-        await syncService.restoreData(req.body.versionId);
-        apiResponse.success(res, { message: 'Data restored successfully' });
-    } catch (error) {
-        apiResponse.error(res, error.message);
-    }
+const restoreData = async (c) => {
+  try {
+    const env = c.env;
+    const body = await c.req.json();
+    const result = await syncService.restoreData(env, body.backupId || body.versionId);
+    return apiResponse.success(c, result);
+  } catch (err) {
+    return apiResponse.error(c, err.message);
+  }
 };
 
-/**
- * @description 移动网站到回收站
- */
-const moveToTrash = async (req, res) => {
-    try {
-        const result = await syncService.moveToTrash(req.body.websiteIds);
-        apiResponse.success(res, result);
-    } catch (error) {
-        apiResponse.error(res, error.message);
-    }
+const moveToTrash = async (c) => {
+  try {
+    const env = c.env;
+    const body = await c.req.json();
+    const result = await syncService.moveToTrash(env, body.websiteIds);
+    return apiResponse.success(c, result);
+  } catch (err) {
+    return apiResponse.error(c, err.message);
+  }
 };
 
-module.exports = {
-  exportData,
-  importData,
-  restoreData,
-  moveToTrash
+const listBackups = async (c) => {
+  try {
+    const env = c.env;
+    const backups = await syncService.listBackups(env);
+    return apiResponse.success(c, backups);
+  } catch (err) {
+    return apiResponse.error(c, err.message);
+  }
 };
+
+const getHistory = async (c) => {
+  try {
+    const env = c.env;
+    const history = await syncService.getHistory(env);
+    return apiResponse.success(c, history);
+  } catch (err) {
+    return apiResponse.error(c, err.message);
+  }
+};
+
+module.exports = { exportData, importData, restoreData, moveToTrash, listBackups, getHistory };

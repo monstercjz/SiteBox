@@ -1,97 +1,78 @@
 // backend/controllers/dockerGroupController.js
 const dockerGroupService = require('../services/dockerGroupService');
-const apiResponse = require('../utils/apiResponse');
 const syncService = require('../services/syncService');
+const apiResponse = require('../utils/apiResponse');
 
-/**
- * @description 获取所有 Docker 容器分组
- */
-const getAllGroups = async (req, res) => {
+const getAllGroups = async (c) => {
   try {
-    const groups = await dockerGroupService.getAllGroups();
-    apiResponse.success(res, groups);
-  } catch (error) {
-    apiResponse.error(res, error.message);
+    const env = c.env;
+    const groups = await dockerGroupService.getAllGroups(env);
+    return apiResponse.success(c, groups);
+  } catch (err) {
+    return apiResponse.error(c, err.message);
   }
 };
 
-/**
- * @description 创建新的 Docker 容器分组
- */
-const createGroup = async (req, res) => {
+const createGroup = async (c) => {
   try {
-    const group = await dockerGroupService.createGroup(req.body);
-    await syncService.backupData(); // 调用备份函数
-    apiResponse.success(res, group, 201);
-  } catch (error) {
-    apiResponse.error(res, error.message);
+    const env = c.env;
+    const body = await c.req.json();
+    const group = await dockerGroupService.createGroup(env, body);
+    await syncService.backupData(env);
+    return apiResponse.success(c, group, 201);
+  } catch (err) {
+    return apiResponse.error(c, err.message);
   }
 };
 
-/**
- * @description 获取单个 Docker 容器分组详情
- */
-const getGroupById = async (req, res) => {
+const getGroupById = async (c) => {
   try {
-    const group = await dockerGroupService.getGroupById(req.params.groupId);
-    if (!group) {
-      return apiResponse.error(res, 'Group not found', 404);
-    }
-    apiResponse.success(res, group);
-  } catch (error) {
-    apiResponse.error(res, error.message);
+    const env = c.env;
+    const { groupId } = c.req.param();
+    const group = await dockerGroupService.getGroupById(env, groupId);
+    if (!group) return apiResponse.error(c, 'Group not found', 404);
+    return apiResponse.success(c, group);
+  } catch (err) {
+    return apiResponse.error(c, err.message);
   }
 };
 
-/**
- * @description 更新 Docker 容器分组信息
- */
-const updateGroup = async (req, res) => {
+const updateGroup = async (c) => {
   try {
-    const group = await dockerGroupService.updateGroup(req.params.groupId, req.body);
-    if (!group) {
-      return apiResponse.error(res, 'Group not found', 404);
-    }
-    await syncService.backupData(); // 调用备份函数
-    apiResponse.success(res, group);
-  } catch (error) {
-     apiResponse.error(res, error.message);
+    const env = c.env;
+    const { groupId } = c.req.param();
+    const body = await c.req.json();
+    const group = await dockerGroupService.updateGroup(env, groupId, body);
+    if (!group) return apiResponse.error(c, 'Group not found', 404);
+    await syncService.backupData(env);
+    return apiResponse.success(c, group);
+  } catch (err) {
+    return apiResponse.error(c, err.message);
   }
 };
 
-/**
- * @description 删除 Docker 容器分组
- */
-const deleteGroup = async (req, res) => {
+const deleteGroup = async (c) => {
   try {
-    const group = await dockerGroupService.deleteGroup(req.params.groupId);
-    if (!group) {
-      return apiResponse.error(res, 'Group not found', 404);
-    }
-    await syncService.backupData(); // 调用备份函数
-    apiResponse.success(res, { message: 'Group deleted successfully' });
-  } catch (error) {
-    apiResponse.error(res, error.message);
+    const env = c.env;
+    const { groupId } = c.req.param();
+    const result = await dockerGroupService.deleteGroup(env, groupId);
+    if (!result) return apiResponse.error(c, 'Group not found', 404);
+    await syncService.backupData(env);
+    return apiResponse.success(c, { message: 'Group deleted successfully' });
+  } catch (err) {
+    return apiResponse.error(c, err.message);
   }
 };
 
-/**
- * @description Docker 容器分组排序
- */
-const reorderGroups = async (req, res) => {
-    try {
-        const groups = await dockerGroupService.reorderGroups(req.body);
-        apiResponse.success(res, groups);
-    } catch (error) {
-        apiResponse.error(res, error.message);
-    }
+const reorderGroups = async (c) => {
+  try {
+    const env = c.env;
+    const body = await c.req.json();
+    const groups = await dockerGroupService.reorderGroups(env, body);
+    return apiResponse.success(c, groups);
+  } catch (err) {
+    return apiResponse.error(c, err.message);
+  }
 };
 
-module.exports = {
-  getAllGroups,
-  createGroup,
-  getGroupById,
-  updateGroup,
-  deleteGroup,
-  reorderGroups
-};
+module.exports = { getAllGroups, createGroup, getGroupById, updateGroup, deleteGroup, reorderGroups };

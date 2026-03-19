@@ -1,176 +1,201 @@
 // backend/services/syncService.js
-const fileHandler = require('../utils/fileHandler');
-const { v4: uuidv4 } = require('uuid');
+const { execSQL, queryOne, queryAll, batchExec } = require('../utils/fileHandler');
 
-const { WEBSITE_DATA_FILE_PATH } = require('../config/constants');
-const { HISTORY_DATA_FILE_PATH } = require('../config/constants');
+const MAX_BACKUP_VERSIONS = 5;
 const ARCHIVE_SUCCESS_MESSAGE = 'Websites info archived successfully';
 
 /**
- * @description 导出数据
+ * 将 groups + websites + dockers 全量数据导出为 JSON
  */
-const exportData = async () => {
-  const data = await fileHandler.readData(WEBSITE_DATA_FILE_PATH);
-  console.log('Websites info exported successfully',data);
-  return {
-    groups: data.groups,
-    websites: data.websites,
-    nextGroupId: data.nextGroupId,
-    nextWebsiteId: data.nextWebsiteId,
-  };
+const exportData = async (env) => {
+  const groups = await queryAll(env, 'SELECT * FROM groups ORDER BY order_index ASC');
+  const websites = await queryAll(env, 'SELECT * FROM websites ORDER BY order_index ASC');
+  const dockers = await queryAll(env, 'SELECT * FROM dockers ORDER BY created_at ASC');
+
+  return { groups, websites, dockers };
+};
+
+const normalizeGroups = (data) => {
+  if (Array.isArray(data.groups)) return data.groups;
+  const websiteGroups = Array.isArray(data.websiteGroups) ? data.websiteGroups : [];
+  const dockerGroups = Array.isArray(data.dockerGroups) ? data.dockerGroups : [];
+  return [...websiteGroups, ...dockerGroups];
 };
 
 /**
- *  @description 导入数据
+ * 导入数据（先备份，再清空，再插入）
  */
-const importData = async (importData) => {
-    await backupData();
-    await fileHandler.writeData(WEBSITE_DATA_FILE_PATH, importData);
+const importData = async (env, importedData) => {
+  await backupData(env);
+
+  const groups = normalizeGroups(importedData || {});
+  const websites = Array.isArray(importedData?.websites) ? importedData.websites : [];
+  const dockers = Array.isArray(importedData?.dockers) ? importedData.dockers : [];
+
+  const statements = [];
+
+  // 清空所有表
+  statements.push({ sql: 'DELETE FROM dockers', params: [] });
+  statements.push({ sql: 'DELETE FROM websites', params: [] });
+  statements.push({ sql: 'DELETE FROM groups', params: [] });
+
+  // 插入 groups
+  for (const g of groups) {
+    statements.push({
+      sql: 'INSERT OR REPLACE INTO groups (id, name, order_index, is_collapsible, group_type, dashboard_type, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)',
+      params: [
+        g.id,
+        g.name,
+        g.order_index ?? g.order ?? 0,
+        g.is_collapsible ?? (typeof g.isCollapsible === 'boolean' ? (g.isCollapsible ? 1 : 0) : 1),
+        g.group_type ?? g.groupType,
+        g.dashboard_type ?? g.dashboardType,
+        g.created_at || g.createdAt || new Date().toISOString(),
+      ],
+    });
+  }
+
+  // 插入 websites
+  for (const w of websites) {
+    statements.push({
+      sql: 'INSERT OR REPLACE INTO websites (id, group_id, name, url, description, favicon_url, last_access_time, order_index, is_accessible) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+      params: [
+        w.id,
+        w.group_id ?? w.groupId,
+        w.name,
+        w.url,
+        w.description ?? '',
+        w.favicon_url ?? w.faviconUrl ?? '',
+        w.last_access_time ?? w.lastAccessTime ?? null,
+        w.order_index ?? w.order ?? 0,
+        w.is_accessible ?? (typeof w.isAccessible === 'boolean' ? (w.isAccessible ? 1 : 0) : 1),
+      ],
+    });
+  }
+
+  // 插入 dockers
+  for (const d of dockers) {
+    statements.push({
+      sql: 'INSERT OR REPLACE INTO dockers (id, group_id, name, display_name, url, url_port, description, server, server_port, favicon_url, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+      params: [
+        d.id,
+        d.group_id ?? d.groupId,
+        d.name,
+        d.display_name ?? d.displayName ?? d.name,
+        d.url ?? '',
+        d.url_port ?? d.urlPort ?? null,
+        d.description ?? '',
+        d.server,
+        d.server_port ?? d.serverPort,
+        d.favicon_url ?? d.faviconUrl ?? '',
+        d.created_at || d.createdAt || new Date().toISOString(),
+        d.updated_at || d.updatedAt || new Date().toISOString(),
+      ],
+    });
+  }
+
+  await batchExec(env, statements);
 };
 
 /**
- * @description 恢复到指定版本
+ * 恢复到指定备份版本
  */
-const restoreData = async (versionId) => {
-    const historyData = await fileHandler.readData(historyFilePath);
-    const version = (historyData.versions || []).find(version => version.versionId === versionId);
-    if (!version) {
-        throw new Error('Version not found');
-    }
-    await fileHandler.writeData(WEBSITE_DATA_FILE_PATH, version.data);
-};
+const restoreData = async (env, backupId) => {
+  const backup = await queryOne(env, 'SELECT * FROM backups WHERE id = ?', [backupId]);
+  if (!backup) {
+    throw new Error('备份版本不存在');
+  }
 
-/**
- * @description 记录网站信息
- * @description 记录网站信息
- */
-const moveToTrash = async (websiteIds) => {
-    try {
-        // 读取网站数据
-        const data = await fileHandler.readData(WEBSITE_DATA_FILE_PATH);
-        if (!data || !data.websites) {
-            throw new Error('Invalid website data');
-        }
-        
-        // 读取历史数据
-        const historyData = await fileHandler.readData(HISTORY_DATA_FILE_PATH);
-        const existingWebsiteInfos = historyData?.websiteInfos || [];
-
-        // 如果 websiteIds 不是数组，则转换为数组
-        const idsArray = Array.isArray(websiteIds) ? websiteIds : [websiteIds];
-        const websitesToDelete = new Set(idsArray);
-        const websiteInfos = [];
-
-        // 获取所有网站
-        const websites = data.websites;
-
-        // 循环处理每个网站 ID
-        for (const websiteId of idsArray) {
-            const website = websites.find(item => item.id === websiteId);
-            // 如果网站不存在，则输出错误信息并跳过
-            if (!website) {
-                console.error(`Website with id ${websiteId} not found`);
-                continue;
-            }
-            // 提取网站信息
-            const websiteInfo = `${website.name}+${website.url}+${website.description}`;
-            websiteInfos.push(websiteInfo);
-        }
-
-        // 将网站信息添加到历史数据
-        historyData.websiteInfos = [...existingWebsiteInfos, ...websiteInfos];
-
-        // 从网站数据中删除已归档的网站
-        data.websites = websites.filter(website => !websitesToDelete.has(website.id));
-
-        // 写入历史数据
-        await fileHandler.writeData(HISTORY_DATA_FILE_PATH, historyData);
-
-        // 写入网站数据
-        await fileHandler.writeData(WEBSITE_DATA_FILE_PATH, data);
-
-        return { message: ARCHIVE_SUCCESS_MESSAGE };
-    } catch (error) {
-        console.error('Error archiving websites:', error);
-        throw error; // 重新抛出异常以便调用者处理
-    }
-};
-
-const path = require('path');
-const fs = require('fs').promises;
-
-const BACKUP_DIR = path.join(__dirname, '../data/backups'); // 备份文件存放目录
-const MAX_BACKUP_VERSIONS = 5; // 最大备份版本数
-
-/**
- * @description 备份 sites-data.json 文件
- */
-const backupData = async () => {
+  let data;
   try {
-    const data = await fileHandler.readData(WEBSITE_DATA_FILE_PATH);
-    // Get current time in China timezone (UTC+8)
-    const now = new Date();
-    const chinaTime = new Date(now.getTime() + (8 * 60 * 60 * 1000));
-    const timestamp = chinaTime.toISOString().replace(/:/g, '-').replace('T', '_');
-    const backupFilename = path.join(BACKUP_DIR, `sites-data-backup-${timestamp}.json`);
+    data = JSON.parse(backup.data);
+  } catch {
+    throw new Error('备份数据损坏，无法解析');
+  }
 
-    // 确保备份目录存在
-    await fs.mkdir(BACKUP_DIR, { recursive: true });
+  await importData(env, data);
+  return { message: '数据已恢复到备份版本', backupId };
+};
 
-    await fileHandler.writeData(backupFilename, data);
+/**
+ * 移入回收站（记录到 history 表，并从 websites 表删除）
+ */
+const moveToTrash = async (env, websiteIds) => {
+  const idsArray = Array.isArray(websiteIds) ? websiteIds : [websiteIds];
 
-    // 清理旧备份文件，只保留最新 MAX_BACKUP_VERSIONS 个
-    await cleanupOldBackups();
+  const statements = [];
 
-    console.log('sites-data.json backed up successfully');
+  for (const id of idsArray) {
+    const website = await queryOne(env, 'SELECT * FROM websites WHERE id = ?', [id]);
+    if (!website) {
+      console.error(`Website with id ${id} not found`);
+      continue;
+    }
+    const websiteInfo = `${website.name}+${website.url}+${website.description}`;
+    statements.push({
+      sql: 'INSERT INTO history (website_info, created_at) VALUES (?, ?)',
+      params: [websiteInfo, new Date().toISOString()],
+    });
+    statements.push({
+      sql: 'DELETE FROM websites WHERE id = ?',
+      params: [id],
+    });
+  }
+
+  if (statements.length > 0) {
+    await batchExec(env, statements);
+  }
+
+  return { message: ARCHIVE_SUCCESS_MESSAGE };
+};
+
+/**
+ * 备份当前数据到 backups 表，最多保留 MAX_BACKUP_VERSIONS 条
+ */
+const backupData = async (env) => {
+  try {
+    const data = await exportData(env);
+    const json = JSON.stringify(data);
+    const now = new Date().toISOString();
+
+    await execSQL(env, 'INSERT INTO backups (data, created_at) VALUES (?, ?)', [json, now]);
+
+    // 清理超量备份（保留最新的 MAX_BACKUP_VERSIONS 条）
+    const allBackups = await queryAll(env, 'SELECT id FROM backups ORDER BY id DESC');
+    if (allBackups.length > MAX_BACKUP_VERSIONS) {
+      const toDelete = allBackups.slice(MAX_BACKUP_VERSIONS);
+      const deleteStatements = toDelete.map((b) => ({
+        sql: 'DELETE FROM backups WHERE id = ?',
+        params: [b.id],
+      }));
+      await batchExec(env, deleteStatements);
+    }
+
+    console.log('Data backed up successfully at', now);
   } catch (error) {
-    console.error('Error backing up sites-data.json:', error);
+    console.error('Error backing up data:', error);
     throw error;
   }
 };
 
 /**
- * @description 清理旧备份文件，只保留最新的 MAX_BACKUP_VERSIONS 个
+ * 获取所有备份列表（不含数据内容，只返回 id 和 created_at）
  */
-const cleanupOldBackups = async () => {
-  try {
-    const files = await fs.readdir(BACKUP_DIR);
-    const backupFilesWithStats = await Promise.all(
-      files
-        .filter(file => file.startsWith('sites-data-backup-') && file.endsWith('.json'))
-        .map(async file => {
-          const filePath = path.join(BACKUP_DIR, file);
-          const stats = await fs.stat(filePath);
-          return { 
-            name: file,
-            path: filePath,
-            time: stats.mtime.getTime()
-          };
-        })
-    );
+const listBackups = async (env) => {
+  const rows = await queryAll(env, 'SELECT id, created_at FROM backups ORDER BY id DESC');
+  return rows;
+};
 
-    const now = Date.now();
-    const FIVE_MINUTES = 5 * 60 * 1000;
-    
-    // Keep all backups from last 5 minutes
-    const recentBackups = backupFilesWithStats.filter(f => now - f.time < FIVE_MINUTES);
-    
-    // For older backups, keep only latest 5
-    const oldBackups = backupFilesWithStats
-      .filter(f => now - f.time >= FIVE_MINUTES)
-      .sort((a, b) => b.time - a.time) // Sort newest first
-      .slice(MAX_BACKUP_VERSIONS); // Keep only latest 5
-
-    // Files to delete are old backups beyond the limit
-    const filesToDelete = oldBackups;
-
-    for (const file of filesToDelete) {
-      await fs.unlink(file.path);
-      console.log(`Deleted old backup file: ${file.name}`);
-    }
-  } catch (error) {
-    console.error('Error cleaning up old backups:', error);
-  }
+/**
+ * 获取历史（回收站）记录
+ */
+const getHistory = async (env) => {
+  const rows = await queryAll(env, 'SELECT * FROM history ORDER BY created_at DESC');
+  return rows.map((r) => ({
+    id: r.id,
+    websiteInfo: r.website_info,
+    createdAt: r.created_at,
+  }));
 };
 
 module.exports = {
@@ -178,5 +203,7 @@ module.exports = {
   importData,
   restoreData,
   moveToTrash,
-  backupData
+  backupData,
+  listBackups,
+  getHistory,
 };

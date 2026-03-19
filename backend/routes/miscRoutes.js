@@ -1,28 +1,12 @@
 // backend/routes/miscRoutes.js
-const express = require('express');
-const router = express.Router();
+const { Hono } = require('hono');
 const miscController = require('../controllers/miscController');
 
-/**
- * @route GET /status
- * @description 获取系统状态
- */
-router.get('/status', miscController.getStatus);
-/**
- * @route GET /help
- * @description 获取帮助文档
- */
-router.get('/help', miscController.getHelp);
-/**
- * @route GET /gettings/siteName
- * @description 获取网站名称
- */
-router.get('/gettings/siteName', miscController.getSiteName);
+const app = new Hono();
 
-/**
- * @route POST /misc/siteName
- * @description 更新网站名称
- */
-router.post('/siteName', miscController.updateSiteName);
+app.get('/status',              (c) => miscController.getStatus(c));
+app.get('/help',                (c) => miscController.getHelp(c));
+app.get('/gettings/siteName',   (c) => miscController.getSiteName(c));
+app.post('/siteName',           (c) => miscController.updateSiteName(c));
 
-module.exports = router;
+module.exports = app;

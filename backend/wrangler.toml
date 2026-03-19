@@ -1,0 +1,12 @@
+name = "sitebox-backend"
+main = "server.js"
+compatibility_date = "2024-01-01"
+compatibility_flags = ["nodejs_compat"]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "sitebox"
+database_id = "placeholder-replace-after-wrangler-d1-create"
+
+[vars]
+DEPLOY_MODE = "cloudflare"

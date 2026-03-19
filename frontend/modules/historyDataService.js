@@ -47,8 +47,8 @@ export async function exportData() {
         if (!responseexportdatas.success) throw new Error(`HTTP error! status: ${response.status}`);
         // console.log('responseexportdata', responseexportdatas);
         const responseexportdata = responseexportdatas.data;
-        const { websites, groups, nextGroupId, nextWebsiteId } = responseexportdata;
-        const jsonString = JSON.stringify({ websites, groups, nextGroupId, nextWebsiteId }, null, 2);
+        const { websites, groups, dockers } = responseexportdata;
+        const jsonString = JSON.stringify({ websites, groups, dockers }, null, 2);
         const blob = new Blob([jsonString], { type: 'application/json' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');

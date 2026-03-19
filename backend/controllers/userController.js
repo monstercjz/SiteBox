@@ -2,44 +2,32 @@
 const userService = require('../services/userService');
 const apiResponse = require('../utils/apiResponse');
 
-/**
- * @description 获取用户设置
- */
-const getSettings = async (req, res) => {
+const getSettings = async (c) => {
   try {
-    const settings = await userService.getSettings();
-    apiResponse.success(res, settings);
-  } catch (error) {
-    apiResponse.error(res, error.message);
+    const env = c.env;
+    const settings = await userService.getSettings(env);
+    return apiResponse.success(c, settings);
+  } catch (err) {
+    return apiResponse.error(c, err.message);
+  }
+};
+
+const updateSettings = async (c) => {
+  try {
+    const env = c.env;
+    const body = await c.req.json();
+    const settings = await userService.updateSettings(env, body);
+    return apiResponse.success(c, settings);
+  } catch (err) {
+    return apiResponse.error(c, err.message);
   }
 };
 
 /**
- * @description 更新用户设置
+ * 上传自定义图标（Cloudflare 模式下不支持文件上传到本地，返回提示）
  */
-const updateSettings = async (req, res) => {
-  try {
-    const settings = await userService.updateSettings(req.body);
-    apiResponse.success(res, settings);
-  } catch (error) {
-    apiResponse.error(res, error.message);
-  }
+const uploadIcon = async (c) => {
+  return apiResponse.error(c, '自定义图标上传在 Cloudflare 模式下暂不支持，请使用外部 URL', 501);
 };
 
-/**
- * @description 上传自定义图标
- */
-const uploadIcon = async (req, res) => {
-    try {
-        // TODO: Implement icon upload logic
-        apiResponse.success(res, { message: 'Icon uploaded successfully' });
-    } catch (error) {
-        apiResponse.error(res, error.message);
-    }
-};
-
-module.exports = {
-  getSettings,
-  updateSettings,
-  uploadIcon
-};
+module.exports = { getSettings, updateSettings, uploadIcon };

@@ -1,536 +1,343 @@
 // backend/services/dockerService.js
-const Docker = require('dockerode');
-const fileHandler = require('../utils/fileHandler');
+const { execSQL, queryOne, queryAll } = require('../utils/fileHandler');
 const { v4: uuidv4 } = require('uuid');
 const Joi = require('joi');
 const logger = require('../utils/logger');
+const { processFavicon, DEFAULT_DOCKER_ICON_URL } = require('../utils/dockerfavicon.js');
 
-const { processFavicon } = require('../utils/dockerfavicon.js');
-const { DOCKER_DATA_FILE_PATH } = require('../config/constants');
-
-// 初始化 Docker 客户端 (连接到远程 Docker 主机)
-const docker = new Docker({
-  host: '192.168.3.245', // 远程 Docker 主机的 IP 地址
-  port: 2375, // Docker API 默认端口
-  protocol: 'http', // 使用 HTTP 协议
-});
-
-/**
- * Docker 数据结构定义
- * @typedef {Object} DockerItem
- * @property {string} id - 唯一标识
- * @property {string} groupId - 所属分组ID
- * @property {string} name - 显示名称
- * @property {string} url - 访问地址
- * @property {number} urlPort - 访问端口
- * @property {string} description - 描述信息
- * @property {string} faviconUrl - 图标地址
- * @property {string} server - Docker 服务器地址
- * @property {number} serverPort - Docker 服务器端口
- */
+const IS_CF_MODE = process.env.DEPLOY_MODE === 'cloudflare';
 
 // Joi 校验规则
 const CREATE_DOCKER_SCHEMA = Joi.object({
   groupId: Joi.string().uuid().required(),
   dockerData: Joi.object({
     name: Joi.string().required(),
-    displayName: Joi.string().min(3).max(50).optional().default(Joi.ref('name')), // 展示名字，默认值为 name
-    url: Joi.string(),
+    displayName: Joi.string().min(3).max(50).optional().default(Joi.ref('name')),
+    url: Joi.string().optional().allow(''),
     urlPort: Joi.number().port().allow('').empty('').optional(),
-    description: Joi.string().allow(''),
+    description: Joi.string().allow('').optional(),
     server: Joi.string().required(),
     serverPort: Joi.number().port().required(),
-    faviconUrl: Joi.string().uri()
-  }).required()
+    faviconUrl: Joi.string().uri().optional(),
+  }).required(),
 });
 
 const UPDATE_DOCKER_SCHEMA = Joi.object({
   dockerId: Joi.string().uuid().required(),
   dockerData: Joi.object({
-    groupId: Joi.string().uuid(),
+    groupId: Joi.string().uuid().optional(),
     name: Joi.string().required(),
-    displayName: Joi.string().min(3).max(50).optional().default(Joi.ref('name')), // 展示名字，默认值为 name
+    displayName: Joi.string().min(3).max(50).optional().default(Joi.ref('name')),
     url: Joi.string().required(),
     urlPort: Joi.number().port().allow('').empty('').optional(),
-    description: Joi.string().allow(''),
+    description: Joi.string().allow('').optional(),
     server: Joi.string().required(),
     serverPort: Joi.number().port().required(),
-    faviconUrl: Joi.string().uri()
-  }).required()
+    faviconUrl: Joi.string().uri().optional(),
+  }).required(),
 });
 
-// 错误处理
 const handleDockerError = (error, message) => {
   logger.error(`${message}: ${error.message}`);
   throw new Error(`${message}: ${error.message}`);
 };
 
 /**
- * @description 获取所有 Docker 容器实时信息 (从数据文件读取服务器信息并批量获取并且返回全部容器信息)
+ * 将数据库行转换为 docker 对象
  */
-const getAllServerRealdockerinfo = async () => {
-  try {
-    const dockerRecords = await getAlldockers(); // 从数据文件读取 Docker 记录 
-    if (!dockerRecords || dockerRecords.length === 0) {
-      return []; // 如果没有 Docker 记录，则返回空数组
-    }
-
-    // 提取去重的服务器列表
-    const servers = [...new Set(dockerRecords.map(d => `${d.server}:${d.serverPort}`))];
-    const dockerClients = {}; // 用于缓存 Docker 客户端
-    const allContainerInfoList = [];
-
-    for (const server of servers) {
-      const [serverHost, serverPort] = server.split(':');
-      const clientKey = `${serverHost}:${serverPort}`;
-
-      // 动态创建 Docker 客户端
-      if (!dockerClients[clientKey]) {
-        dockerClients[clientKey] = new Docker({
-          host: serverHost,
-          port: parseInt(serverPort, 10),
-          protocol: 'http',
-        });
-      }
-      const dockerClient = dockerClients[clientKey];
-
-      try {
-        const containers = await dockerClient.listContainers({ all: true });
-        const containerInfoList = await Promise.all(containers.map(async (containerInfo) => {
-          const container = dockerClient.getContainer(containerInfo.Id);
-          const stats = await container.stats({ stream: false });
-          const details = await container.inspect();
-
-          const dockerRecord = dockerRecords.find(record => `${record.server}:${record.serverPort}` === server && record.name === containerInfo.Names[0].substring(1)); // 查找匹配的 Docker 记录
-
-          return {
-            id: containerInfo.Id,
-            dockerItemId: dockerRecord ? dockerRecord.id : null, // 添加 dockerItemId
-            name: containerInfo.Names[0].substring(1),
-            state: containerInfo.State,
-            image: containerInfo.Image,
-            ports: containerInfo.Ports,
-            cpuUsage: stats.cpu_stats.cpu_usage.total_usage,
-            memoryUsage: stats.memory_stats.usage,
-            memoryLimit: stats.memory_stats.limit,
-            networkIO: stats.networks,
-            details: details,
-          };
-        }));
-        allContainerInfoList.push(...containerInfoList);
-      } catch (serverError) {
-        console.error(`Error getting containers from server ${server}:`, serverError);
-        // 忽略单个服务器的错误，继续获取其他服务器的信息
-      }
-    }
-
-    return allContainerInfoList; // 返回整合后的所有容器信息
-  } catch (error) {
-    console.error('Error getting Docker containers:', error);
-    throw error;
-  }
-};
-/**
- * @description 获取所有 Docker 容器实时信息 (从数据文件读取服务器信息并批量获取然后返回在存储有记录的容器信息)
- */
-const getRecordRealdockerinfo = async () => {
-  try {
-    const dockerRecords = await getAlldockers(); // 从数据文件读取 Docker 记录 
-    if (!dockerRecords || dockerRecords.length === 0) {
-      return []; // 如果没有 Docker 记录，则返回空数组
-    }
-
-    // 提取去重的服务器列表
-    const servers = [...new Set(dockerRecords.map(d => `${d.server}:${d.serverPort}`))];
-    const dockerClients = {}; // 用于缓存 Docker 客户端
-    const allContainerInfoList = [];
-
-    for (const server of servers) {
-      const [serverHost, serverPort] = server.split(':');
-      const clientKey = `${serverHost}:${serverPort}`;
-
-      // 动态创建 Docker 客户端
-      if (!dockerClients[clientKey]) {
-        dockerClients[clientKey] = new Docker({
-          host: serverHost,
-          port: parseInt(serverPort, 10),
-          protocol: 'http',
-        });
-      }
-      const dockerClient = dockerClients[clientKey];
-
-      try {
-        const containers = await dockerClient.listContainers({ all: true });
-        const containerInfoList = await Promise.all(containers.map(async (containerInfo) => {
-          const container = dockerClient.getContainer(containerInfo.Id);
-          const stats = await container.stats({ stream: false });
-          const details = await container.inspect();
-
-          const dockerRecord = dockerRecords.find(record => `${record.server}:${record.serverPort}` === server && record.name === containerInfo.Names[0].substring(1)); // 查找匹配的 Docker 记录
-
-          if (dockerRecord) {
-            return {
-              id: containerInfo.Id,
-              dockerItemId: dockerRecord.id, // 添加 dockerItemId
-              name: containerInfo.Names[0].substring(1),
-              state: containerInfo.State,
-              image: containerInfo.Image,
-              ports: containerInfo.Ports,
-              cpuUsage: stats.cpu_stats.cpu_usage.total_usage,
-              memoryUsage: stats.memory_stats.usage,
-              memoryLimit: stats.memory_stats.limit,
-              networkIO: stats.networks,
-              details: details,
-            };
-          }
-          return null; // 如果没有匹配的记录，则返回 null
-        }));
-
-        // 过滤掉 null 值
-        const filteredContainerInfoList = containerInfoList.filter(info => info !== null);
-        allContainerInfoList.push(...filteredContainerInfoList);
-      } catch (serverError) {
-        console.error(`Error getting containers from server ${server}:`, serverError);
-        // 忽略单个服务器的错误，继续获取其他服务器的信息
-      }
-    }
-
-    return allContainerInfoList; // 返回整合后的所有容器信息
-  } catch (error) {
-    console.error('Error getting Docker containers:', error);
-    throw error;
-  }
-};
-/**
- * @description 获取所有 Docker 容器实时信息 (从数据文件读取服务器信息并批量获取然后返回在存储有记录的容器部分信息)
- */
-const getRealdockerinfo = async () => {
-  try {
-    const dockerRecords = await getAlldockers(); // 从数据文件读取 Docker 记录 
-    if (!dockerRecords || dockerRecords.length === 0) {
-      return []; // 如果没有 Docker 记录，则返回空数组
-    }
-
-    // 提取去重的服务器列表
-    const servers = [...new Set(dockerRecords.map(d => `${d.server}:${d.serverPort}`))];
-    const dockerClients = {}; // 用于缓存 Docker 客户端
-    const allContainerInfoList = [];
-
-    for (const server of servers) {
-      const [serverHost, serverPort] = server.split(':');
-      const clientKey = `${serverHost}:${serverPort}`;
-
-      // 动态创建 Docker 客户端
-      if (!dockerClients[clientKey]) {
-        dockerClients[clientKey] = new Docker({
-          host: serverHost,
-          port: parseInt(serverPort, 10),
-          protocol: 'http',
-        });
-      }
-      const dockerClient = dockerClients[clientKey];
-
-      try {
-        const containers = await dockerClient.listContainers({ all: true });
-        const containerInfoList = await Promise.all(containers.map(async (containerInfo) => {
-          const container = dockerClient.getContainer(containerInfo.Id);
-          const stats = await container.stats({ stream: false });
-          const details = await container.inspect();
-
-          const dockerRecord = dockerRecords.find(record => `${record.server}:${record.serverPort}` === server && record.name === containerInfo.Names[0].substring(1)); // 查找匹配的 Docker 记录
-
-          if (dockerRecord) {
-            return {
-              id: containerInfo.Id,
-              dockerItemId: dockerRecord.id, // 添加 dockerItemId
-              name: containerInfo.Names[0].substring(1),
-              state: containerInfo.State,
-              // image: containerInfo.Image,
-              // ports: containerInfo.Ports,
-              cpuUsage: stats.cpu_stats.cpu_usage.total_usage,
-              // memoryUsage: stats.memory_stats.usage,
-              // memoryLimit: stats.memory_stats.limit,
-              networkIO: stats.networks,
-              // details: details,
-            };
-          }
-          return null; // 如果没有匹配的记录，则返回 null
-        }));
-
-        // 过滤掉 null 值
-        const filteredContainerInfoList = containerInfoList.filter(info => info !== null);
-        allContainerInfoList.push(...filteredContainerInfoList);
-      } catch (serverError) {
-        console.error(`Error getting containers from server ${server}:`, serverError);
-        // 忽略单个服务器的错误，继续获取其他服务器的信息
-      }
-    }
-
-    return allContainerInfoList; // 返回整合后的所有容器信息
-  } catch (error) {
-    console.error('Error getting Docker containers:', error);
-    throw error;
-  }
-};
-
+const rowToDocker = (row) => ({
+  id: row.id,
+  groupId: row.group_id,
+  name: row.name,
+  displayName: row.display_name,
+  url: row.url,
+  urlPort: row.url_port,
+  description: row.description,
+  server: row.server,
+  serverPort: row.server_port,
+  faviconUrl: (!row.favicon_url || row.favicon_url.startsWith('/icons/'))
+    ? DEFAULT_DOCKER_ICON_URL
+    : row.favicon_url,
+  createdAt: row.created_at,
+  updatedAt: row.updated_at,
+});
 
 /**
- * @description 获取单个 Docker 容器实时状态
+ * 获取所有存储的 Docker 记录
  */
-const getRealdockerinfobyId = async (containerId) => {
-  console.log('getRealdockerinfobyId', containerId);
+const getAlldockers = async (env) => {
   try {
-    const container = docker.getContainer(containerId);
-    const stats = await container.stats({ stream: false }); // 获取容器的实时统计信息
-    const details = await container.inspect(); // 获取容器的详细信息
-    const containerInfo = await container.inspect();
-
-    return {
-      id: containerInfo.Id,
-      name: containerInfo.Name.substring(1), // 去掉容器名称前面的 "/"
-      state: containerInfo.State.Status,
-      image: containerInfo.Config.Image,
-      ports: containerInfo.HostConfig.PortBindings,
-      cpuUsage: stats.cpu_stats.cpu_usage.total_usage,
-      memoryUsage: stats.memory_stats.usage,
-      memoryLimit: stats.memory_stats.limit,
-      networkIO: stats.networks, // 网络 IO 信息
-      details: details, // 包含更详细的容器配置信息，如果需要可以前端展示
-    };
-  } catch (error) {
-    console.error('Error getting Docker container info:', error);
-    throw error;
-  }
-};
-
-
-/**
- * 获取所有存储的 Docker 记录 
- */
-const getAlldockers = async () => {
-  try {
-    const data = await fileHandler.readData(DOCKER_DATA_FILE_PATH);
-    return data.dockers || []; // 返回存储的 Docker 记录，如果没有则返回空数组
+    const rows = await queryAll(env, 'SELECT * FROM dockers ORDER BY created_at ASC');
+    return rows.map(rowToDocker);
   } catch (error) {
     handleDockerError(error, '获取存储的 Docker 记录失败');
-    return []; // 发生错误时返回空数组，避免程序崩溃
+    return [];
   }
 };
 
 /**
- * 获取单个存储的 Docker 记录详情
+ * 获取单个 Docker 记录详情
  */
-const getdockerById = async (dockerId) => {
+const getdockerById = async (env, dockerId) => {
   try {
-    const data = await fileHandler.readData(DOCKER_DATA_FILE_PATH);
-    const docker = (data.dockers || []).find(d => d.id === dockerId);
-    return docker || null; // 返回找到的 Docker 记录，如果没有则返回 null
+    const row = await queryOne(env, 'SELECT * FROM dockers WHERE id = ?', [dockerId]);
+    return row ? rowToDocker(row) : null;
   } catch (error) {
-    handleDockerError(error, '获取存储的 Docker 记录详情失败');
-    return null; // 发生错误时返回 null
+    handleDockerError(error, '获取 Docker 记录详情失败');
+    return null;
   }
 };
 
-
 /**
- * 获取某个分组下的所有 Docker 记录 
+ * 获取某个分组下的所有 Docker 记录
  */
-const getdockersByGroupId = async (groupId) => {
+const getdockersByGroupId = async (env, groupId) => {
   try {
-    const data = await fileHandler.readData(DOCKER_DATA_FILE_PATH);
-    const dockers = (data.dockers || []).filter(docker => docker.groupId === groupId);
-    return dockers || []; // 返回找到的 Docker 记录，如果没有则返回空数组
+    const rows = await queryAll(env, 'SELECT * FROM dockers WHERE group_id = ? ORDER BY created_at ASC', [groupId]);
+    return rows.map(rowToDocker);
   } catch (error) {
     handleDockerError(error, '获取分组下的 Docker 记录失败');
-    return []; // 发生错误时返回空数组，避免程序崩溃
+    return [];
   }
 };
 
-
 /**
- * 创建 Docker 记录 
+ * 创建 Docker 记录
  */
-const createDocker = async (groupId, dockerData) => {
-  console.log('dockerData', dockerData);
+const createDocker = async (env, groupId, dockerData) => {
   try {
-    
-    // console.log('dockerData before validation:', dockerData);
     await CREATE_DOCKER_SCHEMA.validateAsync({ groupId, dockerData });
-    // console.log('dockerData after validation:', dockerData);
-    
-    const data = await fileHandler.readData(DOCKER_DATA_FILE_PATH);
-    const existing = (data.dockers || []).find(d => 
-      d.url === dockerData.url && 
-      d.urlPort === dockerData.urlPort
+
+    const existing = await queryOne(env,
+      'SELECT id FROM dockers WHERE url = ? AND url_port = ?',
+      [dockerData.url, dockerData.urlPort || null]
     );
-    
     if (existing) {
       throw new Error('Docker 记录已存在');
     }
 
-    // const faviconUrl = await fetchFavicon(dockerData.url) || 
-    //   `https://via.placeholder.com/64?text=${dockerData.name[0]}`;
     const faviconUrl = await processFavicon(dockerData.name, dockerData.displayName);
-    console.log('获取到的faviconUrl', faviconUrl);
+    const now = new Date().toISOString();
     const newDocker = {
       id: uuidv4(),
       groupId,
-      ...dockerData,//这个写法就导致必须在controller里先解析出来，并且前端调用的时候必须加大括号包裹
+      ...dockerData,
       faviconUrl,
-      createdAt: new Date(),
-      updatedAt: new Date()
+      createdAt: now,
+      updatedAt: now,
     };
 
-    data.dockers = [...(data.dockers || []), newDocker];
-    await fileHandler.writeData(DOCKER_DATA_FILE_PATH, data);
-    
+    await execSQL(env,
+      'INSERT INTO dockers (id, group_id, name, display_name, url, url_port, description, server, server_port, favicon_url, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+      [newDocker.id, groupId, dockerData.name, dockerData.displayName || dockerData.name, dockerData.url || '', dockerData.urlPort || null, dockerData.description || '', dockerData.server, dockerData.serverPort, faviconUrl, now, now]
+    );
+
     return newDocker;
   } catch (error) {
-   console.error('Joi validation error:', error); // 打印 Joi 验证错误信息
-   handleDockerError(error, '创建 Docker 记录失败');
+    handleDockerError(error, '创建 Docker 记录失败');
   }
-
 };
 
 /**
- * 更新 Docker 记录 
+ * 更新 Docker 记录
  */
-const updateDocker = async (dockerId, dockerData) => {
+const updateDocker = async (env, dockerId, dockerData) => {
   try {
-    console.log('updateDocker', dockerData);
     await UPDATE_DOCKER_SCHEMA.validateAsync({ dockerId, dockerData });
     const faviconUrl = await processFavicon(dockerData.name, dockerData.displayName);
-    console.log('修改之后的faviconUrl', faviconUrl);
-    const data = await fileHandler.readData(DOCKER_DATA_FILE_PATH);
-    const updated = data.dockers.map(d => {
-      if (d.id === dockerId) {
-        return {
-          ...d,
-          ...dockerData,
-          faviconUrl,
-          updatedAt: new Date()
-          
-        };
-      }
-      return d;
-    });
+    const now = new Date().toISOString();
+    const existing = await queryOne(env, 'SELECT * FROM dockers WHERE id = ?', [dockerId]);
+    if (!existing) {
+      throw new Error('Docker 记录不存在');
+    }
 
-    data.dockers = updated;
-    await fileHandler.writeData(DOCKER_DATA_FILE_PATH, data);
-    
-    return updated.find(d => d.id === dockerId);
+    const groupId = dockerData.groupId || existing.group_id;
+
+    await execSQL(env,
+      'UPDATE dockers SET group_id = ?, name = ?, display_name = ?, url = ?, url_port = ?, description = ?, server = ?, server_port = ?, favicon_url = ?, updated_at = ? WHERE id = ?',
+      [groupId, dockerData.name, dockerData.displayName || dockerData.name, dockerData.url, dockerData.urlPort || null, dockerData.description || '', dockerData.server, dockerData.serverPort, faviconUrl, now, dockerId]
+    );
+
+    return await getdockerById(env, dockerId);
   } catch (error) {
     handleDockerError(error, '更新 Docker 记录失败');
   }
 };
 
 /**
- * 删除 Docker 记录 
+ * 删除 Docker 记录
  */
-const deleteDocker = async (dockerId) => {
+const deleteDocker = async (env, dockerId) => {
   try {
-    const data = await fileHandler.readData(DOCKER_DATA_FILE_PATH);
-    const initialCount = data.dockers?.length || 0;
-    
-    data.dockers = (data.dockers || []).filter(d => d.id !== dockerId);
-    await fileHandler.writeData(DOCKER_DATA_FILE_PATH, data);
-    
-    return { 
-      deleted: initialCount - (data.dockers?.length || 0),
-      message: 'Docker 记录已删除'
-    };
+    const { changes } = await execSQL(env, 'DELETE FROM dockers WHERE id = ?', [dockerId]);
+    return { deleted: changes, message: 'Docker 记录已删除' };
   } catch (error) {
     handleDockerError(error, '删除 Docker 记录失败');
   }
 };
 
-/**
- * 启动 Docker 容器 
- */
-const startDocker = async (dockerItemId) => {
-  try {
-    const dockerRecord = await getdockerById(dockerItemId);
-    if (!dockerRecord) {
-      throw new Error('Docker 记录未找到');
-    }
+// ── 实时 Docker 操作（CF 模式下 stub）──
 
-    const dockerClient = new Docker({ host: dockerRecord.server, port: dockerRecord.serverPort, protocol: 'http', });
-    const containers = await dockerClient.listContainers({ all: true });
-    const containerInfo = containers.find(c => c.Names.includes(`/${dockerRecord.name}`));
-    if (!containerInfo) {
-      throw new Error(`Docker 容器 ${dockerRecord.name} 未找到`);
-    }
+const CF_NOT_SUPPORTED = () => {
+  throw new Error('Docker 实时功能在 Cloudflare 模式下不可用，请使用 Docker 部署模式');
+};
 
-    const container = dockerClient.getContainer(containerInfo.Id);
-    await container.start();
-    return { message: `Docker 容器 ${dockerRecord.name} 已启动` };
-  } catch (error) {
-    handleDockerError(error, '启动 Docker 容器失败');
+const matchContainerByName = (containers, dockerName, options = {}) => {
+  const { allowAmbiguous = false } = options;
+  const expected = `/${dockerName}`;
+
+  const exactMatches = containers.filter((c) => c.Names.includes(expected));
+  if (exactMatches.length === 1) return exactMatches[0];
+  if (exactMatches.length > 1) {
+    if (allowAmbiguous) return null;
+    throw new Error(`Docker 容器名匹配到多个候选: ${dockerName}`);
   }
+
+  const suffixMatches = containers.filter((c) => c.Names.some((n) => n.endsWith(expected)));
+  if (suffixMatches.length === 1) return suffixMatches[0];
+  if (suffixMatches.length > 1) {
+    if (allowAmbiguous) return null;
+    throw new Error(`Docker 容器名匹配到多个候选: ${dockerName}`);
+  }
+
+  return null;
+};
+
+const findContainerByRecord = async (dockerClient, dockerRecord, options = {}) => {
+  const containers = await dockerClient.listContainers({ all: true });
+  return matchContainerByName(containers, dockerRecord.name, options);
 };
 
 /**
- * 停止 Docker 容器
+ * 获取实时容器信息（仅 Docker 模式）
  */
-const stopDocker = async (dockerItemId) => {
-  try {
-    const dockerRecord = await getdockerById(dockerItemId);
-    if (!dockerRecord) {
-      throw new Error('Docker 记录未找到');
-    }
+const getRealdockerinfo = async (env) => {
+  if (IS_CF_MODE || (env && env.DEPLOY_MODE === 'cloudflare')) return CF_NOT_SUPPORTED();
 
-    const dockerClient = new Docker({ host: dockerRecord.server, port: dockerRecord.serverPort, protocol: 'http', });
-    const containers = await dockerClient.listContainers({ all: true });
-    const containerInfo = containers.find(c => c.Names.includes(`/${dockerRecord.name}`));
-    if (!containerInfo) {
-      throw new Error(`Docker 容器 ${dockerRecord.name} 未找到`);
-    }
+  const Docker = require('dockerode');
+  const dockerRecords = await getAlldockers(env);
+  if (!dockerRecords || dockerRecords.length === 0) return [];
 
-    const container = dockerClient.getContainer(containerInfo.Id);
-    await container.stop();
-    return { message: `Docker 容器 ${dockerRecord.name} 已停止` };
-  } catch (error) {
-    handleDockerError(error, '停止 Docker 容器失败');
+  const servers = [...new Set(dockerRecords.map(d => `${d.server}:${d.serverPort}`))];
+  const allContainerInfoList = [];
+
+  for (const server of servers) {
+    const [serverHost, serverPort] = server.split(':');
+    const dockerClient = new Docker({ host: serverHost, port: parseInt(serverPort, 10), protocol: 'http' });
+    try {
+      const containers = await dockerClient.listContainers({ all: true });
+      const serverRecords = dockerRecords.filter((r) => `${r.server}:${r.serverPort}` === server);
+
+      for (const dockerRecord of serverRecords) {
+        const containerInfo = matchContainerByName(containers, dockerRecord.name, { allowAmbiguous: true });
+        if (!containerInfo) continue;
+
+        const container = dockerClient.getContainer(containerInfo.Id);
+        const stats = await container.stats({ stream: false });
+
+        allContainerInfoList.push({
+          id: containerInfo.Id,
+          dockerItemId: dockerRecord.id,
+          name: containerInfo.Names[0].substring(1),
+          state: containerInfo.State,
+          cpuUsage: stats.cpu_stats.cpu_usage.total_usage,
+          networkIO: stats.networks,
+        });
+      }
+    } catch (serverError) {
+      console.error(`Error getting containers from server ${server}:`, serverError);
+    }
   }
+  return allContainerInfoList;
 };
 
-/**
- * 重启 Docker 容器
- */
-const restartDocker = async (dockerItemId) => {
-  try {
-    const dockerRecord = await getdockerById(dockerItemId);
-    if (!dockerRecord) {
-      throw new Error('Docker 记录未找到');
-    }
-
-    const dockerClient = new Docker({ host: dockerRecord.server, port: dockerRecord.serverPort, protocol: 'http', });
-    const containers = await dockerClient.listContainers({ all: true });
-    const containerInfo = containers.find(c => c.Names.includes(`/${dockerRecord.name}`));
-    if (!containerInfo) {
-      throw new Error(`Docker 容器 ${dockerRecord.name} 未找到`);
-    }
-
-    const container = dockerClient.getContainer(containerInfo.Id);
-    await container.restart();
-    return { message: `Docker 容器 ${dockerRecord.name} 已重启` };
-  } catch (error) {
-    handleDockerError(error, '重启 Docker 容器失败');
-  }
+const getAllServerRealdockerinfo = async (env) => {
+  if (IS_CF_MODE || (env && env.DEPLOY_MODE === 'cloudflare')) return CF_NOT_SUPPORTED();
+  return getRealdockerinfo(env);
 };
 
+const getRecordRealdockerinfo = async (env) => {
+  if (IS_CF_MODE || (env && env.DEPLOY_MODE === 'cloudflare')) return CF_NOT_SUPPORTED();
+  return getRealdockerinfo(env);
+};
+
+const getRealdockerinfobyId = async (env, dockerItemId) => {
+  if (IS_CF_MODE || (env && env.DEPLOY_MODE === 'cloudflare')) return CF_NOT_SUPPORTED();
+  const Docker = require('dockerode');
+
+  const dockerRecord = await getdockerById(env, dockerItemId);
+  if (!dockerRecord) throw new Error('Docker 记录未找到');
+
+  const dockerClient = new Docker({ host: dockerRecord.server, port: dockerRecord.serverPort, protocol: 'http' });
+  const containerInfo = await findContainerByRecord(dockerClient, dockerRecord);
+  if (!containerInfo) throw new Error(`Docker 容器 ${dockerRecord.name} 未找到`);
+
+  const container = dockerClient.getContainer(containerInfo.Id);
+  const stats = await container.stats({ stream: false });
+  const details = await container.inspect();
+
+  return {
+    id: details.Id,
+    dockerItemId: dockerRecord.id,
+    name: details.Name.substring(1),
+    state: details.State.Status,
+    image: details.Config.Image,
+    ports: details.HostConfig.PortBindings,
+    cpuUsage: stats.cpu_stats.cpu_usage.total_usage,
+    memoryUsage: stats.memory_stats.usage,
+    memoryLimit: stats.memory_stats.limit,
+    networkIO: stats.networks,
+    details,
+  };
+};
+
+const startDocker = async (env, dockerItemId) => {
+  if (IS_CF_MODE || (env && env.DEPLOY_MODE === 'cloudflare')) return CF_NOT_SUPPORTED();
+  const Docker = require('dockerode');
+  const dockerRecord = await getdockerById(env, dockerItemId);
+  if (!dockerRecord) throw new Error('Docker 记录未找到');
+  const dockerClient = new Docker({ host: dockerRecord.server, port: dockerRecord.serverPort, protocol: 'http' });
+  const containerInfo = await findContainerByRecord(dockerClient, dockerRecord);
+  if (!containerInfo) throw new Error(`Docker 容器 ${dockerRecord.name} 未找到`);
+  await dockerClient.getContainer(containerInfo.Id).start();
+  return { message: `Docker 容器 ${dockerRecord.name} 已启动` };
+};
+
+const stopDocker = async (env, dockerItemId) => {
+  if (IS_CF_MODE || (env && env.DEPLOY_MODE === 'cloudflare')) return CF_NOT_SUPPORTED();
+  const Docker = require('dockerode');
+  const dockerRecord = await getdockerById(env, dockerItemId);
+  if (!dockerRecord) throw new Error('Docker 记录未找到');
+  const dockerClient = new Docker({ host: dockerRecord.server, port: dockerRecord.serverPort, protocol: 'http' });
+  const containerInfo = await findContainerByRecord(dockerClient, dockerRecord);
+  if (!containerInfo) throw new Error(`Docker 容器 ${dockerRecord.name} 未找到`);
+  await dockerClient.getContainer(containerInfo.Id).stop();
+  return { message: `Docker 容器 ${dockerRecord.name} 已停止` };
+};
+
+const restartDocker = async (env, dockerItemId) => {
+  if (IS_CF_MODE || (env && env.DEPLOY_MODE === 'cloudflare')) return CF_NOT_SUPPORTED();
+  const Docker = require('dockerode');
+  const dockerRecord = await getdockerById(env, dockerItemId);
+  if (!dockerRecord) throw new Error('Docker 记录未找到');
+  const dockerClient = new Docker({ host: dockerRecord.server, port: dockerRecord.serverPort, protocol: 'http' });
+  const containerInfo = await findContainerByRecord(dockerClient, dockerRecord);
+  if (!containerInfo) throw new Error(`Docker 容器 ${dockerRecord.name} 未找到`);
+  await dockerClient.getContainer(containerInfo.Id).restart();
+  return { message: `Docker 容器 ${dockerRecord.name} 已重启` };
+};
 
 module.exports = {
+  getAlldockers,
+  getdockerById,
+  getdockersByGroupId,
+  createDocker,
+  updateDocker,
+  deleteDocker,
   getAllServerRealdockerinfo,
   getRealdockerinfo,
   getRecordRealdockerinfo,
-  createDocker,
   getRealdockerinfobyId,
-  updateDocker,
-  getAlldockers,
-  deleteDocker,
-  getdockerById,
-  getdockersByGroupId,
   startDocker,
   stopDocker,
   restartDocker,

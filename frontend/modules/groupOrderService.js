@@ -55,7 +55,7 @@ function handleDragOver(e) {
 
 // 处理dragleave事件
 function handleDragLeave(e) {
-    const targetGroup = e.target.closest('.website-group');
+    const targetGroup = e.target.closest('.website-group') || e.target.closest('.docker-group');
     if (targetGroup) {
         targetGroup.classList.remove('drag-over');
     }
@@ -130,15 +130,8 @@ async function saveGroupOrder() {
     mainDashboard.classList.add('loading');
 
     try {
-        // 获取所有 group 元素 (website-group 和 docker-group)
+        // 获取所有 group 元素（按当前 DOM 顺序）
         const allGroups = Array.from(mainDashboard.querySelectorAll('.website-group, .docker-group'));
-
-        // 按照 DOM 顺序排序 group 元素
-        allGroups.sort((a, b) => {
-            const indexA = Array.from(mainDashboard.children).indexOf(a);
-            const indexB = Array.from(mainDashboard.children).indexOf(b);
-            return indexA - indexB;
-        });
 
         // 分别构建 website group 和 docker group 的排序数据
         const orderedWebsiteGroups = [];

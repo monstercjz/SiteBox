@@ -4,12 +4,19 @@ networks:
   app-network:
     driver: bridge
 
+# 命名 volume：SQLite 数据库文件持久化，跨平台通用（NAS / 云容器 / VPS 均可直接使用）
+# 如需绑定到宿主机指定目录，可将 sitebox_data 替换为绑定挂载：
+#   volumes:
+#     - /your/host/path:/app/data
+volumes:
+  sitebox_data:
+
 services:
   frontend-nginx:
     container_name: SiteBox
     build:
-      context: ./frontend # Explicitly set build context to ./frontend
-      dockerfile: Dockerfile # Dockerfile path is relative to the context (./frontend)
+      context: ./frontend
+      dockerfile: Dockerfile
     ports:
       - "80:80"
     depends_on:
@@ -19,13 +26,17 @@ services:
     networks:
       - app-network
     restart: always
-    volumes:
-      - /mnt/sdb/docker-data/data/SiteBox/SiteBoxFront:/usr/share/nginx/html:ro
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --spider http://localhost:80/ || exit 1"]
+      interval: 30s
+      timeout: 5s
+      start_period: 10s
+      retries: 3
 
   backend-nginx:
-    container_name: Sitebox-backend-nginx-server
+    container_name: SiteBox-backend-nginx
     build:
-      context: ./backend-nginx # 将构建上下文改为当前目录
+      context: ./backend-nginx
       dockerfile: Dockerfile
     ports:
       - "3001:3001"
@@ -38,27 +49,30 @@ services:
     restart: always
     healthcheck:
       test: ["CMD-SHELL", "nginx -t"]
-      interval: 10s
+      interval: 30s
       timeout: 5s
+      start_period: 5s
       retries: 3
 
   backend-app:
-    container_name: SiteBox-backend-app-server
+    container_name: SiteBox-backend-app
     build:
       context: ./backend
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
     volumes:
-      - /mnt/sdb/docker-data/data/SiteBox/SiteBoxData:/app/data
+      - sitebox_data:/app/data
     environment:
       PORT: 3000
-      BACKEND_URL: http://localhost
+      DB_PATH: /app/data/sitebox.db
+      DEPLOY_MODE: docker
     networks:
       - app-network
     restart: always
     healthcheck:
-      test: ["CMD-SHELL", "node server.js --check"]
-      interval: 10s
+      test: ["CMD-SHELL", "wget -q --spider http://localhost:3000/api/ || exit 1"]
+      interval: 30s
       timeout: 5s
+      start_period: 10s
       retries: 3

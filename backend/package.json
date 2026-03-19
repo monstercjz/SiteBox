@@ -1,18 +1,25 @@
 {
-  "name": "backend",
-  "version": "1.0.0",
-  "description": "Backend service",
+  "name": "sitebox-backend",
+  "version": "2.0.0",
+  "description": "SiteBox Backend - supports Cloudflare Workers (D1) and Docker (better-sqlite3) modes",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.node.js",
+    "start:docker": "DEPLOY_MODE=docker node server.node.js",
+    "dev": "node server.node.js",
+    "deploy:cf": "wrangler deploy",
+    "db:migrate": "wrangler d1 execute sitebox --file=./schema.sql",
+    "db:migrate:local": "wrangler d1 execute sitebox --local --file=./schema.sql"
   },
   "dependencies": {
-    "axios": "^1.7.9",
-    "cors": "^2.8.5",
-    "dockerode": "^4.0.4",
-    "express": "^4.18.2",
+    "@hono/node-server": "^1.13.7",
+    "better-sqlite3": "^11.7.0",
+    "dockerode": "^4.0.9",
+    "hono": "^4.6.20",
     "joi": "^17.13.3",
-    "node-fetch": "^3.3.2",
     "uuid": "^11.0.5"
+  },
+  "devDependencies": {
+    "wrangler": "^3.99.0"
   }
 }
