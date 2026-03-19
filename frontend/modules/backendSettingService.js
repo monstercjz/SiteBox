@@ -3,6 +3,7 @@
 // 保存后自动刷新页面使配置生效
 
 import { showNotification } from './utils.js';
+import { backendUrl } from '../config.js';
 
 const STORAGE_KEY = 'backendUrl';
 const PANEL_ID = 'backend-setting-panel';
@@ -37,6 +38,9 @@ function openPanel() {
   if (document.getElementById(PANEL_ID)) return;
 
   const currentUrl = localStorage.getItem(STORAGE_KEY) || '';
+  const apiBaseUrl = backendUrl;
+  const sourceLabel = currentUrl ? '手动设置（localStorage）' : '默认配置';
+
 
   const overlay = document.createElement('div');
   overlay.id = OVERLAY_ID;
@@ -70,23 +74,38 @@ function openPanel() {
           <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
         </svg>
       </button>
-      <p style="margin-bottom: 1rem; color: var(--text-secondary); font-size: 0.875rem; line-height: 1.6;">
-        填写后端服务器地址，程序会自动加上 <code>/api</code>，结尾不要加 <code>/</code>。<br>
-        · 有反向代理（Docker/nginx）→ 留空或填 <code>（默认）</code><br>
-        · 本地开发 → 填 <code>http://localhost:3000</code><br>
-        · 远端服务器 → 填 <code>http://服务器IP:端口</code>
+      <div style="margin-bottom: 0.875rem; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 0.5rem; background: var(--background-tertiary);">
+        <div style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.35rem;">当前生效 API 地址</div>
+        <div style="font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; word-break: break-all;">${apiBaseUrl}</div>
+        <div style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.35rem;">来源：${sourceLabel}</div>
+      </div>
+
+      <p style="margin-bottom: 0.75rem; color: var(--text-secondary); font-size: 0.875rem; line-height: 1.6;">
+        只填写「后端主机地址」，不要加 <code>/api</code>，程序会自动拼接。<br>
+        示例：
       </p>
+      <ul style="margin: 0 0 0.875rem 1.1rem; padding: 0; color: var(--text-secondary); font-size: 0.82rem; line-height: 1.7;">
+        <li>Cloudflare Workers 自定义域名：<code>https://sb.nuaa.dpdns.org</code></li>
+        <li>自有 VPS + 域名（Nginx/Caddy 反代）：<code>https://api.example.com</code></li>
+        <li>自有 VPS 直连端口：<code>http://服务器IP:3000</code> 或 <code>https://api.example.com:3000</code></li>
+        <li>本地开发：<code>http://localhost:3000</code></li>
+      </ul>
+
+      <p style="margin: 0 0 0.75rem; color: var(--text-secondary); font-size: 0.78rem; line-height: 1.6;">
+        若前端是 HTTPS，后端也应使用 HTTPS（否则会被浏览器拦截 Mixed Content）。
+      </p>
+
       <input
         id="backend-url-input"
         type="text"
-        placeholder="留空使用默认，或填 http://localhost:3000"
+        placeholder="留空使用默认，或填 https://api.example.com"
         value="${currentUrl}"
         style="width: 100%; box-sizing: border-box;"
       />
       <div style="display: flex; align-items: center; gap: 0.5rem; margin-top: 0.75rem; margin-bottom: 1rem;">
         <input type="checkbox" id="backend-url-clear-check" style="width: auto; margin-bottom: 0;" />
         <label for="backend-url-clear-check" style="color: var(--text-secondary); font-size: 0.8rem; cursor: pointer;">
-          清除设置，恢复默认（使用反向代理 <code>/api</code>）
+          清除手动设置，恢复默认地址
         </label>
       </div>
       <div class="modal-buttons-container">
@@ -126,20 +145,31 @@ function openPanel() {
 
     const inputVal = document.getElementById('backend-url-input').value.trim();
     if (!inputVal) {
-      showNotification('请输入后端地址', 'error');
+      localStorage.removeItem(STORAGE_KEY);
+      showNotification('已恢复默认地址，即将刷新页面', 'success');
+      setTimeout(() => location.reload(), 1200);
       return;
     }
 
-    // 基本格式校验：必须以 http:// 或 https:// 开头（不含 /api，程序自动补）
     if (!/^https?:\/\//.test(inputVal)) {
       showNotification('地址格式不正确，请以 http:// 或 https:// 开头', 'error');
       return;
     }
 
-    // 去掉末尾多余的 /api 或 /，统一由 config.js 拼接
-    const cleanVal = inputVal.replace(/\/api\/?$/, '').replace(/\/$/, '');
+    let normalizedUrl;
+    try {
+      const parsedUrl = new URL(inputVal);
+      if (parsedUrl.pathname !== '/' && parsedUrl.pathname !== '/api') {
+        showNotification('请只填写主机地址，不要带路径（如 /v1）', 'error');
+        return;
+      }
+      normalizedUrl = `${parsedUrl.protocol}//${parsedUrl.host}`;
+    } catch (error) {
+      showNotification('地址格式无效，请检查后重试', 'error');
+      return;
+    }
 
-    localStorage.setItem(STORAGE_KEY, cleanVal);
+    localStorage.setItem(STORAGE_KEY, normalizedUrl);
     showNotification('后端地址已保存，即将刷新页面', 'success');
     setTimeout(() => location.reload(), 1200);
   });
@@ -155,7 +185,4 @@ function openPanel() {
 /**
  * 关闭设置面板
  */
-function closePanel() {
-  document.getElementById(PANEL_ID)?.remove();
-  document.getElementById(OVERLAY_ID)?.remove();
-}
+fun

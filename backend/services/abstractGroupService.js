@@ -130,6 +130,11 @@ const reorderGroups = async (env, reorderData) => {
   try {
     await schema.validateAsync(reorderData);
 
+    if (!Array.isArray(reorderData) || reorderData.length === 0) {
+      logger.info('Groups reordered skipped: empty reorder payload');
+      return [];
+    }
+
     const statements = reorderData.map((item) => {
       if (item.dashboardType) {
         return {
@@ -143,11 +148,12 @@ const reorderGroups = async (env, reorderData) => {
       };
     });
 
-    await batchExec(env, statements);
+    if (statements.length > 0) {
+      await batchExec(env, statements);
+    }
 
     logger.info('Groups reordered');
 
-    // 返回更新后的分组列表
     const ids = reorderData.map(item => item.id);
     const placeholders = ids.map(() => '?').join(',');
     const rows = await queryAll(env, `SELECT * FROM groups WHERE id IN (${placeholders}) ORDER BY order_index ASC`, ids);
