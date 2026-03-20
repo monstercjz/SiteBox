@@ -1,0 +1,12 @@
+name = "sitebox-backend"
+main = "server.js"
+compatibility_date = "2024-01-01"
+compatibility_flags = ["nodejs_compat"]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "sitebox"
+database_id = "148bb43e-fb40-4dc5-94e0-f2e689194b4b"
+
+[vars]
+DEPLOY_MODE = "cloudflare"
