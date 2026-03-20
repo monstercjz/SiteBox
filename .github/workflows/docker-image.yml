@@ -24,7 +24,7 @@ jobs:
         with:
           context: ./frontend
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/sitebox-frontend:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/sitebox-frontend-sql:latest
 
       # 2. 打包推送到后端应用镜像
       - name: Build and push Backend App
@@ -32,7 +32,7 @@ jobs:
         with:
           context: ./backend
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/sitebox-backend:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/sitebox-backend-sql:latest
 
       # 3. 打包推送到后端 Nginx 镜像
       - name: Build and push Backend Nginx
