@@ -123,27 +123,33 @@ curl https://<your-worker-domain>/api/
 > 下面给两种写法，二选一（推荐 A）
 
 ### A. 路径填 `/backend`（推荐）
+
 - **项目名称**：`sitebox-backend`
 - **构建命令**：留空
 - **部署命令**：
+
   ```bash
   npm install && npx wrangler deploy server.mjs --name sitebox-backend --compatibility-date=2024-01-01
   ```
+
 - **非生产分支构建**：先关掉（稳定后再开）
 - **高级设置 → 路径**：`/backend`
 - **API 令牌**：创建并注入 `CLOUDFLARE_API_TOKEN`或者使用已经存在的token
-    - 令牌权限建议至少包含：
-    - Workers Scripts: Edit
-    - D1: Edit
-    - Account: Read
+  - 令牌权限建议至少包含：
+  - Workers Scripts: Edit
+  - D1: Edit
+  - Account: Read
 
 ### B. 路径填 `/`（仓库根）
+
 - **项目名称**：`sitebox-backend`
 - **构建命令**：留空
 - **部署命令**：
+
   ```bash
   npm --prefix backend install && npx wrangler deploy backend/server.mjs --name sitebox-backend --compatibility-date=2024-01-01
   ```
+
 - **高级设置 → 路径**：`/`
 - **API 令牌**：同上
 
@@ -153,17 +159,17 @@ curl https://<your-worker-domain>/api/
 
 部署命令只负责上传代码，`D1 绑定/变量` 你要在 Cloudflare 控制台补齐：
 
-1. 打开 **Cloudflare Dashboard**  
-2. 进 **Workers & Pages** → 选你的 Worker（`sitebox-backend`）  
-3. **Settings → Variables**  
+1. 打开 **Cloudflare Dashboard**
+2. 进 **Workers & Pages** → 选你的 Worker（`sitebox-backend`）
+3. **Settings → Variables**
    - 新增：
      - 名称：`DEPLOY_MODE`
      - 值：`cloudflare`
-4. **Settings → Bindings**  
+4. **Settings → Bindings**
    - 新增 D1 绑定：
      - Binding 名：`DB`
      - 选择数据库：`sitebox`（你已有的那个）
-5. **Settings → Runtime / Compatibility**（不同界面名字略有差异）  
+5. **Settings → Runtime / Compatibility**（不同界面名字略有差异）
    - Compatibility date：`2024-01-01`
    - Compatibility flags：`nodejs_compat`
 
@@ -171,8 +177,10 @@ curl https://<your-worker-domain>/api/
 
 ## 三、初始化数据库（必须）
 
-即使部署成功，没建表也会出问题。  
+即使部署成功，没建表也会出问题。
 去 **D1 控制台** 选 `sitebox` 数据库，执行 `backend/schema.sql` 的 SQL（整份执行一次）。
+> 重要说明，如果没有toml文件，即便绑定了数据库，下次自动部署的时候这个绑定也会失效
+> 建议在仓库中添加一个toml文件，修改自己对应的db名字和id
 
 ---
 
@@ -187,8 +195,8 @@ curl https://<your-worker-domain>/api/
 - https://siteback.nuaa.dpdns.org/api/website-groups
 - https://siteback.nuaa.dpdns.org/api/websites
 - 预期要返回 JSON（success/data），不能再报 prepare 错误。
----
 
+---
 
 ---
 
