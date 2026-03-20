@@ -17,8 +17,10 @@
   /* 使用 fixed 定位，使其脱离文档流，固定在页面视口特定位置 */
   top: calc(var(--spacing-inset-lg) + 48px);
   /* 距离顶部一定距离，考虑 header 元素的高度 (48px) */
-  right: max(var(--spacing-inset-md),
-      calc((93% - var(--size-websitedashboard-max-width)) / 2));
+  right: max(
+    var(--spacing-inset-md),
+    calc((93% - var(--size-websitedashboard-max-width)) / 2)
+  );
   /* 靠右对齐：
          - 至少保持中等内边距 (--spacing-inset-md)
          - 并且当屏幕宽度超过网站仪表盘最大宽度时，保持居中对齐
@@ -177,3 +179,69 @@
   transition: all var(--transition-normal);
   /* 添加过渡效果 */
 }
+
+/* ==========================================================================
+外部搜索引擎搜索框样式
+========================================================================== */
+.external-search-box {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0.75rem auto 0;
+  padding: 0.5rem 1rem;
+  max-width: 600px;
+}
+
+.search-engine-select {
+  padding: 0.4rem 0.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background-color: var(--background-body);
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  cursor: pointer;
+  outline: none;
+}
+
+.search-engine-select:focus {
+  border-color: var(--background-body);
+}
+
+.external-search-input {
+  flex: 1;
+  padding: 0.4rem 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background-color: var(--background-body);
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  outline: none;
+}
+
+.external-search-input:focus {
+  background-color: var(--background-card);
+    color: var(--text-primary);
+    border-color: var(--border-normal);
+}
+
+.external-search-input::placeholder {
+  color: var(--text-secondary);
+}
+
+.external-search-button {
+  padding: 0.4rem 1rem;
+  border: none;
+  border-radius: 4px;
+  background-color: var(--color-primary);
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+}
+
+.external-search-button:hover {
+  background-color: var(--background-card);
+    color: var(--text-primary);
+    border-color: var(--border-normal);
+}
+
