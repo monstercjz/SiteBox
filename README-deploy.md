@@ -16,11 +16,13 @@
 ## 一、Docker Compose 部署（NAS / 云容器 / VPS）
 
 ### 适用场景
+
 - Synology / QNAP NAS（安装了 Docker 套件）
 - 腾讯云 / 阿里云容器服务
 - 任意安装了 Docker 的 VPS
 
 ### 前提条件
+
 - Docker >= 20.10
 - Docker Compose v2（`docker compose` 命令）
 
@@ -115,9 +117,11 @@ docker compose up -d --build backend-app
 ## 二、VPS 裸机部署
 
 ### 适用场景
+
 自有 Linux 服务器，不使用 Docker，直接运行 Node.js 进程。
 
 ### 前提条件
+
 - Node.js >= 18
 - npm >= 8
 - 推荐使用 PM2 管理进程
@@ -139,10 +143,12 @@ node server.node.js
 推荐使用 PM2：
 
 # 3b. 使用 PM2 后台运行（推荐生产环境）
+
 npm install -g pm2
 pm2 start server.node.js --name sitebox-backend
 pm2 save
 pm2 startup  # 设置开机自启
+
 ```
 
 ### 环境变量配置
@@ -183,6 +189,7 @@ server {
 ## 三、Cloudflare Workers + D1 部署
 
 ### 前提条件
+
 - Node.js >= 18
 - Wrangler CLI：`npm install -g wrangler`
 - Cloudflare 账户
@@ -273,6 +280,12 @@ npm run build
 - 清空会移除 localStorage 中的 `backendUrl`
 - 前端回退到默认 `/api`
 
+### 对于nginx已经设置了地址的情况
+
+- 首次打开页面的时候还是会检查缓存，如果没有地址，就会有设置界面弹出
+- 如果在设置界面设置了地址，就会根据设置的地址进行请求，nginx的地址将会无效
+- 如果继续使用nginx的地址，界面不设置地址，关闭之后，会缓存`backendSettingDismissed=true`,记录到本页面曾打开过，后续刷新页面不再弹窗显示
+
 ---
 
 ## 六、常见错误与排查
@@ -282,6 +295,7 @@ npm run build
 原因：地址/端口不可达或端口未开放。
 
 排查：
+
 - 检查是否应使用 `https://域名` 而不是 `https://域名:3000`
 - 检查服务器安全组与防火墙
 
@@ -290,6 +304,7 @@ npm run build
 原因：接口返回了非 JSON（如网关 HTML/404 文本）。
 
 排查：
+
 - 直接访问接口确认返回体
 - 确认反向代理路径是否正确指向 `/api`
 
@@ -298,6 +313,7 @@ npm run build
 原因：只执行了本地迁移，未执行远程迁移。
 
 修复：
+
 ```bash
 npx wrangler d1 execute sitebox --remote --file=./schema.sql
 ```
@@ -344,4 +360,3 @@ npx wrangler d1 execute sitebox --remote --file=./schema.sql
 完整建表 SQL 见 `backend/schema.sql`。
 
 ---
-

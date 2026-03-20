@@ -44,8 +44,11 @@ export function initBackendSettingService() {
     triggerBtn.addEventListener('click', openPanel);
   }
 
+  // 检查是否设置过地址，且是否点击过“不再提示”
+  const hasSetUrl = localStorage.getItem(STORAGE_KEY);
+  const hasDismissed = localStorage.getItem('backendSettingDismissed');
   // 首次未设置时自动弹出引导（仅当 localStorage 里没有值）
-  if (!localStorage.getItem(STORAGE_KEY)) {
+   if (!hasSetUrl && !hasDismissed) {
     openPanel();
   }
 }
@@ -272,6 +275,7 @@ function openPanel() {
  * 关闭设置面板
  */
 function closePanel() {
+  localStorage.setItem('backendSettingDismissed', 'true'); // 用户关过一次，就不再自动弹了
   document.getElementById(PANEL_ID)?.remove();
   document.getElementById(OVERLAY_ID)?.remove();
 }
