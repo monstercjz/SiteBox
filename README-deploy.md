@@ -62,13 +62,13 @@ docker volume inspect sitebox_data
 
 # 备份数据库
 docker run --rm \
-  -v sitebox_data:/data \
+  -v sitebox_data:/data/db \
   -v $(pwd):/backup \
   alpine tar czf /backup/sitebox-backup.tar.gz -C /data .
 
 # 恢复数据
 docker run --rm \
-  -v sitebox_data:/data \
+  -v sitebox_data:/data/db \
   -v $(pwd):/backup \
   alpine tar xzf /backup/sitebox-backup.tar.gz -C /data
 ```
