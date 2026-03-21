@@ -4,6 +4,10 @@ npm-debug.log
 .gitignore
 Dockerfile
 nginx.conf
-data/*.json
+data/
+*.db
+*.db-journal
+*.db-wal
 README.md
 .dockerignore
+.env

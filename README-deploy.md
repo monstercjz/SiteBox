@@ -136,16 +136,21 @@ cd sitebox/SiteBox/backend
 # 2. 安装依赖
 npm install --omit=dev
 
-# 3a. 直接启动（测试用）
+# 3a. 直接启动（测试用，使用代码中默认回落的值）
 node server.node.js
-```
+# 或者需要改变环境端口等信息值的话
+cp .env.example .env
+nano .env
+node --env-file=.env server.node.js
 
-推荐使用 PM2：
+#推荐使用 PM2：
 
 # 3b. 使用 PM2 后台运行（推荐生产环境）
 
 npm install -g pm2
-pm2 start server.node.js --name sitebox-backend
+cp .env.example .env
+nano .env
+pm2 start server.node.js --node-args="--env-file=.env" --name sitebox-backend
 pm2 save
 pm2 startup  # 设置开机自启
 

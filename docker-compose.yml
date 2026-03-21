@@ -22,7 +22,9 @@ services:
     depends_on:
       - backend-nginx
     environment:
-      - BACKEND_ADDR=backend-nginx:3001
+      - BACKEND_PROTO=http
+      - BACKEND_ADDR=backend-nginx:3001 # 使用内部服务名，流量不走公网，安全且快
+      - BACKEND_HOST=backend-nginx
     networks:
       - app-network
     restart: always

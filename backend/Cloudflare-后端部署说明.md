@@ -181,6 +181,7 @@ curl https://<your-worker-domain>/api/
 去 **D1 控制台** 选 `sitebox` 数据库，执行 `backend/schema.sql` 的 SQL（整份执行一次）。
 > 重要说明，如果没有toml文件，即便绑定了数据库，下次自动部署的时候这个绑定也会失效
 > 建议在仓库中添加一个toml文件，修改自己对应的db名字和id
+> 如果有toml文件，即便不手动补配置也能正常运行
 
 ---
 

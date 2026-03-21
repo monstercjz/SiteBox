@@ -1,28 +1,32 @@
+# 建议使用 20 版本，性能更好且支持更多原生特性
 FROM node:18-alpine
+# FROM node:20-alpine
+
+# 因为 better-sqlite3 是原生模块，在 Alpine 上安装可能需要这些构建工具
+# 安装完后删除缓存以减小镜像体积
+# RUN apk add --no-cache python3 make g++
 
 WORKDIR /app
 
-# 安装依赖（利用缓存分层）
+# 先拷贝 package 文件安装依赖，利用 Docker 缓存层
 COPY package*.json ./
+
+# 只安装生产环境依赖
 RUN npm install --omit=dev
 
-# 复制应用代码
+# 复制所有源代码
 COPY . .
 
-# 创建非 root 用户运行应用
-# RUN addgroup -S sitebox && adduser -S sitebox -G sitebox \
-#     && mkdir -p /app/data \
-#     && chown -R sitebox:sitebox /app
+# 设置默认环境变量
+ENV PORT=3000
+ENV DEPLOY_MODE=docker
+# 数据库路径：建议放在绝对路径，方便 PVE 挂载
+ENV DB_PATH=/app/data/sitebox.db
 
-# USER sitebox
+# 声明端口
+EXPOSE $PORT
 
-# 声明数据目录为卷，便于宿主机挂载持久化 SQLite 文件
-# VOLUME ["/app/data"]
-
-EXPOSE 3000
-
-# 健康检查：调用真实 API 端点
-# HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
-#     CMD wget -q --spider http://localhost:3000/api/ || exit 1
-
+# 启动命令
+# 1. 确保你的 server.node.js 里没有我们之前说的 import/export 混用错误
+# 2. 生产环境直接运行，无需 --env-file（由 ENV 指令提供变量）
 CMD ["node", "server.node.js"]
