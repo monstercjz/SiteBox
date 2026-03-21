@@ -9,6 +9,7 @@ import {
     INPUT_ID_NEW_WEBSITE_NAME,
     INPUT_ID_NEW_WEBSITE_URL,
     INPUT_ID_NEW_WEBSITE_DESCRIPTION,
+    INPUT_ID_NEW_WEBSITE_FAVICON,
     SELECT_ID_GROUP_SELECT,
     DATA_ITEM_ID,
     DATA_DESCRIPTION,
@@ -59,7 +60,7 @@ export class WebsiteOperationService {
                     modalInteractionService.closeModal(this.modalId);
                     return;
         }
-        
+
         try {
             const { websiteId, mode, callback, groupId } = options;
 
@@ -95,7 +96,7 @@ export class WebsiteOperationService {
      * @param {string} groupId - 分组 ID
      */
     async setupWebsiteModal(mode, websiteId, groupId) {
-        
+
         const modalContent = this.createModalContent(mode);
         modalInteractionService.createModal(this.modalId, modalContent);
 
@@ -111,19 +112,20 @@ export class WebsiteOperationService {
             //分组id不为空，并且是添加模式
             this.setupAddWebsiteModalData(this.modalId,groupId);
         }
-        
+
         modalInteractionService.openModal(this.modalId, {
             onSave: async (modal) => {
                 try {
                     const newWebsiteName = modal.querySelector(`#${INPUT_ID_NEW_WEBSITE_NAME}`).value;
                     const newWebsiteUrl = modal.querySelector(`#${INPUT_ID_NEW_WEBSITE_URL}`).value;
                     const newWebsiteDescription = modal.querySelector(`#${INPUT_ID_NEW_WEBSITE_DESCRIPTION}`).value;
+                    const newWebsiteFavicon = modal.querySelector(`#${INPUT_ID_NEW_WEBSITE_FAVICON}`).value;
                     const newWebsiteGroup = modal.querySelector(`#${SELECT_ID_GROUP_SELECT}`).value;
 
                     if (this.callback) {
                         const checkNewWebsiteUrl = validateAndCompleteUrl(newWebsiteUrl);
                         console.log('checkNewWebsiteUrl', checkNewWebsiteUrl); // 前端网址自动补全 https://
-                        await this.callback({ newWebsiteName, checkNewWebsiteUrl, newWebsiteDescription, newWebsiteGroup });
+                        await this.callback({ newWebsiteName, checkNewWebsiteUrl, newWebsiteDescription, newWebsiteFavicon, newWebsiteGroup });
                     }
                 } catch (error) {
                     console.error('Failed to save website:', error);
@@ -154,6 +156,7 @@ export class WebsiteOperationService {
                 <input type="text" id="${INPUT_ID_NEW_WEBSITE_NAME}" placeholder="网站名称">
                 <input type="text" id="${INPUT_ID_NEW_WEBSITE_URL}" placeholder="网站URL">
                 <input type="text" id="${INPUT_ID_NEW_WEBSITE_DESCRIPTION}" placeholder="网站描述">
+                <input type="text" id="${INPUT_ID_NEW_WEBSITE_FAVICON}" placeholder="图标URL (可选)">
                 <select id="${SELECT_ID_GROUP_SELECT}"></select>
                 <div class="modal-buttons-container">
                     <button class="${BUTTON_CLASS_SAVE}" aria-label="${ARIA_LABEL_SAVE}">保存</button>
@@ -175,12 +178,13 @@ export class WebsiteOperationService {
 
         modal.setAttribute(DATA_ITEM_ID, websiteId);
 
-        const { websiteName, websiteUrl, websiteDescription, websiteGroupId } = this.getWebsiteInfo(websiteId);
+        const { websiteName, websiteUrl, websiteDescription, websiteFavicon, websiteGroupId } = this.getWebsiteInfo(websiteId);
 
         modalInteractionService.setModalData(modalId, {
             newWebsiteName: websiteName,
             newWebsiteUrl: websiteUrl,
             newWebsiteDescription: websiteDescription,
+            newWebsiteFavicon: websiteFavicon,
             groupSelect: websiteGroupId,
         });
     }
@@ -192,7 +196,7 @@ export class WebsiteOperationService {
     async setupAddWebsiteModalData(modalId,groupId) {
         const modal = document.getElementById(modalId);
         if (!modal) return;
-        
+
         // modal.setAttribute(DATA_ITEM_ID, websiteId);
 
         // const { websiteName, websiteUrl, websiteDescription, websiteGroupId } = this.getWebsiteInfo(websiteId);
@@ -222,7 +226,9 @@ export class WebsiteOperationService {
         const websiteName = websiteItem.querySelector('a').textContent;
         const websiteDescription = websiteItem.getAttribute(DATA_DESCRIPTION);
         const websiteGroupId = websiteItem.getAttribute(DATA_GROUP_ID);
+        const faviconImg = websiteItem.querySelector('img');
+        const websiteFavicon = faviconImg ? faviconImg.getAttribute('src') : '';
 
-        return { websiteName, websiteUrl, websiteDescription, websiteGroupId };
+        return { websiteName, websiteUrl, websiteDescription, websiteFavicon, websiteGroupId };
     }
 }

@@ -21,7 +21,7 @@ COPY . .
 ENV PORT=3000
 ENV DEPLOY_MODE=docker
 # 数据库路径：建议放在绝对路径，方便 PVE 挂载
-ENV DB_PATH=/app/data/sitebox.db
+ENV DB_PATH=/app/data/db/sitebox.db
 
 # 声明端口
 EXPOSE $PORT

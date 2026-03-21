@@ -67,7 +67,7 @@ services:
       - sitebox_data:/app/data
     environment:
       PORT: 3000
-      DB_PATH: /app/data/sitebox.db
+      DB_PATH: /app/data/db/sitebox.db
       DEPLOY_MODE: docker
     networks:
       - app-network

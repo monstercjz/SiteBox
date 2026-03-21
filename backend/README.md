@@ -36,7 +36,7 @@ npm run deploy:cf
 参考 `.env.example`：
 
 - `PORT`：服务端口（默认 `3000`）
-- `DB_PATH`：SQLite 文件路径（默认 `backend/data/sitebox.db`）
+- `DB_PATH`：SQLite 文件路径（默认 `backend/data/db/sitebox.db`）
 - `DEPLOY_MODE`：部署模式（如 `docker` / `cloudflare`）
 
 ## 数据库迁移

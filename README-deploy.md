@@ -170,7 +170,7 @@ nano .env
 
 ```env
 PORT=3000
-DB_PATH=/var/data/sitebox/sitebox.db
+DB_PATH=/var/data/sitebox/db/sitebox.db
 DEPLOY_MODE=docker
 ```
 

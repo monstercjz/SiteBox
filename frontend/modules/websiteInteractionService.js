@@ -51,13 +51,17 @@ export async function addWebsite(groupId) {
         await websiteOperationService.openWebsiteModal({
             mode: 'add',
             groupId: groupId,
-            callback: async ({ newWebsiteName, checkNewWebsiteUrl, newWebsiteDescription, newWebsiteGroup }) => {
+            callback: async ({ newWebsiteName, checkNewWebsiteUrl, newWebsiteDescription, newWebsiteFavicon, newWebsiteGroup }) => {
                 const websiteSaveService = new WebsiteSaveService();
-                const result = await websiteSaveService.saveWebsite(null, {
+                const websiteData = {
                     name: newWebsiteName,
                     url: checkNewWebsiteUrl,
                     description: newWebsiteDescription,
-                }, newWebsiteGroup);
+                };
+                if (newWebsiteFavicon && newWebsiteFavicon.trim() !== '') {
+                    websiteData.faviconUrl = newWebsiteFavicon;
+                }
+                const result = await websiteSaveService.saveWebsite(null, websiteData, newWebsiteGroup);
                 if (result) {
                     // renderDashboardWithData();
                     //更新ui
@@ -80,14 +84,18 @@ export async function editWebsite(groupId, websiteId) {
         mode: 'edit',
         websiteId: websiteId,
         groupId: groupId,
-        callback: async ({ newWebsiteName, checkNewWebsiteUrl, newWebsiteDescription, newWebsiteGroup }) => {
+        callback: async ({ newWebsiteName, checkNewWebsiteUrl, newWebsiteDescription, newWebsiteFavicon, newWebsiteGroup }) => {
             const websiteSaveService = new WebsiteSaveService();
-            const result = await websiteSaveService.saveWebsite(websiteId, {
+            const websiteData = {
                 name: newWebsiteName,
                 url: checkNewWebsiteUrl,
                 description: newWebsiteDescription,
                 groupId: newWebsiteGroup,
-            }, newWebsiteGroup);
+            };
+            if (newWebsiteFavicon && newWebsiteFavicon.trim() !== '') {
+                websiteData.faviconUrl = newWebsiteFavicon;
+            }
+            const result = await websiteSaveService.saveWebsite(websiteId, websiteData, newWebsiteGroup);
             if (result) {
                 renderDashboardWithData();
             }
@@ -125,7 +133,9 @@ export function getWebsiteInfo(websiteId) {
     const websiteName = websiteItem.querySelector('a').textContent;
     const websiteDescription = websiteItem.getAttribute(DATA_DESCRIPTION);
     const websiteGroupId = websiteItem.getAttribute(DATA_GROUP_ID);
-    return { websiteName, websiteUrl, websiteDescription, websiteGroupId };
+    const faviconImg = websiteItem.querySelector('img');
+    const websiteFavicon = faviconImg ? faviconImg.getAttribute('src') : '';
+    return { websiteName, websiteUrl, websiteDescription, websiteFavicon, websiteGroupId };
 }
 
 export async function openImportWebsitesModal() {

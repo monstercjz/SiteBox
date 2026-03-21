@@ -38,7 +38,7 @@ const CREATE_WEBSITE_SCHEMA = Joi.object({
     name: Joi.string().required(),
     url: Joi.string().uri().required(),
     description: Joi.string().allow('').optional(),
-    faviconUrl: Joi.string().uri().optional(),
+    faviconUrl: Joi.string().optional(),
   }).required(),
 });
 
@@ -49,7 +49,7 @@ const UPDATE_WEBSITE_SCHEMA = Joi.object({
     name: Joi.string().required(),
     url: Joi.string().uri().required(),
     description: Joi.string().allow('').optional(),
-    faviconUrl: Joi.string().uri().optional(),
+    faviconUrl: Joi.string().optional(),
     order: Joi.number().integer().optional(),
     isAccessible: Joi.boolean().optional(),
   }).required(),

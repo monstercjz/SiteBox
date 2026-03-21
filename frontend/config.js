@@ -103,7 +103,7 @@ export const MENU_TEXT_DELETE_DOCKER = '删除 Docker';
 
 // 事件类型
 export const EVENT_CONTEXTMENU = 'contextmenu';
-// 
+//
 
 // 正则表达式相关常量
 export const REGEX_WEBSITE_GROUP_ID = /website-group-title-([0-9a-fA-F-]+)/;
@@ -247,6 +247,7 @@ export const WEBSITE_MODAL_ID = 'websiteModal';
 export const INPUT_ID_NEW_WEBSITE_NAME = 'newWebsiteName';
 export const INPUT_ID_NEW_WEBSITE_URL = 'newWebsiteUrl';
 export const INPUT_ID_NEW_WEBSITE_DESCRIPTION = 'newWebsiteDescription';
+export const INPUT_ID_NEW_WEBSITE_FAVICON = 'newWebsiteFavicon';
 
 // 选择框 ID 相关常量
 // export const SELECT_ID_GROUP_SELECT = 'groupSelect';
@@ -471,7 +472,7 @@ export const RANDOM_COLORS = [
     '#ea580c', // orange
     '#7e22ce'  // violet
   ];
-  
+
   // 背景图片列表
   export const BACKGROUND_IMAGES = [
     'url("./background/background1.png")',

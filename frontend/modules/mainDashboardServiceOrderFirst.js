@@ -267,7 +267,7 @@ function createWebsiteItem(website) {
     websiteItem.setAttribute(DATA_GROUP_ID, website.groupId);
 
     websiteItem.innerHTML = `
-        ${website.faviconUrl ? `<img src="${getFullUrl(website.faviconUrl)}" title="${website.name}" alt="Image" loading="lazy">` : ''}
+        ${website.faviconUrl ? `<img src="${getFullUrl(website.faviconUrl)}" title="${website.name}" alt="Image" loading="lazy" onerror="this.onerror=null;this.src='site-icon.png';">` : ''}
         <a href="${website.url}" target="_blank" class="website-item__link">${website.name}</a>
     `;
 
@@ -289,12 +289,12 @@ function createDockerItem(docker) {
     dockerItem.setAttribute(DATA_DOCKER_SERVER_IP, docker.server);
     dockerItem.setAttribute(DATA_DOCKER_SERVER_PORT, docker.serverPort);
     dockerItem.setAttribute(DATA_DOCKER_URLPORT, docker.urlPort);
-    
+
 
     dockerItem.innerHTML = `
         <div class="docker-item-header">
             <div class="docker-item-title">
-                ${docker.faviconUrl ? `<img src="${getFullUrl(docker.faviconUrl)}" title="${docker.name}" alt="Image" loading="lazy">` : ''}
+                ${docker.faviconUrl ? `<img src="${getFullUrl(docker.faviconUrl)}" title="${docker.name}" alt="Image" loading="lazy" onerror="this.onerror=null;this.src='site-icon.png';">` : ''}
                 <a href="${docker.url}:${docker.urlPort}" target="_blank" class="docker-item__link">${docker.displayName}</a>
             </div>
             <span class="docker-status-indicator"></span>

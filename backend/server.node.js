@@ -11,7 +11,7 @@ const fs = require('fs');
 const app = require('./app');
 
 const PORT = process.env.PORT || 3000;
-const DB_PATH = process.env.DB_PATH || path.join(__dirname, 'data', 'sitebox.db');
+const DB_PATH = process.env.DB_PATH || path.join(__dirname, 'data', 'db', 'sitebox.db');
 
 // 确保 data 目录存在
 const dataDir = path.dirname(DB_PATH);
@@ -41,8 +41,11 @@ const nodeEnv = {
   DEPLOY_MODE: 'docker',
 };
 
-// 提供静态文件（前端打包后的资源，如果与后端一起部署）
-// app.use('/icons/*', serveStatic({ root: './data' }));
+// 提供静态文件
+app.use('/api/data/*', serveStatic({
+    root: './',
+    rewriteRequestPath: (path) => path.replace(/^\/api/, '')
+}));
 
 // 启动服务，将 nodeEnv 注入每个请求
 serve({
