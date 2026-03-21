@@ -1,5 +1,4 @@
 Dockerfile
-nginx.conf
 .git
 .env
 node_modules
