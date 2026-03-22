@@ -29,13 +29,13 @@ function debouncedSaveWebsiteOrder() {
 // 处理dragstart事件
 function handleDragStart(e) {
     const item = e.target.closest('.website-item');
-    console.log('Website dragstart - target:', e.target, 'item:', item, 'item.id:', item ? item.id : null);
+    // console.log('Website dragstart - target:', e.target, 'item:', item, 'item.id:', item ? item.id : null);
     if (!item) {
         return; // 如果不是网站项目，则不处理，让其他拖拽服务处理
     }
     e.stopPropagation(); // 防止触发组拖拽
     const itemId = item.id;
-    console.log('Website item drag start - itemId:', itemId);
+    // console.log('Website item drag start - itemId:', itemId);
     e.dataTransfer.setData('text/plain', itemId);
     e.dataTransfer.effectAllowed = 'move';
 }
@@ -125,10 +125,10 @@ async function saveWebsiteOrder() {
             });
         });
 
-        console.log('Saving website order, items:', allItemsOrdered);
+        // console.log('Saving website order, items:', allItemsOrdered);
         if (allItemsOrdered.length > 0) {
             const response = await reorderWebsites(allItemsOrdered);
-            console.log('Reorder response:', response);
+            // console.log('Reorder response:', response);
             if (response) {
                 showNotification('网站顺序已保存', 'success');
             } else {

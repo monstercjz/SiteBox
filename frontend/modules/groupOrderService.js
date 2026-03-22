@@ -50,7 +50,7 @@ function handleDragStart(e) {
         e.stopPropagation(); // 阻止事件冒泡，防止触发其他拖拽服务
         const groupId = group.id;
         const groupType = group.classList.contains('website-group') ? 'website-group' : 'docker-group';
-        console.log('Group drag start - groupId:', groupId, 'groupType:', groupType);
+        // console.log('Group drag start - groupId:', groupId, 'groupType:', groupType);
         e.dataTransfer.setData('text/plain', groupId);
         e.dataTransfer.setData('application/group-type', groupType); // 保存 groupType
     } else {
@@ -94,7 +94,7 @@ function handleDrop(e) {
 
     // 如果不是分组拖拽，则不处理，让 websiteOrderService 处理
     if (!isGroupDragging) {
-        console.log('Group handleDrop - not a group drag, returning');
+        // console.log('Group handleDrop - not a group drag, returning');
         return;
     }
 
@@ -108,16 +108,16 @@ function handleDrop(e) {
     }
 
     const draggedGroupId = e.dataTransfer.getData('text/plain');
-    console.log('Group Drop event - draggedGroupId:', draggedGroupId, 'targetGroup:', targetGroup ? targetGroup.id : null);
+    // console.log('Group Drop event - draggedGroupId:', draggedGroupId, 'targetGroup:', targetGroup ? targetGroup.id : null);
 
     if (!targetGroup || targetGroup.id === draggedGroupId) {
-        console.log('Group handleDrop - no target or same target, returning');
+        // console.log('Group handleDrop - no target or same target, returning');
         return;
     }
 
     const draggedGroup = document.getElementById(draggedGroupId);
     if (!draggedGroup) {
-        console.error('Dragged group not found, ID:', draggedGroupId);
+        // console.error('Dragged group not found, ID:', draggedGroupId);
         return;
     }
 
