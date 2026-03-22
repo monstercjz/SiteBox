@@ -86,8 +86,11 @@ function openPanel() {
     z-index: 1001;
     width: 90%;
     max-width: 31.25rem;
-    padding: 2rem;
+    max-height: 85vh;
+    padding: 1.5rem;
     opacity: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   `;
 
   // 添加自定义checkbox样式
