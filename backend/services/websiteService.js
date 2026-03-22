@@ -232,6 +232,9 @@ const deleteWebsite = async (env, websiteId) => {
 
 /**
  * 网站排序
+ * @param {Object} env - 环境变量
+ * @param {Array<{id: string}>} reorderData - 排序数据，包含网站ID数组
+ * @returns {Promise<Array>} 更新后的网站列表
  */
 const reorderWebsites = async (env, reorderData) => {
   const schema = Joi.array().items(Joi.object({ id: Joi.string().uuid().required() })).required();
@@ -241,19 +244,28 @@ const reorderWebsites = async (env, reorderData) => {
     handleServiceError(error, '无效的排序数据');
   }
 
-  const statements = reorderData.map((item, index) => ({
-    sql: 'UPDATE websites SET order_index = ? WHERE id = ?',
-    params: [index + 1, item.id],
-  }));
-
-  await batchExec(env, statements);
+  // 分批执行更新，每批最多 500 条，避免 SQLite 变量数量限制
+  const BATCH_SIZE = 500;
+  for (let i = 0; i < reorderData.length; i += BATCH_SIZE) {
+    const batch = reorderData.slice(i, i + BATCH_SIZE);
+    const statements = batch.map((item, index) => ({
+      sql: 'UPDATE websites SET order_index = ? WHERE id = ?',
+      params: [i + index + 1, item.id],
+    }));
+    await batchExec(env, statements);
+  }
   logger.info(`重新排序网站，共 ${reorderData.length} 条`);
 
-  // 返回更新后的列表
+  // 分批查询网站，每批最多 500 个 ID，避免 IN 子句变量数量限制
+  const allRows = [];
   const ids = reorderData.map(item => item.id);
-  const placeholders = ids.map(() => '?').join(',');
-  const rows = await queryAll(env, `SELECT * FROM websites WHERE id IN (${placeholders}) ORDER BY order_index ASC`, ids);
-  return rows.map(rowToWebsite);
+  for (let i = 0; i < ids.length; i += BATCH_SIZE) {
+    const batchIds = ids.slice(i, i + BATCH_SIZE);
+    const placeholders = batchIds.map(() => '?').join(',');
+    const rows = await queryAll(env, `SELECT * FROM websites WHERE id IN (${placeholders}) ORDER BY order_index ASC`, batchIds);
+    allRows.push(...rows);
+  }
+  return allRows.map(rowToWebsite);
 };
 
 /**

@@ -119,6 +119,9 @@ const deleteGroup = async (env, groupId) => {
 
 /**
  * 分组排序（批量更新 order_index）
+ * @param {Object} env - 环境变量
+ * @param {Array<{id: string, order: number, dashboardType?: string}>} reorderData - 排序数据
+ * @returns {Promise<Array>} 更新后的分组列表
  */
 const reorderGroups = async (env, reorderData) => {
   const schema = Joi.array().items(Joi.object({
@@ -135,29 +138,39 @@ const reorderGroups = async (env, reorderData) => {
       return [];
     }
 
-    const statements = reorderData.map((item) => {
-      if (item.dashboardType) {
+    // 分批执行更新，每批最多 500 条，避免 SQLite 变量数量限制
+    const BATCH_SIZE = 500;
+    for (let i = 0; i < reorderData.length; i += BATCH_SIZE) {
+      const batch = reorderData.slice(i, i + BATCH_SIZE);
+      const statements = batch.map((item) => {
+        if (item.dashboardType) {
+          return {
+            sql: 'UPDATE groups SET order_index = ?, dashboard_type = ? WHERE id = ?',
+            params: [item.order, item.dashboardType, item.id],
+          };
+        }
         return {
-          sql: 'UPDATE groups SET order_index = ?, dashboard_type = ? WHERE id = ?',
-          params: [item.order, item.dashboardType, item.id],
+          sql: 'UPDATE groups SET order_index = ? WHERE id = ?',
+          params: [item.order, item.id],
         };
+      });
+      if (statements.length > 0) {
+        await batchExec(env, statements);
       }
-      return {
-        sql: 'UPDATE groups SET order_index = ? WHERE id = ?',
-        params: [item.order, item.id],
-      };
-    });
-
-    if (statements.length > 0) {
-      await batchExec(env, statements);
     }
 
     logger.info('Groups reordered');
 
+    // 分批查询分组，每批最多 500 个 ID，避免 IN 子句变量数量限制
+    const allRows = [];
     const ids = reorderData.map(item => item.id);
-    const placeholders = ids.map(() => '?').join(',');
-    const rows = await queryAll(env, `SELECT * FROM groups WHERE id IN (${placeholders}) ORDER BY order_index ASC`, ids);
-    return rows.map(rowToGroup);
+    for (let i = 0; i < ids.length; i += BATCH_SIZE) {
+      const batchIds = ids.slice(i, i + BATCH_SIZE);
+      const placeholders = batchIds.map(() => '?').join(',');
+      const rows = await queryAll(env, `SELECT * FROM groups WHERE id IN (${placeholders}) ORDER BY order_index ASC`, batchIds);
+      allRows.push(...rows);
+    }
+    return allRows.map(rowToGroup);
   } catch (error) {
     logger.error(`Error reordering groups: ${error.message}`);
     throw error;
