@@ -262,6 +262,8 @@ function createListContainer(listId) {
 function createWebsiteItem(website) {
     const websiteItem = document.createElement('div');
     websiteItem.classList.add(CLASS_WEBSITE_ITEM);
+    websiteItem.setAttribute('draggable', true);
+    websiteItem.id = website.id; // 添加 id 属性以便拖拽识别
     websiteItem.setAttribute(DATA_DESCRIPTION, website.description);
     websiteItem.setAttribute(DATA_ITEM_ID, website.id);
     websiteItem.setAttribute(DATA_GROUP_ID, website.groupId);

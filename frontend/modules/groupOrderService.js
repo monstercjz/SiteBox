@@ -4,6 +4,7 @@ import { reorderWebsiteGroups,reorderDockerGroups, updateWebsiteGroup, updateDoc
 
 let websitedashboard;
 let saveTimeout;
+let isGroupDragging = false; // 跟踪是否正在拖拽分组
 // let dashboardTypeUpdates = []; // Array to store dashboardType updates
 
 // 初始化拖拽排序功能
@@ -31,23 +32,43 @@ function debouncedSaveGroupOrder() {
 
 // 处理dragstart事件
 function handleDragStart(e) {
-    const group = e.target.closest('.website-group') || e.target.closest('.docker-group');
-    if (!group) {
-        e.preventDefault();
-        return;
+    // 获取被拖拽的元素
+    const target = e.target;
+
+    // 检查是否直接拖拽分组容器本身（而不是其子元素）
+    const isGroupContainer = (target.classList.contains('website-group') || target.classList.contains('docker-group'));
+
+    // 检查是否拖拽分组标题（h2 元素）
+    const isGroupTitle = target.closest('h2[class$="__title"]');
+
+    // 只有当直接拖拽分组容器或分组标题时才处理
+    if (isGroupContainer || isGroupTitle) {
+        const group = target.closest('.website-group') || target.closest('.docker-group');
+        if (!group) return;
+
+        isGroupDragging = true; // 设置拖拽状态
+        e.stopPropagation(); // 阻止事件冒泡，防止触发其他拖拽服务
+        const groupId = group.id;
+        const groupType = group.classList.contains('website-group') ? 'website-group' : 'docker-group';
+        console.log('Group drag start - groupId:', groupId, 'groupType:', groupType);
+        e.dataTransfer.setData('text/plain', groupId);
+        e.dataTransfer.setData('application/group-type', groupType); // 保存 groupType
+    } else {
+        isGroupDragging = false; // 重置拖拽状态
     }
-    e.stopPropagation();
-    const groupId = group.id;
-    const groupType = group.classList.contains('website-group') ? 'website-group' : 'docker-group';
-    e.dataTransfer.setData('text/plain', groupId);
-    e.dataTransfer.setData('application/group-type', groupType); // 保存 groupType
+    // 否则不处理，让 websiteOrderService 处理
 }
 
 // 处理dragover事件
 function handleDragOver(e) {
+    // 如果不是分组拖拽，则不处理
+    if (!isGroupDragging) {
+        return;
+    }
+
     e.preventDefault();
     // 添加视觉反馈
-    const targetGroup = e.target.closest('.website-group');
+    const targetGroup = e.target.closest('.website-group') || e.target.closest('.docker-group');
     if (targetGroup) {
         targetGroup.classList.add('drag-over');
     }
@@ -55,6 +76,11 @@ function handleDragOver(e) {
 
 // 处理dragleave事件
 function handleDragLeave(e) {
+    // 如果不是分组拖拽，则不处理
+    if (!isGroupDragging) {
+        return;
+    }
+
     const targetGroup = e.target.closest('.website-group') || e.target.closest('.docker-group');
     if (targetGroup) {
         targetGroup.classList.remove('drag-over');
@@ -66,6 +92,15 @@ function handleDragLeave(e) {
 function handleDrop(e) {
     e.preventDefault();
 
+    // 如果不是分组拖拽，则不处理，让 websiteOrderService 处理
+    if (!isGroupDragging) {
+        console.log('Group handleDrop - not a group drag, returning');
+        return;
+    }
+
+    // 重置拖拽状态
+    isGroupDragging = false;
+
     // 移除视觉反馈
     const targetGroup = e.target.closest('.website-group') || e.target.closest('.docker-group');
     if (targetGroup) {
@@ -73,12 +108,16 @@ function handleDrop(e) {
     }
 
     const draggedGroupId = e.dataTransfer.getData('text/plain');
-    const draggedGroupType = e.dataTransfer.getData('application/group-type'); // 获取 groupType
-    if (!targetGroup || targetGroup.id === draggedGroupId) return;
+    console.log('Group Drop event - draggedGroupId:', draggedGroupId, 'targetGroup:', targetGroup ? targetGroup.id : null);
+
+    if (!targetGroup || targetGroup.id === draggedGroupId) {
+        console.log('Group handleDrop - no target or same target, returning');
+        return;
+    }
 
     const draggedGroup = document.getElementById(draggedGroupId);
     if (!draggedGroup) {
-        console.error('Dragged group not found');
+        console.error('Dragged group not found, ID:', draggedGroupId);
         return;
     }
 
@@ -110,10 +149,10 @@ function handleDrop(e) {
         debouncedSaveGroupOrder(); // 保存排序
 
         // Defer dashboardType update, add to updates array
-        // dashboardTypeUpdates.push({ 
+        // dashboardTypeUpdates.push({
         //     groupId: draggedGroupId,
         //     groupType: draggedGroupType,
-        //     dashboardType: targetDashboardType 
+        //     dashboardType: targetDashboardType
         // });
     }
 }
@@ -161,18 +200,18 @@ async function saveGroupOrder() {
             }
         });
 
-        
+
         const websiteUpdateResponse = await reorderWebsiteGroups(orderedWebsiteGroups);
         if (!websiteUpdateResponse) {
             throw new Error('Failed to update website group order');
         }
 
-        
+
         const dockerUpdateResponse = await reorderDockerGroups(orderedDockerGroups); // 调用 docker group 排序 API
         if (!dockerUpdateResponse) {
             throw new Error('Failed to update docker group order');
         }
-        
+
 
         // Process dashboardType updates
         // const dashboardTypeUpdatePromises = dashboardTypeUpdates.map(update => {

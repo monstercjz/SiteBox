@@ -4,6 +4,7 @@ import { SELECTORS, elements, initializeDOMElements } from './modules/eventDomMa
 import { renderDashboardWithData } from './modules/mainDashboardService.js';
 import { dockerUpdateInfoAll } from './modules/dockerIfonUpdate.js';
 import { initGroupOrderService } from './modules/groupOrderService.js';
+import { initWebsiteOrderService } from './modules/websiteOrderService.js';
 import { initBackendSettingService } from './modules/backendSettingService.js';
 import { initExternalSearchService } from './modules/externalSearchService.js';
 // import { restartDocker } from './modules/dockerInteractionService.js';
@@ -23,6 +24,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         renderDashboardWithData(),
         // renderDockerDashboardWithData()
     ]);
+
+    // 初始化网站项目拖拽排序服务
+    initWebsiteOrderService();
 
     // 实时刷新容器信息
     setInterval(dockerUpdateInfoAll, 1800000);

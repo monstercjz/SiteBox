@@ -216,6 +216,15 @@ async function reorderWebsiteGroups(groups) {
 }
 
 /**
+ * 重新排序网站
+ * @param {object[]} websites - 网站数组，包含 id 和 order 属性
+ * @returns {Promise<any>}- 返回 Promise，解析为排序结果
+ */
+async function reorderWebsites(websites) {
+  return fetchDataFromApi('/websites/reorder', 'PATCH', websites);
+}
+
+/**
  * 重新排序 Docker 容器分组
  * @param {object[]} groups - 分组数组，包含 id 和 order 属性
  * @returns {Promise<any>}- 返回 Promise，解析为排序结果
@@ -370,6 +379,7 @@ export {
   batchDeleteWebsites,
   batchMoveWebsites,
   reorderWebsiteGroups, // 重新排序网站分组 (原 reorderGroups)
+  reorderWebsites, // 重新排序网站
   moveToTrash,
   batchImportWebsites,
   recordWebsiteClick,
