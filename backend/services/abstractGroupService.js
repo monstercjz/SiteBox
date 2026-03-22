@@ -138,8 +138,8 @@ const reorderGroups = async (env, reorderData) => {
       return [];
     }
 
-    // 分批执行更新，每批最多 500 条，避免 SQLite 变量数量限制
-    const BATCH_SIZE = 500;
+    // 分批执行更新，每批最多 100 条，避免 SQLite 变量数量限制
+    const BATCH_SIZE = 100;
     for (let i = 0; i < reorderData.length; i += BATCH_SIZE) {
       const batch = reorderData.slice(i, i + BATCH_SIZE);
       const statements = batch.map((item) => {
@@ -161,7 +161,7 @@ const reorderGroups = async (env, reorderData) => {
 
     logger.info('Groups reordered');
 
-    // 分批查询分组，每批最多 500 个 ID，避免 IN 子句变量数量限制
+    // 分批查询分组，每批最多 100 个 ID，避免 IN 子句变量数量限制
     const allRows = [];
     const ids = reorderData.map(item => item.id);
     for (let i = 0; i < ids.length; i += BATCH_SIZE) {
