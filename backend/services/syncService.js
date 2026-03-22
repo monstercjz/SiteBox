@@ -5,6 +5,24 @@ const MAX_BACKUP_VERSIONS = 5;
 const ARCHIVE_SUCCESS_MESSAGE = 'Websites info archived successfully';
 
 /**
+ * 优雅地获取环境变量，支持 Cloudflare (env) 和 VPS (process.env)
+ */
+const getEnvVar = (env, key) => {
+  // 优先从 Cloudflare env (c.env) 获取
+  if (env && env[key]) {
+    console.log(`[Sync] Found ${key} in env`);
+    return env[key];
+  }
+  // 其次从 Node process.env 获取
+  if (process.env && process.env[key]) {
+    console.log(`[Sync] Found ${key} in process.env`);
+    return process.env[key];
+  }
+  console.log(`[Sync] ${key} not found`);
+  return null;
+};
+
+/**
  * 将 groups + websites + dockers 全量数据导出为 JSON
  */
 const exportData = async (env) => {
@@ -198,6 +216,86 @@ const getHistory = async (env) => {
   }));
 };
 
+/**
+ * 同步数据到 GitHub
+ * 1. 导出全量数据
+ * 2. 调用 GitHub API 更新文件
+ */
+const cloudSync = async (env) => {
+  const token = getEnvVar(env, 'GITHUB_TOKEN');
+  const repo = getEnvVar(env, 'GITHUB_REPO');
+  const path = getEnvVar(env, 'GITHUB_PATH');
+
+  if (!token || !repo || !path) {
+    throw new Error('GitHub 配置不完整，请检查环境变量 GITHUB_TOKEN, GITHUB_REPO, GITHUB_PATH');
+  }
+
+  // 1. 获取数据
+  const data = await exportData(env);
+  const content = JSON.stringify(data, null, 2);
+  const contentBase64 = Buffer.from(content).toString('base64');
+
+  // 2. 解析 repo (owner/repo)
+  const [owner, repoName] = repo.split('/');
+  if (!owner || !repoName) {
+    throw new Error('GITHUB_REPO 格式错误，应为 owner/repo');
+  }
+
+  // 3. 获取文件 SHA (如果文件已存在)
+  let sha = null;
+  try {
+    const getUrl = `https://api.github.com/repos/${owner}/${repoName}/contents/${path}`;
+    const getResponse = await fetch(getUrl, {
+      headers: {
+        'Authorization': `token ${token}`,
+        'Accept': 'application/vnd.github.v3+json',
+        'User-Agent': 'SiteBox-Backend'
+      }
+    });
+
+    if (getResponse.ok) {
+      const getData = await getResponse.json();
+      sha = getData.sha;
+    } else if (getResponse.status !== 404) {
+      // 404 是正常的（文件不存在），其他错误需要抛出
+      const errText = await getResponse.text();
+      throw new Error(`获取 GitHub 文件信息失败: ${getResponse.status} ${errText}`);
+    }
+  } catch (e) {
+    console.error('获取文件 SHA 失败', e);
+    // 如果是网络错误，继续尝试创建可能也可以，但这里为了安全先抛出
+    throw new Error(`连接 GitHub 失败: ${e.message}`);
+  }
+
+  // 4. 更新或创建文件
+  const putUrl = `https://api.github.com/repos/${owner}/${repoName}/contents/${path}`;
+  const putBody = {
+    message: `Sync data from SiteBox ${new Date().toISOString()}`,
+    content: contentBase64,
+  };
+  if (sha) {
+    putBody.sha = sha;
+  }
+
+  const putResponse = await fetch(putUrl, {
+    method: 'PUT',
+    headers: {
+      'Authorization': `token ${token}`,
+      'Accept': 'application/vnd.github.v3+json',
+      'Content-Type': 'application/json',
+      'User-Agent': 'SiteBox-Backend'
+    },
+    body: JSON.stringify(putBody)
+  });
+
+  if (!putResponse.ok) {
+    const errText = await putResponse.text();
+    throw new Error(`推送数据到 GitHub 失败: ${putResponse.status} ${errText}`);
+  }
+
+  return { message: '数据已成功同步到 GitHub' };
+};
+
 module.exports = {
   exportData,
   importData,
@@ -206,4 +304,5 @@ module.exports = {
   backupData,
   listBackups,
   getHistory,
+  cloudSync,
 };

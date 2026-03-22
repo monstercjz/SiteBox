@@ -363,6 +363,15 @@ async function updateSiteName(newSiteName) {
 async function getSiteName() {
   return fetchDataFromApi(`/misc/gettings/siteName`, 'GET');
 }
+
+/**
+ * 云端同步
+ * @returns {Promise<any>}
+ */
+async function cloudSync() {
+  return fetchDataFromApi('/sync/cloud-sync', 'POST');
+}
+
 export {
   fetchDataFromApi,
   getWebsites,
@@ -402,6 +411,7 @@ export {
   restartDockerContainer,
   updateSiteName,
   getSiteName,
+  cloudSync,
 };
 
 

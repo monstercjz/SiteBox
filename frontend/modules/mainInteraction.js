@@ -12,7 +12,8 @@ const actionMap = {
     'background-toggle': { module: '/modules/randomBackGroundService.js', func: 'RandomBackground', log: 'Random Background Button Clicked', error: 'Failed to toggle background' },
     'theme-switcher-toggle': { module: '/modules/themeService.js', func: 'toggleThemeButtonShow', log: 'Theme Switcher Toggle Button Clicked', error: 'Failed to toggle theme' },
     'layout-switcher-toggle': { module: '/modules/layoutService.js', func: 'toggleLayoutButtonShow', log: 'Theme Switcher Toggle Button Clicked', error: 'Failed to toggle theme' },
-    'import-websites-batch-button': { module: '/modules/websiteInteractionService.js', func: 'openImportWebsitesModal', log: 'Import Websites Button Clicked', error: 'Failed to open import modal' }
+    'import-websites-batch-button': { module: '/modules/websiteInteractionService.js', func: 'openImportWebsitesModal', log: 'Import Websites Button Clicked', error: 'Failed to open import modal' },
+    'cloud-sync-button': { module: '/modules/cloudSyncService.js', func: 'handleCloudSync', log: 'Cloud Sync Button Clicked', error: 'Failed to sync to cloud' }
 };
 /**
  * 通用事件处理函数
@@ -132,7 +133,7 @@ export async function handleHoverEventss(e) {
     }
 }
 export async function handleHoverEvents(e) {
-    
+
     const { handleElementEnter } = await import('./tooltipService.js');
         handleElementEnter(e);
 }

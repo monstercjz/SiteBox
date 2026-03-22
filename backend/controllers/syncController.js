@@ -65,4 +65,14 @@ const getHistory = async (c) => {
   }
 };
 
-module.exports = { exportData, importData, restoreData, moveToTrash, listBackups, getHistory };
+const cloudSync = async (c) => {
+  try {
+    const env = c.env;
+    const result = await syncService.cloudSync(env);
+    return apiResponse.success(c, result);
+  } catch (err) {
+    return apiResponse.error(c, err.message);
+  }
+};
+
+module.exports = { exportData, importData, restoreData, moveToTrash, listBackups, getHistory, cloudSync };
