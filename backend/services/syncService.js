@@ -233,7 +233,23 @@ const cloudSync = async (env) => {
   // 1. 获取数据
   const data = await exportData(env);
   const content = JSON.stringify(data, null, 2);
-  const contentBase64 = Buffer.from(content).toString('base64');
+  // 兼容 Node.js (Buffer) 和 Cloudflare Workers (btoa)
+  // 注意：btoa 不支持 Unicode，需要先编码
+  let contentBase64;
+  if (typeof Buffer !== 'undefined') {
+    contentBase64 = Buffer.from(content).toString('base64');
+  } else {
+    // Cloudflare Workers / 现代浏览器
+    const encoder = new TextEncoder();
+    const uint8Array = encoder.encode(content);
+    // 将 Uint8Array 转换为二进制字符串
+    let binary = '';
+    const bytes = new Uint8Array(uint8Array);
+    for (let i = 0; i < bytes.byteLength; i++) {
+      binary += String.fromCharCode(bytes[i]);
+    }
+    contentBase64 = btoa(binary);
+  }
 
   // 2. 解析 repo (owner/repo)
   const [owner, repoName] = repo.split('/');
