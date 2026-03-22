@@ -172,6 +172,15 @@ nano .env
 PORT=3000
 DB_PATH=/var/data/sitebox/db/sitebox.db
 DEPLOY_MODE=docker
+# ─── GitHub 云端同步配置 ─────────────────────────────────────────
+# 用于将数据同步到 GitHub 仓库
+# 1. 创建一个 GitHub Personal Access Token (Classic)，并授予 repo 权限
+# 2. 填入 Token (ghp_...)
+# 3. 填入目标仓库，格式：owner/repo (例如：yourname/sitebox-data)
+# 4. 填入文件路径，例如：data/backup.json
+GITHUB_TOKEN=
+GITHUB_REPO=
+GITHUB_PATH=
 ```
 
 ### 配合 Nginx 反向代理

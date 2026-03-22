@@ -27,6 +27,9 @@ database_id = "148bb43e-fb40-4dc5-94e0-f2e689194b4b"
 
 [vars]
 DEPLOY_MODE = "cloudflare"
+GITHUB_TOKEN=
+GITHUB_REPO=
+GITHUB_PATH=
 ```
 
 各字段含义：
@@ -165,6 +168,12 @@ curl https://<your-worker-domain>/api/
    - 新增：
      - 名称：`DEPLOY_MODE`
      - 值：`cloudflare`
+     - 名称：`GITHUB_TOKEN`
+     - 值：`xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx`
+     - 名称：`GITHUB_REPO`
+     - 值：`xxxxx/yyyyy`
+     - 名称：`GITHUB_PATH`
+     - 值：`backup_json/backup.json`
 4. **Settings → Bindings**
    - 新增 D1 绑定：
      - Binding 名：`DB`
@@ -173,13 +182,14 @@ curl https://<your-worker-domain>/api/
    - Compatibility date：`2024-01-01`
    - Compatibility flags：`nodejs_compat`
 
+
 ---
 
 ## 三、初始化数据库（必须）
 
 即使部署成功，没建表也会出问题。
 去 **D1 控制台** 选 `sitebox` 数据库，执行 `backend/schema.sql` 的 SQL（整份执行一次）。
-> 重要说明，如果没有toml文件，即便绑定了数据库，下次自动部署的时候这个绑定也会失效
+> **重要说明**，如果没有toml文件，即便绑定了数据库或者设置了变量，下次自动部署的时候这个绑定也会失效
 > 建议在仓库中添加一个toml文件，修改自己对应的db名字和id
 > 如果有toml文件，即便不手动补配置也能正常运行
 
