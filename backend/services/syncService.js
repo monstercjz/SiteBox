@@ -257,10 +257,29 @@ const cloudSync = async (env) => {
     throw new Error('GITHUB_REPO 格式错误，应为 owner/repo');
   }
 
-  // 3. 获取文件 SHA (如果文件已存在)
+  // 3. 生成带时间戳的文件路径
+  // 例如: backup_json/backup.json -> backup_json/backup_20260322_185120.json
+  const now = new Date();
+  const pad = (n) => n.toString().padStart(2, '0');
+  const timestamp = `${now.getFullYear()}${pad(now.getMonth() + 1)}${pad(now.getDate())}_${pad(now.getHours())}${pad(now.getMinutes())}${pad(now.getSeconds())}`;
+
+  const pathParts = path.split('/');
+  const fileName = pathParts.pop();
+  const dir = pathParts.join('/');
+
+  // 提取文件名和扩展名
+  const lastDotIndex = fileName.lastIndexOf('.');
+  const baseName = lastDotIndex > 0 ? fileName.slice(0, lastDotIndex) : fileName;
+  const ext = lastDotIndex > 0 ? fileName.slice(lastDotIndex) : '.json';
+
+  const timestampedFileName = `${baseName}_${timestamp}${ext}`;
+  const finalPath = dir ? `${dir}/${timestampedFileName}` : timestampedFileName;
+
+  // 4. 获取文件 SHA (如果文件已存在)
+  // 注意：这里我们不需要检查文件是否存在，因为每次都是新文件
   let sha = null;
   try {
-    const getUrl = `https://api.github.com/repos/${owner}/${repoName}/contents/${path}`;
+    const getUrl = `https://api.github.com/repos/${owner}/${repoName}/contents/${finalPath}`;
     const getResponse = await fetch(getUrl, {
       headers: {
         'Authorization': `token ${token}`,
@@ -273,18 +292,16 @@ const cloudSync = async (env) => {
       const getData = await getResponse.json();
       sha = getData.sha;
     } else if (getResponse.status !== 404) {
-      // 404 是正常的（文件不存在），其他错误需要抛出
       const errText = await getResponse.text();
       throw new Error(`获取 GitHub 文件信息失败: ${getResponse.status} ${errText}`);
     }
   } catch (e) {
     console.error('获取文件 SHA 失败', e);
-    // 如果是网络错误，继续尝试创建可能也可以，但这里为了安全先抛出
-    throw new Error(`连接 GitHub 失败: ${e.message}`);
+    // 网络错误时尝试创建新文件
   }
 
-  // 4. 更新或创建文件
-  const putUrl = `https://api.github.com/repos/${owner}/${repoName}/contents/${path}`;
+  // 5. 更新或创建文件
+  const putUrl = `https://api.github.com/repos/${owner}/${repoName}/contents/${finalPath}`;
   const putBody = {
     message: `Sync data from SiteBox ${new Date().toISOString()}`,
     content: contentBase64,
@@ -309,7 +326,7 @@ const cloudSync = async (env) => {
     throw new Error(`推送数据到 GitHub 失败: ${putResponse.status} ${errText}`);
   }
 
-  return { message: '数据已成功同步到 GitHub' };
+  return { message: `数据已成功同步到 GitHub: ${finalPath}` };
 };
 
 module.exports = {
