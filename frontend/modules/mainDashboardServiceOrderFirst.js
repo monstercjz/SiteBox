@@ -268,9 +268,43 @@ function createWebsiteItem(website) {
     websiteItem.setAttribute(DATA_ITEM_ID, website.id);
     websiteItem.setAttribute(DATA_GROUP_ID, website.groupId);
 
+    const safeUrl = website.url || '';
+    const safeName = website.name || 'Web';
+
     websiteItem.innerHTML = `
-        ${website.faviconUrl ? `<img src="${getFullUrl(website.faviconUrl)}" title="${website.name}" alt="Image" loading="lazy" onerror="this.onerror=null;this.src='site-icon.png';">` : ''}
-        <a href="${website.url}" target="_blank" class="website-item__link">${website.name}</a>
+        ${website.faviconUrl ? `
+          <img
+            src="${getFullUrl(website.faviconUrl)}"
+            title="${safeName}"
+            alt="${safeName}"
+            loading="lazy"
+            data-fallback-step="0"
+            onerror="
+              const step = parseInt(this.getAttribute('data-fallback-step') || '0');
+              const isLocal = /^(https?:\\/\\/)?(127\\.|192\\.168\\.|10\\.|172\\.|localhost)/.test('${safeUrl}');
+
+              if (step === 0 && !isLocal) {
+                // 第 1 步 (仅外网)：DDG 失败，换 Google 128px 高清 API
+                this.setAttribute('data-fallback-step', '1');
+                this.src = 'https://www.google.com/s2/favicons?sz=128&domain_url=${safeUrl}';
+
+              } else if (step <= 1) {
+                // 第 2 步 (内外网通用)：Google也失败，或内网没图标，使用首字母头像生成器
+                this.setAttribute('data-fallback-step', '2');
+                // background=random 会自动分配好看的颜色，color=fff 是白色字体，bold=true 加粗字体
+                this.src = 'https://ui-avatars.com/api/?name=' + encodeURIComponent('${safeName}') + '&background=random&color=fff&bold=true&size=128';
+
+              } else {
+                // 第 3 步：连头像 API 都挂了(比如用户完全没网)，兜底本地图标
+                this.onerror = null;
+                this.src = 'favicon.ico';
+              }
+            "
+          >` : `
+            <!-- 如果后端连 faviconUrl 都没传，直接给首字母头像 -->
+            <img src="https://ui-avatars.com/api/?name=${encodeURIComponent(safeName)}&background=random&color=fff&bold=true&size=128" loading="lazy">
+          `}
+        <a href="${safeUrl}" target="_blank" class="website-item__link">${safeName}</a>
     `;
 
     return websiteItem;
@@ -292,12 +326,40 @@ function createDockerItem(docker) {
     dockerItem.setAttribute(DATA_DOCKER_SERVER_PORT, docker.serverPort);
     dockerItem.setAttribute(DATA_DOCKER_URLPORT, docker.urlPort);
 
+    const safeUrl = docker.url || '';
+    const safeName = docker.displayName || docker.name || 'Docker';
 
     dockerItem.innerHTML = `
         <div class="docker-item-header">
             <div class="docker-item-title">
-                ${docker.faviconUrl ? `<img src="${getFullUrl(docker.faviconUrl)}" title="${docker.name}" alt="Image" loading="lazy" onerror="this.onerror=null;this.src='site-icon.png';">` : ''}
-                <a href="${docker.url}:${docker.urlPort}" target="_blank" class="docker-item__link">${docker.displayName}</a>
+                ${docker.faviconUrl ? `
+                  <img
+                    src="${getFullUrl(docker.faviconUrl)}"
+                    title="${safeName}"
+                    alt="${safeName}"
+                    loading="lazy"
+                    data-fallback-step="0"
+                    onerror="
+                      const step = parseInt(this.getAttribute('data-fallback-step') || '0');
+                      const isLocal = /^(https?:\\/\\/)?(127\\.|192\\.168\\.|10\\.|172\\.|localhost)/.test('${safeUrl}');
+
+                      if (step === 0 && !isLocal) {
+                        this.setAttribute('data-fallback-step', '1');
+                        this.src = 'https://www.google.com/s2/favicons?sz=128&domain_url=${safeUrl}';
+
+                      } else if (step <= 1) {
+                        this.setAttribute('data-fallback-step', '2');
+                        this.src = 'https://ui-avatars.com/api/?name=' + encodeURIComponent('${safeName}') + '&background=random&color=fff&bold=true&size=128';
+
+                      } else {
+                        this.onerror = null;
+                        this.src = 'favicon.ico';
+                      }
+                    "
+                  >` : `
+                    <img src="https://ui-avatars.com/api/?name=${encodeURIComponent(safeName)}&background=random&color=fff&bold=true&size=128" loading="lazy">
+                  `}
+                <a href="${docker.url}:${docker.urlPort}" target="_blank" class="docker-item__link">${safeName}</a>
             </div>
             <span class="docker-status-indicator"></span>
         </div>
