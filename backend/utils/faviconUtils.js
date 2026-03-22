@@ -39,8 +39,8 @@ const fetchFavicon = async (websiteUrl, customFaviconUrl) => {
     }
 
     // 公网服务：优先 DuckDuckGo
-    // return `https://icons.duckduckgo.com/ip3/${domain}.ico`;
-    return `https://www.google.com/s2/favicons?sz=128&domain_url=${domain}`;
+    return `https://icons.duckduckgo.com/ip3/${domain}.ico`;
+    // return `https://www.google.com/s2/favicons?sz=128&domain_url=${domain}`;
 
   } catch (error) {
     console.error('[Favicon] URL parsing error:', error);
