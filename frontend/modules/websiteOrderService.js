@@ -4,7 +4,6 @@ import { reorderWebsites } from './api.js';
 
 let saveTimeout;
 
-// 初始化网站项目拖拽排序功能
 export function initWebsiteOrderService() {
     console.log('Initializing website order service...');
     const mainDashboard = document.querySelector('main');
@@ -13,78 +12,68 @@ export function initWebsiteOrderService() {
         return;
     }
 
-    // 绑定事件监听器到main元素，使用事件委托
     mainDashboard.addEventListener('dragstart', handleDragStart);
     mainDashboard.addEventListener('dragover', handleDragOver);
     mainDashboard.addEventListener('dragleave', handleDragLeave);
     mainDashboard.addEventListener('drop', handleDrop);
+    mainDashboard.addEventListener('dragend', handleDragEnd);
 }
 
-// 添加防抖的saveWebsiteOrder函数
-function debouncedSaveWebsiteOrder() {
+// 将需要保存的列表容器直接作为参数传入，避免全局变量污染
+function debouncedSaveWebsiteOrder(listContainer) {
     clearTimeout(saveTimeout);
-    saveTimeout = setTimeout(() => saveWebsiteOrder(), 300);
+    saveTimeout = setTimeout(() => saveWebsiteOrder(listContainer), 300);
 }
 
-// 处理dragstart事件
 function handleDragStart(e) {
     const item = e.target.closest('.website-item');
-    // console.log('Website dragstart - target:', e.target, 'item:', item, 'item.id:', item ? item.id : null);
-    if (!item) {
-        return; // 如果不是网站项目，则不处理，让其他拖拽服务处理
-    }
-    e.stopPropagation(); // 防止触发组拖拽
-    const itemId = item.id;
-    // console.log('Website item drag start - itemId:', itemId);
-    e.dataTransfer.setData('text/plain', itemId);
+    if (!item) return;
+
+    e.stopPropagation();
+    e.dataTransfer.setData('text/plain', item.id);
     e.dataTransfer.effectAllowed = 'move';
 }
 
-// 处理dragover事件
 function handleDragOver(e) {
     const item = e.target.closest('.website-item');
-    if (!item) {
-        return;
-    }
+    if (!item) return;
+
     e.preventDefault();
     e.dataTransfer.dropEffect = 'move';
-    item.classList.add('drag-over');
+
+    // 避免重复添加
+    if (!item.classList.contains('drag-over')) {
+        item.classList.add('drag-over');
+    }
 }
 
-// 处理dragleave事件
 function handleDragLeave(e) {
     const item = e.target.closest('.website-item');
-    if (item) {
+    // 确保鼠标真正离开了当前 item 才移除样式 (防止子元素触发冒泡导致闪烁)
+    if (item && !item.contains(e.relatedTarget)) {
         item.classList.remove('drag-over');
     }
 }
 
-// 处理drop事件
 function handleDrop(e) {
     const targetItem = e.target.closest('.website-item');
-    if (!targetItem) {
-        return;
-    }
+    if (!targetItem) return;
 
     e.preventDefault();
-    e.stopPropagation(); // 防止触发组拖拽
+    e.stopPropagation();
 
-    // 移除视觉反馈
     targetItem.classList.remove('drag-over');
 
-    const draggedItemId = e.dataTransfer.getData('text/plain');
-    if (!draggedItemId || targetItem.id === draggedItemId) return;
+    const droppedId = e.dataTransfer.getData('text/plain');
+    if (!droppedId || targetItem.id === droppedId) return;
 
-    const draggedItem = document.getElementById(draggedItemId);
-    if (!draggedItem) {
-        console.error('Dragged item not found');
-        return;
-    }
+    const draggedItem = document.getElementById(droppedId);
+    if (!draggedItem) return;
 
-    // 确保拖拽和目标都在同一个列表容器内
     const draggedList = draggedItem.parentElement;
     const targetList = targetItem.parentElement;
 
+    // 只处理同组拖拽
     if (draggedList === targetList && draggedList) {
         const items = Array.from(draggedList.children);
         const draggedIndex = items.indexOf(draggedItem);
@@ -96,39 +85,33 @@ function handleDrop(e) {
             draggedList.insertBefore(draggedItem, targetItem);
         }
 
-        debouncedSaveWebsiteOrder();
+        // 直接把当前操作的列表传给防抖函数
+        debouncedSaveWebsiteOrder(draggedList);
     }
 }
 
-// 保存网站项目顺序
-async function saveWebsiteOrder() {
-    const mainDashboard = document.querySelector('main');
-    if (!mainDashboard) return;
+// 监听 dragend 清理状态
+function handleDragEnd(e) {
+    // 确保清理所有可能残留的反馈样式
+    document.querySelectorAll('.drag-over').forEach(el => el.classList.remove('drag-over'));
+}
 
-    // 显示loading状态
+// 接收具体的列表容器进行保存，使函数变得纯粹且不易受外部状态干扰
+async function saveWebsiteOrder(listContainer) {
+    const mainDashboard = document.querySelector('main');
+    if (!mainDashboard || !listContainer) return;
+
     mainDashboard.classList.add('loading');
 
     try {
-        // 获取所有网站列表容器
-        const lists = mainDashboard.querySelectorAll('.website-list');
-        const allItemsOrdered = [];
+        // 直接从传入的 DOM 容器中提取最新顺序
+        const items = Array.from(listContainer.children);
+        const itemsToSave = items
+            .filter(item => item.classList.contains('website-item'))
+            .map(item => ({ id: item.id }));
 
-        lists.forEach(list => {
-            const items = Array.from(list.children);
-
-            items.forEach((item) => {
-                if (item.classList.contains('website-item')) {
-                    allItemsOrdered.push({
-                        id: item.id
-                    });
-                }
-            });
-        });
-
-        // console.log('Saving website order, items:', allItemsOrdered);
-        if (allItemsOrdered.length > 0) {
-            const response = await reorderWebsites(allItemsOrdered);
-            // console.log('Reorder response:', response);
+        if (itemsToSave.length > 0) {
+            const response = await reorderWebsites(itemsToSave);
             if (response) {
                 showNotification('网站顺序已保存', 'success');
             } else {
