@@ -50,7 +50,7 @@
       var(--action-secondary) 100%
     ); */
   background: var(--background-body);
-  color: var(--action-primary);
+  color: var(--color-functional-secondary-active);
 }
 
 /* Icon Button State Styles - 图标按钮状态样式 */
