@@ -27,9 +27,9 @@ ENV DB_PATH=/app/data/db/sitebox.db
 # 2. 填入 Token (ghp_...)
 # 3. 填入目标仓库，格式：owner/repo (例如：yourname/sitebox-data)
 # 4. 填入文件路径，例如：data/backup.json
-GITHUB_TOKEN=xxxxxxxxxxxxxxxxxxxxxxxx
-GITHUB_REPO=xxxxxx/yyyyyyyy
-GITHUB_PATH=backup_json/backup.json
+ENV GITHUB_TOKEN=xxxxxxxxxxxxxxxxxxxxxxxx
+ENV GITHUB_REPO=xxxxxx/yyyyyyyy
+ENV GITHUB_PATH=backup_json/backup.json
 
 # 声明端口
 EXPOSE $PORT
