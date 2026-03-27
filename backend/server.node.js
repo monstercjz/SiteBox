@@ -54,3 +54,28 @@ serve({
 }, (info) => {
   console.log(`SiteBox backend (Docker mode) running on http://localhost:${info.port}`);
 });
+
+// ====== LXC 优雅关机逻辑 ======
+
+function gracefulShutdown(signal) {
+  console.log(`\n[LXC] 接收到 ${signal} 信号，准备关闭容器...`);
+
+  try {
+    // 安全关闭数据库，确保 WAL 模式下的数据落盘，防止断电损坏数据库
+    db.close();
+    console.log('SQLite 数据库已安全关闭.');
+  } catch (err) {
+    console.error('关闭数据库时发生错误:', err);
+  }
+
+  // 退出当前 Node.js 进程 (0 代表正常退出)
+  // 因为 Node 是 LXC 的 1 号进程，它一退出，LXC 容器就会瞬间完美关闭！
+  process.exit(0);
+}
+
+// 【关键】监听 LXC/PVE 发送的电源关闭信号
+process.on('SIGPWR', () => gracefulShutdown('SIGPWR'));
+
+// 兼容标准的 SIGTERM 和键盘 Ctrl+C
+process.on('SIGTERM', () => gracefulShutdown('SIGTERM'));
+process.on('SIGINT', () => gracefulShutdown('SIGINT'));
