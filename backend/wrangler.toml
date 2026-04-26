@@ -13,3 +13,4 @@ database_id = "148bb43e-fb40-4dc5-94e0-f2e689194b4b"
 # GITHUB_TOKEN ="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 # GITHUB_REPO ="xxxxx/yyyyy"
 # GITHUB_PATH = "backup_json/backup.json"
+# 这里的四个值在网页页面手动添加，并且以密钥类型存储
