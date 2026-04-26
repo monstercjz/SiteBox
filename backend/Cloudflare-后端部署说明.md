@@ -182,7 +182,7 @@ curl https://<your-worker-domain>/api/
    - Compatibility date：`2024-01-01`
    - Compatibility flags：`nodejs_compat`
 6. 这些变量建议不要在**Settings → Variables**里设置，这里设置当重新部署，toml文件内容改变之后，这里的会消失
-   这些变量在构建的时候，作为变量填入
+   这些变量在构建的时候，作为变量填入。并且是以加密的形式
 
 ---
 
